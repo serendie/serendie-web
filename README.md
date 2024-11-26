@@ -1,1 +1,1 @@
-# DIC Design System Website
+# Serendie Website

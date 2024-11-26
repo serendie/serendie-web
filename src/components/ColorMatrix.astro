@@ -1,7 +1,7 @@
 ---
 import tokens from "@serendie/design-token/panda";
-import { css } from "../../../../ui/styled-system/css/css";
 import ColorMatrixCell from "./ColorMatrixCell.astro";
+import { css } from "styled-system/css";
 
 export const { colors } = tokens;
 export const colorScale = colors.sd.reference.color.scale;
@@ -113,7 +113,7 @@ function toCamelCase(color: string) {
           pr: "sd.system.dimension.spacing.extraSmall",
         })}
       >
-        Trans-<br/>parency
+        Trans-<br />parency
       </th>
       {
         getShades("transparency").map((shade) => (

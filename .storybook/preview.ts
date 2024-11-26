@@ -2,11 +2,11 @@ import "../src/index.css";
 
 import type { Preview, ReactRenderer } from "@storybook/react";
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
-import { SerendieTokens } from "../../../ui/src/tokens";
+import serendieTokens from "@serendie/design-token/panda";
 
 const defaultTheme = "konjo";
 
-const { themes } = SerendieTokens;
+const { themes } = serendieTokens;
 const themeNames = [defaultTheme].concat(Object.keys(themes));
 
 const preview: Preview = {
