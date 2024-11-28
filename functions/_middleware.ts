@@ -37,6 +37,11 @@ const basicAuth: Middleware = async ({
   next,
   env,
 }: EventContext): Promise<Response> => {
+  // 本番環境の場合は認証をスキップ
+  if (env.CF_PAGES_URL === env["SITE_DOMAIN"]) {
+    return await next();
+  }
+
   if (!request.headers.has("Authorization")) {
     return new Response("You need to login.", {
       status: 401,
