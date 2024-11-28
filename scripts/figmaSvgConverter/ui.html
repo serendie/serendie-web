@@ -1,8 +1,6 @@
 <script>
   window.onmessage = (event) => {
-    if (
-      event.data.pluginMessage
-    ) {
+    if (event.data.pluginMessage) {
       switch (event.data.pluginMessage.type) {
         case "svg-data":
           downloadSvgFile(event);
@@ -27,5 +25,4 @@
     URL.revokeObjectURL(url);
     parent.postMessage({ pluginMessage: { type: "close-plugin" } }, "*");
   }
-
 </script>
