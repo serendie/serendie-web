@@ -34,6 +34,6 @@ export default tsESLint.config(
   ...tsESLint.configs.recommended,
   prettierRecommended,
   {
-    ignores: ["dist/", "styled-system/", "**/*.cjs", "node_modules/"],
+    ignores: ["dist/", "styled-system/", "**/*.cjs"],
   }
 );
