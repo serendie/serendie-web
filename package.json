@@ -49,8 +49,5 @@
     "@astrojs/partytown": "^2.1.2",
     "@pandacss/dev": "^0.42.0",
     "vite-plugin-svgr": "^4.2.0"
-  },
-  "engines": {
-    "node": ">=20.10.0"
   }
 }
