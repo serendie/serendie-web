@@ -1,9 +1,10 @@
-import { Search, Switch } from "@serendie/ui";
+import { List, ListItem, Search, Switch, Toast, toaster } from "@serendie/ui";
 import { styled } from "styled-system/jsx";
 
 import { useState } from "react";
-import { css } from "styled-system/css";
-import { iconsData } from "@/content/icons";
+import { css, sva } from "styled-system/css";
+import { SerendieSymbol, symbolNames } from "@serendie/symbols";
+import { Menu } from "@ark-ui/react";
 
 const Container = styled("div", {
   base: {
@@ -49,6 +50,7 @@ const IconBox = styled("div", {
     textAlign: "center",
     borderBottom: "1px solid",
     borderColor: "sd.system.color.component.outline",
+    cursor: "pointer",
   },
 });
 
@@ -71,9 +73,10 @@ const IconTitle = styled("h4", {
 });
 
 export const IconPage: React.FC = () => {
-  const [icons, setIcons] = useState(iconsData);
-  const [iconStyle, setIconStyle] = useState<"outline" | "fill">("outline");
-  const [searchText, setSearchText] = useState<string>("");
+  const [icons, setIcons] =
+    useState<readonly (typeof symbolNames)[number][]>(symbolNames);
+  const [variant, setVariant] = useState<"outlined" | "filled">("outlined");
+  const [searchText, setSearchText] = useState("");
 
   return (
     <Container>
@@ -83,14 +86,16 @@ export const IconPage: React.FC = () => {
           value={searchText as unknown as string[]}
           onChange={(e) => {
             setSearchText((e.target as HTMLInputElement).value as string);
+            if (!searchText) {
+              return setIcons(symbolNames);
+            }
             setIcons(
-              iconsData.filter((icon) =>
-                icon.name
-                  .toLowerCase()
-                  .includes((e.target as HTMLInputElement).value.toLowerCase())
-              )
+              symbolNames.filter((name) =>
+                name.toLowerCase().includes(searchText.toLowerCase())
+              ) as readonly (typeof symbolNames)[number][]
             );
           }}
+          placeholder="アイコン名を入力..."
         />
         <Switch
           label={"Filled"}
@@ -100,23 +105,118 @@ export const IconPage: React.FC = () => {
               width: "fit-content",
             },
           })}
-          checked={iconStyle === "fill"}
+          checked={variant === "filled"}
           onCheckedChange={() => {
-            setIconStyle(iconStyle === "outline" ? "fill" : "outline");
+            setVariant(variant === "outlined" ? "filled" : "outlined");
           }}
         />
       </SearchBar>
 
       <IconContainer>
         {icons.map((icon) => (
-          <IconBox key={icon.name}>
-            <IconBoxSvg
-              dangerouslySetInnerHTML={{ __html: icon[iconStyle] }}
-            ></IconBoxSvg>
-            <IconTitle>{icon.name}</IconTitle>
-          </IconBox>
+          <IconMenu key={icon} name={icon} variant={variant}>
+            <IconBoxSvg>
+              <SerendieSymbol name={icon} size={24} variant={variant} />
+            </IconBoxSvg>
+            <IconTitle>{icon}</IconTitle>
+          </IconMenu>
         ))}
       </IconContainer>
+
+      <Toast toaster={toaster} />
     </Container>
+  );
+};
+
+const iconMenuStyles = sva({
+  slots: ["content", "label"],
+  base: {
+    content: {
+      bgColor: "sd.system.color.component.surface",
+      borderRadius: "sd.system.dimension.radius.medium",
+      bg: "sd.system.color.component.surface",
+      boxShadow: "sd.system.elevation.shadow.level1",
+      outline: "none",
+      minWidth: "200px",
+    },
+    label: {
+      textStyle: {
+        base: "sd.system.typography.label.medium_compact",
+        expanded: "sd.system.typography.label.medium_expanded",
+      },
+      fontFamily: "Noto Sans Mono",
+      px: "16px",
+      pt: "10px",
+      pb: "4px",
+      // 1 line
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    },
+  },
+});
+
+const IconMenu: React.FC<{
+  children: React.ReactNode;
+  name: string;
+  variant?: "outlined" | "filled";
+}> = ({ children, name, variant }) => {
+  const styles = iconMenuStyles();
+  return (
+    <Menu.Root>
+      <Menu.Trigger>
+        <IconBox>{children}</IconBox>
+      </Menu.Trigger>
+      <Menu.Positioner>
+        <Menu.Content className={styles.content}>
+          <List>
+            <h2 className={styles.label}>{name}</h2>
+            <Menu.Item
+              value="copy_name"
+              onClick={() => {
+                navigator.clipboard.writeText(name);
+                toaster.create({
+                  type: "success",
+                  title: name + "のアイコン名をコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="アイコン名をコピー" />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_jsx"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `<SerendieSymbol name="${name}" variant="${variant}" />`
+                );
+                toaster.create({
+                  type: "success",
+                  title: name + "のJSXをコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="JSXをコピー" />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_import"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `import { SerendieSymbol } from "@serendie/symbols";`
+                );
+                toaster.create({
+                  type: "success",
+                  title: "import文をコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="import文をコピー" />
+            </Menu.Item>
+          </List>
+        </Menu.Content>
+      </Menu.Positioner>
+    </Menu.Root>
   );
 };
