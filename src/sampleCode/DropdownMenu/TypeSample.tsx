@@ -1,4 +1,5 @@
-import { DropdownMenu, SvgIcon } from "@serendie/ui";
+import { DropdownMenu } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { Dd, Dl, Dt } from "src/components/LayoutUtils";
 
 export function TypeSample() {
@@ -11,17 +12,17 @@ export function TypeSample() {
             {
               label: "React",
               value: "React",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
             {
               label: "Vue",
               value: "Vue",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
             {
               label: "Angular",
               value: "Angular",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
           ]}
           title="メニュータイトル"
@@ -35,17 +36,17 @@ export function TypeSample() {
             {
               label: "React",
               value: "React",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
             {
               label: "Vue",
               value: "Vue",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
             {
               label: "Angular",
               value: "Angular",
-              icon: <SvgIcon icon="texture" />,
+              icon: <SerendieSymbol name="texture" />,
             },
           ]}
           isIconMenu

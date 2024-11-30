@@ -1,4 +1,5 @@
-import { List, ListItem, SvgIcon } from "@serendie/ui";
+import { List, ListItem } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { Dd, Dl, Dt } from "src/components/LayoutUtils";
 
 export function StateSample() {
@@ -9,7 +10,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SvgIcon icon={"texture"} />}
+            leftIcon={<SerendieSymbol name={"texture"} />}
           />
         </List>
       </Dd>
@@ -18,7 +19,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SvgIcon icon={"texture"} />}
+            leftIcon={<SerendieSymbol name={"texture"} />}
             focusVisible
           />
         </List>
@@ -28,7 +29,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SvgIcon icon={"texture"} />}
+            leftIcon={<SerendieSymbol name={"texture"} />}
             disabled
           />
         </List>
@@ -38,7 +39,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SvgIcon icon={"texture"} />}
+            leftIcon={<SerendieSymbol name={"texture"} />}
             selected
           />
         </List>

@@ -1,5 +1,6 @@
 import { Dd, Dl, Dt } from "@/components/LayoutUtils";
-import { IconButton, SvgIcon } from "@serendie/ui";
+import { IconButton } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { TopAppBar } from "@serendie/ui";
 
 export function TypeSample() {
@@ -11,14 +12,14 @@ export function TypeSample() {
           type="navbar"
           headingIconButton={
             <IconButton
-              icon={<SvgIcon icon="menu" />}
+              icon={<SerendieSymbol name="menu" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
             <IconButton
-              icon={<SvgIcon icon={"search"} />}
+              icon={<SerendieSymbol name={"search"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -33,7 +34,7 @@ export function TypeSample() {
           title="Page Title"
           trailingIconButtons={
             <IconButton
-              icon={<SvgIcon icon={"add"} />}
+              icon={<SerendieSymbol name={"add"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -47,14 +48,14 @@ export function TypeSample() {
           type="navbar"
           headingIconButton={
             <IconButton
-              icon={<SvgIcon icon="menu" />}
+              icon={<SerendieSymbol name="menu" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
             <IconButton
-              icon={<SvgIcon icon={"search"} />}
+              icon={<SerendieSymbol name={"search"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -69,14 +70,14 @@ export function TypeSample() {
           type="navbar"
           headingIconButton={
             <IconButton
-              icon={<SvgIcon icon="menu" />}
+              icon={<SerendieSymbol name="menu" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
             <IconButton
-              icon={<SvgIcon icon={"search"} />}
+              icon={<SerendieSymbol name={"search"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -87,14 +88,14 @@ export function TypeSample() {
           title="Page Title"
           headingIconButton={
             <IconButton
-              icon={<SvgIcon icon="chevron_left" />}
+              icon={<SerendieSymbol name="chevron_left" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
             <IconButton
-              icon={<SvgIcon icon={"add"} />}
+              icon={<SerendieSymbol name={"add"} />}
               styleType="ghost"
               shape="rectangle"
             />

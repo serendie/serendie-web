@@ -1,4 +1,5 @@
-import { Button, SvgIcon } from "@serendie/ui";
+import { Button } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 
 interface StorybookButtonProps {
   storyPath: string;
@@ -16,7 +17,7 @@ export const StorybookButton: React.FC<StorybookButtonProps> = ({
       onClick={() => window.open(href, "_blank")}
       size={"small"}
       styleType={"outlined"}
-      rightIcon={<SvgIcon icon={"arrow_blank"} />}
+      rightIcon={<SerendieSymbol name={"arrow_blank"} />}
     >
       Storybook
     </Button>
