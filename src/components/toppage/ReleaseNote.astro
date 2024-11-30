@@ -1,5 +1,6 @@
 ---
-import { Badge, Button, SvgIcon } from "@serendie/ui";
+import { Badge, Button } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { siteConfig } from "../../../siteConfig";
@@ -158,10 +159,13 @@ const NoteIcon = styled("div", {
         </Badge>
       </NoteBadge>
       <NoteIcon>
-        <SvgIcon icon="chevron_right" size="24px" />
+        <SerendieSymbol name="chevron_right" size="24px" />
       </NoteIcon>
     </Note>
-    <Note href="https://www.mitsubishielectric.co.jp/news/2024/1107.html" target="_blank">
+    <Note
+      href="https://www.mitsubishielectric.co.jp/news/2024/1107.html"
+      target="_blank"
+    >
       <NoteTime>2024/11/7</NoteTime>
       <NoteTitle> Serendie Design Systemを公開しました。 </NoteTitle>
       <NoteBadge>
@@ -174,7 +178,7 @@ const NoteIcon = styled("div", {
         </Badge>
       </NoteBadge>
       <NoteIcon>
-        <SvgIcon icon="chevron_right" size="24px" />
+        <SerendieSymbol name="chevron_right" size="24px" />
       </NoteIcon>
     </Note>
   </ReleasenoteGrid>

@@ -1,19 +1,23 @@
 import { IconButton } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { HBox, VBox } from "src/components/LayoutUtils";
 
 export function TypeSample() {
   return (
     <HBox>
       <VBox>
-        <IconButton icon="add" />
+        <IconButton icon={<SerendieSymbol name={"add"} />} />
         <p>Filled</p>
       </VBox>
       <VBox>
-        <IconButton icon="add" styleType="outlined" />
+        <IconButton
+          icon={<SerendieSymbol name={"add"} />}
+          styleType="outlined"
+        />
         <p>Outlined</p>
       </VBox>
       <VBox>
-        <IconButton icon="add" styleType="ghost" />
+        <IconButton icon={<SerendieSymbol name={"add"} />} styleType="ghost" />
         <p>Ghost</p>
       </VBox>
     </HBox>
