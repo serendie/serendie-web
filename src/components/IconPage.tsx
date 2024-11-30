@@ -83,10 +83,8 @@ export const IconPage: React.FC = () => {
       <SearchBar>
         <Search
           items={[]} // IconContainer側で表示されるため候補は無しに
-          value={[searchText]}
-          onChange={(e) => {
-            const text = (e.target as HTMLInputElement).value.toLowerCase();
-            setSearchText(text);
+          onInputValueChange={(e) => {
+            setSearchText(e.inputValue);
           }}
         />
         <Switch
