@@ -3,7 +3,11 @@ import { styled } from "styled-system/jsx";
 
 import { useState } from "react";
 import { css, sva } from "styled-system/css";
-import { SerendieSymbol, symbolNames } from "@serendie/symbols";
+import {
+  SerendieSymbol,
+  symbolNames,
+  type SymbolVariant,
+} from "@serendie/symbols";
 import { Menu } from "@ark-ui/react";
 
 const Container = styled("div", {
@@ -73,9 +77,7 @@ const IconTitle = styled("h4", {
 });
 
 export const IconPage: React.FC = () => {
-  const [icons, setIcons] =
-    useState<readonly (typeof symbolNames)[number][]>(symbolNames);
-  const [variant, setVariant] = useState<"outlined" | "filled">("outlined");
+  const [variant, setVariant] = useState<SymbolVariant>("outlined");
   const [searchText, setSearchText] = useState("");
 
   return (
@@ -83,17 +85,8 @@ export const IconPage: React.FC = () => {
       <SearchBar>
         <Search
           items={[]} // IconContainer側で表示されるため候補は無しに
-          value={searchText as unknown as string[]}
-          onChange={(e) => {
-            setSearchText((e.target as HTMLInputElement).value as string);
-            if (!searchText) {
-              return setIcons(symbolNames);
-            }
-            setIcons(
-              symbolNames.filter((name) =>
-                name.toLowerCase().includes(searchText.toLowerCase())
-              ) as readonly (typeof symbolNames)[number][]
-            );
+          onInputValueChange={(e) => {
+            setSearchText(e.inputValue.toLowerCase());
           }}
           placeholder="アイコン名を入力..."
         />
@@ -113,14 +106,16 @@ export const IconPage: React.FC = () => {
       </SearchBar>
 
       <IconContainer>
-        {icons.map((icon) => (
-          <IconMenu key={icon} name={icon} variant={variant}>
-            <IconBoxSvg>
-              <SerendieSymbol name={icon} size={24} variant={variant} />
-            </IconBoxSvg>
-            <IconTitle>{icon}</IconTitle>
-          </IconMenu>
-        ))}
+        {symbolNames
+          .filter((icon) => icon.includes(searchText))
+          .map((icon) => (
+            <IconMenu key={icon} name={icon} variant={variant}>
+              <IconBoxSvg>
+                <SerendieSymbol name={icon} size={24} variant={variant} />
+              </IconBoxSvg>
+              <IconTitle>{icon}</IconTitle>
+            </IconMenu>
+          ))}
       </IconContainer>
 
       <Toast toaster={toaster} />
