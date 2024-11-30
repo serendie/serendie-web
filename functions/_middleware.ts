@@ -38,7 +38,7 @@ const basicAuth: Middleware = async ({
   env,
 }: EventContext): Promise<Response> => {
   // 本番環境の場合は認証をスキップ
-  if (env.CF_PAGES_URL === env["SITE_DOMAIN"]) {
+  if (env.IS_PREVIEW !== "true") {
     return await next();
   }
 
