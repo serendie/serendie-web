@@ -3,7 +3,11 @@ import { styled } from "styled-system/jsx";
 
 import { useState } from "react";
 import { css } from "styled-system/css";
-import { iconsData } from "@/content/icons";
+import {
+  SerendieSymbol,
+  symbolNames,
+  type SymbolVariant,
+} from "@serendie/symbols";
 
 const Container = styled("div", {
   base: {
@@ -71,8 +75,7 @@ const IconTitle = styled("h4", {
 });
 
 export const IconPage: React.FC = () => {
-  const [icons, setIcons] = useState(iconsData);
-  const [iconStyle, setIconStyle] = useState<"outline" | "fill">("outline");
+  const [iconStyle, setIconStyle] = useState<SymbolVariant>("outlined");
   const [searchText, setSearchText] = useState<string>("");
 
   return (
@@ -80,16 +83,10 @@ export const IconPage: React.FC = () => {
       <SearchBar>
         <Search
           items={[]} // IconContainer側で表示されるため候補は無しに
-          value={searchText as unknown as string[]}
+          value={[searchText]}
           onChange={(e) => {
-            setSearchText((e.target as HTMLInputElement).value as string);
-            setIcons(
-              iconsData.filter((icon) =>
-                icon.name
-                  .toLowerCase()
-                  .includes((e.target as HTMLInputElement).value.toLowerCase())
-              )
-            );
+            const text = (e.target as HTMLInputElement).value.toLowerCase();
+            setSearchText(text);
           }}
         />
         <Switch
@@ -100,22 +97,24 @@ export const IconPage: React.FC = () => {
               width: "fit-content",
             },
           })}
-          checked={iconStyle === "fill"}
+          checked={iconStyle === "filled"}
           onCheckedChange={() => {
-            setIconStyle(iconStyle === "outline" ? "fill" : "outline");
+            setIconStyle(iconStyle === "outlined" ? "filled" : "outlined");
           }}
         />
       </SearchBar>
 
       <IconContainer>
-        {icons.map((icon) => (
-          <IconBox key={icon.name}>
-            <IconBoxSvg
-              dangerouslySetInnerHTML={{ __html: icon[iconStyle] }}
-            ></IconBoxSvg>
-            <IconTitle>{icon.name}</IconTitle>
-          </IconBox>
-        ))}
+        {symbolNames
+          .filter((name) => name.includes(searchText))
+          .map((name) => (
+            <IconBox key={name}>
+              <IconBoxSvg>
+                <SerendieSymbol name={name} variant={iconStyle} size={24} />
+              </IconBoxSvg>
+              <IconTitle>{name}</IconTitle>
+            </IconBox>
+          ))}
       </IconContainer>
     </Container>
   );

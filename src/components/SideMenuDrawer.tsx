@@ -2,7 +2,7 @@ import { Drawer } from "@serendie/ui";
 import { useState } from "react";
 import { SideMenuList, SideMenuListItemLink, type Links } from "./SideMenu";
 import { css } from "styled-system/css";
-import IconLayoutSidebar from "../assets/icon/outline/layout-sidebar.svg?react";
+import { SerendieSymbol } from "@serendie/symbols";
 
 export const SideMenuDrawer: React.FC<{
   links: Links[];
@@ -30,7 +30,7 @@ export const SideMenuDrawer: React.FC<{
           },
         })}
       >
-        <IconLayoutSidebar width={24} height={24} />
+        <SerendieSymbol name="layout-sidebar" size={24} />
       </button>
 
       <Drawer
