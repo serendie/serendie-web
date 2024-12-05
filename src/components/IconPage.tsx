@@ -133,20 +133,7 @@ const iconMenuStyles = sva({
       boxShadow: "sd.system.elevation.shadow.level1",
       outline: "none",
       minWidth: "200px",
-    },
-    label: {
-      textStyle: {
-        base: "sd.system.typography.label.medium_compact",
-        expanded: "sd.system.typography.label.medium_expanded",
-      },
-      fontFamily: "Noto Sans Mono",
-      px: "16px",
-      pt: "10px",
-      pb: "4px",
-      // 1 line
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
+      y: "calc(var(--cursor-y) + 8px)",
     },
   },
 });
@@ -156,16 +143,42 @@ const IconMenu: React.FC<{
   name: string;
   variant?: "outlined" | "filled";
 }> = ({ children, name, variant }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
   const styles = iconMenuStyles();
   return (
-    <Menu.Root>
+    <Menu.Root
+      positioning={{
+        overlap: true,
+        offset: {
+          mainAxis: position.y - size.height,
+          crossAxis: position.x,
+        },
+        placement: "bottom-start",
+      }}
+    >
       <Menu.Trigger>
-        <IconBox>{children}</IconBox>
+        <IconBox
+          onClick={(e) => {
+            // boxの中からどの位置をクリックしたかを取得
+            const rect = e.currentTarget.getBoundingClientRect();
+            setSize({
+              width: rect.width,
+              height: rect.height,
+            });
+            setPosition({
+              x: e.clientX - rect.left,
+              y: e.clientY - rect.top,
+            });
+          }}
+        >
+          {children}
+        </IconBox>
       </Menu.Trigger>
       <Menu.Positioner>
         <Menu.Content className={styles.content}>
           <List>
-            <h2 className={styles.label}>{name}</h2>
             <Menu.Item
               value="copy_name"
               onClick={() => {
