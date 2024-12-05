@@ -1,5 +1,6 @@
 import { Dd, Dl, Dt } from "@/components/LayoutUtils";
 import { IconButton } from "@serendie/ui";
+import { SerendieSymbol } from "@serendie/symbols";
 import { TopAppBar } from "@serendie/ui";
 
 export function TypeSample() {
@@ -10,10 +11,18 @@ export function TypeSample() {
         <TopAppBar
           type="navbar"
           headingIconButton={
-            <IconButton icon="menu" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name="menu" />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
           trailingIconButtons={
-            <IconButton icon="search" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name={"search"} />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
         />
       </Dd>
@@ -24,7 +33,11 @@ export function TypeSample() {
           type="titleBar"
           title="Page Title"
           trailingIconButtons={
-            <IconButton icon="add" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name={"add"} />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
         />
       </Dd>
@@ -34,10 +47,18 @@ export function TypeSample() {
         <TopAppBar
           type="navbar"
           headingIconButton={
-            <IconButton icon="menu" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name="menu" />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
           trailingIconButtons={
-            <IconButton icon="search" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name={"search"} />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
         />
         <TopAppBar type="titleBar" title="Page Title" />
@@ -48,10 +69,18 @@ export function TypeSample() {
         <TopAppBar
           type="navbar"
           headingIconButton={
-            <IconButton icon="menu" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name="menu" />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
           trailingIconButtons={
-            <IconButton icon="search" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name={"search"} />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
         />
         <TopAppBar
@@ -59,13 +88,17 @@ export function TypeSample() {
           title="Page Title"
           headingIconButton={
             <IconButton
-              icon="chevron_left"
+              icon={<SerendieSymbol name="chevron_left" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
-            <IconButton icon="add" styleType="ghost" shape="rectangle" />
+            <IconButton
+              icon={<SerendieSymbol name={"add"} />}
+              styleType="ghost"
+              shape="rectangle"
+            />
           }
         />
       </Dd>

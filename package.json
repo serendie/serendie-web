@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run build:panda && astro dev",
     "start": "astro dev",
-    "build": "npm run build:panda && astro build",
+    "build": "npm run build:panda && astro build && cp _redirects dist/_redirects",
     "build:astro": "astro check && astro build",
     "build:panda": "panda cssgen -m --clean && panda codegen",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
@@ -24,6 +24,7 @@
     "@eslint/js": "^9.15.0",
     "@pandacss/eslint-plugin": "^0.2.2",
     "@serendie/design-token": "0.1.1",
+    "@serendie/symbols": "^0.0.5",
     "@serendie/ui": "*",
     "@types/eslint__js": "^8.42.3",
     "@types/react": "^18.3.3",

@@ -241,7 +241,7 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
             placeholder={placeholder}
             className={styles.valueText}
           />
-          {/* <SvgIcon icon="expandMore" size="20" className={styles.iconBox} /> */}
+          {/* <SerendieSymbol name="expandMore" size="20" className={styles.iconBox} /> */}
           <div
             className={css({
               "& path": {
