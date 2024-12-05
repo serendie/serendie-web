@@ -242,17 +242,6 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
             placeholder={placeholder}
             className={styles.valueText}
           />
-          {/* <SvgIcon icon="expandMore" size="20" className={styles.iconBox} /> */}
-          {/* <div
-            className={css({
-              "& path": {
-                fill: "white !important",
-              },
-            })}
-            // dangerouslySetInnerHTML={{
-            //   __html: ChevronDown,
-            // }}
-          ></div> */}
           <SerendieSymbol name="chevron-down" size={20} color="white" />
         </ArkSelect.Trigger>
       </ArkSelect.Control>
