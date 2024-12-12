@@ -1,9 +1,10 @@
 import { Select as ArkSelect, type SelectRootProps } from "@ark-ui/react";
 import { type RecipeVariantProps, css, cx, sva } from "styled-system/css";
-import ChevronDown from "../assets/icon/outline/chevron-down.svg?raw";
+
 import { useId } from "react";
 import { type RefObject } from "react";
 import { Portal } from "@ark-ui/react";
+import { SerendieSymbol } from "@serendie/symbols";
 
 export const SelectStyle = sva({
   slots: ["root", "valueText", "trigger", "content", "item", "iconBox"],
@@ -241,17 +242,7 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
             placeholder={placeholder}
             className={styles.valueText}
           />
-          {/* <SerendieSymbol name="expandMore" size="20" className={styles.iconBox} /> */}
-          <div
-            className={css({
-              "& path": {
-                fill: "white !important",
-              },
-            })}
-            dangerouslySetInnerHTML={{
-              __html: ChevronDown,
-            }}
-          ></div>
+          <SerendieSymbol name="chevron-down" size={20} color="white" />
         </ArkSelect.Trigger>
       </ArkSelect.Control>
       {invalid && invalidMessage && (

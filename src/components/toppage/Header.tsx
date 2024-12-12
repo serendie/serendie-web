@@ -4,7 +4,7 @@ import { styled } from "styled-system/jsx";
 import { Shapes } from "./Shapes";
 import { AnimationFadeIn } from "./AnimationFadeIn";
 import { motion } from "framer-motion";
-import ChevronRightOutline from "../../../src/assets/icon/outline/chevron-right.svg?raw";
+import { SerendieSymbol } from "@serendie/symbols";
 
 const HeaderOver = styled("header", {
   base: {
@@ -94,18 +94,7 @@ const ShapesWrapper = styled("div", {
 });
 
 const ChevronRight: React.FC = () => {
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: ChevronRightOutline,
-      }}
-      className={css({
-        "& path": {
-          fill: "white !important",
-        },
-      })}
-    />
-  );
+  return <SerendieSymbol name="chevron-right" color="white" />;
 };
 
 export const HeaderTitleContent = () => (

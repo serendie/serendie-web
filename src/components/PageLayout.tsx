@@ -1,7 +1,7 @@
+import { SerendieSymbol } from "@serendie/symbols";
 import type { ComponentProps } from "react";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
-import IconRight from "../assets/icon/outline/arrow-right.svg?react";
 
 export const PageMain = styled("div", {
   base: {
@@ -213,7 +213,7 @@ export const PageLinks = (props: PageFooterProps) => (
               </span>
               {sib.data.title}
             </span>
-            <IconRight width="24px" />
+            <SerendieSymbol name="arrow-right" width={24} />
           </a>
         </li>
       ))}

@@ -1,9 +1,14 @@
-import { Search, Switch } from "@serendie/ui";
+import { List, ListItem, Search, Switch, Toast, toaster } from "@serendie/ui";
 import { styled } from "styled-system/jsx";
 
 import { useState } from "react";
-import { css } from "styled-system/css";
-import { iconsData } from "@/content/icons";
+import { css, sva } from "styled-system/css";
+import {
+  SerendieSymbol,
+  symbolNames,
+  type SymbolVariant,
+} from "@serendie/symbols";
+import { Menu } from "@ark-ui/react";
 
 const Container = styled("div", {
   base: {
@@ -49,6 +54,7 @@ const IconBox = styled("div", {
     textAlign: "center",
     borderBottom: "1px solid",
     borderColor: "sd.system.color.component.outline",
+    cursor: "pointer",
   },
 });
 
@@ -71,26 +77,18 @@ const IconTitle = styled("h4", {
 });
 
 export const IconPage: React.FC = () => {
-  const [icons, setIcons] = useState(iconsData);
-  const [iconStyle, setIconStyle] = useState<"outline" | "fill">("outline");
-  const [searchText, setSearchText] = useState<string>("");
+  const [variant, setVariant] = useState<SymbolVariant>("outlined");
+  const [searchText, setSearchText] = useState("");
 
   return (
     <Container>
       <SearchBar>
         <Search
           items={[]} // IconContainer側で表示されるため候補は無しに
-          value={searchText as unknown as string[]}
-          onChange={(e) => {
-            setSearchText((e.target as HTMLInputElement).value as string);
-            setIcons(
-              iconsData.filter((icon) =>
-                icon.name
-                  .toLowerCase()
-                  .includes((e.target as HTMLInputElement).value.toLowerCase())
-              )
-            );
+          onInputValueChange={(e) => {
+            setSearchText(e.inputValue.toLowerCase());
           }}
+          placeholder="アイコン名を入力..."
         />
         <Switch
           label={"Filled"}
@@ -100,23 +98,133 @@ export const IconPage: React.FC = () => {
               width: "fit-content",
             },
           })}
-          checked={iconStyle === "fill"}
+          checked={variant === "filled"}
           onCheckedChange={() => {
-            setIconStyle(iconStyle === "outline" ? "fill" : "outline");
+            setVariant(variant === "outlined" ? "filled" : "outlined");
           }}
         />
       </SearchBar>
 
       <IconContainer>
-        {icons.map((icon) => (
-          <IconBox key={icon.name}>
-            <IconBoxSvg
-              dangerouslySetInnerHTML={{ __html: icon[iconStyle] }}
-            ></IconBoxSvg>
-            <IconTitle>{icon.name}</IconTitle>
-          </IconBox>
-        ))}
+        {symbolNames
+          .filter((icon) => icon.includes(searchText))
+          .map((icon) => (
+            <IconMenu key={icon} name={icon} variant={variant}>
+              <IconBoxSvg>
+                <SerendieSymbol name={icon} size={24} variant={variant} />
+              </IconBoxSvg>
+              <IconTitle>{icon}</IconTitle>
+            </IconMenu>
+          ))}
       </IconContainer>
+
+      <Toast toaster={toaster} />
     </Container>
+  );
+};
+
+const iconMenuStyles = sva({
+  slots: ["content", "label"],
+  base: {
+    content: {
+      bgColor: "sd.system.color.component.surface",
+      borderRadius: "sd.system.dimension.radius.medium",
+      bg: "sd.system.color.component.surface",
+      boxShadow: "sd.system.elevation.shadow.level1",
+      outline: "none",
+      minWidth: "200px",
+      y: "calc(var(--cursor-y) + 8px)",
+    },
+  },
+});
+
+const IconMenu: React.FC<{
+  children: React.ReactNode;
+  name: string;
+  variant?: "outlined" | "filled";
+}> = ({ children, name, variant }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  const styles = iconMenuStyles();
+  return (
+    <Menu.Root
+      positioning={{
+        overlap: true,
+        offset: {
+          mainAxis: position.y - size.height,
+          crossAxis: position.x,
+        },
+        placement: "bottom-start",
+      }}
+    >
+      <Menu.Trigger>
+        <IconBox
+          onClick={(e) => {
+            // boxの中からどの位置をクリックしたかを取得
+            const rect = e.currentTarget.getBoundingClientRect();
+            setSize({
+              width: rect.width,
+              height: rect.height,
+            });
+            setPosition({
+              x: e.clientX - rect.left,
+              y: e.clientY - rect.top,
+            });
+          }}
+        >
+          {children}
+        </IconBox>
+      </Menu.Trigger>
+      <Menu.Positioner>
+        <Menu.Content className={styles.content}>
+          <List>
+            <Menu.Item
+              value="copy_name"
+              onClick={() => {
+                navigator.clipboard.writeText(name);
+                toaster.create({
+                  type: "success",
+                  title: name + "のアイコン名をコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="アイコン名をコピー" />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_jsx"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `<SerendieSymbol name="${name}" variant="${variant}" />`
+                );
+                toaster.create({
+                  type: "success",
+                  title: name + "のJSXをコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="JSXをコピー" />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_import"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `import { SerendieSymbol } from "@serendie/symbols";`
+                );
+                toaster.create({
+                  type: "success",
+                  title: "import文をコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="import文をコピー" />
+            </Menu.Item>
+          </List>
+        </Menu.Content>
+      </Menu.Positioner>
+    </Menu.Root>
   );
 };
