@@ -8,7 +8,7 @@ export function AutoAdjustHeightSample() {
       label="ラベル"
       placeholder="プレースホルダー"
       required
-      autoAdjustHeight={true}
+      autoAdjustHeight
     />
   );
 }
