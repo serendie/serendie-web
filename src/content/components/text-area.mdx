@@ -8,6 +8,8 @@ lastUpdated: "2024-11-1"
 import Code from "@/components/Code.astro";
 import { StateSample } from "@/sampleCode/TextArea/StateSample";
 import stateSampleRaw from "@/sampleCode/TextArea/StateSample.tsx?raw";
+import { AutoAdjustHeightSample } from "@/sampleCode/TextArea/AutoAdjustHeightSample";
+import AutoAdjustHeightSampleRaw from "@/sampleCode/TextArea/AutoAdjustHeightSample.tsx?raw";
 
 <Code
   title="状態"
@@ -16,4 +18,13 @@ import stateSampleRaw from "@/sampleCode/TextArea/StateSample.tsx?raw";
   storyPath="/story/components-textarea--basic"
 >
   <StateSample client:load />
+</Code>
+
+<Code
+  title="高さの自動調整"
+  description="入力された内容に応じて高さを変更したい場合には、autoAdjustHeight propsを使用してください。"
+  code={AutoAdjustHeightSampleRaw}
+  storyPath="/story/components-textarea--auto-adjust-height"
+>
+  <AutoAdjustHeightSample client:load />
 </Code>
