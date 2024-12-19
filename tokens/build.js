@@ -4,14 +4,21 @@ import {
   customFileHeader,
 } from "@serendie/style-dictionary-formatter";
 
+import defaultTokens from "@serendie/design-token";
+
 registerAll();
 
 StyleDictionary.extend({
   source: ["tokens/data/**/*.json"],
+  tokens: {
+    ...defaultTokens,
+  },
   platforms: {
     css: {
+      buildPath: "src/tokens/",
       options: {
         fileHeader: customFileHeader,
+        outputReferences: false,
       },
       transforms: [
         "attribute/cti",
@@ -29,8 +36,10 @@ StyleDictionary.extend({
       ],
     },
     js: {
+      buildPath: "src/tokens/",
       options: {
         fileHeader: customFileHeader,
+        outputReferences: false,
       },
       transforms: [
         "attribute/cti",
