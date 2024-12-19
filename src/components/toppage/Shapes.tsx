@@ -20,13 +20,13 @@ const shapePositions: {
       height: "26.045%",
     },
     initial: {
-      top: "30%",
+      top: "50%",
       left: "90%",
       rotate: "120deg",
     },
     initial_compact: {
-      top: "100%",
-      left: "0%",
+      top: "120%",
+      left: "-45%",
       rotate: "120deg",
     },
     animate: {
@@ -44,13 +44,13 @@ const shapePositions: {
       height: "24.979%",
     },
     initial: {
-      top: "-25%",
+      top: "-45%",
       left: "-25%",
       rotate: "-140deg",
     },
     initial_compact: {
-      top: "-100%",
-      left: "70%",
+      top: "-150%",
+      left: "80%",
       rotate: "-140deg",
     },
     animate: {
@@ -68,7 +68,7 @@ const shapePositions: {
       height: "69.44%",
     },
     initial: {
-      top: "70%",
+      top: "60%",
       left: "-80%",
       rotate: "30deg",
     },
@@ -92,13 +92,13 @@ const shapePositions: {
       height: "45.52%",
     },
     initial: {
-      top: "0%",
+      top: "20%",
       left: "85%",
       rotate: "60deg",
     },
     initial_compact: {
       top: "0%",
-      left: "10%",
+      left: "-40%",
       rotate: "60deg",
     },
     animate: {
@@ -140,7 +140,7 @@ const shapePositions: {
       height: "26.87%",
     },
     initial: {
-      top: "90%",
+      top: "110%",
       left: "90%",
       rotate: "-80deg",
     },
@@ -172,6 +172,7 @@ export const Shapes = () => {
         expanded: {
           height: "37.222vw",
           width: "37.222vw",
+          aspectRatio: "1 / 1",
           maxH: "543px",
           maxW: "543px",
         },
