@@ -15,7 +15,7 @@ StyleDictionary.extend({
   },
   platforms: {
     css: {
-      buildPath: "src/tokens/",
+      buildPath: "generated/tokens/",
       options: {
         fileHeader: customFileHeader,
         outputReferences: false,
@@ -36,7 +36,7 @@ StyleDictionary.extend({
       ],
     },
     js: {
-      buildPath: "src/tokens/",
+      buildPath: "generated/tokens",
       options: {
         fileHeader: customFileHeader,
         outputReferences: false,
