@@ -1,7 +1,7 @@
 @layer reset, base, tokens, recipes, utilities;
 @import "@serendie/ui/styles.css";
 @import "../styled-system/styles.css";
-@import "../tokens/generated/panda-tokens.css";
+@import "../tokens/generated/tokens.css";
 @import "@serendie/design-token/tokens.css";
 @import "../scripts/token2cssVars/composition.css";
 
