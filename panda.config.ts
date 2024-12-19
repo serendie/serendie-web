@@ -1,6 +1,6 @@
 import { SerendiePreset } from "@serendie/ui";
 import { defineConfig } from "@pandacss/dev";
-import webTokens from "@serendie/design-token/internal/web";
+import webTokens from "./tokens/generated/panda-tokens";
 import { webTypography, webTypography2 } from "./src/tokens";
 const { themes, ...tokens } = webTokens;
 const themeNames = Object.keys(themes);
