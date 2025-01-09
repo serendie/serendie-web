@@ -17,7 +17,7 @@ export function TypeSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
           />
         </List>
       </Dd>
@@ -28,7 +28,7 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
           >
             <p>タイムスタンプなど</p>
           </ListItem>
@@ -40,7 +40,7 @@ export function TypeSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             isLargeLeftIcon
           />
         </List>
@@ -52,7 +52,7 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             isLargeLeftIcon
           >
             <p>タイムスタンプなど</p>
@@ -65,7 +65,7 @@ export function TypeSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            rightIcon={<SerendieSymbol name={"chevron_right"} />}
+            rightIcon={<SerendieSymbol name={"chevron-right"} />}
           />
         </List>
       </Dd>
@@ -76,7 +76,7 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            rightIcon={<SerendieSymbol name={"chevron_right"} />}
+            rightIcon={<SerendieSymbol name={"chevron-right"} />}
           />
         </List>
       </Dd>
@@ -87,7 +87,7 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             isLargeLeftIcon
             badge={3}
           />

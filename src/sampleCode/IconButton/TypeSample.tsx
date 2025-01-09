@@ -6,18 +6,18 @@ export function TypeSample() {
   return (
     <HBox>
       <VBox>
-        <IconButton icon={<SerendieSymbol name={"add"} />} />
+        <IconButton icon={<SerendieSymbol name={"plus"} />} />
         <p>Filled</p>
       </VBox>
       <VBox>
         <IconButton
-          icon={<SerendieSymbol name={"add"} />}
+          icon={<SerendieSymbol name={"plus"} />}
           styleType="outlined"
         />
         <p>Outlined</p>
       </VBox>
       <VBox>
-        <IconButton icon={<SerendieSymbol name={"add"} />} styleType="ghost" />
+        <IconButton icon={<SerendieSymbol name={"plus"} />} styleType="ghost" />
         <p>Ghost</p>
       </VBox>
     </HBox>

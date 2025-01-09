@@ -440,7 +440,7 @@ const LinkContentCompact: React.FC<LinkContentProps> = ({ content }) => {
 
         <IconButton
           styleType="ghost"
-          icon={<SerendieSymbol name="chevron_left" />}
+          icon={<SerendieSymbol name="chevron-left" />}
           className={cx(
             styles.titleWrapperButton,
             styles.titleWrapperButtonLeft
@@ -450,7 +450,7 @@ const LinkContentCompact: React.FC<LinkContentProps> = ({ content }) => {
         />
         <IconButton
           styleType="ghost"
-          icon={<SerendieSymbol name="chevron_right" />}
+          icon={<SerendieSymbol name="chevron-right" />}
           className={cx(
             styles.titleWrapperButton,
             styles.titleWrapperButtonRight

@@ -272,7 +272,7 @@ const PathSpan: React.FC<{ path: string[] }> = ({ path }) => {
             size={"small"}
             styleType="ghost"
             shape="rectangle"
-            icon={<SerendieSymbol name="clipboard_copy" />}
+            icon={<SerendieSymbol name="copy" />}
             onClick={handleClick}
           />
           {copied && (
