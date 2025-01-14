@@ -19,7 +19,7 @@ export function TypeSample() {
           }
           trailingIconButtons={
             <IconButton
-              icon={<SerendieSymbol name={"search"} />}
+              icon={<SerendieSymbol name={"magnifying-glass"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -34,7 +34,7 @@ export function TypeSample() {
           title="Page Title"
           trailingIconButtons={
             <IconButton
-              icon={<SerendieSymbol name={"add"} />}
+              icon={<SerendieSymbol name={"plus"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -55,7 +55,7 @@ export function TypeSample() {
           }
           trailingIconButtons={
             <IconButton
-              icon={<SerendieSymbol name={"search"} />}
+              icon={<SerendieSymbol name={"magnifying-glass"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -77,7 +77,7 @@ export function TypeSample() {
           }
           trailingIconButtons={
             <IconButton
-              icon={<SerendieSymbol name={"search"} />}
+              icon={<SerendieSymbol name={"magnifying-glass"} />}
               styleType="ghost"
               shape="rectangle"
             />
@@ -88,14 +88,14 @@ export function TypeSample() {
           title="Page Title"
           headingIconButton={
             <IconButton
-              icon={<SerendieSymbol name="chevron_left" />}
+              icon={<SerendieSymbol name="chevron-left" />}
               styleType="ghost"
               shape="rectangle"
             />
           }
           trailingIconButtons={
             <IconButton
-              icon={<SerendieSymbol name={"add"} />}
+              icon={<SerendieSymbol name={"plus"} />}
               styleType="ghost"
               shape="rectangle"
             />

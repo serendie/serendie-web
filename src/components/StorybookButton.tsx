@@ -17,7 +17,7 @@ export const StorybookButton: React.FC<StorybookButtonProps> = ({
       onClick={() => window.open(href, "_blank")}
       size={"small"}
       styleType={"outlined"}
-      rightIcon={<SerendieSymbol name={"arrow_blank"} />}
+      rightIcon={<SerendieSymbol name={"arrow-up-right"} />}
     >
       Storybook
     </Button>

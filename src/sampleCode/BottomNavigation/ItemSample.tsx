@@ -8,14 +8,14 @@ export function ItemSample() {
       <VBox w="25%">
         <BottomNavigationItem
           label="ホーム"
-          icon={<SerendieSymbol name={"texture"} />}
+          icon={<SerendieSymbol name={"home"} />}
         />
         <p>Default (Enable)</p>
       </VBox>
       <VBox w="25%">
         <BottomNavigationItem
           label="ホーム"
-          icon={<SerendieSymbol name={"texture"} />}
+          icon={<SerendieSymbol name={"home"} />}
           isActive
         />
         <p>Active</p>
@@ -23,7 +23,7 @@ export function ItemSample() {
       <VBox w="25%">
         <BottomNavigationItem
           label="ホーム"
-          icon={<SerendieSymbol name={"texture"} />}
+          icon={<SerendieSymbol name={"home"} />}
           dot
         />
         <p>With Badge (dot)</p>
@@ -31,7 +31,7 @@ export function ItemSample() {
       <VBox w="25%">
         <BottomNavigationItem
           label="ホーム"
-          icon={<SerendieSymbol name={"texture"} />}
+          icon={<SerendieSymbol name={"home"} />}
           count={3}
         />
         <p>With Badge (number)</p>
