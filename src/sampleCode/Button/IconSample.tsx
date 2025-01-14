@@ -5,11 +5,11 @@ import { HBox } from "src/components/LayoutUtils";
 export function IconSample() {
   return (
     <HBox>
-      <Button leftIcon={<SerendieSymbol name="chevron_left" />}>
+      <Button leftIcon={<SerendieSymbol name="chevron-left" />}>
         LeftIcon
       </Button>
       <Button
-        rightIcon={<SerendieSymbol name="chevron_right" />}
+        rightIcon={<SerendieSymbol name="chevron-right" />}
         styleType="ghost"
       >
         RightIcon

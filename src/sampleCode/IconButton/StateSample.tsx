@@ -7,7 +7,7 @@ export const StateSample: React.FC = () => {
   return (
     <StateMatrix<ComponentProps<typeof IconButton>>
       component={IconButton}
-      defaultProps={{ icon: <SerendieSymbol name={"add"} /> }}
+      defaultProps={{ icon: <SerendieSymbol name={"plus"} /> }}
       propsName="styleType"
       states={["enabled", "hover", "focus-visible", "disabled"]}
       props={["filled", "ghost", "outlined"]}

@@ -4,7 +4,7 @@ import { styled } from "styled-system/jsx";
 import { Shapes } from "./Shapes";
 import { AnimationFadeIn } from "./AnimationFadeIn";
 import { motion } from "framer-motion";
-import ChevronRightOutline from "../../../src/assets/icon/outline/chevron-right.svg?raw";
+import { SerendieSymbol } from "@serendie/symbols";
 
 const HeaderOver = styled("header", {
   base: {
@@ -72,6 +72,16 @@ const HeaderDescription = styled("p", {
   },
 });
 
+const ShapesContainer = styled("div", {
+  base: {
+    position: "absolute",
+    top: 0,
+    height: "100vh",
+    width: "100vw",
+    pointerEvents: "none",
+  },
+});
+
 const ShapesWrapper = styled("div", {
   base: {
     position: "absolute",
@@ -79,33 +89,22 @@ const ShapesWrapper = styled("div", {
     top: "50%",
     right: "24px",
     expanded: {
-      bottom: "0",
-      top: "50%",
-      transform: "translateY(-50%)",
+      bottom: "13%",
+      top: "initial",
       right: "10.417vw",
-      width: "37.222vw",
-      height: "37.222vw",
-      maxH: "543px",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      "@media (min-width: 1600px)": {
+        bottom: "17%",
+        right: "15.417vw",
+      },
     },
   },
 });
 
 const ChevronRight: React.FC = () => {
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: ChevronRightOutline,
-      }}
-      className={css({
-        "& path": {
-          fill: "white !important",
-        },
-      })}
-    />
-  );
+  return <SerendieSymbol name="chevron-right" color="white" />;
 };
 
 export const HeaderTitleContent = () => (
@@ -144,9 +143,11 @@ export const Header: React.FC = () => {
       <HeaderWrapper>
         <AnimationFadeIn />
 
-        <ShapesWrapper>
-          <Shapes />
-        </ShapesWrapper>
+        <ShapesContainer>
+          <ShapesWrapper>
+            <Shapes />
+          </ShapesWrapper>
+        </ShapesContainer>
 
         <HeaderContainer>
           <HeaderTitle>

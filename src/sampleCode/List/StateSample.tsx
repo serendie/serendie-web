@@ -10,7 +10,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
           />
         </List>
       </Dd>
@@ -19,7 +19,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             focusVisible
           />
         </List>
@@ -29,7 +29,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             disabled
           />
         </List>
@@ -39,7 +39,7 @@ export function StateSample() {
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"texture"} />}
+            leftIcon={<SerendieSymbol name={"placeholder"} />}
             selected
           />
         </List>

@@ -1,12 +1,11 @@
 import { useRef } from "react";
-import IconClose from "../assets/icon/outline/close.svg?react";
-import IconMenu from "../assets/icon/outline/menu.svg?react";
 import IconFigma from "../assets/logo/figma-bw.svg?react";
 import IconGitHub from "../assets/logo/github.svg?react";
 import IconX from "../assets/logo/x.svg?react";
 import { css } from "styled-system/css";
 import { ThemeSelector } from "./ThemeSelector";
 import { HeaderTitleContent } from "./toppage/Header";
+import { SerendieSymbol } from "@serendie/symbols";
 
 export const GlobalHeaderMenu: React.FC<{
   menuItems: {
@@ -30,7 +29,7 @@ export const GlobalHeaderMenu: React.FC<{
           dialogRef.current?.showModal();
         }}
       >
-        <IconMenu width={18} height={18} />
+        <SerendieSymbol name="menu" width={18} />
       </button>
       <dialog
         ref={dialogRef}
@@ -79,7 +78,7 @@ export const GlobalHeaderMenu: React.FC<{
                 dialogRef.current?.close();
               }}
             >
-              <IconClose width={18} height={18} />
+              <SerendieSymbol name="close" width={18} />
             </button>
           </div>
           <div

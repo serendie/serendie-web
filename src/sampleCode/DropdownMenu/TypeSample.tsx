@@ -12,17 +12,17 @@ export function TypeSample() {
             {
               label: "React",
               value: "React",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
             {
               label: "Vue",
               value: "Vue",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
             {
               label: "Angular",
               value: "Angular",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
           ]}
           title="メニュータイトル"
@@ -36,17 +36,17 @@ export function TypeSample() {
             {
               label: "React",
               value: "React",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
             {
               label: "Vue",
               value: "Vue",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
             {
               label: "Angular",
               value: "Angular",
-              icon: <SerendieSymbol name="texture" />,
+              icon: <SerendieSymbol name="placeholder" />,
             },
           ]}
           isIconMenu
