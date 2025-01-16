@@ -376,8 +376,9 @@ const SearchToken: React.FC<{
   onInputValueChange: (e: { inputValue: string }) => void;
 }> = ({ onInputValueChange }) => {
   const ref = React.useRef<HTMLInputElement>(null);
-  const isMac = navigator.userAgent.toLowerCase().includes("mac os x");
-
+  const isMac =
+    typeof navigator !== "undefined" &&
+    navigator.userAgent.toLowerCase().includes("mac os x");
   const keyBindStyles = cva({
     base: {
       aspectRatio: "1/1",
