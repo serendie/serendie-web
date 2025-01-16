@@ -1,9 +1,9 @@
 import type tokens from "@serendie/design-token/token-list";
 import { IconButton, Search } from "@serendie/ui";
 import { SerendieSymbol } from "@serendie/symbols";
-import { css } from "styled-system/css";
+import { css, cva } from "styled-system/css";
 import { Box, Circle, Flex, styled } from "styled-system/jsx";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Icon01 from "../assets/headLineIcon/icon01.svg?react";
 import Icon02 from "../assets/headLineIcon/icon02.svg?react";
 import Icon03 from "../assets/headLineIcon/icon03.svg?react";
@@ -36,12 +36,14 @@ const Wrapper = styled("div", {
 });
 const Th = styled("div", {
   base: {
-    fontFamily: "var(--global-font-mono)",
     textAlign: "left",
     color: "sd.reference.color.scale.gray.400",
-    py: "sd.system.dimension.spacing.medium",
+    py: "sd.system.dimension.spacing.small",
     borderBottom: "1px solid",
     borderColor: "sd.reference.color.scale.gray.200",
+    "& span": {
+      fontFamily: "var(--global-font-mono)",
+    },
   },
 });
 
@@ -58,7 +60,14 @@ export function TokenList({ tokens }: TokenList) {
 
   return (
     <div>
-      <div>
+      <div
+        className={css({
+          display: {
+            base: "none",
+            smDown: "block",
+          },
+        })}
+      >
         <Search
           onInputValueChange={(e) => setKeyword(e.inputValue)}
           placeholder="Search tokens"
@@ -68,14 +77,32 @@ export function TokenList({ tokens }: TokenList) {
       <Grid
         display={"grid"}
         gridTemplateColumns={{
-          sm: "minmax(100px, auto) minmax(100px, auto)",
+          sm: "repeat(2, 1fr)",
         }}
-        mt="sd.system.dimension.spacing.extraLarge"
+        mt={{
+          base: "sd.system.dimension.spacing.none",
+          smDown: "sd.system.dimension.spacing.large",
+        }}
         fontSize={"sd.reference.typography.scale.expanded.twoExtraSmall"}
       >
-        <Wrapper display={{ base: "contents", smDown: "none" }}>
-          <Th>name</Th>
-          <Th>reference</Th>
+        <Wrapper
+          display={{ base: "grid", smDown: "none" }}
+          gridTemplateColumns={"subgrid"}
+          gridColumn={"1/-1"}
+          bgColor={"sd.system.color.component.surface"}
+          position={"sticky"}
+          top={0}
+          alignContent={"center"}
+        >
+          <Th alignContent={"center"}>
+            <span>name</span>
+          </Th>
+          <Th display={"grid"} gridTemplateColumns={"1fr auto"}>
+            <Box alignContent={"center"}>
+              <span>reference</span>
+            </Box>
+            <SearchToken onInputValueChange={(e) => setKeyword(e.inputValue)} />
+          </Th>
         </Wrapper>
         {types.map((type, i) => (
           <Wrapper key={i}>
@@ -86,7 +113,7 @@ export function TokenList({ tokens }: TokenList) {
                   base: "_Web.headline.h1_sp",
                   sm: "sd.system.typography.title.small_compact",
                 },
-                pt: "sd.system.dimension.spacing.threeExtraLarge",
+                pt: "sd.system.dimension.spacing.extraLarge",
                 pb: "sd.system.dimension.spacing.small",
                 color: "web.system.color.component.onSurface",
                 display: "flex",
@@ -344,3 +371,76 @@ const Code = styled("code", {
     color: "sd.system.color.component.onSurfaceVariant",
   },
 });
+
+const SearchToken: React.FC<{
+  onInputValueChange: (e: { inputValue: string }) => void;
+}> = ({ onInputValueChange }) => {
+  const ref = React.useRef<HTMLInputElement>(null);
+  const isMac = navigator.userAgent.toLowerCase().includes("mac os x");
+
+  const keyBindStyles = cva({
+    base: {
+      aspectRatio: "1/1",
+      bg: "sd.reference.color.scale.gray.100",
+      borderRadius: "sd.system.dimension.radius.small",
+      color: "sd.system.color.component.onSurfaceVariant",
+      height: "20px",
+      width: "20px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    variants: {
+      width: {
+        auto: {
+          width: "auto",
+        },
+      },
+    },
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        ref.current?.querySelector("input")?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+  return (
+    <Box ref={ref} position="relative" color="initial">
+      <Search
+        size="small"
+        onInputValueChange={onInputValueChange}
+        placeholder="tokenを検索..."
+        items={[]}
+      />
+      <Box
+        position="absolute"
+        top="50%"
+        right="4px"
+        transform="translateY(-50%)"
+        p="sd.system.dimension.spacing.twoExtraSmall"
+        pointerEvents="none"
+        display="flex"
+        gap={"-sd.system.dimension.spacing.twoExtraSmall"}
+        fontFamily="var(--global-font-mono)"
+      >
+        <code
+          className={keyBindStyles({
+            width: isMac ? undefined : "auto",
+          })}
+        >
+          {isMac ? "⌘" : "Ctrl"}
+        </code>
+        +<code className={keyBindStyles()}>K</code>
+      </Box>
+    </Box>
+  );
+};
