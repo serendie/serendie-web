@@ -1,4 +1,4 @@
-# Serendie Website
+# SDS Website
 
 Cloudflare Pagesでホスティングしています。
 
