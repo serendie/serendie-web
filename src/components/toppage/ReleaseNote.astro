@@ -144,11 +144,12 @@ const NoteIcon = styled("div", {
   </TitleContainer>
 
   <ReleasenoteGrid>
-    <Note href={siteConfig.serendieUIKitFigmaFileURL} target="_blank">
-      <NoteTime>2024/11/7</NoteTime>
-      <NoteTitle>
-        Figma CommunityにてSerendie UI Kitを公開しました。
-      </NoteTitle>
+    <Note
+      href="https://github.com/serendie"
+      target="_blank"
+    >
+      <NoteTime>2025/1/31</NoteTime>
+      <NoteTitle>GitHubにてSerendie UIやSerendie SymbolsなどがOSSとして公開されました。</NoteTitle>
       <NoteBadge>
         <Badge
           className={css({
@@ -162,21 +163,30 @@ const NoteIcon = styled("div", {
         <SerendieSymbol name="chevron-right" size={24} />
       </NoteIcon>
     </Note>
+    <Note href="https://www.mitsubishielectric.co.jp/serendie/stories/07/" target="_blank">
+      <NoteTime>2024/12/20</NoteTime>
+      <NoteTitle>
+        Serendie Design System立ち上げメンバーのインタビュー記事が公開されました。
+      </NoteTitle>
+      <NoteIcon>
+        <SerendieSymbol name="chevron-right" size={24} />
+      </NoteIcon>
+    </Note>
+    <Note href={siteConfig.serendieUIKitFigmaFileURL} target="_blank">
+      <NoteTime>2024/11/7</NoteTime>
+      <NoteTitle>
+        Figma CommunityにてSerendie UI Kitを公開しました。
+      </NoteTitle>
+      <NoteIcon>
+        <SerendieSymbol name="chevron-right" size={24} />
+      </NoteIcon>
+    </Note>
     <Note
       href="https://www.mitsubishielectric.co.jp/news/2024/1107.html"
       target="_blank"
     >
       <NoteTime>2024/11/7</NoteTime>
       <NoteTitle> Serendie Design Systemを公開しました。 </NoteTitle>
-      <NoteBadge>
-        <Badge
-          className={css({
-            background: "web.system.color.impression.secondary",
-          })}
-        >
-          NEW
-        </Badge>
-      </NoteBadge>
       <NoteIcon>
         <SerendieSymbol name="chevron-right" size={24} />
       </NoteIcon>
