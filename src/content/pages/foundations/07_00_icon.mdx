@@ -3,7 +3,7 @@ title: アイコン
 slug: foundations/icon
 description: Serendie Symbolsは、デジタルプロダクトのなかで汎用性高く使える、Serendieらしいアイコン集です。
 illustType: A
-lastUpdated: "2024-11-1"
+lastUpdated: "2025-01-31"
 subLinks:
   [
     { name: "設計", path: "/foundations/icon" },
@@ -20,9 +20,16 @@ import { siteConfig } from "../../../../siteConfig.js";
 
     Serendie Symbolsは、現在のところOutlined(線)とFilled(塗り)の2パターンがあり、それぞれ300種類程度のアイコンを提供しています。
 
+    ## Figmaで使う
+
     <a href={siteConfig.serendieUIKitFigmaFileURL}>Serendie UI Kit (Figma)</a>では、「SerendieSymbols」としてComponent化されており、UIコンポーネントと同様にバリアントプロパティによりアイコンを選択できます。
 
-  <img src="/assets/pages/icon/iconcomponent.avif" width="310px" alt="serendie symbols" />
+    <img src="/assets/pages/icon/iconcomponent.avif" width="310px" alt="serendie symbols" />
+
+    ## Reactで使う
+
+    React環境向けにSerendie SymbolsをSVGコンポーネント化したライブラリを提供しています。アイコン名などはFigmaと共通です。詳しくは[GitHub](https://github.com/serendie/serendie-symbols)を参照してください。
+
 </PageSection>
 
 <PageSection>
