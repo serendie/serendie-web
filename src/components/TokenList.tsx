@@ -66,7 +66,12 @@ export function TokenList({ tokens }: TokenList) {
   const types = [...new Set(filteredTokens.map((token) => token.type))];
 
   return (
-    <div>
+    <Box
+      mt={{
+        base: "-sd.system.dimension.spacing.fourExtraLarge",
+        smDown: "0",
+      }}
+    >
       <div
         className={css({
           display: {
@@ -77,7 +82,7 @@ export function TokenList({ tokens }: TokenList) {
       >
         <Search
           onInputValueChange={(e) => setKeyword(e.inputValue)}
-          placeholder="Search tokens"
+          placeholder="検索..."
           items={[]}
         />
       </div>
@@ -100,6 +105,7 @@ export function TokenList({ tokens }: TokenList) {
           position={"sticky"}
           top={0}
           alignContent={"center"}
+          zIndex={1}
         >
           <Th alignContent={"center"}>
             <span>name</span>
@@ -145,7 +151,7 @@ export function TokenList({ tokens }: TokenList) {
           </Wrapper>
         ))}
       </Grid>
-    </div>
+    </Box>
   );
 }
 
@@ -517,7 +523,7 @@ const SearchToken: React.FC<{
       <Search
         size="small"
         onInputValueChange={onInputValueChange}
-        placeholder="tokenを検索..."
+        placeholder="検索..."
         items={[]}
       />
       <Box
