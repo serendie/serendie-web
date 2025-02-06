@@ -1,5 +1,11 @@
 import type tokens from "@serendie/design-token/token-list";
-import { IconButton, Search } from "@serendie/ui";
+import {
+  IconButton,
+  List as SerendieList,
+  Search,
+  ListItem,
+  toaster,
+} from "@serendie/ui";
 import { SerendieSymbol } from "@serendie/symbols";
 import { css, cva } from "styled-system/css";
 import { Box, Circle, Flex, styled } from "styled-system/jsx";
@@ -10,6 +16,7 @@ import Icon03 from "../assets/headLineIcon/icon03.svg?react";
 import Icon04 from "../assets/headLineIcon/icon04.svg?react";
 import Icon05 from "../assets/headLineIcon/icon05.svg?react";
 import Icon06 from "../assets/headLineIcon/icon06.svg?react";
+import { Menu } from "@ark-ui/react";
 
 const icons = [
   <Icon01 />,
@@ -163,6 +170,7 @@ const List: React.FC<ListByTYpeProps> = ({ tokens }) => {
             }}
             borderBottom={{ sm: "1px solid" }}
             borderColor={{ sm: "sd.reference.color.scale.gray.200" }}
+            alignContent={"center"}
           >
             <PathSpan path={token.path} />
           </Row>
@@ -189,40 +197,130 @@ const Values: React.FC<ValuesProps> = ({ token }) => {
       borderBottom={"1px solid"}
       borderColor={"sd.reference.color.scale.gray.200"}
     >
-      <Flex
-        flexDirection={"column"}
-        alignItems={"flex-start"}
-        gap={"sd.reference.dimension.scale.3"}
-      >
-        {typeof originalValue === "object" ? (
-          Object.keys(originalValue).map((key, i) => (
-            <Box
-              key={i}
-              display="flex"
-              alignItems={"center"}
-              gap={"sd.reference.dimension.scale.3"}
-            >
-              <Box color={"sd.system.color.component.onSurfaceVariant"}>
-                {key}:{" "}
+      <Flex alignItems={"center"}>
+        <Flex
+          flexDirection={"column"}
+          alignItems={"flex-start"}
+          gap={"sd.reference.dimension.scale.3"}
+          width={{ base: "100%" }}
+        >
+          {typeof originalValue === "object" ? (
+            Object.keys(originalValue).map((key, i) => (
+              <Box
+                key={i}
+                display="flex"
+                alignItems={"center"}
+                gap={"sd.reference.dimension.scale.3"}
+              >
+                <Box color={"sd.system.color.component.onSurfaceVariant"}>
+                  {key}:{" "}
+                </Box>
+                <ReferenceValue
+                  token={token}
+                  originalValue={originalValue[key].toString()}
+                  value={
+                    typeof value === "object"
+                      ? value[key]?.toString()
+                      : undefined
+                  }
+                />
               </Box>
-              <ReferenceValue
-                token={token}
-                originalValue={originalValue[key].toString()}
-                value={
-                  typeof value === "object" ? value[key]?.toString() : undefined
-                }
-              />
-            </Box>
-          ))
-        ) : (
-          <ReferenceValue
-            token={token}
-            originalValue={originalValue.toString()}
-            value={token.value.toString()}
-          />
-        )}
+            ))
+          ) : (
+            <ReferenceValue
+              token={token}
+              originalValue={originalValue.toString()}
+              value={token.value.toString()}
+            />
+          )}
+        </Flex>
+        <ValuesMenu token={token} />
       </Flex>
     </Row>
+  );
+};
+
+const ValuesMenu: React.FC<{ token: Token }> = ({ token }) => {
+  return (
+    <Menu.Root
+      positioning={{
+        overlap: true,
+        offset: {
+          mainAxis: -8,
+          crossAxis: 0,
+        },
+      }}
+    >
+      <Menu.Trigger
+        className={css({
+          aspectRatio: "1/1",
+          height: "fit-content",
+        })}
+      >
+        <IconButton
+          size={"small"}
+          styleType="ghost"
+          shape="rectangle"
+          icon={<SerendieSymbol name="more-horizontal" />}
+        />
+      </Menu.Trigger>
+      <Menu.Positioner>
+        <Menu.Content
+          className={css({
+            bgColor: "sd.system.color.component.surface",
+            borderRadius: "sd.system.dimension.radius.medium",
+            bg: "sd.system.color.component.surface",
+            boxShadow: "sd.system.elevation.shadow.level1",
+            outline: "none",
+            minWidth: "200px",
+            zIndex: 10000,
+            "& ul": {
+              m: 0,
+              marginInlineStart: "0 !important",
+              p: "0 !important",
+              listStyle: "none",
+              "& li": {
+                listStyle: "none",
+                m: "0 !important",
+              },
+            },
+          })}
+        >
+          <SerendieList>
+            <Menu.Item
+              value="copy_token"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  token.key === "color" ? token.value.toString() : token.key
+                );
+                toaster.create({
+                  type: "success",
+                  title: "トークンをコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title={"トークンをコピー"} />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_cssvariable"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `var(--${token.key.replace(/\./g, "-")})`
+                );
+                toaster.create({
+                  type: "success",
+                  title: "CSS変数でコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="CSS変数をコピー" />
+            </Menu.Item>
+          </SerendieList>
+        </Menu.Content>
+      </Menu.Positioner>
+    </Menu.Root>
   );
 };
 
