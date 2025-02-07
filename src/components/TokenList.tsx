@@ -1,15 +1,22 @@
 import type tokens from "@serendie/design-token/token-list";
-import { IconButton, Search } from "@serendie/ui";
+import {
+  IconButton,
+  List as SerendieList,
+  Search,
+  ListItem,
+  toaster,
+} from "@serendie/ui";
 import { SerendieSymbol } from "@serendie/symbols";
-import { css } from "styled-system/css";
+import { css, cva } from "styled-system/css";
 import { Box, Circle, Flex, styled } from "styled-system/jsx";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Icon01 from "../assets/headLineIcon/icon01.svg?react";
 import Icon02 from "../assets/headLineIcon/icon02.svg?react";
 import Icon03 from "../assets/headLineIcon/icon03.svg?react";
 import Icon04 from "../assets/headLineIcon/icon04.svg?react";
 import Icon05 from "../assets/headLineIcon/icon05.svg?react";
 import Icon06 from "../assets/headLineIcon/icon06.svg?react";
+import { Menu } from "@ark-ui/react";
 
 const icons = [
   <Icon01 />,
@@ -36,12 +43,14 @@ const Wrapper = styled("div", {
 });
 const Th = styled("div", {
   base: {
-    fontFamily: "var(--global-font-mono)",
     textAlign: "left",
     color: "sd.reference.color.scale.gray.400",
-    py: "sd.system.dimension.spacing.medium",
+    py: "sd.system.dimension.spacing.small",
     borderBottom: "1px solid",
     borderColor: "sd.reference.color.scale.gray.200",
+    "& span": {
+      fontFamily: "var(--global-font-mono)",
+    },
   },
 });
 
@@ -57,25 +66,56 @@ export function TokenList({ tokens }: TokenList) {
   const types = [...new Set(filteredTokens.map((token) => token.type))];
 
   return (
-    <div>
-      <div>
+    <Box
+      mt={{
+        base: "-sd.system.dimension.spacing.fourExtraLarge",
+        smDown: "0",
+      }}
+    >
+      <div
+        className={css({
+          display: {
+            base: "none",
+            smDown: "block",
+          },
+        })}
+      >
         <Search
           onInputValueChange={(e) => setKeyword(e.inputValue)}
-          placeholder="Search tokens"
+          placeholder="検索..."
           items={[]}
         />
       </div>
       <Grid
         display={"grid"}
         gridTemplateColumns={{
-          sm: "minmax(100px, auto) minmax(100px, auto)",
+          sm: "repeat(2, 1fr)",
         }}
-        mt="sd.system.dimension.spacing.extraLarge"
+        mt={{
+          base: "sd.system.dimension.spacing.none",
+          smDown: "sd.system.dimension.spacing.large",
+        }}
         fontSize={"sd.reference.typography.scale.expanded.twoExtraSmall"}
       >
-        <Wrapper display={{ base: "contents", smDown: "none" }}>
-          <Th>name</Th>
-          <Th>reference</Th>
+        <Wrapper
+          display={{ base: "grid", smDown: "none" }}
+          gridTemplateColumns={"subgrid"}
+          gridColumn={"1/-1"}
+          bgColor={"sd.system.color.component.surface"}
+          position={"sticky"}
+          top={0}
+          alignContent={"center"}
+          zIndex={1}
+        >
+          <Th alignContent={"center"}>
+            <span>name</span>
+          </Th>
+          <Th display={"grid"} gridTemplateColumns={"1fr auto"}>
+            <Box alignContent={"center"}>
+              <span>reference</span>
+            </Box>
+            <SearchToken onInputValueChange={(e) => setKeyword(e.inputValue)} />
+          </Th>
         </Wrapper>
         {types.map((type, i) => (
           <Wrapper key={i}>
@@ -86,7 +126,7 @@ export function TokenList({ tokens }: TokenList) {
                   base: "_Web.headline.h1_sp",
                   sm: "sd.system.typography.title.small_compact",
                 },
-                pt: "sd.system.dimension.spacing.threeExtraLarge",
+                pt: "sd.system.dimension.spacing.extraLarge",
                 pb: "sd.system.dimension.spacing.small",
                 color: "web.system.color.component.onSurface",
                 display: "flex",
@@ -111,7 +151,7 @@ export function TokenList({ tokens }: TokenList) {
           </Wrapper>
         ))}
       </Grid>
-    </div>
+    </Box>
   );
 }
 
@@ -136,6 +176,7 @@ const List: React.FC<ListByTYpeProps> = ({ tokens }) => {
             }}
             borderBottom={{ sm: "1px solid" }}
             borderColor={{ sm: "sd.reference.color.scale.gray.200" }}
+            alignContent={"center"}
           >
             <PathSpan path={token.path} />
           </Row>
@@ -162,40 +203,130 @@ const Values: React.FC<ValuesProps> = ({ token }) => {
       borderBottom={"1px solid"}
       borderColor={"sd.reference.color.scale.gray.200"}
     >
-      <Flex
-        flexDirection={"column"}
-        alignItems={"flex-start"}
-        gap={"sd.reference.dimension.scale.3"}
-      >
-        {typeof originalValue === "object" ? (
-          Object.keys(originalValue).map((key, i) => (
-            <Box
-              key={i}
-              display="flex"
-              alignItems={"center"}
-              gap={"sd.reference.dimension.scale.3"}
-            >
-              <Box color={"sd.system.color.component.onSurfaceVariant"}>
-                {key}:{" "}
+      <Flex alignItems={"center"}>
+        <Flex
+          flexDirection={"column"}
+          alignItems={"flex-start"}
+          gap={"sd.reference.dimension.scale.3"}
+          width={{ base: "100%" }}
+        >
+          {typeof originalValue === "object" ? (
+            Object.keys(originalValue).map((key, i) => (
+              <Box
+                key={i}
+                display="flex"
+                alignItems={"center"}
+                gap={"sd.reference.dimension.scale.3"}
+              >
+                <Box color={"sd.system.color.component.onSurfaceVariant"}>
+                  {key}:{" "}
+                </Box>
+                <ReferenceValue
+                  token={token}
+                  originalValue={originalValue[key].toString()}
+                  value={
+                    typeof value === "object"
+                      ? value[key]?.toString()
+                      : undefined
+                  }
+                />
               </Box>
-              <ReferenceValue
-                token={token}
-                originalValue={originalValue[key].toString()}
-                value={
-                  typeof value === "object" ? value[key]?.toString() : undefined
-                }
-              />
-            </Box>
-          ))
-        ) : (
-          <ReferenceValue
-            token={token}
-            originalValue={originalValue.toString()}
-            value={token.value.toString()}
-          />
-        )}
+            ))
+          ) : (
+            <ReferenceValue
+              token={token}
+              originalValue={originalValue.toString()}
+              value={token.value.toString()}
+            />
+          )}
+        </Flex>
+        <ValuesMenu token={token} />
       </Flex>
     </Row>
+  );
+};
+
+const ValuesMenu: React.FC<{ token: Token }> = ({ token }) => {
+  return (
+    <Menu.Root
+      positioning={{
+        overlap: true,
+        offset: {
+          mainAxis: -8,
+          crossAxis: 0,
+        },
+      }}
+    >
+      <Menu.Trigger
+        className={css({
+          aspectRatio: "1/1",
+          height: "fit-content",
+        })}
+      >
+        <IconButton
+          size={"small"}
+          styleType="ghost"
+          shape="rectangle"
+          icon={<SerendieSymbol name="more-horizontal" />}
+        />
+      </Menu.Trigger>
+      <Menu.Positioner>
+        <Menu.Content
+          className={css({
+            bgColor: "sd.system.color.component.surface",
+            borderRadius: "sd.system.dimension.radius.medium",
+            bg: "sd.system.color.component.surface",
+            boxShadow: "sd.system.elevation.shadow.level1",
+            outline: "none",
+            minWidth: "200px",
+            zIndex: 10000,
+            "& ul": {
+              m: 0,
+              marginInlineStart: "0 !important",
+              p: "0 !important",
+              listStyle: "none",
+              "& li": {
+                listStyle: "none",
+                m: "0 !important",
+              },
+            },
+          })}
+        >
+          <SerendieList>
+            <Menu.Item
+              value="copy_token"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  token.key === "color" ? token.value.toString() : token.key
+                );
+                toaster.create({
+                  type: "success",
+                  title: "トークンをコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title={"トークンをコピー"} />
+            </Menu.Item>
+            <Menu.Item
+              value="copy_cssvariable"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `var(--${token.key.replace(/\./g, "-")})`
+                );
+                toaster.create({
+                  type: "success",
+                  title: "CSS変数でコピーしました",
+                  duration: 1500,
+                });
+              }}
+            >
+              <ListItem title="CSS変数をコピー" />
+            </Menu.Item>
+          </SerendieList>
+        </Menu.Content>
+      </Menu.Positioner>
+    </Menu.Root>
   );
 };
 
@@ -344,3 +475,77 @@ const Code = styled("code", {
     color: "sd.system.color.component.onSurfaceVariant",
   },
 });
+
+const SearchToken: React.FC<{
+  onInputValueChange: (e: { inputValue: string }) => void;
+}> = ({ onInputValueChange }) => {
+  const ref = React.useRef<HTMLInputElement>(null);
+  const isMac =
+    typeof navigator !== "undefined" &&
+    navigator.userAgent.toLowerCase().includes("mac os x");
+  const keyBindStyles = cva({
+    base: {
+      aspectRatio: "1/1",
+      bg: "sd.reference.color.scale.gray.100",
+      borderRadius: "sd.system.dimension.radius.small",
+      color: "sd.system.color.component.onSurfaceVariant",
+      height: "20px",
+      width: "20px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    variants: {
+      width: {
+        auto: {
+          width: "auto",
+        },
+      },
+    },
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        ref.current?.querySelector("input")?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+  return (
+    <Box ref={ref} position="relative" color="initial">
+      <Search
+        size="small"
+        onInputValueChange={onInputValueChange}
+        placeholder="検索..."
+        items={[]}
+      />
+      <Box
+        position="absolute"
+        top="50%"
+        right="4px"
+        transform="translateY(-50%)"
+        p="sd.system.dimension.spacing.twoExtraSmall"
+        pointerEvents="none"
+        display="flex"
+        gap={"-sd.system.dimension.spacing.twoExtraSmall"}
+        fontFamily="var(--global-font-mono)"
+      >
+        <code
+          className={keyBindStyles({
+            width: isMac ? undefined : "auto",
+          })}
+        >
+          {isMac ? "⌘" : "Ctrl"}
+        </code>
+        +<code className={keyBindStyles()}>K</code>
+      </Box>
+    </Box>
+  );
+};
