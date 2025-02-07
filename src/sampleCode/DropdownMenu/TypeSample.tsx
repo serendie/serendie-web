@@ -49,8 +49,8 @@ export function TypeSample() {
               icon: <SerendieSymbol name="placeholder" />,
             },
           ]}
-          isIconMenu
           title="メニュータイトル"
+          styleType="iconButton"
         />
       </Dd>
     </Dl>
