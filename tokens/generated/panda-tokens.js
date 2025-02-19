@@ -4,627 +4,627 @@
  */
 
 export default {
-  "themes": {
-    "asagi": {
-      "tokens": {
-        "colors": {
-          "web": {
-            "system": {
-              "color": {
-                "impression": {
-                  "primary": {
-                    "value": "#00757E"
+  themes: {
+    asagi: {
+      tokens: {
+        colors: {
+          web: {
+            system: {
+              color: {
+                impression: {
+                  primary: {
+                    value: "#00757E",
                   },
-                  "onPrimary": {
-                    "value": "#FFFFFF"
+                  onPrimary: {
+                    value: "#FFFFFF",
                   },
-                  "secondary": {
-                    "value": "#015C63"
+                  secondary: {
+                    value: "#015C63",
                   },
-                  "onSecondary": {
-                    "value": "#FFFFFF"
+                  onSecondary: {
+                    value: "#FFFFFF",
                   },
-                  "tertiary": {
-                    "value": "#EFEEEB"
+                  tertiary: {
+                    value: "#EFEEEB",
                   },
-                  "onTertiary": {
-                    "value": "#02373C"
+                  onTertiary: {
+                    value: "#02373C",
                   },
-                  "subtle": {
-                    "value": "#D9F6FC"
-                  }
+                  subtle: {
+                    value: "#D9F6FC",
+                  },
                 },
-                "component": {
-                  "surface": {
-                    "value": "#FFFFFF"
+                component: {
+                  surface: {
+                    value: "#FFFFFF",
                   },
-                  "onSurface": {
-                    "value": "#02373C"
+                  onSurface: {
+                    value: "#02373C",
                   },
-                  "surfaceDim": {
-                    "value": "#EFEEEB"
+                  surfaceDim: {
+                    value: "#EFEEEB",
                   },
-                  "surfaceDimmest": {
-                    "value": "#AFAEAA"
-                  }
+                  surfaceDimmest: {
+                    value: "#AFAEAA",
+                  },
                 },
-                "mvShape": {
-                  "foreground": {
-                    "arc": {
-                      "index": {
-                        "value": "#00A3AF"
+                mvShape: {
+                  foreground: {
+                    arc: {
+                      index: {
+                        value: "#00A3AF",
                       },
-                      "indexBorder": {
-                        "value": "#98E1C8"
+                      indexBorder: {
+                        value: "#98E1C8",
                       },
-                      "extraBold": {
-                        "value": "#98E1C8"
+                      extraBold: {
+                        value: "#98E1C8",
                       },
-                      "bold": {
-                        "value": "#00757E"
+                      bold: {
+                        value: "#00757E",
                       },
-                      "normal": {
-                        "value": "#EB4F8E"
+                      normal: {
+                        value: "#EB4F8E",
                       },
-                      "thin": {
-                        "value": "#F7C6B0"
-                      }
+                      thin: {
+                        value: "#F7C6B0",
+                      },
                     },
-                    "rectangle": {
-                      "oblong": {
-                        "value": "#F9EBF0"
+                    rectangle: {
+                      oblong: {
+                        value: "#F9EBF0",
                       },
-                      "square": {
-                        "value": "#D7DEFB"
-                      }
-                    }
+                      square: {
+                        value: "#D7DEFB",
+                      },
+                    },
                   },
-                  "background": {
-                    "arc": {
-                      "first": {
-                        "value": "#64CCD3"
+                  background: {
+                    arc: {
+                      first: {
+                        value: "#64CCD3",
                       },
-                      "second": {
-                        "value": "#BFCEFC"
+                      second: {
+                        value: "#BFCEFC",
                       },
-                      "third": {
-                        "value": "#98E1C8"
+                      third: {
+                        value: "#98E1C8",
                       },
-                      "fourth": {
-                        "value": "#D9D8D3"
+                      fourth: {
+                        value: "#D9D8D3",
                       },
-                      "fifth": {
-                        "value": "#64CCD3"
-                      }
-                    }
-                  }
+                      fifth: {
+                        value: "#64CCD3",
+                      },
+                    },
+                  },
                 },
-                "articleFigure": {
-                  "foreground": {
-                    "primary": {
-                      "value": "#64CCD3"
+                articleFigure: {
+                  foreground: {
+                    primary: {
+                      value: "#64CCD3",
                     },
-                    "onPrimary": {
-                      "value": "#00757E"
+                    onPrimary: {
+                      value: "#00757E",
                     },
-                    "secondary": {
-                      "value": "#CC9FD9"
+                    secondary: {
+                      value: "#CC9FD9",
                     },
-                    "tertiary": {
-                      "value": "#D9F6FC"
+                    tertiary: {
+                      value: "#D9F6FC",
                     },
-                    "surface": {
-                      "value": "#FFFFFF"
+                    surface: {
+                      value: "#FFFFFF",
                     },
-                    "onSurface": {
-                      "value": "#000000"
-                    }
+                    onSurface: {
+                      value: "#000000",
+                    },
                   },
-                  "background": {
-                    "value": "#f5f5f5"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                  background: {
+                    value: "#f5f5f5",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
-    "kurikawa": {
-      "tokens": {
-        "colors": {
-          "web": {
-            "system": {
-              "color": {
-                "impression": {
-                  "primary": {
-                    "value": "#AB4919"
+    kurikawa: {
+      tokens: {
+        colors: {
+          web: {
+            system: {
+              color: {
+                impression: {
+                  primary: {
+                    value: "#AB4919",
                   },
-                  "onPrimary": {
-                    "value": "#FFFFFF"
+                  onPrimary: {
+                    value: "#FFFFFF",
                   },
-                  "secondary": {
-                    "value": "#803510"
+                  secondary: {
+                    value: "#803510",
                   },
-                  "onSecondary": {
-                    "value": "#FFFFFF"
+                  onSecondary: {
+                    value: "#FFFFFF",
                   },
-                  "tertiary": {
-                    "value": "#AB4919"
+                  tertiary: {
+                    value: "#AB4919",
                   },
-                  "onTertiary": {
-                    "value": "#FFFFFF"
+                  onTertiary: {
+                    value: "#FFFFFF",
                   },
-                  "subtle": {
-                    "value": "#FAECE6"
-                  }
+                  subtle: {
+                    value: "#FAECE6",
+                  },
                 },
-                "component": {
-                  "surface": {
-                    "value": "#FFFFFF"
+                component: {
+                  surface: {
+                    value: "#FFFFFF",
                   },
-                  "onSurface": {
-                    "value": "#50230D"
+                  onSurface: {
+                    value: "#50230D",
                   },
-                  "surfaceDim": {
-                    "value": "#EFEEEB"
+                  surfaceDim: {
+                    value: "#EFEEEB",
                   },
-                  "surfaceDimmest": {
-                    "value": "#AFAEAA"
-                  }
+                  surfaceDimmest: {
+                    value: "#AFAEAA",
+                  },
                 },
-                "mvShape": {
-                  "foreground": {
-                    "arc": {
-                      "index": {
-                        "value": "#F49567"
+                mvShape: {
+                  foreground: {
+                    arc: {
+                      index: {
+                        value: "#F49567",
                       },
-                      "indexBorder": {
-                        "value": "#EDC18A"
+                      indexBorder: {
+                        value: "#EDC18A",
                       },
-                      "extraBold": {
-                        "value": "#EDC18A"
+                      extraBold: {
+                        value: "#EDC18A",
                       },
-                      "bold": {
-                        "value": "#803510"
+                      bold: {
+                        value: "#803510",
                       },
-                      "normal": {
-                        "value": "#BFCEFC"
+                      normal: {
+                        value: "#BFCEFC",
                       },
-                      "thin": {
-                        "value": "#DCBDE4"
-                      }
+                      thin: {
+                        value: "#DCBDE4",
+                      },
                     },
-                    "rectangle": {
-                      "oblong": {
-                        "value": "#D7DEFB"
+                    rectangle: {
+                      oblong: {
+                        value: "#D7DEFB",
                       },
-                      "square": {
-                        "value": "#FDB9B4"
-                      }
-                    }
+                      square: {
+                        value: "#FDB9B4",
+                      },
+                    },
                   },
-                  "background": {
-                    "arc": {
-                      "first": {
-                        "value": "#E26324"
+                  background: {
+                    arc: {
+                      first: {
+                        value: "#E26324",
                       },
-                      "second": {
-                        "value": "#AF8245"
+                      second: {
+                        value: "#AF8245",
                       },
-                      "third": {
-                        "value": "#F49567"
+                      third: {
+                        value: "#F49567",
                       },
-                      "fourth": {
-                        "value": "#846132"
+                      fourth: {
+                        value: "#846132",
                       },
-                      "fifth": {
-                        "value": "#E26324"
-                      }
-                    }
-                  }
+                      fifth: {
+                        value: "#E26324",
+                      },
+                    },
+                  },
                 },
-                "articleFigure": {
-                  "foreground": {
-                    "primary": {
-                      "value": "#F49567"
+                articleFigure: {
+                  foreground: {
+                    primary: {
+                      value: "#F49567",
                     },
-                    "onPrimary": {
-                      "value": "#803510"
+                    onPrimary: {
+                      value: "#803510",
                     },
-                    "secondary": {
-                      "value": "#DAA358"
+                    secondary: {
+                      value: "#DAA358",
                     },
-                    "tertiary": {
-                      "value": "#F7EDE2"
+                    tertiary: {
+                      value: "#F7EDE2",
                     },
-                    "surface": {
-                      "value": "#FFFFFF"
+                    surface: {
+                      value: "#FFFFFF",
                     },
-                    "onSurface": {
-                      "value": "#000000"
-                    }
+                    onSurface: {
+                      value: "#000000",
+                    },
                   },
-                  "background": {
-                    "value": "#f5f5f5"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                  background: {
+                    value: "#f5f5f5",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
-    "sumire": {
-      "tokens": {
-        "colors": {
-          "web": {
-            "system": {
-              "color": {
-                "impression": {
-                  "primary": {
-                    "value": "#914DA9"
+    sumire: {
+      tokens: {
+        colors: {
+          web: {
+            system: {
+              color: {
+                impression: {
+                  primary: {
+                    value: "#914DA9",
                   },
-                  "onPrimary": {
-                    "value": "#FFFFFF"
+                  onPrimary: {
+                    value: "#FFFFFF",
                   },
-                  "secondary": {
-                    "value": "#733B85"
+                  secondary: {
+                    value: "#733B85",
                   },
-                  "onSecondary": {
-                    "value": "#FFFFFF"
+                  onSecondary: {
+                    value: "#FFFFFF",
                   },
-                  "tertiary": {
-                    "value": "#043F81"
+                  tertiary: {
+                    value: "#043F81",
                   },
-                  "onTertiary": {
-                    "value": "#FFFFFF"
+                  onTertiary: {
+                    value: "#FFFFFF",
                   },
-                  "subtle": {
-                    "value": "#F4ECF6"
-                  }
+                  subtle: {
+                    value: "#F4ECF6",
+                  },
                 },
-                "component": {
-                  "surface": {
-                    "value": "#FFFFFF"
+                component: {
+                  surface: {
+                    value: "#FFFFFF",
                   },
-                  "onSurface": {
-                    "value": "#462352"
+                  onSurface: {
+                    value: "#462352",
                   },
-                  "surfaceDim": {
-                    "value": "#EFEEEB"
+                  surfaceDim: {
+                    value: "#EFEEEB",
                   },
-                  "surfaceDimmest": {
-                    "value": "#AFAEAA"
-                  }
+                  surfaceDimmest: {
+                    value: "#AFAEAA",
+                  },
                 },
-                "mvShape": {
-                  "foreground": {
-                    "arc": {
-                      "index": {
-                        "value": "#CC9FD9"
+                mvShape: {
+                  foreground: {
+                    arc: {
+                      index: {
+                        value: "#CC9FD9",
                       },
-                      "indexBorder": {
-                        "value": "#BFCEFC"
+                      indexBorder: {
+                        value: "#BFCEFC",
                       },
-                      "extraBold": {
-                        "value": "#BFCEFC"
+                      extraBold: {
+                        value: "#BFCEFC",
                       },
-                      "bold": {
-                        "value": "#462352"
+                      bold: {
+                        value: "#462352",
                       },
-                      "normal": {
-                        "value": "#EDC18A"
+                      normal: {
+                        value: "#EDC18A",
                       },
-                      "thin": {
-                        "value": "#8FAEFE"
-                      }
+                      thin: {
+                        value: "#8FAEFE",
+                      },
                     },
-                    "rectangle": {
-                      "oblong": {
-                        "value": "#F2DBC0"
+                    rectangle: {
+                      oblong: {
+                        value: "#F2DBC0",
                       },
-                      "square": {
-                        "value": "#F5C1D1"
-                      }
-                    }
+                      square: {
+                        value: "#F5C1D1",
+                      },
+                    },
                   },
-                  "background": {
-                    "arc": {
-                      "first": {
-                        "value": "#AA61C2"
+                  background: {
+                    arc: {
+                      first: {
+                        value: "#AA61C2",
                       },
-                      "second": {
-                        "value": "#0A69CF"
+                      second: {
+                        value: "#0A69CF",
                       },
-                      "third": {
-                        "value": "#CC9FD9"
+                      third: {
+                        value: "#CC9FD9",
                       },
-                      "fourth": {
-                        "value": "#073165"
+                      fourth: {
+                        value: "#073165",
                       },
-                      "fifth": {
-                        "value": "#914DA9"
-                      }
-                    }
-                  }
+                      fifth: {
+                        value: "#914DA9",
+                      },
+                    },
+                  },
                 },
-                "articleFigure": {
-                  "foreground": {
-                    "primary": {
-                      "value": "#CC9FD9"
+                articleFigure: {
+                  foreground: {
+                    primary: {
+                      value: "#CC9FD9",
                     },
-                    "onPrimary": {
-                      "value": "#733B85"
+                    onPrimary: {
+                      value: "#733B85",
                     },
-                    "secondary": {
-                      "value": "#8FAEFE"
+                    secondary: {
+                      value: "#8FAEFE",
                     },
-                    "tertiary": {
-                      "value": "#F4ECF6"
+                    tertiary: {
+                      value: "#F4ECF6",
                     },
-                    "surface": {
-                      "value": "#FFFFFF"
+                    surface: {
+                      value: "#FFFFFF",
                     },
-                    "onSurface": {
-                      "value": "#000000"
-                    }
+                    onSurface: {
+                      value: "#000000",
+                    },
                   },
-                  "background": {
-                    "value": "#f5f5f5"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                  background: {
+                    value: "#f5f5f5",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
-    "tsutsuji": {
-      "tokens": {
-        "colors": {
-          "web": {
-            "system": {
-              "color": {
-                "impression": {
-                  "primary": {
-                    "value": "#B9336B"
+    tsutsuji: {
+      tokens: {
+        colors: {
+          web: {
+            system: {
+              color: {
+                impression: {
+                  primary: {
+                    value: "#B9336B",
                   },
-                  "onPrimary": {
-                    "value": "#FFFFFF"
+                  onPrimary: {
+                    value: "#FFFFFF",
                   },
-                  "secondary": {
-                    "value": "#932653"
+                  secondary: {
+                    value: "#932653",
                   },
-                  "onSecondary": {
-                    "value": "#FFFFFF"
+                  onSecondary: {
+                    value: "#FFFFFF",
                   },
-                  "tertiary": {
-                    "value": "#F9EBF0"
+                  tertiary: {
+                    value: "#F9EBF0",
                   },
-                  "onTertiary": {
-                    "value": "#591734"
+                  onTertiary: {
+                    value: "#591734",
                   },
-                  "subtle": {
-                    "value": "#F9EBF0"
-                  }
+                  subtle: {
+                    value: "#F9EBF0",
+                  },
                 },
-                "component": {
-                  "surface": {
-                    "value": "#FFFFFF"
+                component: {
+                  surface: {
+                    value: "#FFFFFF",
                   },
-                  "onSurface": {
-                    "value": "#591734"
+                  onSurface: {
+                    value: "#591734",
                   },
-                  "surfaceDim": {
-                    "value": "#EFEEEB"
+                  surfaceDim: {
+                    value: "#EFEEEB",
                   },
-                  "surfaceDimmest": {
-                    "value": "#AFAEAA"
-                  }
+                  surfaceDimmest: {
+                    value: "#AFAEAA",
+                  },
                 },
-                "mvShape": {
-                  "foreground": {
-                    "arc": {
-                      "index": {
-                        "value": "#EB4F8E"
+                mvShape: {
+                  foreground: {
+                    arc: {
+                      index: {
+                        value: "#EB4F8E",
                       },
-                      "indexBorder": {
-                        "value": "#F7C6B0"
+                      indexBorder: {
+                        value: "#F7C6B0",
                       },
-                      "extraBold": {
-                        "value": "#F7C6B0"
+                      extraBold: {
+                        value: "#F7C6B0",
                       },
-                      "bold": {
-                        "value": "#B9336B"
+                      bold: {
+                        value: "#B9336B",
                       },
-                      "normal": {
-                        "value": "#00A3AF"
+                      normal: {
+                        value: "#00A3AF",
                       },
-                      "thin": {
-                        "value": "#BFCEFC"
-                      }
+                      thin: {
+                        value: "#BFCEFC",
+                      },
                     },
-                    "rectangle": {
-                      "oblong": {
-                        "value": "#F4ECF6"
+                    rectangle: {
+                      oblong: {
+                        value: "#F4ECF6",
                       },
-                      "square": {
-                        "value": "#CAF9E6"
-                      }
-                    }
+                      square: {
+                        value: "#CAF9E6",
+                      },
+                    },
                   },
-                  "background": {
-                    "arc": {
-                      "first": {
-                        "value": "#F190B4"
+                  background: {
+                    arc: {
+                      first: {
+                        value: "#F190B4",
                       },
-                      "second": {
-                        "value": "#FDB9B4"
+                      second: {
+                        value: "#FDB9B4",
                       },
-                      "third": {
-                        "value": "#F190B4"
+                      third: {
+                        value: "#F190B4",
                       },
-                      "fourth": {
-                        "value": "#FCD6D3"
+                      fourth: {
+                        value: "#FCD6D3",
                       },
-                      "fifth": {
-                        "value": "#F190B4"
-                      }
-                    }
-                  }
+                      fifth: {
+                        value: "#F190B4",
+                      },
+                    },
+                  },
                 },
-                "articleFigure": {
-                  "foreground": {
-                    "primary": {
-                      "value": "#F190B4"
+                articleFigure: {
+                  foreground: {
+                    primary: {
+                      value: "#F190B4",
                     },
-                    "onPrimary": {
-                      "value": "#B9336B"
+                    onPrimary: {
+                      value: "#B9336B",
                     },
-                    "secondary": {
-                      "value": "#CC9FD9"
+                    secondary: {
+                      value: "#CC9FD9",
                     },
-                    "tertiary": {
-                      "value": "#F9EBF0"
+                    tertiary: {
+                      value: "#F9EBF0",
                     },
-                    "surface": {
-                      "value": "#FFFFFF"
+                    surface: {
+                      value: "#FFFFFF",
                     },
-                    "onSurface": {
-                      "value": "#000000"
-                    }
+                    onSurface: {
+                      value: "#000000",
+                    },
                   },
-                  "background": {
-                    "value": "#f5f5f5"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  background: {
+                    value: "#f5f5f5",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
-  "colors": {
-    "web": {
-      "system": {
-        "color": {
-          "impression": {
-            "primary": {
-              "value": "#0A69CF"
+  colors: {
+    web: {
+      system: {
+        color: {
+          impression: {
+            primary: {
+              value: "#0A69CF",
             },
-            "onPrimary": {
-              "value": "#FFFFFF"
+            onPrimary: {
+              value: "#FFFFFF",
             },
-            "secondary": {
-              "value": "#0650A0"
+            secondary: {
+              value: "#0650A0",
             },
-            "onSecondary": {
-              "value": "#FFFFFF"
+            onSecondary: {
+              value: "#FFFFFF",
             },
-            "tertiary": {
-              "value": "#EFF2FC"
+            tertiary: {
+              value: "#EFF2FC",
             },
-            "onTertiary": {
-              "value": "#073165"
+            onTertiary: {
+              value: "#073165",
             },
-            "subtle": {
-              "value": "#EFF2FC"
-            }
+            subtle: {
+              value: "#EFF2FC",
+            },
           },
-          "component": {
-            "surface": {
-              "value": "#FFFFFF"
+          component: {
+            surface: {
+              value: "#FFFFFF",
             },
-            "onSurface": {
-              "value": "#073165"
+            onSurface: {
+              value: "#073165",
             },
-            "surfaceDim": {
-              "value": "#EFEEEB"
+            surfaceDim: {
+              value: "#EFEEEB",
             },
-            "surfaceDimmest": {
-              "value": "#AFAEAA"
-            }
+            surfaceDimmest: {
+              value: "#AFAEAA",
+            },
           },
-          "mvShape": {
-            "foreground": {
-              "arc": {
-                "index": {
-                  "value": "#428CFE"
+          mvShape: {
+            foreground: {
+              arc: {
+                index: {
+                  value: "#428CFE",
                 },
-                "indexBorder": {
-                  "value": "#BFCEFC"
+                indexBorder: {
+                  value: "#BFCEFC",
                 },
-                "extraBold": {
-                  "value": "#BFCEFC"
+                extraBold: {
+                  value: "#BFCEFC",
                 },
-                "bold": {
-                  "value": "#0650A0"
+                bold: {
+                  value: "#0650A0",
                 },
-                "normal": {
-                  "value": "#F84258"
+                normal: {
+                  value: "#F84258",
                 },
-                "thin": {
-                  "value": "#F2DBC0"
-                }
+                thin: {
+                  value: "#F2DBC0",
+                },
               },
-              "rectangle": {
-                "oblong": {
-                  "value": "#FCEBEA"
+              rectangle: {
+                oblong: {
+                  value: "#FCEBEA",
                 },
-                "square": {
-                  "value": "#AEEAD5"
-                }
-              }
+                square: {
+                  value: "#AEEAD5",
+                },
+              },
             },
-            "background": {
-              "arc": {
-                "first": {
-                  "value": "#8FAEFE"
+            background: {
+              arc: {
+                first: {
+                  value: "#8FAEFE",
                 },
-                "second": {
-                  "value": "#9CE6EC"
+                second: {
+                  value: "#9CE6EC",
                 },
-                "third": {
-                  "value": "#8FAEFE"
+                third: {
+                  value: "#8FAEFE",
                 },
-                "fourth": {
-                  "value": "#C3EFF4"
+                fourth: {
+                  value: "#C3EFF4",
                 },
-                "fifth": {
-                  "value": "#8FAEFE"
-                }
-              }
-            }
+                fifth: {
+                  value: "#8FAEFE",
+                },
+              },
+            },
           },
-          "articleFigure": {
-            "foreground": {
-              "primary": {
-                "value": "#8FAEFE"
+          articleFigure: {
+            foreground: {
+              primary: {
+                value: "#8FAEFE",
               },
-              "onPrimary": {
-                "value": "#0A69CF"
+              onPrimary: {
+                value: "#0A69CF",
               },
-              "secondary": {
-                "value": "#64CCD3"
+              secondary: {
+                value: "#64CCD3",
               },
-              "tertiary": {
-                "value": "#EFF2FC"
+              tertiary: {
+                value: "#EFF2FC",
               },
-              "surface": {
-                "value": "#FFFFFF"
+              surface: {
+                value: "#FFFFFF",
               },
-              "onSurface": {
-                "value": "#000000"
-              }
+              onSurface: {
+                value: "#000000",
+              },
             },
-            "background": {
-              "value": "#f5f5f5"
-            }
-          }
-        }
-      }
-    }
-  }
-}
+            background: {
+              value: "#f5f5f5",
+            },
+          },
+        },
+      },
+    },
+  },
+};
