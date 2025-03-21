@@ -2,12 +2,14 @@
 title: Text Field
 componentName: テキストフィールド
 description: 1行のテキストを入力するためのコンポーネントです。Buttonなどと合わせてフォームを構成します。複数行にはTextAreaを使用してください。
-lastUpdated: "2024-11-1"
+lastUpdated: "2025-03-21"
 ---
 
 import Code from "@/components/Code.astro";
 import { StateSample } from "@/sampleCode/TextField/StateSample";
 import stateSampleRaw from "@/sampleCode/TextField/StateSample.tsx?raw";
+import { PasswordFieldSample } from "@/sampleCode/TextField/PasswordFieldSample";
+import passwordFieldSampleRaw from "@/sampleCode/TextField/PasswordFieldSample.tsx?raw";
 
 <Code
   title="状態"
@@ -16,4 +18,13 @@ import stateSampleRaw from "@/sampleCode/TextField/StateSample.tsx?raw";
   storyPath="/story/components-textfield--basic"
 >
   <StateSample client:load />
+</Code>
+
+<Code
+  title="PasswordField"
+  description="パスワード入力用のテキストフィールドとして、PasswordFieldコンポーネントが用意されています。簡単にパスワードの表示・非表示を切り替えることができます。"
+  code={passwordFieldSampleRaw}
+  storyPath="/story/components-passwordfield--basic"
+>
+  <PasswordFieldSample client:load />
 </Code>
