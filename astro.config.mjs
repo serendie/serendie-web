@@ -27,6 +27,9 @@ export default defineConfig({
   },
   vite: {
     plugins: [svgr()],
+    ssr: {
+      noExternal: ["@ark-ui/react"],
+    },
   },
   trailingSlash: "never",
 });
