@@ -28,7 +28,7 @@ export default defineConfig({
   vite: {
     plugins: [svgr()],
     ssr: {
-      noExternal: ["@ark-ui/react"],
+      noExternal: ["@ark-ui/react", "@serendie/ui"],
     },
   },
   trailingSlash: "never",
