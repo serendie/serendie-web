@@ -2,12 +2,14 @@
 title: Choice Box
 componentName: チョイスボックス
 description: CheckBoxとRadioButtonからラベルを除いたコンポーネントです。カードやリストと併用して使用できます。
-lastUpdated: "2024-11-1"
+lastUpdated: "2025-05-23"
 ---
 
 import Code from "@/components/Code.astro";
 import { TypeSample } from "@/sampleCode/ChoiceBox/TypeSample";
 import typeSampleRaw from "@/sampleCode/ChoiceBox/TypeSample.tsx?raw";
+import { IndeterminateSample } from "@/sampleCode/ChoiceBox/IndeterminateSample";
+import indeterminateSampleRaw from "@/sampleCode/ChoiceBox/IndeterminateSample.tsx?raw";
 
 <Code
   title="バリエーション"
@@ -16,4 +18,13 @@ import typeSampleRaw from "@/sampleCode/ChoiceBox/TypeSample.tsx?raw";
   storyPath="/story/components-choicebox--radio"
 >
   <TypeSample client:load />
+</Code>
+
+<Code
+  title="Indeterminate状態"
+  description="CheckboxタイプのChoiceBoxでは、indeterminate状態（未確定状態）を指定することができます。indeterminateは、親チェックボックスが一部の子要素のみ選択されている場合など、部分的な選択状態を表現する際に使用できます。"
+  code={indeterminateSampleRaw}
+  storyPath="/story/components-choicebox--indeterminate"
+>
+  <IndeterminateSample client:load />
 </Code>
