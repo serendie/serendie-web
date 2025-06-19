@@ -1,0 +1,216 @@
+---
+import tokens from "@serendie/design-token/panda";
+import DataVizColorCell from "./DataVizColorCell.astro";
+import { css } from "styled-system/css";
+
+const { colors } = tokens;
+
+interface Props {
+  type: "single" | "semantic" | "multi";
+  theme?: "konjo" | "kurikawa" | "tsutsuji" | "sumire" | "asagi";
+}
+
+const { type, theme = "konjo" } = Astro.props;
+
+// カラーデータの定義
+const singleColors = {
+  konjo: {
+    name: "Primary/Konjo",
+    colors: [
+      { shade: "01", value: "#d7defb" },
+      { shade: "02", value: "#bfcefc" },
+      { shade: "03", value: "#8faefe" },
+      { shade: "04", value: "#428cfe" },
+      { shade: "05", value: "#0a69cf" },
+      { shade: "06", value: "#073165" },
+    ],
+  },
+  kurikawa: {
+    name: "Primary/Kurikawa",
+    colors: [
+      { shade: "01", value: "#f7d8c9" },
+      { shade: "02", value: "#f7c6b0" },
+      { shade: "03", value: "#f49567" },
+      { shade: "04", value: "#e26324" },
+      { shade: "05", value: "#ab4919" },
+      { shade: "06", value: "#50230d" },
+    ],
+  },
+  tsutsuji: {
+    name: "Primary/Tsutsuji",
+    colors: [
+      { shade: "01", value: "#f6d7e0" },
+      { shade: "02", value: "#f5c1d1" },
+      { shade: "03", value: "#f190b4" },
+      { shade: "04", value: "#eb4f8e" },
+      { shade: "05", value: "#932653" },
+      { shade: "06", value: "#591734" },
+    ],
+  },
+  sumire: {
+    name: "Primary/Sumire",
+    colors: [
+      { shade: "01", value: "#eadaee" },
+      { shade: "02", value: "#dcbde4" },
+      { shade: "03", value: "#cc9fd9" },
+      { shade: "04", value: "#aa61c2" },
+      { shade: "05", value: "#733b85" },
+      { shade: "06", value: "#462352" },
+    ],
+  },
+  asagi: {
+    name: "Primary/Asagi",
+    colors: [
+      { shade: "01", value: "#c3eff4" },
+      { shade: "02", value: "#9ce6ec" },
+      { shade: "03", value: "#64ccd3" },
+      { shade: "04", value: "#00a3af" },
+      { shade: "05", value: "#00757e" },
+      { shade: "06", value: "#02373c" },
+    ],
+  },
+};
+
+const semanticColors = {
+  positive: {
+    name: "Positive",
+    colors: [
+      { shade: "01", value: "#d4f4e8" },
+      { shade: "02", value: "#b0ecd2" },
+      { shade: "03", value: "#7dddb0" },
+      { shade: "04", value: "#4fc988" },
+      { shade: "05", value: "#2bb563" },
+      { shade: "06", value: "#145c31" },
+    ],
+  },
+  negative: {
+    name: "Negative",
+    colors: [
+      { shade: "01", value: "#ffdbdb" },
+      { shade: "02", value: "#ffc2c2" },
+      { shade: "03", value: "#ff9999" },
+      { shade: "04", value: "#ff6666" },
+      { shade: "05", value: "#e52e2e" },
+      { shade: "06", value: "#991919" },
+    ],
+  },
+  notice: {
+    name: "Notice",
+    colors: [
+      { shade: "01", value: "#fff8cc" },
+      { shade: "02", value: "#fff299" },
+      { shade: "03", value: "#ffe866" },
+      { shade: "04", value: "#ffdb33" },
+      { shade: "05", value: "#ccad00" },
+      { shade: "06", value: "#665600" },
+    ],
+  },
+};
+
+const multiColors = [
+  { shade: "01", value: "#428cfe" },
+  { shade: "02", value: "#64ccd3" },
+  { shade: "03", value: "#ff9999" },
+  { shade: "04", value: "#cc9fd9" },
+  { shade: "05", value: "#b87333" },
+  { shade: "06", value: "#9ce6ec" },
+  { shade: "07", value: "#ffe866" },
+  { shade: "08", value: "#f190b4" },
+  { shade: "09", value: "#c7b299" },
+];
+
+// 表示するデータを決定
+let displayData: Array<{
+  name: string;
+  colors: Array<{ shade: string; value: string }>;
+}> = [];
+
+if (type === "single") {
+  displayData = Object.values(singleColors);
+} else if (type === "semantic") {
+  displayData = Object.values(semanticColors);
+} else if (type === "multi") {
+  displayData = [{ name: "Multi", colors: multiColors }];
+}
+---
+
+<div
+  class={css({
+    mt: "sd.system.dimension.spacing.extraLarge",
+    maxWidth: "calc(100vw - 48px)",
+    overflowX: "auto",
+  })}
+>
+  {
+    type === "multi" ? (
+      <div
+        class={css({
+          display: "flex",
+          gap: "4px",
+          minWidth: "fit-content",
+        })}
+      >
+        {multiColors.map((color) => (
+          <DataVizColorCell
+            label={color.shade}
+            value={color.value}
+            width="64px"
+          />
+        ))}
+      </div>
+    ) : (
+      <table
+        class={css({
+          borderCollapse: "separate",
+          borderSpacing: "0 24px",
+          width: "100%",
+          minWidth: "fit-content",
+        })}
+      >
+        <thead>
+          <tr>
+            <th />
+            {["01", "02", "03", "04", "05", "06"].map((shade) => (
+              <th
+                class={css({
+                  fontFamily: "sd.reference.typography.fontFamily.monospace",
+                  textStyle: "sd.system.typography.label.small_compact",
+                  pb: "sd.system.dimension.spacing.extraSmall",
+                  color: "sd.system.color.component.onSurfaceVariant",
+                  minWidth: "80px",
+                  textAlign: "center",
+                })}
+              >
+                {shade}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {displayData.map((row) => (
+            <tr>
+              <th
+                class={css({
+                  position: "sticky",
+                  left: 0,
+                  bg: "sd.system.color.component.surface",
+                  zIndex: 1,
+                  textAlign: "left",
+                  textStyle: "sd.system.typography.label.large_compact",
+                  pr: "sd.system.dimension.spacing.medium",
+                  minWidth: "120px",
+                  fontWeight: 400,
+                })}
+              >
+                <div>{row.name}</div>
+              </th>
+              {row.colors.map((color) => (
+                <DataVizColorCell value={color.value} />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  }
+</div>

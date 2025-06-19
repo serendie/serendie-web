@@ -1,0 +1,160 @@
+---
+title: データビジュアライゼーション - カラーパレット
+slug: foundations/data-visualization-palette
+lastUpdated: "2025-06-19"
+illustType: A
+description: データビジュアライゼーション専用のカラーパレットです。チャートやグラフで使用する色の一覧と使用方法を示します。
+parent: foundations/data-visualization
+fullWidth: true
+subLinks:
+  [
+    { name: "カラーの使い方", path: "/foundations/data-visualization" },
+    { name: "カラーパレット", path: "/foundations/data-visualization-palette" },
+  ]
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import {
+  PageMain,
+  PageSection,
+  PageAside,
+  PageLinks,
+  PageA,
+} from "../../../components/PageLayout.tsx";
+import StickySideNav from "../../../components/StickySideNav.astro";
+import { css } from "styled-system/css";
+import { CalloutSection } from "../../../components/CalloutSection.tsx";
+import DataVizColorMatrix from "../../../components/DataVizColorMatrix.astro";
+
+<PageSection>
+  <PageHeadLine number={1}>Mark</PageHeadLine>
+
+## Single（単色色相）
+
+チャート本体に使用する単色色相のカラーパレットです。データ数が３以下の場合は偶数のカラーを使用してください。
+
+<div className={css({ 
+  fontFamily: "sd.reference.typography.fontFamily.monospace",
+  fontSize: "12px",
+  color: "sd.reference.color.scale.gray.1000",
+  marginBottom: "16px",
+  letterSpacing: "0.6px"
+})}>
+  sd.system.color.chart.mark.primary
+</div>
+
+<DataVizColorMatrix type="single" />
+
+## Semantic
+
+成功やエラー、注意など、データに特定の意味や目的を持たせる場合はSemanticカラーパレットを使用してください。データ数が入れ子の場合は階層別にカラーを使用してください。
+
+<div className={css({ 
+  fontFamily: "sd.reference.typography.fontFamily.monospace",
+  fontSize: "12px",
+  color: "sd.reference.color.scale.gray.1000",
+  marginBottom: "16px",
+  letterSpacing: "0.6px"
+})}>
+  sd.system.color.chart.mark
+</div>
+
+<DataVizColorMatrix type="semantic" />
+
+## Multi（複数色相）
+
+チャート本体に使用する複数色相のカラーパレットです。各色を個別に分類が認識できるように、パレットの番号の順番に従って使用してください。
+
+<div className={css({ 
+  fontFamily: "sd.reference.typography.fontFamily.monospace",
+  fontSize: "12px",
+  color: "sd.reference.color.scale.gray.1000",
+  marginBottom: "16px",
+  letterSpacing: "0.6px"
+})}>
+  sd.system.color.chart.mark.multi
+</div>
+
+<DataVizColorMatrix type="multi" />
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Component</PageHeadLine>
+
+チャート内での目盛やラベルなど、マーク（チャート本体）以外の要素はこちらのパレットを使用してください。
+
+<div className={css({ 
+  fontFamily: "sd.reference.typography.fontFamily.monospace",
+  fontSize: "12px",
+  color: "sd.reference.color.scale.gray.1000",
+  marginBottom: "16px",
+  letterSpacing: "0.6px"
+})}>
+  sd.system.color.chart.component
+</div>
+
+<CalloutSection>
+  <div className={css({ padding: "20px" })}>
+    <div className={css({ display: "flex", flexDirection: "column", gap: "16px" })}>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>chart.Surface</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#f5f5f5",
+          borderRadius: "4px",
+          border: "1px solid #e0e0e0"
+        })} />
+      </div>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>onChart.Surface</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#262626",
+          borderRadius: "4px"
+        })} />
+      </div>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>onMark.Label</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#000000",
+          borderRadius: "4px"
+        })} />
+      </div>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>inverse.OnMark.Label</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#ffffff",
+          borderRadius: "4px",
+          border: "1px solid #e0e0e0"
+        })} />
+      </div>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>scalemark</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#d9d9d9",
+          borderRadius: "4px"
+        })} />
+      </div>
+      <div className={css({ display: "flex", alignItems: "center", gap: "24px" })}>
+        <span className={css({ minWidth: "120px", fontSize: "14px" })}>threshold</span>
+        <div className={css({ 
+          width: "80px", 
+          height: "40px", 
+          backgroundColor: "#428cfe",
+          borderRadius: "4px"
+        })} />
+      </div>
+    </div>
+  </div>
+</CalloutSection>
+
+</PageSection>
