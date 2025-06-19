@@ -1,8 +1,9 @@
 import React from "react";
 import { css } from "styled-system/css";
+import { token } from "styled-system/tokens";
 
 interface ChartColorMatrixProps {
-  type: "single" | "semantic" | "multi";
+  type: "single" | "semantic" | "multi" | "component";
 }
 
 // チャートカラーパレットのデータ定義
@@ -13,56 +14,56 @@ const chartColors = {
       {
         name: "Primary/Konjo",
         colors: {
-          "01": "#d7defb",
-          "02": "#bfcefc",
-          "03": "#8faefe",
-          "04": "#428cfe",
-          "05": "#0a69cf",
-          "06": "#073165",
+          "01": token("colors.sd.reference.color.scale.blue.200"),
+          "02": token("colors.sd.reference.color.scale.blue.300"),
+          "03": token("colors.sd.reference.color.scale.blue.400"),
+          "04": token("colors.sd.reference.color.scale.blue.500"),
+          "05": token("colors.sd.reference.color.scale.blue.600"),
+          "06": token("colors.sd.reference.color.scale.blue.900"),
         },
       },
       {
         name: "Primary/Kurikawa",
         colors: {
-          "01": "#f7d8c9",
-          "02": "#f7c6b0",
-          "03": "#f49567",
-          "04": "#e26324",
-          "05": "#ab4919",
-          "06": "#50230d",
+          "01": token("colors.sd.reference.color.scale.chestnut.200"),
+          "02": token("colors.sd.reference.color.scale.chestnut.300"),
+          "03": token("colors.sd.reference.color.scale.chestnut.400"),
+          "04": token("colors.sd.reference.color.scale.chestnut.500"),
+          "05": token("colors.sd.reference.color.scale.chestnut.600"),
+          "06": token("colors.sd.reference.color.scale.chestnut.900"),
         },
       },
       {
         name: "Primary/Tsutsuji",
         colors: {
-          "01": "#f6d7e0",
-          "02": "#f5c1d1",
-          "03": "#f190b4",
-          "04": "#eb4f8e",
-          "05": "#932653",
-          "06": "#591734",
+          "01": token("colors.sd.reference.color.scale.pink.200"),
+          "02": token("colors.sd.reference.color.scale.pink.300"),
+          "03": token("colors.sd.reference.color.scale.pink.400"),
+          "04": token("colors.sd.reference.color.scale.pink.500"),
+          "05": token("colors.sd.reference.color.scale.pink.600"),
+          "06": token("colors.sd.reference.color.scale.pink.900"),
         },
       },
       {
         name: "Primary/Sumire",
         colors: {
-          "01": "#eadaee",
-          "02": "#dcbde4",
-          "03": "#cc9fd9",
-          "04": "#aa61c2",
-          "05": "#733b85",
-          "06": "#462352",
+          "01": token("colors.sd.reference.color.scale.purple.200"),
+          "02": token("colors.sd.reference.color.scale.purple.300"),
+          "03": token("colors.sd.reference.color.scale.purple.400"),
+          "04": token("colors.sd.reference.color.scale.purple.500"),
+          "05": token("colors.sd.reference.color.scale.purple.600"),
+          "06": token("colors.sd.reference.color.scale.purple.900"),
         },
       },
       {
         name: "Primary/Asagi",
         colors: {
-          "01": "#c3eff4",
-          "02": "#9ce6ec",
-          "03": "#64ccd3",
-          "04": "#00a3af",
-          "05": "#00757e",
-          "06": "#02373c",
+          "01": token("colors.sd.reference.color.scale.skyBlue.200"),
+          "02": token("colors.sd.reference.color.scale.skyBlue.300"),
+          "03": token("colors.sd.reference.color.scale.skyBlue.400"),
+          "04": token("colors.sd.reference.color.scale.skyBlue.500"),
+          "05": token("colors.sd.reference.color.scale.skyBlue.600"),
+          "06": token("colors.sd.reference.color.scale.skyBlue.900"),
         },
       },
     ],
@@ -73,34 +74,34 @@ const chartColors = {
       {
         name: "Positive",
         colors: {
-          "01": "#d4f4e8",
-          "02": "#b0ecd2",
-          "03": "#7dddb0",
-          "04": "#4fc988",
-          "05": "#2bb563",
-          "06": "#145c31",
+          "01": token("colors.sd.system.color.chart.mark.positive.01"),
+          "02": token("colors.sd.system.color.chart.mark.positive.02"),
+          "03": token("colors.sd.system.color.chart.mark.positive.03"),
+          "04": token("colors.sd.system.color.chart.mark.positive.04"),
+          "05": token("colors.sd.system.color.chart.mark.positive.05"),
+          "06": token("colors.sd.system.color.chart.mark.positive.06"),
         },
       },
       {
         name: "Negative",
         colors: {
-          "01": "#ffdbdb",
-          "02": "#ffc2c2",
-          "03": "#ff9999",
-          "04": "#ff6666",
-          "05": "#e52e2e",
-          "06": "#991919",
+          "01": token("colors.sd.system.color.chart.mark.negative.01"),
+          "02": token("colors.sd.system.color.chart.mark.negative.02"),
+          "03": token("colors.sd.system.color.chart.mark.negative.03"),
+          "04": token("colors.sd.system.color.chart.mark.negative.04"),
+          "05": token("colors.sd.system.color.chart.mark.negative.05"),
+          "06": token("colors.sd.system.color.chart.mark.negative.06"),
         },
       },
       {
         name: "Notice",
         colors: {
-          "01": "#fff8cc",
-          "02": "#fff299",
-          "03": "#ffe866",
-          "04": "#ffdb33",
-          "05": "#ccad00",
-          "06": "#665600",
+          "01": token("colors.sd.system.color.chart.mark.notice.01"),
+          "02": token("colors.sd.system.color.chart.mark.notice.02"),
+          "03": token("colors.sd.system.color.chart.mark.notice.03"),
+          "04": token("colors.sd.system.color.chart.mark.notice.04"),
+          "05": token("colors.sd.system.color.chart.mark.notice.05"),
+          "06": token("colors.sd.system.color.chart.mark.notice.06"),
         },
       },
     ],
@@ -111,15 +112,61 @@ const chartColors = {
       {
         name: "Multi",
         colors: {
-          "01": "#428cfe",
-          "02": "#64ccd3",
-          "03": "#ff9999",
-          "04": "#cc9fd9",
-          "05": "#b87333",
-          "06": "#9ce6ec",
-          "07": "#ffe866",
-          "08": "#f190b4",
-          "09": "#c7b299",
+          "01": token("colors.sd.system.color.chart.mark.multi.01"),
+          "02": token("colors.sd.system.color.chart.mark.multi.02"),
+          "03": token("colors.sd.system.color.chart.mark.multi.03"),
+          "04": token("colors.sd.system.color.chart.mark.multi.04"),
+          "05": token("colors.sd.system.color.chart.mark.multi.05"),
+          "06": token("colors.sd.system.color.chart.mark.multi.06"),
+          "07": token("colors.sd.system.color.chart.mark.multi.07"),
+          "08": token("colors.sd.system.color.chart.mark.multi.08"),
+          "09": token("colors.sd.system.color.chart.mark.multi.09"),
+          "10": token("colors.sd.system.color.chart.mark.multi.10"),
+        },
+      },
+    ],
+  },
+  component: {
+    shades: [""],
+    rows: [
+      {
+        name: "Surface",
+        colors: {
+          "": token("colors.sd.system.color.chart.component.chartSurface"),
+        },
+      },
+      {
+        name: "onSurface",
+        colors: {
+          // sd/system/color/chart/component/onChartSurface
+          "": token("colors.sd.system.color.chart.component.onChartSurface"),
+        },
+      },
+      {
+        name: "onMarkLabel",
+        colors: {
+          //sd/system/color/chart/component/onMarkLabel
+          "": token("colors.sd.system.color.chart.component.onMarkLabel"),
+        },
+      },
+      {
+        name: "inverseOnMarkLabel",
+        colors: {
+          "": token(
+            "colors.sd.system.color.chart.component.inverseOnMarkLabel"
+          ),
+        },
+      },
+      {
+        name: "scaleMark",
+        colors: {
+          "": token("colors.sd.system.color.chart.component.scalemark"),
+        },
+      },
+      {
+        name: "threshold",
+        colors: {
+          "": token("colors.sd.system.color.chart.component.threshold"),
         },
       },
     ],
@@ -246,7 +293,7 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ type }) => {
                     className={cellClass}
                     style={{
                       backgroundColor: color,
-                      borderWidth: color.toLowerCase() === "#ffffff" ? 1 : 0,
+                      borderWidth: color === "#ffffff" ? 1 : 0,
                     }}
                     onClick={(e) => handleColorClick(color, e.currentTarget)}
                   >

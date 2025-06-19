@@ -125,5 +125,5 @@ The user typically runs `npm run dev` in a separate terminal window. You don't n
 When you complete a task, run this command to notify the user with a loud ping sound:
 
 ```bash
-afplay /System/Library/Sounds/Hero.aiff -v 10
+afplay /System/Library/Sounds/Hero.aiff
 ```

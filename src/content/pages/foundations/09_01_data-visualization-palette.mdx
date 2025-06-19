@@ -129,105 +129,15 @@ import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
   sd.system.color.chart.component
 </div>
 
-<CalloutSection>
-  <div className={css({ padding: "20px" })}>
-    <div
-      className={css({ display: "flex", flexDirection: "column", gap: "16px" })}
-    >
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          chart.Surface
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#f5f5f5",
-            borderRadius: "4px",
-            border: "1px solid #e0e0e0",
-          })}
-        />
-      </div>
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          onChart.Surface
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#262626",
-            borderRadius: "4px",
-          })}
-        />
-      </div>
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          onMark.Label
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#000000",
-            borderRadius: "4px",
-          })}
-        />
-      </div>
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          inverse.OnMark.Label
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#ffffff",
-            borderRadius: "4px",
-            border: "1px solid #e0e0e0",
-          })}
-        />
-      </div>
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          scalemark
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#d9d9d9",
-            borderRadius: "4px",
-          })}
-        />
-      </div>
-      <div
-        className={css({ display: "flex", alignItems: "center", gap: "24px" })}
-      >
-        <span className={css({ minWidth: "120px", fontSize: "14px" })}>
-          threshold
-        </span>
-        <div
-          className={css({
-            width: "80px",
-            height: "40px",
-            backgroundColor: "#428cfe",
-            borderRadius: "4px",
-          })}
-        />
-      </div>
-    </div>
-  </div>
-</CalloutSection>
+<div
+  className={css({
+    mt: "sd.system.dimension.spacing.twoExtraLarge",
+    maxWidth: "calc(100vw - 48px)",
+    overflowX: "auto",
+  })}
+>
+  <ChartColorMatrix type="component" />
+</div>
 
 </PageSection>
+
