@@ -12,7 +12,8 @@ function cleanContent(content: string): string {
 
   // Extract Code component information
   const codeBlocks = [];
-  const codeRegex = /<Code[^>]*?title="([^"]*)"[^>]*?description="([^"]*)"[^>]*?>[\s\S]*?<\/Code>/g;
+  const codeRegex =
+    /<Code[^>]*?title="([^"]*)"[^>]*?description="([^"]*)"[^>]*?>[\s\S]*?<\/Code>/g;
   let match;
   while ((match = codeRegex.exec(content)) !== null) {
     const title = match[1];
@@ -21,7 +22,10 @@ function cleanContent(content: string): string {
   }
 
   // Remove all JSX/MDX components
-  content = content.replace(/<[A-Z][A-Za-z0-9]*[^>]*>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g, "");
+  content = content.replace(
+    /<[A-Z][A-Za-z0-9]*[^>]*>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g,
+    ""
+  );
   content = content.replace(/<[A-Z][A-Za-z0-9]*[^>]*\/>/g, "");
 
   // Remove export statements
@@ -82,7 +86,7 @@ export const GET: APIRoute = async () => {
   // Table of contents
   content.push("## Table of Contents");
   content.push("");
-  
+
   // About TOC
   if (pagesByDir["about"]) {
     content.push("### About");
