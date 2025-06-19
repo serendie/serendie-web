@@ -10,15 +10,27 @@ function cleanContent(content: string): string {
   // Remove import statements
   content = content.replace(/^import\s+.*?;?\s*$/gm, "");
 
-  // Remove React/MDX components (basic pattern)
-  content = content.replace(
-    /<[A-Z][A-Za-z0-9]*[^>]*>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g,
-    ""
-  );
+  // Extract Code component information
+  const codeBlocks = [];
+  const codeRegex = /<Code[^>]*?title="([^"]*)"[^>]*?description="([^"]*)"[^>]*?>[\s\S]*?<\/Code>/g;
+  let match;
+  while ((match = codeRegex.exec(content)) !== null) {
+    const title = match[1];
+    const description = match[2];
+    codeBlocks.push(`### ${title}\n\n${description}`);
+  }
+
+  // Remove all JSX/MDX components
+  content = content.replace(/<[A-Z][A-Za-z0-9]*[^>]*>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g, "");
   content = content.replace(/<[A-Z][A-Za-z0-9]*[^>]*\/>/g, "");
 
   // Remove export statements
   content = content.replace(/^export\s+.*?;?\s*$/gm, "");
+
+  // Add extracted code blocks at the end
+  if (codeBlocks.length > 0) {
+    content = content.trim() + "\n\n" + codeBlocks.join("\n\n");
+  }
 
   // Clean up multiple newlines
   content = content.replace(/\n{3,}/g, "\n\n");
@@ -44,6 +56,10 @@ export const GET: APIRoute = async () => {
     a.data.title.localeCompare(b.data.title)
   );
 
+  // For MDX content, we'll use the raw body property
+  const pagesWithBody = sortedPages;
+  const componentsWithBody = sortedComponents;
+
   // Build the llms-full.txt content
   const content = [];
 
@@ -56,8 +72,8 @@ export const GET: APIRoute = async () => {
   content.push("");
 
   // Group pages by directory
-  const pagesByDir: Record<string, typeof pages> = {};
-  sortedPages.forEach((page) => {
+  const pagesByDir: Record<string, typeof pagesWithBody> = {};
+  pagesWithBody.forEach((page) => {
     const dir = page.id.split("/")[0];
     if (!pagesByDir[dir]) pagesByDir[dir] = [];
     pagesByDir[dir].push(page);
@@ -67,6 +83,24 @@ export const GET: APIRoute = async () => {
   content.push("## Table of Contents");
   content.push("");
   
+  // About TOC
+  if (pagesByDir["about"]) {
+    content.push("### About");
+    pagesByDir["about"].forEach((page) => {
+      content.push(`- ${page.data.title}`);
+    });
+    content.push("");
+  }
+
+  // Get Started TOC
+  if (pagesByDir["get-started"]) {
+    content.push("### Get Started");
+    pagesByDir["get-started"].forEach((page) => {
+      content.push(`- ${page.data.title}`);
+    });
+    content.push("");
+  }
+
   // Foundations TOC
   if (pagesByDir["foundations"]) {
     content.push("### Foundations");
@@ -78,28 +112,10 @@ export const GET: APIRoute = async () => {
 
   // Components TOC
   content.push("### Components");
-  sortedComponents.forEach((component) => {
+  componentsWithBody.forEach((component) => {
     content.push(`- ${component.data.title}`);
   });
   content.push("");
-
-  // Get Started TOC
-  if (pagesByDir["get-started"]) {
-    content.push("### Get Started");
-    pagesByDir["get-started"].forEach((page) => {
-      content.push(`- ${page.data.title}`);
-    });
-    content.push("");
-  }
-
-  // About TOC
-  if (pagesByDir["about"]) {
-    content.push("### About");
-    pagesByDir["about"].forEach((page) => {
-      content.push(`- ${page.data.title}`);
-    });
-    content.push("");
-  }
 
   // Terms TOC
   if (pagesByDir["terms"]) {
@@ -116,6 +132,25 @@ export const GET: APIRoute = async () => {
   // Full content sections
   content.push("## Full Documentation Content");
   content.push("");
+
+  // About full content
+  if (pagesByDir["about"]) {
+    content.push("### About");
+    content.push("");
+    pagesByDir["about"].forEach((page) => {
+      const path = formatPagePath(page.slug);
+      content.push(`#### ${page.data.title}`);
+      content.push(`URL: ${baseUrl}${path}`);
+      content.push("");
+      const cleanedContent = cleanContent(page.body);
+      if (cleanedContent) {
+        content.push(cleanedContent);
+        content.push("");
+      }
+      content.push("---");
+      content.push("");
+    });
+  }
 
   // Get Started full content
   if (pagesByDir["get-started"]) {
@@ -158,7 +193,7 @@ export const GET: APIRoute = async () => {
   // Components full content
   content.push("### Components");
   content.push("");
-  sortedComponents.forEach((component) => {
+  componentsWithBody.forEach((component) => {
     const path = `/components/${component.slug}`;
     content.push(`#### ${component.data.title}`);
     content.push(`URL: ${baseUrl}${path}`);
@@ -176,25 +211,6 @@ export const GET: APIRoute = async () => {
     content.push("---");
     content.push("");
   });
-
-  // About full content
-  if (pagesByDir["about"]) {
-    content.push("### About");
-    content.push("");
-    pagesByDir["about"].forEach((page) => {
-      const path = formatPagePath(page.slug);
-      content.push(`#### ${page.data.title}`);
-      content.push(`URL: ${baseUrl}${path}`);
-      content.push("");
-      const cleanedContent = cleanContent(page.body);
-      if (cleanedContent) {
-        content.push(cleanedContent);
-        content.push("");
-      }
-      content.push("---");
-      content.push("");
-    });
-  }
 
   // Terms full content
   if (pagesByDir["terms"]) {
