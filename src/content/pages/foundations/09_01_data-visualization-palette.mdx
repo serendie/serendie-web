@@ -24,6 +24,7 @@ import StickySideNav from "../../../components/StickySideNav.astro";
 import { css } from "styled-system/css";
 import { CalloutSection } from "../../../components/CalloutSection.tsx";
 import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
+import { chartColors } from "@/data/chartColors.ts";
 
 <PageSection>
   <PageHeadLine number={1}>Mark</PageHeadLine>
@@ -52,7 +53,7 @@ import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
     overflowX: "auto",
   })}
 >
-  <ChartColorMatrix type="single" />
+  <ChartColorMatrix data={chartColors.single} />
 </div>
 
 ## Semantic
@@ -79,7 +80,7 @@ import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
     overflowX: "auto",
   })}
 >
-  <ChartColorMatrix type="semantic" />
+  <ChartColorMatrix data={chartColors.semantic} />
 </div>
 
 ## Multi（複数色相）
@@ -106,7 +107,7 @@ import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
     overflowX: "auto",
   })}
 >
-  <ChartColorMatrix type="multi" />
+  <ChartColorMatrix data={chartColors.multi} />
 </div>
 
 </PageSection>
@@ -136,8 +137,7 @@ import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
     overflowX: "auto",
   })}
 >
-  <ChartColorMatrix type="component" />
+  <ChartColorMatrix data={chartColors.component} />
 </div>
 
 </PageSection>
-
