@@ -32,7 +32,7 @@ function formatPagePath(slug: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const baseUrl = "https://serendie.com"; // Update with actual domain
+  const baseUrl = "https://serendie.design";
 
   // Fetch all content
   const pages = await getCollection("pages");
@@ -130,7 +130,7 @@ export const GET: APIRoute = async () => {
   content.push("");
   content.push(
     "For complete documentation content including all details, visit: " +
-      `${baseUrl}/llms-full.txt`
+      "https://serendie.design/llms-full.txt"
   );
   content.push("");
 
