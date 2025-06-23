@@ -30,3 +30,5 @@ styled-system-studio
 ## Test
 coverage/
 src/mcp/__tests__/outputs/
+
+.wrangler
