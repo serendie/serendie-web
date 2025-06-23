@@ -1,0 +1,133 @@
+---
+import Layout from "../layouts/Global.astro";
+
+// Pre-render this page at build time
+export const prerender = true;
+---
+
+<Layout title="MCP Server Demo">
+  <div class="mcp-demo">
+    <h1>MCP Server Demo</h1>
+    
+    <div class="section">
+      <h2>Available MCP Tools</h2>
+      <p>The Serendie MCP server provides the following tools:</p>
+      
+      <div class="tool">
+        <h3>1. health-check</h3>
+        <p>Check if the MCP server is running properly.</p>
+        <pre>No input required</pre>
+      </div>
+      
+      <div class="tool">
+        <h3>2. get-design-tokens</h3>
+        <p>Retrieve design tokens for Serendie Design System.</p>
+        <pre>{`{
+  "theme": "asagi" | "konjo" | "kurikawa" | "sumire" | "tsutsuji",
+  "category": "color" | "spacing" | "typography" | "all"
+}`}</pre>
+      </div>
+      
+      <div class="tool">
+        <h3>3. get-component-info</h3>
+        <p>Get detailed information about UI components.</p>
+        <pre>{`{
+  "componentName": "button" // optional, returns all if not specified
+}`}</pre>
+      </div>
+      
+      <div class="tool">
+        <h3>4. search-documentation</h3>
+        <p>Search through Serendie documentation.</p>
+        <pre>{`{
+  "query": "your search query",
+  "category": "components" | "pages" | "all",
+  "limit": 10
+}`}</pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>MCP Endpoint</h2>
+      <p>The MCP server is available at:</p>
+      <code class="endpoint">/api/mcp</code>
+      <p>This endpoint supports the Model Context Protocol for AI assistants to interact with the Serendie Design System.</p>
+    </div>
+
+    <div class="section">
+      <h2>Integration</h2>
+      <p>To use this MCP server with an AI assistant that supports the Model Context Protocol:</p>
+      <ol>
+        <li>Configure your AI assistant to connect to the MCP endpoint</li>
+        <li>The assistant will have access to all the tools listed above</li>
+        <li>It can retrieve design tokens, component information, and search documentation</li>
+      </ol>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .mcp-demo {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--colors-sd-system-color-text-primary);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--colors-sd-system-color-text-primary);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--colors-sd-system-color-text-secondary);
+  }
+
+  .tool {
+    background-color: var(--colors-sd-system-component-surfaceDim);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tool p {
+    margin-bottom: 0.5rem;
+  }
+
+  pre {
+    background-color: var(--colors-sd-system-component-surface);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--colors-sd-system-color-border-primary);
+  }
+
+  code.endpoint {
+    background-color: var(--colors-sd-system-component-surfaceDim);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    display: inline-block;
+    margin: 1rem 0;
+  }
+
+  ol {
+    margin-left: 2rem;
+    line-height: 1.8;
+  }
+</style>

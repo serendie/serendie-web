@@ -27,17 +27,22 @@ npm run build:tokens     # Rebuild design tokens from Style Dictionary
 npm run lint             # Run ESLint
 npm run lint:fix         # Auto-fix ESLint issues
 npm run format           # Format code with Prettier
+
+# Testing
+npm run test:mcp         # Run MCP server tests
 ```
 
 ## Architecture & Key Concepts
 
 ### Tech Stack
 
-- **Framework**: Astro 4.x with React 18 integration
+- **Framework**: Astro 4.x with React 18 integration (hybrid mode for API routes)
 - **Styling**: PandaCSS with @serendie/ui preset
 - **Content**: MDX for component documentation
 - **Build**: Vite with custom SVG handling
 - **Deployment**: Cloudflare Pages
+- **API**: Hono.js for API routes
+- **MCP**: Model Context Protocol server for AI assistant integration
 
 ### Project Structure
 
@@ -48,6 +53,9 @@ src/
 │   ├── components/    # UI component docs
 │   └── pages/        # General documentation
 ├── layouts/          # Page layouts
+├── mcp/              # MCP server implementation
+│   ├── server.ts     # MCP server configuration
+│   └── tools/        # MCP tool implementations
 ├── pages/            # Astro routes
 └── sampleCode/       # Component code examples
 
@@ -86,6 +94,13 @@ tokens/               # Design token configuration
    - Content collections defined in `src/content/config.ts`
    - Frontmatter controls navigation and metadata
    - MDX allows React components in documentation
+
+5. **MCP Server Development**:
+   - MCP server files are in `src/mcp/`
+   - Add new tools in `src/mcp/tools/`
+   - **IMPORTANT**: Always run `npm run test:mcp` after modifying MCP server code
+   - Tests are located in `src/mcp/__tests__/`
+   - **Note**: The dev server must be running (`npm run dev`) before running MCP tests
 
 ### Important Configuration Files
 
