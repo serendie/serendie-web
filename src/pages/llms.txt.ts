@@ -3,7 +3,9 @@ import { getCollection } from "astro:content";
 
 export const prerender = true;
 
-function cleanContent(content: string): string {
+function cleanContent(content: string | undefined): string {
+  if (!content) return "";
+
   // Remove frontmatter
   content = content.replace(/^---[\s\S]*?---\n/, "");
 
