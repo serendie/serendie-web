@@ -23,9 +23,10 @@
   },
   "dependencies": {
     "@ark-ui/react": "^3.5.0",
-    "@astrojs/check": "^0.8.1",
-    "@astrojs/mdx": "^3.1.6",
-    "@astrojs/react": "^3.6.0",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.6.0",
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/react": "^4.3.0",
     "@eslint/js": "^9.15.0",
     "@hono/mcp": "^0.1.0",
     "@modelcontextprotocol/sdk": "^1.13.0",
@@ -37,7 +38,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "astro": "^4.11.5",
+    "astro": "^5.10.0",
     "embla-carousel": "^8.2.1",
     "embla-carousel-react": "^8.2.1",
     "eslint": "^8.57.1",
@@ -60,7 +61,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@astrojs/partytown": "^2.1.2",
+    "@astrojs/partytown": "^2.1.4",
     "@pandacss/dev": "^0.42.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",

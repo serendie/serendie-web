@@ -6,11 +6,15 @@ import svgr from "vite-plugin-svgr";
 import partytown from "@astrojs/partytown";
 import { getSiteUrl, BASE_PATH } from "./src/utils";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   site: getSiteUrl(),
   base: BASE_PATH,
-  output: "hybrid", // Enable SSR for API routes
+
+  output: "server",
+
   integrations: [
     react(),
     mdx(),
@@ -20,17 +24,21 @@ export default defineConfig({
       },
     }),
   ],
+
   markdown: {
     shikiConfig: {
       theme: "github-light",
       langs: ["ts", "js", "jsx", "tsx", "css", "shell"],
     },
   },
+
   vite: {
     plugins: [svgr()],
     ssr: {
       noExternal: ["@ark-ui/react", "@serendie/ui"],
     },
   },
+
   trailingSlash: "never",
+  adapter: cloudflare(),
 });
