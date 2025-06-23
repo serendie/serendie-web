@@ -13,7 +13,7 @@ export default defineConfig({
   site: getSiteUrl(),
   base: BASE_PATH,
 
-  output: "server",
+  output: "static",
 
   integrations: [
     react(),

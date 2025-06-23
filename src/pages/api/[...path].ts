@@ -74,12 +74,15 @@ app.notFound((c) => {
 app.onError((err, c) => {
   console.error("API Error:", err);
   console.error("Stack trace:", err.stack);
-  return c.json({ 
-    error: "Internal Server Error",
-    message: err.message,
-    // Include stack trace in development
-    ...(process.env.NODE_ENV !== "production" && { stack: err.stack })
-  }, 500);
+  return c.json(
+    {
+      error: "Internal Server Error",
+      message: err.message,
+      // Include stack trace in development
+      ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
+    },
+    500
+  );
 });
 
 // Export the app type for TypeScript support
