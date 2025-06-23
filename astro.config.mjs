@@ -10,6 +10,7 @@ import { getSiteUrl, BASE_PATH } from "./src/utils";
 export default defineConfig({
   site: getSiteUrl(),
   base: BASE_PATH,
+  output: "hybrid", // Enable SSR for API routes
   integrations: [
     react(),
     mdx(),
