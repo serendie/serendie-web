@@ -24,8 +24,9 @@ interface MCPResponse {
   id: number;
 }
 
-// MCP server URL
-const MCP_URL = "http://localhost:4321/api/mcp";
+// Get port from command line argument or use default
+const PORT = process.argv[2] || "4321";
+const MCP_URL = `http://localhost:${PORT}/api/mcp`;
 
 // Output directory for test results
 const OUTPUT_DIR = path.join(process.cwd(), "src/mcp/__tests__/outputs");
@@ -35,7 +36,7 @@ async function sendMCPRequest(request: MCPRequest): Promise<MCPResponse> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json, text/event-stream",
+      Accept: "application/json, text/event-stream",
     },
     body: JSON.stringify(request),
   });
@@ -52,7 +53,7 @@ async function sendMCPRequest(request: MCPRequest): Promise<MCPResponse> {
     // Handle SSE response
     const text = await response.text();
     const lines = text.split("\n");
-    
+
     for (const line of lines) {
       if (line.startsWith("data: ")) {
         const data = line.slice(6);
@@ -60,12 +61,12 @@ async function sendMCPRequest(request: MCPRequest): Promise<MCPResponse> {
           try {
             return JSON.parse(data);
           } catch (e) {
-            console.error("Failed to parse SSE data:", data);
+            console.error("Failed to parse SSE data:", data, e);
           }
         }
       }
     }
-    
+
     throw new Error("No valid JSON data found in SSE response");
   }
 
@@ -246,17 +247,19 @@ async function checkServerStatus(): Promise<boolean> {
 async function main() {
   console.log("=== MCP Server Test Client ===");
   console.log(`Server URL: ${MCP_URL}`);
+  console.log(`Port: ${PORT}`);
   console.log(`Output directory: ${OUTPUT_DIR}\n`);
 
   // Check if server is running
   console.log("Checking if dev server is running...");
   const isServerRunning = await checkServerStatus();
-  
+
   if (!isServerRunning) {
-    console.error("\n❌ Dev server is not running!");
+    console.error(`\n❌ Dev server is not running on port ${PORT}!`);
     console.error("\nPlease start the dev server first with:");
     console.error("  npm run dev");
     console.error("\nThen run this test again in another terminal.");
+    console.error(`\nOr specify a different port: npm run test:mcp <port>`);
     process.exit(1);
   }
 
