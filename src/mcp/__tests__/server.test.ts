@@ -35,7 +35,6 @@ describe("MCP Server", () => {
     it("should have registered all expected tools", () => {
       // We know these tools are registered in createMcpServer:
       // - health-check
-      // - get-design-tokens
       // - get-symbols
       // - get-symbol-detail
 

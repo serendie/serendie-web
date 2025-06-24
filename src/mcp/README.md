@@ -6,7 +6,6 @@ This directory contains the Model Context Protocol (MCP) server implementation f
 
 The MCP server allows AI assistants to interact with the Serendie Design System documentation programmatically. It provides tools for:
 
-- Retrieving design tokens by theme and category
 - Getting list of available symbols/icons from the design system
 - Getting detailed information about specific symbols
 - Health checking the server status
@@ -17,12 +16,10 @@ The MCP server allows AI assistants to interact with the Serendie Design System 
 src/mcp/
 ├── server.ts              # Main MCP server configuration
 ├── tools/                 # Tool implementations
-│   ├── design-tokens.ts   # Design token retrieval
 │   └── symbols.ts         # Symbol list and detail retrieval
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── tools/
-│   │   ├── design-tokens.test.ts
 │   │   └── symbols.test.ts
 │   └── outputs/          # Test output files (gitignored)
 ├── test-client.ts        # Manual test client
@@ -81,14 +78,7 @@ The test client will:
    - No parameters required
    - Returns server status and timestamp
 
-2. **get-design-tokens**
-
-   - Parameters:
-     - `theme`: "asagi" | "konjo" | "kurikawa" | "sumire" | "tsutsuji" (optional)
-     - `category`: "color" | "spacing" | "typography" | "all" (optional)
-   - Returns design tokens for the specified theme and category
-
-3. **get-symbols**
+2. **get-symbols**
 
    - Parameters:
      - `search`: string (optional) - Filter symbols by name
@@ -98,7 +88,7 @@ The test client will:
      - Available variants (common to all symbols)
      - Array of symbol names
 
-4. **get-symbol-detail**
+3. **get-symbol-detail**
    - Parameters:
      - `name`: string (required) - The name of the symbol to get details for
    - Returns detailed information about a specific symbol:
@@ -140,14 +130,14 @@ Before implementing, consider:
 
 Follow MCP best practices for tool naming:
 
-- Use **kebab-case** (e.g., `get-design-tokens`, `search-symbols`)
+- Use **kebab-case** (e.g., `get-symbols`, `search-documentation`)
 - Start with a **verb** that describes the action (get, search, list, check, validate)
 - Be **descriptive** but **concise**
 - Examples:
-  - ✅ `get-design-tokens` (clear action + target)
-  - ✅ `search-documentation` (action + what's being searched)
-  - ❌ `tokens` (no verb, unclear)
-  - ❌ `getDesignTokensFromThemeAndCategory` (too verbose, wrong case)
+  - ✅ `get-symbols` (clear action + target)
+  - ✅ `get-symbol-detail` (action + specific resource)
+  - ❌ `symbols` (no verb, unclear)
+  - ❌ `getSymbolDetailWithUsageExamples` (too verbose, wrong case)
 
 #### 3. Implementation Steps
 
@@ -284,7 +274,6 @@ Follow MCP best practices for tool naming:
 **Examples in this Project**:
 
 - Tools with multiple functions: `src/mcp/tools/symbols.ts` (list + detail)
-- Tool with file reading: `src/mcp/tools/design-tokens.ts`
 - Direct registration: See `health-check` in `src/mcp/server.ts`
 
 #### 6. Common Patterns
