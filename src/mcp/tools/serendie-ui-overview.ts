@@ -160,7 +160,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             importance: "必須。px値禁止。",
             priority: [
               "スペーシング: p: 4, gap: 2 (px値禁止)",
-              "色: color: 'primary' (HEX禁止)",
+              "色: color: 'sd.system.color.impression.primary' (HEX禁止)",
             ],
             commonMistakes: [
               "padding: '16px' → p: 4",
