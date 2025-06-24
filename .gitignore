@@ -32,3 +32,5 @@ coverage/
 src/mcp/__tests__/outputs/
 
 .wrangler
+
+src/mcp/data
