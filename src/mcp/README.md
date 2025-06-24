@@ -7,8 +7,8 @@ This directory contains the Model Context Protocol (MCP) server implementation f
 The MCP server allows AI assistants to interact with the Serendie Design System documentation programmatically. It provides tools for:
 
 - Retrieving design tokens by theme and category
-- Getting component information and documentation
-- Searching through documentation content
+- Getting list of available symbols/icons from the design system
+- Getting detailed information about specific symbols
 - Health checking the server status
 
 ## File Structure
@@ -18,14 +18,12 @@ src/mcp/
 ├── server.ts              # Main MCP server configuration
 ├── tools/                 # Tool implementations
 │   ├── design-tokens.ts   # Design token retrieval
-│   ├── components.ts      # Component information
-│   └── documentation.ts   # Documentation search
+│   └── symbols.ts         # Symbol list and detail retrieval
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── tools/
 │   │   ├── design-tokens.test.ts
-│   │   ├── components.test.ts
-│   │   └── documentation.test.ts
+│   │   └── symbols.test.ts
 │   └── outputs/          # Test output files (gitignored)
 ├── test-client.ts        # Manual test client
 └── README.md            # This file
@@ -36,16 +34,19 @@ src/mcp/
 ### Unit Tests
 
 Run all tests:
+
 ```bash
 npm test
 ```
 
 Run tests with UI:
+
 ```bash
 npm run test:ui
 ```
 
 Run tests with coverage:
+
 ```bash
 npm run test:coverage
 ```
@@ -53,16 +54,19 @@ npm run test:coverage
 ### Manual Testing with MCP Client
 
 1. **Start the dev server** (in one terminal):
+
 ```bash
 npm run dev
 ```
 
 2. **Run the MCP tests** (in another terminal):
+
 ```bash
 npm run test:mcp
 ```
 
 The test client will:
+
 - Check if the dev server is running
 - List all available tools
 - Test each tool with various parameters
@@ -73,30 +77,40 @@ The test client will:
 ## Available MCP Tools
 
 1. **health-check**
+
    - No parameters required
    - Returns server status and timestamp
 
 2. **get-design-tokens**
+
    - Parameters:
      - `theme`: "asagi" | "konjo" | "kurikawa" | "sumire" | "tsutsuji" (optional)
      - `category`: "color" | "spacing" | "typography" | "all" (optional)
    - Returns design tokens for the specified theme and category
 
-3. **get-component-info**
-   - Parameters:
-     - `componentName`: string (optional)
-   - Returns component details or list of all components
+3. **get-symbols**
 
-4. **search-documentation**
    - Parameters:
-     - `query`: string (required)
-     - `category`: "components" | "pages" | "all" (optional)
-     - `limit`: number (optional)
-   - Returns search results from documentation
+     - `search`: string (optional) - Filter symbols by name
+     - `limit`: number (optional) - Maximum number of results to return
+   - Returns list of available Serendie symbol names:
+     - Total count and filtered count
+     - Available variants (common to all symbols)
+     - Array of symbol names
+
+4. **get-symbol-detail**
+   - Parameters:
+     - `name`: string (required) - The name of the symbol to get details for
+   - Returns detailed information about a specific symbol:
+     - Symbol existence check
+     - Available variants
+     - Import statement
+     - Usage examples (basic, outlined, filled)
 
 ## Expected Output Format
 
 Each tool returns a response in the following format:
+
 ```json
 {
   "content": [
@@ -110,14 +124,198 @@ Each tool returns a response in the following format:
 
 ## Development
 
-### Adding New Tools
+### Creating New MCP Tools - Complete Guide
 
-1. Create a new tool file in `src/mcp/tools/`
-2. Define the tool's input schema using Zod
-3. Implement the tool logic
-4. Register the tool in `src/mcp/server.ts`
-5. Add tests in `src/mcp/__tests__/`
-6. Run `npm run test:mcp` to verify
+#### 1. Planning Your Tool
+
+Before implementing, consider:
+
+- **Purpose**: What specific functionality does this tool provide?
+- **Target Users**: Who will use this tool (AI assistants, developers)?
+- **Data Source**: Where will the tool get its data (files, API, computed)?
+- **Performance**: Will this tool need caching or optimization?
+- **Error Cases**: What could go wrong and how should errors be handled?
+
+#### 2. Naming Conventions
+
+Follow MCP best practices for tool naming:
+
+- Use **kebab-case** (e.g., `get-design-tokens`, `search-symbols`)
+- Start with a **verb** that describes the action (get, search, list, check, validate)
+- Be **descriptive** but **concise**
+- Examples:
+  - ✅ `get-design-tokens` (clear action + target)
+  - ✅ `search-documentation` (action + what's being searched)
+  - ❌ `tokens` (no verb, unclear)
+  - ❌ `getDesignTokensFromThemeAndCategory` (too verbose, wrong case)
+
+#### 3. Implementation Steps
+
+1. **Create the tool file** in `src/mcp/tools/your-tool-name.ts`:
+
+   ```typescript
+   import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+   import { z } from "zod";
+
+   export function getYourToolName(mcpServer: McpServer) {
+     mcpServer.registerTool(
+       "your-tool-name",
+       {
+         title: "Your Tool Title",
+         description: "Clear description of what this tool does",
+         inputSchema: {
+           // Define your parameters here
+         },
+       },
+       async (params) => {
+         // Implement your tool logic
+       }
+     );
+   }
+   ```
+
+2. **Define input schema** using Zod:
+
+   ```typescript
+   inputSchema: {
+     requiredParam: z
+       .string()
+       .describe("Description of this required parameter"),
+     optionalParam: z
+       .number()
+       .optional()
+       .describe("Description of this optional parameter"),
+   }
+   ```
+
+3. **Implement tool logic** with proper error handling:
+
+   ```typescript
+   async (params) => {
+     try {
+       // Your implementation
+       const result = await processData(params);
+
+       return {
+         content: [
+           {
+             type: "text",
+             text: JSON.stringify(result, null, 2),
+           },
+         ],
+       };
+     } catch (error) {
+       return {
+         content: [
+           {
+             type: "text",
+             text: JSON.stringify({
+               error: "Descriptive error message",
+               message:
+                 error instanceof Error ? error.message : "Unknown error",
+             }),
+           },
+         ],
+       };
+     }
+   };
+   ```
+
+4. **Register the tool** in `src/mcp/server.ts`:
+
+   ```typescript
+   import { getYourToolName } from "./tools/your-tool-name";
+
+   // In createMcpServer function:
+   getYourToolName(mcpServer);
+   ```
+
+5. **Create tests** in `src/mcp/__tests__/tools/your-tool-name.test.ts`:
+
+   - Test input validation
+   - Test successful execution
+   - Test error handling
+   - Test edge cases
+
+6. **Update documentation**:
+   - Add tool to this README
+   - Include parameter descriptions
+   - Provide usage examples
+
+#### 4. Best Practices
+
+**Input Validation**:
+
+- Use Zod schemas for type-safe validation
+- Provide clear descriptions for each parameter
+- Set reasonable defaults for optional parameters
+- Validate ranges and formats
+
+**Error Handling**:
+
+- Always wrap logic in try-catch blocks
+- Return structured error responses
+- Include helpful error messages
+- Don't expose sensitive information
+
+**Performance**:
+
+- Consider caching for expensive operations
+- Implement pagination for large datasets
+- Add reasonable timeouts
+- Use streaming for large responses if needed
+
+**Testing**:
+
+- Mock external dependencies
+- Test both success and failure cases
+- Verify output structure
+- Test with realistic data
+
+#### 5. Resources
+
+**MCP Documentation**:
+
+- [MCP Introduction](https://modelcontextprotocol.io/introduction)
+- [MCP Tools Concept](https://modelcontextprotocol.io/docs/concepts/tools)
+- [MCP Architecture](https://modelcontextprotocol.io/docs/concepts/architecture)
+- [MCP TypeScript SDK](https://modelcontextprotocol.io/docs/sdk/typescript)
+
+**Examples in this Project**:
+
+- Tools with multiple functions: `src/mcp/tools/symbols.ts` (list + detail)
+- Tool with file reading: `src/mcp/tools/design-tokens.ts`
+- Direct registration: See `health-check` in `src/mcp/server.ts`
+
+#### 6. Common Patterns
+
+**Search/Filter Pattern**:
+
+```typescript
+inputSchema: {
+  search: z.string().optional().describe("Search query"),
+  limit: z.number().optional().describe("Max results"),
+  category: z.enum(["a", "b", "c"]).optional().describe("Filter by category"),
+}
+```
+
+**Resource Retrieval Pattern**:
+
+```typescript
+inputSchema: {
+  id: z.string().optional().describe("Specific resource ID"),
+  includeDetails: z.boolean().optional().describe("Include full details"),
+}
+```
+
+**Validation Pattern**:
+
+```typescript
+inputSchema: {
+  data: z.string().describe("Data to validate"),
+  schema: z.enum(["type1", "type2"]).describe("Schema to validate against"),
+}
+```
 
 ### API Endpoint
 
@@ -138,3 +336,12 @@ To use this MCP server with an AI assistant:
 - Enable debug logging in `src/mcp/server.ts` if needed
 - Unit tests use mocked file system operations
 - Manual tests use the actual file system and API
+
+## Troubleshooting
+
+**Common Issues**:
+
+1. **"Dev server is not running"** - Start the dev server with `npm run dev` first
+2. **Tool not found** - Ensure the tool is registered in `server.ts`
+3. **Invalid parameters** - Check the Zod schema matches your input
+4. **Empty responses** - Verify the data source exists and is accessible
