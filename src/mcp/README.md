@@ -6,6 +6,7 @@ This directory contains the Model Context Protocol (MCP) server implementation f
 
 The MCP server allows AI assistants to interact with the Serendie Design System documentation programmatically. It provides tools for:
 
+- Getting essential prerequisite knowledge about @serendie/ui design system (MUST BE CALLED FIRST)
 - Getting list of available symbols/icons from the design system
 - Getting detailed information about specific symbols
 - Getting design tokens from the design system
@@ -20,20 +21,23 @@ The MCP server allows AI assistants to interact with the Serendie Design System 
 src/mcp/
 ├── server.ts              # Main MCP server configuration
 ├── tools/                 # Tool implementations
-│   ├── symbols.ts         # Symbol list and detail retrieval
+│   ├── components.ts      # Component list and detail retrieval
 │   ├── design-tokens.ts   # Design token list and detail retrieval
-│   └── components.ts      # Component list and detail retrieval
-├── schemas/              # Zod schema definitions
-│   └── components.ts      # Component-related schemas for type safety
+│   ├── serendie-ui-overview.ts  # Prerequisite knowledge about @serendie/ui (MUST BE CALLED FIRST)
+│   └── symbols.ts         # Symbol list and detail retrieval
+├── schemas/               # Zod schema definitions
+│   ├── components.ts      # Component-related schemas for type safety
+│   └── serendie-ui-overview.ts  # Schema for overview tool response
 ├── data/                  # Generated data files
 │   └── components-manifest.json  # Auto-generated component manifest (run: npm run build:components)
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── integration/      # Integration tests (placeholder for future tests)
 │   ├── tools/            # Tool-specific unit tests
-│   │   ├── symbols.test.ts       # Tests for symbol tools
+│   │   ├── components.test.ts    # Tests for component tools
 │   │   ├── design-tokens.test.ts # Tests for design token tools
-│   │   └── components.test.ts    # Tests for component tools
+│   │   ├── serendie-ui-overview.test.ts  # Tests for overview tool
+│   │   └── symbols.test.ts       # Tests for symbol tools
 │   └── outputs/          # Test output files (gitignored)
 ├── test-client.ts        # Manual test client
 └── README.md            # This file
@@ -127,7 +131,7 @@ The test client will:
      - Available variants (common to all symbols)
      - Array of symbol names
 
-3. **get-symbol-detail**
+4. **get-symbol-detail**
 
    - Parameters:
      - `name`: string (required) - The name of the symbol to get details for
@@ -137,7 +141,7 @@ The test client will:
      - Import statement
      - Usage examples (basic, outlined, filled)
 
-4. **get-design-tokens**
+5. **get-design-tokens**
 
    - Parameters:
      - `search`: string (optional) - Filter tokens by key (partial match, case-insensitive)
@@ -151,7 +155,7 @@ The test client will:
      - Available token types
      - Array of token objects with key, path, type, value, originalValue, category, and theme
 
-5. **get-design-token-detail**
+6. **get-design-token-detail**
 
    - Parameters:
      - `key`: string (required) - The key of the token to get details for (e.g., "sd.system.color.impression.primaryContainer")
@@ -166,7 +170,7 @@ The test client will:
      - Usage examples (CSS and PandaCSS)
      - Reference information (for system tokens)
 
-6. **get-components**
+7. **get-components**
 
    - Parameters:
      - `search`: string (optional) - Filter components by name (partial match, case-insensitive)
@@ -179,7 +183,7 @@ The test client will:
      - Array of component summaries with name, displayName, description, and category
    - Note: This tool returns ALL components from @serendie/ui, including those without documentation
 
-7. **get-component-detail**
+8. **get-component-detail**
    - Parameters:
      - `name`: string (required) - The name of the component to get details for (e.g., "Button", "TextField")
    - Returns detailed information about a specific component:
@@ -220,7 +224,16 @@ The `schemas/` directory contains Zod schema definitions for type safety and run
   - Component summaries and details
   - Response structures for component tools
 
-These schemas ensure type safety between the MCP server implementation and the component manifest data.
+- **serendie-ui-overview.ts**: Defines schemas for the overview tool response including:
+  - Architecture and dependencies information
+  - Import patterns for components and icons
+  - Theme and styling configuration
+  - Development guidelines and best practices
+  - Package relationships
+  - Design token guidelines
+  - Figma integration details
+
+These schemas ensure type safety between the MCP server implementation and the data structures.
 
 ## Development
 
@@ -385,6 +398,7 @@ Follow MCP best practices for tool naming:
 
 - Tools with multiple functions: `src/mcp/tools/symbols.ts` (list + detail)
 - Tools with complex filtering: `src/mcp/tools/design-tokens.ts` (multi-parameter filtering)
+- Tools providing prerequisite knowledge: `src/mcp/tools/serendie-ui-overview.ts` (AI guidance tool)
 - Direct registration: See `health-check` in `src/mcp/server.ts`
 
 #### 6. Common Patterns
@@ -415,6 +429,17 @@ inputSchema: {
   data: z.string().describe("Data to validate"),
   schema: z.enum(["type1", "type2"]).describe("Schema to validate against"),
 }
+```
+
+**AI Guidance Pattern** (for prerequisite knowledge tools):
+
+```typescript
+// Tool description that guides AI behavior
+description:
+  "IMPORTANT: You MUST call this tool FIRST before any related work. " +
+  "This provides critical prerequisite knowledge...",
+inputSchema: {}, // Often no parameters needed
+// Returns comprehensive but compressed JSON data
 ```
 
 ### API Endpoint
