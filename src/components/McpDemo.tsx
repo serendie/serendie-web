@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMcp } from "use-mcp/react";
 import { css } from "../../styled-system/css";
-import { Button } from "@serendie/ui";
-import { TextArea } from "@serendie/ui";
+import { Button, Select, TextArea, TextField } from "@serendie/ui";
 
 interface McpTool {
   name: string;
@@ -177,29 +176,16 @@ export default function McpDemo() {
             MCPサーバーに接続されました。利用可能なツール: {tools.length}個
           </div>
 
-          <div>
-            <label htmlFor="tool-select">ツールを選択</label>
-            <select
-              id="tool-select"
-              value={selectedTool}
-              onChange={(e) => setSelectedTool(e.target.value)}
-              className={css({
-                width: "100%",
-                p: "2",
-                borderRadius: "md",
-                border: "1px solid",
-                borderColor: "gray.200",
-                bg: "background",
-                cursor: "pointer",
-              })}
-            >
-              {toolDescriptions.map((tool) => (
-                <option key={tool.name} value={tool.name}>
-                  {tool.name} - {tool.description}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="ツールを選択"
+            placeholder="ツールを選択してください"
+            value={[selectedTool]}
+            onValueChange={(details) => setSelectedTool(details.value[0])}
+            items={toolDescriptions.map((tool) => ({
+              label: `${tool.name} - ${tool.description}`,
+              value: tool.name,
+            }))}
+          />
 
           {currentTool && Object.keys(currentTool.parameters).length > 0 && (
             <div
@@ -213,45 +199,21 @@ export default function McpDemo() {
                 パラメータ
               </h3>
               {Object.entries(currentTool.parameters).map(([key, param]) => (
-                <div key={key}>
-                  <label htmlFor={`param-${key}`}>
-                    {key}{" "}
-                    {param.required && (
-                      <span className={css({ color: "red.500" })}>*</span>
-                    )}
-                    {param.description && (
-                      <span
-                        className={css({
-                          fontSize: "sm",
-                          color: "gray.500",
-                          ml: "2",
-                        })}
-                      >
-                        ({param.description})
-                      </span>
-                    )}
-                  </label>
-                  <input
-                    id={`param-${key}`}
-                    type={param.type === "number" ? "number" : "text"}
-                    value={parameters[key] || ""}
-                    onChange={(e) =>
-                      setParameters({
-                        ...parameters,
-                        [key]: e.target.value,
-                      })
-                    }
-                    placeholder={param.description}
-                    className={css({
-                      width: "100%",
-                      p: "2",
-                      mt: "1",
-                      borderRadius: "md",
-                      border: "1px solid",
-                      borderColor: "gray.200",
-                    })}
-                  />
-                </div>
+                <TextField
+                  key={key}
+                  label={key}
+                  description={param.description}
+                  placeholder={param.description}
+                  required={param.required}
+                  type={param.type === "number" ? "number" : "text"}
+                  value={parameters[key]?.toString() || ""}
+                  onChange={(e) =>
+                    setParameters({
+                      ...parameters,
+                      [key]: e.target.value,
+                    })
+                  }
+                />
               ))}
             </div>
           )}
@@ -297,6 +259,7 @@ export default function McpDemo() {
                   fontSize: "sm",
                   bg: "gray.50",
                   resize: "vertical",
+                  width: "100%",
                 })}
               />
             </div>
