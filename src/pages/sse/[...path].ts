@@ -8,7 +8,7 @@ import { createMcpServer } from "../../mcp/server";
 export const prerender = false;
 
 // Create a new Hono instance with base path
-const app = new Hono().basePath("/api/");
+const app = new Hono().basePath("/sse");
 
 // Add CORS middleware (you can configure this as needed)
 app.use("*", cors());
@@ -17,7 +17,7 @@ app.use("*", cors());
 const mcpServer = createMcpServer();
 
 // MCP endpoint
-app.all("/mcp", async (c) => {
+app.all("/", async (c) => {
   const transport = new StreamableHTTPTransport();
   await mcpServer.connect(transport);
   return transport.handleRequest(c);

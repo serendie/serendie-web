@@ -26,7 +26,7 @@ interface MCPResponse {
 
 // Get port from command line argument or use default
 const PORT = process.argv[2] || "4321";
-const MCP_URL = `http://localhost:${PORT}/api/mcp`;
+const MCP_URL = `http://localhost:${PORT}/sse`;
 
 // Output directory for test results
 const OUTPUT_DIR = path.join(process.cwd(), "src/mcp/__tests__/outputs");
@@ -278,7 +278,7 @@ async function listTools() {
 
 async function checkServerStatus(): Promise<boolean> {
   try {
-    const response = await fetch(MCP_URL.replace("/api/mcp", "/api/health"), {
+    const response = await fetch(MCP_URL.replace("/sse", "/sse/health"), {
       method: "GET",
     });
     return response.ok;

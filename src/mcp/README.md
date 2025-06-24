@@ -93,6 +93,7 @@ The test client will:
      - Array of symbol names
 
 3. **get-symbol-detail**
+
    - Parameters:
      - `name`: string (required) - The name of the symbol to get details for
    - Returns detailed information about a specific symbol:
@@ -102,6 +103,7 @@ The test client will:
      - Usage examples (basic, outlined, filled)
 
 4. **get-design-tokens**
+
    - Parameters:
      - `search`: string (optional) - Filter tokens by key (partial match, case-insensitive)
      - `type`: string (optional) - Filter by token type (color, typography, dimension, elevation, radius, spacing, opacity)
@@ -340,20 +342,20 @@ inputSchema: {
 
 ### API Endpoint
 
-The MCP server is exposed at `/api/mcp` when the dev server is running. It uses HTTP streaming transport for communication with MCP clients.
+The MCP server is exposed at `/sse` when the dev server is running. It uses HTTP streaming transport for communication with MCP clients.
 
 ## Integration
 
 To use this MCP server with an AI assistant:
 
-1. Configure your MCP client to connect to `http://localhost:4321/api/mcp`
+1. Configure your MCP client to connect to `http://localhost:4321/sse`
 2. The server will automatically be available when running `npm run dev`
 3. Use the available tools to interact with the Serendie documentation
 
 ## Debugging
 
 - Check `src/mcp/__tests__/outputs/` for actual API responses
-- Use the browser DevTools Network tab when accessing `/api/mcp`
+- Use the browser DevTools Network tab when accessing `/sse`
 - Enable debug logging in `src/mcp/server.ts` if needed
 - Unit tests use mocked file system operations
 - Manual tests use the actual file system and API
