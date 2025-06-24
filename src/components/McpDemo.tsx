@@ -3,65 +3,21 @@ import { useMcp } from "use-mcp/react";
 import { css } from "../../styled-system/css";
 import { Button, Select, TextArea, TextField } from "@serendie/ui";
 
+interface McpToolParameter {
+  type: string;
+  required?: boolean;
+  description?: string;
+  enum?: string[];
+}
+
 interface McpTool {
   name: string;
   description: string;
-  parameters: Record<
-    string,
-    {
-      type: string;
-      required?: boolean;
-      description?: string;
-    }
-  >;
+  parameters?: Record<string, McpToolParameter>;
 }
 
-const toolDescriptions: McpTool[] = [
-  {
-    name: "health-check",
-    description: "サーバーステータスのチェック",
-    parameters: {},
-  },
-  {
-    name: "get-symbols",
-    description: "シンボルのリストを取得",
-    parameters: {
-      search: { type: "string", description: "検索キーワード" },
-      limit: { type: "number", description: "最大結果数" },
-    },
-  },
-  {
-    name: "get-symbol-detail",
-    description: "特定のシンボルの詳細を取得",
-    parameters: {
-      name: { type: "string", required: true, description: "シンボル名" },
-    },
-  },
-  {
-    name: "get-design-tokens",
-    description: "デザイントークンのリストを取得",
-    parameters: {
-      search: { type: "string", description: "キーワード検索" },
-      type: {
-        type: "string",
-        description: "トークンタイプ (color, typography等)",
-      },
-      category: { type: "string", description: "カテゴリ (reference, system)" },
-      theme: { type: "string", description: "テーマ (asagi, konjo等)" },
-      limit: { type: "number", description: "最大結果数" },
-    },
-  },
-  {
-    name: "get-design-token-detail",
-    description: "特定のデザイントークンの詳細を取得",
-    parameters: {
-      key: { type: "string", required: true, description: "トークンキー" },
-    },
-  },
-];
-
 export default function McpDemo() {
-  const [selectedTool, setSelectedTool] = useState<string>("health-check");
+  const [selectedTool, setSelectedTool] = useState<string>("");
   const [parameters, setParameters] = useState<Record<string, string | number>>(
     {}
   );
@@ -74,6 +30,21 @@ export default function McpDemo() {
     clientName: "Serendie Web Demo",
     autoReconnect: true,
   });
+
+  // Extract tool information from useMcp tools
+  const toolDescriptions: McpTool[] = tools.map((tool) => ({
+    name: tool.name,
+    description: tool.description || "",
+    parameters:
+      (tool.inputSchema?.properties as Record<string, McpToolParameter>) || {},
+  }));
+
+  useEffect(() => {
+    // Set default selected tool when tools are loaded
+    if (tools.length > 0 && !selectedTool) {
+      setSelectedTool(tools[0].name);
+    }
+  }, [tools, selectedTool]);
 
   useEffect(() => {
     // Reset parameters when tool changes
@@ -96,7 +67,7 @@ export default function McpDemo() {
         (acc, [key, value]) => {
           if (value !== "" && value !== undefined && value !== null) {
             // Convert number strings to numbers if needed
-            const paramDef = currentTool.parameters[key];
+            const paramDef = currentTool.parameters?.[key];
             if (paramDef?.type === "number" && typeof value === "string") {
               acc[key] = parseInt(value, 10);
             } else {
@@ -169,8 +140,7 @@ export default function McpDemo() {
             className={css({
               p: "4",
               borderRadius: "md",
-              bg: "green.50",
-              color: "green.700",
+              color: "sd.reference.color.scale.green.500",
             })}
           >
             MCPサーバーに接続されました。利用可能なツール: {tools.length}個
@@ -179,48 +149,75 @@ export default function McpDemo() {
           <Select
             label="ツールを選択"
             placeholder="ツールを選択してください"
-            value={[selectedTool]}
+            value={selectedTool ? [selectedTool] : []}
             onValueChange={(details) => setSelectedTool(details.value[0])}
             items={toolDescriptions.map((tool) => ({
-              label: `${tool.name} - ${tool.description}`,
+              label: `${tool.name}`,
               value: tool.name,
             }))}
           />
 
-          {currentTool && Object.keys(currentTool.parameters).length > 0 && (
-            <div
-              className={css({
-                display: "flex",
-                flexDirection: "column",
-                gap: "4",
-              })}
-            >
-              <h3 className={css({ fontSize: "lg", fontWeight: "semibold" })}>
-                パラメータ
-              </h3>
-              {Object.entries(currentTool.parameters).map(([key, param]) => (
-                <TextField
-                  key={key}
-                  label={key}
-                  description={param.description}
-                  placeholder={param.description}
-                  required={param.required}
-                  type={param.type === "number" ? "number" : "text"}
-                  value={parameters[key]?.toString() || ""}
-                  onChange={(e) =>
-                    setParameters({
-                      ...parameters,
-                      [key]: e.target.value,
-                    })
+          {currentTool &&
+            currentTool.parameters &&
+            Object.keys(currentTool.parameters).length > 0 && (
+              <div
+                className={css({
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4",
+                })}
+              >
+                <h3 className={css({ fontSize: "lg", fontWeight: "semibold" })}>
+                  パラメータ
+                </h3>
+                {Object.entries(currentTool.parameters).map(([key, param]) => {
+                  if (param.enum) {
+                    return (
+                      <Select
+                        key={key}
+                        label={key}
+                        placeholder={param.description || `Select ${key}`}
+                        value={
+                          parameters[key] ? [parameters[key].toString()] : []
+                        }
+                        onValueChange={(details) =>
+                          setParameters({
+                            ...parameters,
+                            [key]: details.value[0],
+                          })
+                        }
+                        items={param.enum.map((value) => ({
+                          label: value,
+                          value: value,
+                        }))}
+                      />
+                    );
                   }
-                />
-              ))}
-            </div>
-          )}
+
+                  return (
+                    <TextField
+                      key={key}
+                      label={key}
+                      description={param.description}
+                      placeholder={param.description}
+                      required={param.required}
+                      type={param.type === "number" ? "number" : "text"}
+                      value={parameters[key]?.toString() || ""}
+                      onChange={(e) =>
+                        setParameters({
+                          ...parameters,
+                          [key]: e.target.value,
+                        })
+                      }
+                    />
+                  );
+                })}
+              </div>
+            )}
 
           <Button
             onClick={handleCallTool}
-            disabled={!isConnected || isLoading}
+            disabled={!isConnected || isLoading || !selectedTool}
             className={css({ width: "fit-content" })}
           >
             {isLoading ? "実行中..." : "実行"}

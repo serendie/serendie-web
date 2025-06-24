@@ -10,6 +10,8 @@ The MCP server allows AI assistants to interact with the Serendie Design System 
 - Getting detailed information about specific symbols
 - Getting design tokens from the design system
 - Getting detailed information about specific design tokens
+- Getting list of UI components from the design system
+- Getting detailed information about specific components
 - Health checking the server status
 
 ## File Structure
@@ -19,9 +21,13 @@ src/mcp/
 ├── server.ts              # Main MCP server configuration
 ├── tools/                 # Tool implementations
 │   ├── symbols.ts         # Symbol list and detail retrieval
-│   └── design-tokens.ts   # Design token list and detail retrieval
+│   ├── design-tokens.ts   # Design token list and detail retrieval
+│   └── components.ts      # Component list and detail retrieval
+├── data/                  # Generated data files
+│   └── components-manifest.json  # Auto-generated component manifest
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
+│   ├── components.test.ts # Components tools tests
 │   ├── tools/
 │   │   ├── symbols.test.ts
 │   │   └── design-tokens.test.ts
@@ -117,6 +123,7 @@ The test client will:
      - Array of token objects with key, path, type, value, originalValue, category, and theme
 
 5. **get-design-token-detail**
+
    - Parameters:
      - `key`: string (required) - The key of the token to get details for (e.g., "sd.system.color.impression.primaryContainer")
    - Returns detailed information about a specific design token:
@@ -129,6 +136,31 @@ The test client will:
      - CSS variable format
      - Usage examples (CSS and PandaCSS)
      - Reference information (for system tokens)
+
+6. **get-components**
+
+   - Parameters:
+     - `search`: string (optional) - Filter components by name (partial match, case-insensitive)
+     - `category`: string (optional) - Filter by category (Actions, Inputs, Layout, Display, Feedback)
+     - `limit`: number (optional) - Maximum number of results to return
+   - Returns list of Serendie UI components:
+     - Total count and filtered count
+     - Returned count (after limit)
+     - Available categories
+     - Array of component summaries with name, displayName, description, category, importPath, and hasStorybook flag
+
+7. **get-component-detail**
+   - Parameters:
+     - `name`: string (required) - The name of the component to get details for (e.g., "Button", "TextField")
+   - Returns detailed information about a specific component:
+     - Component existence check
+     - Display name (Japanese) and description
+     - Category and last updated date
+     - Import statement
+     - Props definitions with name, type, required flag, default value, and description
+     - Code examples with title, description, code, and filename
+     - Storybook URLs with title, path, and variant
+     - Basic usage examples
 
 ## Expected Output Format
 

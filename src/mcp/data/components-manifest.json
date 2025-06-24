@@ -1,0 +1,2684 @@
+[
+  {
+    "name": "Accordion",
+    "displayName": "アコーディオン",
+    "description": "関連するコンテンツを列挙し、ユーザーが展開・折りたたむことができるコンポーネントです。表示スペースを節約しながら、ユーザーが詳細な情報を得る手段を提供します。",
+    "category": "Layout",
+    "importPath": "@serendie/ui/accordion",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "isLeftIcon",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "description": "The value of the accordion item."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the accordion item is disabled."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      }
+    ],
+    "examples": [
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Accordion, AccordionGroup } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <Dl variant=\"dim\">\n      <Dt>Right Icon</Dt>\n      <Dd>\n        <AccordionGroup>\n          <Accordion\n            title=\"Title\"\n            description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n          />\n        </AccordionGroup>\n      </Dd>\n      <Dt>Left Icon</Dt>\n      <Dd>\n        <AccordionGroup>\n          <Accordion\n            title=\"Title\"\n            description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n            isLeftIcon\n          />\n        </AccordionGroup>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-accordion--default",
+        "variant": "default"
+      }
+    ]
+  },
+  {
+    "name": "Avatar",
+    "displayName": "アバター",
+    "description": "ユーザーについて視覚的に表現するコンポーネントです。",
+    "category": "Display",
+    "importPath": "@serendie/ui/avatar",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onStatusChange",
+        "type": "(details: StatusChangeDetails) => void",
+        "required": false,
+        "description": "Functional called when the image loading status changes."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; image: string; fallback: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the avatar. Useful for composition."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      }
+    ],
+    "examples": [
+      {
+        "title": "Size",
+        "description": "",
+        "code": "import { Avatar } from \"@serendie/ui\";\nimport { HBox, VBox } from \"src/components/LayoutUtils\";\n\nexport function SizeSample() {\n  return (\n    <HBox>\n      <VBox>\n        <Avatar size=\"small\" text=\"SD\" />\n        <p>Small</p>\n      </VBox>\n      <VBox>\n        <Avatar size=\"medium\" text=\"SD\" />\n        <p>Medium</p>\n      </VBox>\n      <VBox>\n        <Avatar size=\"large\" text=\"SD\" />\n        <p>Large</p>\n      </VBox>\n    </HBox>\n  );\n}\n",
+        "fileName": "SizeSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Avatar } from \"@serendie/ui\";\nimport { VBox, HBox } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <HBox>\n      <VBox>\n        <Avatar src=\"https://i.pravatar.cc/300\" />\n        <p>Image</p>\n      </VBox>\n      <VBox>\n        <Avatar text=\"SD\" />\n        <p>Text</p>\n      </VBox>\n      <VBox>\n        <Avatar />\n        <p>Placeholder(filled)</p>\n      </VBox>\n      <VBox>\n        <Avatar placeholder=\"outlined\" />\n        <p>Placeholder(outlined)</p>\n      </VBox>\n    </HBox>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-avatar--text&args=size:small"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/docs/components-avatar--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Badge",
+    "displayName": "バッジ",
+    "description": "ステータス、カテゴリなどを表すコンポーネントです。情報を簡潔に表示し、ユーザーの注意を引きつけます。",
+    "category": "Display",
+    "importPath": "@serendie/ui/badge",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "styleColor",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "closeButton",
+        "type": "ReactElement<BadgeCloseButtonProps, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Close Button",
+        "description": "",
+        "code": "import { Badge, BadgeCloseButton } from \"@serendie/ui\";\nimport { HBox, VBox } from \"src/components/LayoutUtils\";\n\nexport function CloseButtonSample() {\n  return (\n    <HBox>\n      <VBox>\n        <Badge size=\"small\" closeButton={<BadgeCloseButton />}>\n          Label\n        </Badge>\n        <p>Small</p>\n      </VBox>\n      <VBox>\n        <Badge closeButton={<BadgeCloseButton />}>Label</Badge>\n        <p>Medium</p>\n      </VBox>\n      <VBox>\n        <Badge size=\"large\" closeButton={<BadgeCloseButton />}>\n          Label\n        </Badge>\n        <p>Large</p>\n      </VBox>\n    </HBox>\n  );\n}\n",
+        "fileName": "CloseButtonSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Color",
+        "description": "",
+        "code": "import { Badge } from \"@serendie/ui\";\nimport { Dd, Dl, Dt, HBox } from \"src/components/LayoutUtils\";\n\nexport function ColorSample() {\n  return (\n    <HBox>\n      <Dl\n        w=\"100%\"\n        gridTemplateColumns={{ sm: \"max-content auto max-content auto\" }}\n      >\n        <Dt>Gray</Dt>\n        <Dd>\n          <Badge>Label</Badge>\n        </Dd>\n\n        <Dt>Gray-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"gray-subtle\">Label</Badge>\n        </Dd>\n\n        <Dt>Blue</Dt>\n        <Dd>\n          <Badge styleColor=\"blue\">Label</Badge>\n        </Dd>\n\n        <Dt>Blue-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"blue-subtle\">Label</Badge>\n        </Dd>\n\n        <Dt>Green</Dt>\n        <Dd>\n          <Badge styleColor=\"green\">Label</Badge>\n        </Dd>\n\n        <Dt>Green-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"green-subtle\">Label</Badge>\n        </Dd>\n\n        <Dt>Yellow</Dt>\n        <Dd>\n          <Badge styleColor=\"yellow\">Label</Badge>\n        </Dd>\n\n        <Dt>Yellow-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"yellow-subtle\">Label</Badge>\n        </Dd>\n\n        <Dt>Chestnut</Dt>\n        <Dd>\n          <Badge styleColor=\"chestnut\">Label</Badge>\n        </Dd>\n\n        <Dt>Chestnut-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"chestnut-subtle\">Label</Badge>\n        </Dd>\n\n        <Dt>Red</Dt>\n        <Dd>\n          <Badge styleColor=\"red\">Label</Badge>\n        </Dd>\n\n        <Dt>Red-subtle</Dt>\n        <Dd>\n          <Badge styleColor=\"red-subtle\">Label</Badge>\n        </Dd>\n      </Dl>\n    </HBox>\n  );\n}\n",
+        "fileName": "ColorSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Size",
+        "description": "",
+        "code": "import { Badge } from \"@serendie/ui\";\nimport { HBox, VBox } from \"src/components/LayoutUtils\";\n\nexport function SizeSample() {\n  return (\n    <HBox>\n      <VBox>\n        <Badge size=\"small\">Label</Badge>\n        <p>Small</p>\n      </VBox>\n      <VBox>\n        <Badge>Label</Badge>\n        <p>Medium</p>\n      </VBox>\n      <VBox>\n        <Badge size=\"large\">Label</Badge>\n        <p>Large</p>\n      </VBox>\n    </HBox>\n  );\n}\n",
+        "fileName": "SizeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-badge--small",
+        "variant": "small"
+      },
+      {
+        "title": "カラー",
+        "path": "/docs/components-badge--docs",
+        "variant": "docs"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/docs/components-badge--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Banner",
+    "displayName": "バナー",
+    "description": "エラーや警告など重要なメッセージを目立つように表示し、ユーザーの注意を喚起するコンポーネントです。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/banner",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Banner } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <Dl>\n      <Dt>Information</Dt>\n      <Dd>\n        <Banner\n          type=\"information\"\n          title=\"Title\"\n          description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \"\n        />\n      </Dd>\n      <Dt>Error</Dt>\n      <Dd>\n        <Banner\n          type=\"error\"\n          title=\"Title\"\n          description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \"\n        />\n      </Dd>\n      <Dt>Warning</Dt>\n      <Dd>\n        <Banner\n          type=\"warning\"\n          title=\"Title\"\n          description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \"\n        />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-banner--information",
+        "variant": "information"
+      }
+    ]
+  },
+  {
+    "name": "Bottom Navigation",
+    "displayName": "ボトムナビゲーション",
+    "description": "画面下部に配置するモバイルやタブレット向けのグローバルなタブナビゲーションです。",
+    "category": "Actions",
+    "importPath": "@serendie/ui/bottom-navigation",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "サンプル",
+        "path": "/story/components-bottomnavigation--default",
+        "variant": "default"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/docs/components-bottomnavigation--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Button",
+    "displayName": "ボタン",
+    "description": "アクションをトリガーするためのクリック可能なコンポーネントです。",
+    "category": "Actions",
+    "importPath": "@serendie/ui/button",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "styleType",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Icon",
+        "description": "",
+        "code": "import { Button } from \"@serendie/ui\";\nimport { SerendieSymbol } from \"@serendie/symbols\";\nimport { HBox } from \"src/components/LayoutUtils\";\n\nexport function IconSample() {\n  return (\n    <HBox>\n      <Button leftIcon={<SerendieSymbol name=\"chevron-left\" />}>\n        LeftIcon\n      </Button>\n      <Button\n        rightIcon={<SerendieSymbol name=\"chevron-right\" />}\n        styleType=\"ghost\"\n      >\n        RightIcon\n      </Button>\n    </HBox>\n  );\n}\n",
+        "fileName": "IconSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Size",
+        "description": "",
+        "code": "import { Button } from \"@serendie/ui\";\nimport { HBox } from \"src/components/LayoutUtils\";\n\nexport function SizeSample() {\n  return (\n    <HBox>\n      <Button size=\"small\">Small</Button>\n      <Button size=\"medium\">Medium</Button>\n    </HBox>\n  );\n}\n",
+        "fileName": "SizeSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { Button } from \"@serendie/ui\";\nimport type { ComponentProps } from \"react\";\nimport { StateMatrix } from \"src/components/StateMatrix\";\n\nexport const StateSample: React.FC = () => {\n  return (\n    <StateMatrix<ComponentProps<typeof Button>>\n      component={Button}\n      children=\"Button\"\n      propsName=\"styleType\"\n      states={[\"enabled\", \"hover\", \"focus-visible\", \"disabled\", \"loading\"]}\n      props={[\"filled\", \"ghost\", \"outlined\", \"rectangle\"]}\n    />\n  );\n};\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Button } from \"@serendie/ui\";\nimport { HBox } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <HBox>\n      <Button>Filled</Button>\n      <Button styleType=\"outlined\">Outlined</Button>\n      <Button styleType=\"ghost\">Ghost</Button>\n      <Button styleType=\"rectangle\">Rectangle</Button>\n    </HBox>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-button--medium",
+        "variant": "medium"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/story/components-button--outlined",
+        "variant": "outlined"
+      },
+      {
+        "title": "アイコン付きボタン",
+        "path": "/story/components-button--with-left-icon"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-button--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Check Box",
+    "displayName": "チェックボックス",
+    "description": "ChoiceBoxにラベルを付けたコンポーネントです。複数の選択肢から、1つ以上を選択する際に使用します。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/check-box",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "defaultChecked",
+        "type": "CheckedState",
+        "required": false,
+        "description": "The checked state of the checkbox when it is first rendered.\nUse this when you do not need to control the state of the checkbox."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "form",
+        "type": "string",
+        "required": false,
+        "description": "The id of the form that the checkbox belongs to."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; hiddenInput: string; control: string; label: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the checkbox. Useful for composition."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is disabled"
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is invalid"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is required"
+      },
+      {
+        "name": "checked",
+        "type": "CheckedState",
+        "required": false,
+        "description": "The checked state of the checkbox"
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is read-only"
+      },
+      {
+        "name": "onCheckedChange",
+        "type": "(details: CheckedChangeDetails) => void",
+        "required": false,
+        "description": "The callback invoked when the checked state changes."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "The name of the input field in a checkbox.\nUseful for form submission."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "defaultValue": "\"on\"",
+        "description": "The value of checkbox input. Useful for form submission."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "helperText",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-checkbox--default",
+        "variant": "default"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-checkbox--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Choice Box",
+    "displayName": "チョイスボックス",
+    "description": "CheckBoxとRadioButtonからラベルを除いたコンポーネントです。カードやリストと併用して使用できます。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/choice-box",
+    "hasStorybook": true,
+    "lastUpdated": "2025-05-23",
+    "props": [
+      {
+        "name": "type",
+        "type": "enum",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "defaultValue": "\"on\"",
+        "description": "The value of checkbox input. Useful for form submission."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is disabled"
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is invalid"
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; hiddenInput: string; control: string; label: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the checkbox. Useful for composition."
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is required"
+      },
+      {
+        "name": "checked",
+        "type": "CheckedState",
+        "required": false,
+        "description": "The checked state of the checkbox"
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the checkbox is read-only"
+      },
+      {
+        "name": "onCheckedChange",
+        "type": "(details: CheckedChangeDetails) => void",
+        "required": false,
+        "description": "The callback invoked when the checked state changes."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "The name of the input field in a checkbox.\nUseful for form submission."
+      },
+      {
+        "name": "indeterminate",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-choicebox--radio",
+        "variant": "radio"
+      },
+      {
+        "title": "Indeterminate状態",
+        "path": "/story/components-choicebox--indeterminate",
+        "variant": "indeterminate"
+      }
+    ]
+  },
+  {
+    "name": "Dashboard Widget",
+    "displayName": "ダッシュボードウィジェット",
+    "description": "ダッシュボード画面で使うことを想定したコンポーネントです。データをサマライズして表示する際に使用します。",
+    "category": "Display",
+    "importPath": "@serendie/ui/dashboard-widget",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "values",
+        "type": "[AreaValueProps, AreaValueProps] | [AreaValueProps]",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "linkTo",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-dashboardwidget--no-value"
+      }
+    ]
+  },
+  {
+    "name": "Divider",
+    "displayName": "ディバイダー",
+    "description": "視覚的に区切るためのコンポーネントです。コンテナ内でコンテンツをグループ化する際にも使用します。",
+    "category": "Layout",
+    "importPath": "@serendie/ui/divider",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "type",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Color",
+        "description": "",
+        "code": "import { Divider } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function ColorSample() {\n  return (\n    <Dl>\n      <Dt>Light</Dt>\n      <Dd>\n        <Divider color=\"light\" />\n      </Dd>\n\n      <Dt>Normal</Dt>\n      <Dd>\n        <Divider color=\"normal\" />\n      </Dd>\n\n      <Dt>Dark</Dt>\n      <Dd>\n        <Divider color=\"dark\" />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "ColorSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Divider } from \"@serendie/ui\";\nimport { css } from \"styled-system/css\";\nimport { HBox, VBox } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <div\n      className={css({\n        display: \"grid\",\n        gridTemplateColumns: \"1fr 1fr\",\n        height: \"200px\",\n        alignItems: \"center\",\n      })}\n    >\n      <HBox\n        data-name=\"horizontal\"\n        className={css({\n          alignItems: \"center !important\",\n        })}\n      >\n        Horizontal\n        <Divider />\n      </HBox>\n\n      <VBox\n        className={css({\n          height: \"100%\",\n        })}\n      >\n        <Divider type=\"vertical\" />\n        Vertical\n      </VBox>\n    </div>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "カラー",
+        "path": "/story/components-divider--horizontal",
+        "variant": "horizontal"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/story/components-divider--vertical",
+        "variant": "vertical"
+      }
+    ]
+  },
+  {
+    "name": "Drawer",
+    "displayName": "ドロワー",
+    "description": "メニューやナビゲーションを格納するコンポーネントです。主に表示領域が限られるモバイルやタブレットにおいて使用されます。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/drawer",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "contentClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "backdropClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "((e: { open: boolean; }) => void) & ((details: OpenChangeDetails) => void)",
+        "required": false,
+        "description": "Callback to be invoked when the dialog is opened or closed"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "The initial open state of the dialog when it is first rendered.\nUse when you do not need to control its open state."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ trigger: string; positioner: string; backdrop: string; content: string; closeTrigger: string; title: string; description: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the dialog. Useful for composition."
+      },
+      {
+        "name": "trapFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to trap focus inside the dialog when it's opened"
+      },
+      {
+        "name": "preventScroll",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to prevent scrolling behind the dialog when it's opened"
+      },
+      {
+        "name": "modal",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to prevent pointer interaction outside the element and hide all content below it"
+      },
+      {
+        "name": "initialFocusEl",
+        "type": "() => HTMLElement",
+        "required": false,
+        "description": "Element to receive focus when the dialog is opened"
+      },
+      {
+        "name": "finalFocusEl",
+        "type": "() => HTMLElement",
+        "required": false,
+        "description": "Element to receive focus when the dialog is closed"
+      },
+      {
+        "name": "restoreFocus",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to restore focus to the element that had focus before the dialog was opened"
+      },
+      {
+        "name": "closeOnInteractOutside",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to close the dialog when the outside is clicked"
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to close the dialog when the escape key is pressed"
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "required": false,
+        "description": "Human readable label for the dialog, in event the dialog title is not rendered"
+      },
+      {
+        "name": "role",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"dialog\"",
+        "description": "The dialog's role"
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the dialog is open"
+      },
+      {
+        "name": "onEscapeKeyDown",
+        "type": "(event: KeyboardEvent) => void",
+        "required": false,
+        "description": "Function called when the escape key is pressed"
+      },
+      {
+        "name": "onPointerDownOutside",
+        "type": "(event: PointerDownOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the pointer is pressed down outside the component"
+      },
+      {
+        "name": "onFocusOutside",
+        "type": "(event: FocusOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the focus is moved outside the component"
+      },
+      {
+        "name": "onInteractOutside",
+        "type": "(event: InteractOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when an interaction happens outside the component"
+      },
+      {
+        "name": "persistentElements",
+        "type": "(() => Element)[]",
+        "required": false,
+        "description": "Returns the persistent elements that:\n- should not have pointer-events disabled\n- should not trigger the dismiss event"
+      },
+      {
+        "name": "present",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the node is present (controlled by the user)"
+      },
+      {
+        "name": "onExitComplete",
+        "type": "() => void",
+        "required": false,
+        "description": "Function called when the animation ends in the closed state"
+      },
+      {
+        "name": "immediate",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to synchronize the present change immediately or defer it to the next frame"
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      },
+      {
+        "name": "type",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Drawer, IconButton, ListItem, List } from \"@serendie/ui\";\nimport { SerendieSymbol } from \"@serendie/symbols\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\nimport { useState } from \"react\";\n\nexport function TypeSample() {\n  const [leftOpen, setLeftOpen] = useState(false);\n  const [rightOpen, setRightOpen] = useState(false);\n  const [fullOpen, setFullOpen] = useState(false);\n\n  return (\n    <Dl>\n      <Dt>Right</Dt>\n      <Dd>\n        <IconButton\n          icon={<SerendieSymbol name=\"menu\" />}\n          shape=\"rectangle\"\n          styleType=\"outlined\"\n          onClick={() => {\n            setRightOpen(true);\n          }}\n        />\n        <Drawer isOpen={rightOpen} onOpenChange={(e) => setRightOpen(e.open)}>\n          <List>\n            <ListItem title=\"Navigation 1\" />\n            <ListItem title=\"Navigation 2\" />\n            <ListItem title=\"Navigation 3\" />\n          </List>\n        </Drawer>\n      </Dd>\n      <Dt>Left</Dt>\n      <Dd>\n        <IconButton\n          icon={<SerendieSymbol name=\"menu\" />}\n          shape=\"rectangle\"\n          styleType=\"outlined\"\n          onClick={() => {\n            setLeftOpen(true);\n          }}\n        />\n        <Drawer\n          isOpen={leftOpen}\n          onOpenChange={(e) => setLeftOpen(e.open)}\n          type=\"left\"\n        >\n          <List>\n            <ListItem title=\"Navigation 1\" />\n            <ListItem title=\"Navigation 2\" />\n            <ListItem title=\"Navigation 3\" />\n          </List>\n        </Drawer>\n      </Dd>\n      <Dt>Full</Dt>\n      <Dd>\n        <IconButton\n          icon={<SerendieSymbol name=\"menu\" />}\n          shape=\"rectangle\"\n          styleType=\"outlined\"\n          onClick={() => {\n            setFullOpen(true);\n          }}\n        />\n        <Drawer\n          isOpen={fullOpen}\n          onOpenChange={(e) => setFullOpen(e.open)}\n          type=\"full\"\n        >\n          <List>\n            <ListItem title=\"Navigation 1\" />\n            <ListItem title=\"Navigation 2\" />\n            <ListItem title=\"Navigation 3\" />\n          </List>\n        </Drawer>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-drawer--left",
+        "variant": "left"
+      }
+    ]
+  },
+  {
+    "name": "Dropdown Menu",
+    "displayName": "ドロップダウンメニュー",
+    "description": "複数のアクションを格納するためのコンポーネントです。メニュー内のアクションは、クリック時にイベントをトリガーします。アクションではなく、選択肢を表示する場合は、Selectを使用してください。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/dropdown-menu",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "styleType",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "MenuItemProps[]",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "The initial open state of the menu when it is first rendered.\nUse when you do not need to control its open state."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ trigger: string; contextTrigger: string; content: string; groupLabel(id: string): string; group(id: string): string; positioner: string; arrow: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the menu. Useful for composition."
+      },
+      {
+        "name": "highlightedValue",
+        "type": "string",
+        "required": false,
+        "description": "The value of the highlighted menu item."
+      },
+      {
+        "name": "onHighlightChange",
+        "type": "(details: HighlightChangeDetails) => void",
+        "required": false,
+        "description": "Function called when the highlighted menu item changes."
+      },
+      {
+        "name": "onSelect",
+        "type": "(details: SelectionDetails) => void",
+        "required": false,
+        "description": "Function called when a menu item is selected."
+      },
+      {
+        "name": "anchorPoint",
+        "type": "Point",
+        "required": false,
+        "description": "The positioning point for the menu. Can be set by the context menu trigger or the button trigger."
+      },
+      {
+        "name": "loopFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to loop the keyboard navigation."
+      },
+      {
+        "name": "positioning",
+        "type": "PositioningOptions",
+        "required": false,
+        "description": "The options used to dynamically position the menu"
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to close the menu when an option is selected"
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "required": false,
+        "description": "The accessibility label for the menu"
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the menu is open"
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(details: OpenChangeDetails) => void",
+        "required": false,
+        "description": "Function called when the menu opens or closes"
+      },
+      {
+        "name": "typeahead",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the pressing printable characters should trigger typeahead navigation"
+      },
+      {
+        "name": "composite",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the menu is a composed with other composite widgets like a combobox or tabs"
+      },
+      {
+        "name": "onEscapeKeyDown",
+        "type": "(event: KeyboardEvent) => void",
+        "required": false,
+        "description": "Function called when the escape key is pressed"
+      },
+      {
+        "name": "onPointerDownOutside",
+        "type": "(event: PointerDownOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the pointer is pressed down outside the component"
+      },
+      {
+        "name": "onFocusOutside",
+        "type": "(event: FocusOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the focus is moved outside the component"
+      },
+      {
+        "name": "onInteractOutside",
+        "type": "(event: InteractOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when an interaction happens outside the component"
+      },
+      {
+        "name": "present",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the node is present (controlled by the user)"
+      },
+      {
+        "name": "onExitComplete",
+        "type": "() => void",
+        "required": false,
+        "description": "Function called when the animation ends in the closed state"
+      },
+      {
+        "name": "immediate",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to synchronize the present change immediately or defer it to the next frame"
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-dropdownmenu--default",
+        "variant": "default"
+      }
+    ]
+  },
+  {
+    "name": "Icon Button",
+    "displayName": "アイコンボタン",
+    "description": "アクションをトリガーするためのクリック可能なコンポーネントです。アイコンを使用してアクションの内容を視覚的に伝えます。",
+    "category": "Actions",
+    "importPath": "@serendie/ui/icon-button",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "shape",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "styleType",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": true,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-iconbutton--small",
+        "variant": "small"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/story/components-iconbutton--outlined",
+        "variant": "outlined"
+      },
+      {
+        "title": "シェイプ",
+        "path": "/story/components-iconbutton--rectangle",
+        "variant": "rectangle"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-button--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "List",
+    "displayName": "リストアイテム",
+    "description": "関連する項目を縦に並べて、メニューや一覧を構成するためのコンポーネントです。",
+    "category": "Layout",
+    "importPath": "@serendie/ui/list",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [],
+    "examples": [
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { List, ListItem } from \"@serendie/ui\";\nimport { SerendieSymbol } from \"@serendie/symbols\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function StateSample() {\n  return (\n    <Dl>\n      <Dt>Enabled</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n          />\n        </List>\n      </Dd>\n      <Dt>Focused</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            focusVisible\n          />\n        </List>\n      </Dd>\n      <Dt>Disabled</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            disabled\n          />\n        </List>\n      </Dd>\n      <Dt>Selected</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            selected\n          />\n        </List>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { List, ListItem } from \"@serendie/ui\";\nimport { SerendieSymbol } from \"@serendie/symbols\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function TypeSample() {\n  return (\n    <Dl variant=\"dim\">\n      <Dt>Title Only</Dt>\n      <Dd>\n        <List>\n          <ListItem title=\"リストタイトル\" />\n        </List>\n      </Dd>\n\n      <Dt>Left Icon</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n          />\n        </List>\n      </Dd>\n\n      <Dt>Multiple Lines</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            description=\"補足テキスト\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n          >\n            <p>タイムスタンプなど</p>\n          </ListItem>\n        </List>\n      </Dd>\n\n      <Dt>Large Left Icon</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            isLargeLeftIcon\n          />\n        </List>\n      </Dd>\n\n      <Dt>Multiple Lines</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            description=\"補足テキスト\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            isLargeLeftIcon\n          >\n            <p>タイムスタンプなど</p>\n          </ListItem>\n        </List>\n      </Dd>\n\n      <Dt>Right Icon</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            rightIcon={<SerendieSymbol name={\"chevron-right\"} />}\n          />\n        </List>\n      </Dd>\n\n      <Dt>Multiple Lines</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            description=\"補足テキスト\"\n            rightIcon={<SerendieSymbol name={\"chevron-right\"} />}\n          />\n        </List>\n      </Dd>\n\n      <Dt>With Badge</Dt>\n      <Dd>\n        <List>\n          <ListItem\n            title=\"リストタイトル\"\n            description=\"補足テキスト\"\n            leftIcon={<SerendieSymbol name={\"placeholder\"} />}\n            isLargeLeftIcon\n            badge={3}\n          />\n        </List>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-list--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-list--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Modal Dialog",
+    "displayName": "モーダルダイアログ",
+    "description": "アプリケーションを覆うレイヤー上にダイアログを表示するコンポーネントです。Modal Dialogが表示されている間は、ユーザーはその他の操作ができなくなることに注意が必要です。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/modal-dialog",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "cancelButtonLabel",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "submitButtonLabel",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "onButtonClick",
+        "type": "() => void",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "The initial open state of the dialog when it is first rendered.\nUse when you do not need to control its open state."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ trigger: string; positioner: string; backdrop: string; content: string; closeTrigger: string; title: string; description: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the dialog. Useful for composition."
+      },
+      {
+        "name": "trapFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to trap focus inside the dialog when it's opened"
+      },
+      {
+        "name": "preventScroll",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to prevent scrolling behind the dialog when it's opened"
+      },
+      {
+        "name": "modal",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to prevent pointer interaction outside the element and hide all content below it"
+      },
+      {
+        "name": "initialFocusEl",
+        "type": "() => HTMLElement",
+        "required": false,
+        "description": "Element to receive focus when the dialog is opened"
+      },
+      {
+        "name": "finalFocusEl",
+        "type": "() => HTMLElement",
+        "required": false,
+        "description": "Element to receive focus when the dialog is closed"
+      },
+      {
+        "name": "restoreFocus",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to restore focus to the element that had focus before the dialog was opened"
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(details: OpenChangeDetails) => void",
+        "required": false,
+        "description": "Callback to be invoked when the dialog is opened or closed"
+      },
+      {
+        "name": "closeOnInteractOutside",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to close the dialog when the outside is clicked"
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to close the dialog when the escape key is pressed"
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "required": false,
+        "description": "Human readable label for the dialog, in event the dialog title is not rendered"
+      },
+      {
+        "name": "role",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"dialog\"",
+        "description": "The dialog's role"
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the dialog is open"
+      },
+      {
+        "name": "onEscapeKeyDown",
+        "type": "(event: KeyboardEvent) => void",
+        "required": false,
+        "description": "Function called when the escape key is pressed"
+      },
+      {
+        "name": "onPointerDownOutside",
+        "type": "(event: PointerDownOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the pointer is pressed down outside the component"
+      },
+      {
+        "name": "onFocusOutside",
+        "type": "(event: FocusOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the focus is moved outside the component"
+      },
+      {
+        "name": "onInteractOutside",
+        "type": "(event: InteractOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when an interaction happens outside the component"
+      },
+      {
+        "name": "persistentElements",
+        "type": "(() => Element)[]",
+        "required": false,
+        "description": "Returns the persistent elements that:\n- should not have pointer-events disabled\n- should not trigger the dismiss event"
+      },
+      {
+        "name": "present",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the node is present (controlled by the user)"
+      },
+      {
+        "name": "onExitComplete",
+        "type": "() => void",
+        "required": false,
+        "description": "Function called when the animation ends in the closed state"
+      },
+      {
+        "name": "immediate",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to synchronize the present change immediately or defer it to the next frame"
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "サンプル",
+        "path": "/story/components-modaldialog--basic",
+        "variant": "basic"
+      }
+    ]
+  },
+  {
+    "name": "Notification Badge",
+    "displayName": "バッジ",
+    "description": "未読の通知や新着情報をユーザーに知らせるためのコンポーネントです。",
+    "category": "Display",
+    "importPath": "@serendie/ui/notification-badge",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "variant",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "noNumber",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "position",
+        "type": "\"relative\"",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-notificationbadge--default&args=size:small"
+      },
+      {
+        "title": "カラー",
+        "path": "/story/components-notificationbadge--default&args=variant:secondary;size:medium"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/story/components-notificationbadge--no-number"
+      }
+    ]
+  },
+  {
+    "name": "Pagination",
+    "displayName": "ページネーション",
+    "description": "複数ページにまたがるデータやコンテンツのページ切り替えを行うためのコンポーネントです。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/pagination",
+    "hasStorybook": true,
+    "lastUpdated": "2025-05-23",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"medium\"",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onPageChange",
+        "type": "(details: { page: number; }) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "siblingCount",
+        "type": "number",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Basic",
+        "description": "",
+        "code": "import { Pagination } from \"@serendie/ui\";\nimport { useState } from \"react\";\n\nexport function BasicSample() {\n  const [page, setPage] = useState(1);\n  return (\n    <Pagination\n      count={10}\n      page={page}\n      onPageChange={({ page }) => setPage(page)}\n    />\n  );\n}\n",
+        "fileName": "BasicSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "With More Siblings",
+        "description": "",
+        "code": "import { Pagination } from \"@serendie/ui\";\n\nexport function WithMoreSiblingsSample() {\n  return <Pagination count={100} siblingCount={4} />;\n}\n",
+        "fileName": "WithMoreSiblingsSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サンプル",
+        "path": "/story/components-pagination--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "表示数の調整",
+        "path": "/story/components-pagination--with-more-siblings"
+      }
+    ]
+  },
+  {
+    "name": "Progress Indicator",
+    "displayName": "プログレスインジケーター",
+    "description": "ユーザーにアプリケーションの待機状態を視覚的に示すためのコンポーネントです。",
+    "category": "Display",
+    "importPath": "@serendie/ui/progress-indicator",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-progressindicator--small",
+        "variant": "small"
+      }
+    ]
+  },
+  {
+    "name": "Radio Button",
+    "displayName": "ラジオボタン",
+    "description": "ChoiceBoxにラベルを付けたコンポーネントです。複数の選択肢から、一つを排他的に選択する際に使用します。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/radio-button",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "helperText",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-radiobutton--default",
+        "variant": "default"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-radiobutton--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "displayName": "サーチ",
+    "description": "検索用途に特化した入力コンポーネントです。検索キーワードを入力した際に候補をサジェストする機能も持ちます。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/search",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "The initial open state of the combobox when it is first rendered.\nUse when you do not need to control its open state."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "required": false,
+        "description": "The initial value of the combobox when it is first rendered.\nUse when you do not need to control the state of the combobox."
+      },
+      {
+        "name": "items",
+        "type": "string[] | readonly string[]",
+        "required": true,
+        "description": "The options of the select"
+      },
+      {
+        "name": "itemToValue",
+        "type": "(item: string) => string",
+        "required": false,
+        "description": "The value of the item"
+      },
+      {
+        "name": "itemToString",
+        "type": "(item: string) => string",
+        "required": false,
+        "description": "The label of the item"
+      },
+      {
+        "name": "isItemDisabled",
+        "type": "(item: string) => boolean",
+        "required": false,
+        "description": "Whether the item is disabled"
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "form",
+        "type": "string",
+        "required": false,
+        "description": "The associate form of the combobox."
+      },
+      {
+        "name": "autoFocus",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to autofocus the input on mount"
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the combobox is open"
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; label: string; control: string; input: string; content: string; trigger: string; clearTrigger: string; item(id: string, index?: number): string; positioner: string; itemGroup(id: string | number): string; itemGroupLabel(id: string | number): string; }>",
+        "required": false,
+        "description": "The ids of the elements in the combobox. Useful for composition."
+      },
+      {
+        "name": "inputValue",
+        "type": "string",
+        "required": false,
+        "description": "The current value of the combobox's input"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "The `name` attribute of the combobox's input. Useful for form submission"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the combobox is disabled"
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the combobox is readonly. This puts the combobox in a \"non-editable\" mode\nbut the user can still interact with it"
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the combobox is invalid"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the combobox is required"
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "description": "The placeholder text of the combobox's input"
+      },
+      {
+        "name": "highlightedValue",
+        "type": "string",
+        "required": false,
+        "description": "The active item's id. Used to set the `aria-activedescendant` attribute"
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "required": false,
+        "description": "The keys of the selected items"
+      },
+      {
+        "name": "inputBehavior",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"none\"",
+        "description": "Defines the auto-completion behavior of the combobox.\n\n- `autohighlight`: The first focused item is highlighted as the user types\n- `autocomplete`: Navigating the listbox with the arrow keys selects the item and the input is updated"
+      },
+      {
+        "name": "selectionBehavior",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"replace\"",
+        "description": "The behavior of the combobox input when an item is selected\n\n- `replace`: The selected item string is set as the input value\n- `clear`: The input value is cleared\n- `preserve`: The input value is preserved"
+      },
+      {
+        "name": "openOnClick",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to open the combobox popup on initial click on the input"
+      },
+      {
+        "name": "openOnChange",
+        "type": "boolean | ((details: InputValueChangeDetails) => boolean)",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to show the combobox when the input value changes"
+      },
+      {
+        "name": "allowCustomValue",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to allow typing custom values in the input"
+      },
+      {
+        "name": "loopFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to loop the keyboard navigation through the items"
+      },
+      {
+        "name": "positioning",
+        "type": "PositioningOptions",
+        "required": false,
+        "description": "The positioning options to dynamically position the menu"
+      },
+      {
+        "name": "onInputValueChange",
+        "type": "(details: InputValueChangeDetails) => void",
+        "required": false,
+        "description": "Function called when the input's value changes"
+      },
+      {
+        "name": "onValueChange",
+        "type": "(details: ValueChangeDetails<string>) => void",
+        "required": false,
+        "description": "Function called when a new item is selected"
+      },
+      {
+        "name": "onHighlightChange",
+        "type": "(details: HighlightChangeDetails<string>) => void",
+        "required": false,
+        "description": "Function called when an item is highlighted using the pointer\nor keyboard navigation."
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(details: OpenChangeDetails) => void",
+        "required": false,
+        "description": "Function called when the popup is opened"
+      },
+      {
+        "name": "translations",
+        "type": "IntlTranslations",
+        "required": false,
+        "description": "Specifies the localized strings that identifies the accessibility elements and their states"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to allow multiple selection.\n\n**Good to know:** When `multiple` is `true`, the `selectionBehavior` is automatically set to `clear`.\nIt is recommended to render the selected items in a separate container."
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to close the combobox when an item is selected."
+      },
+      {
+        "name": "getSelectionValue",
+        "type": "(details: SelectionValueDetails<string>) => string",
+        "required": false,
+        "description": "Function to get the display value of the selected item"
+      },
+      {
+        "name": "openOnKeyPress",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether to open the combobox on arrow key press"
+      },
+      {
+        "name": "scrollToIndexFn",
+        "type": "(details: ScrollToIndexDetails) => void",
+        "required": false,
+        "description": "Function to scroll to a specific index"
+      },
+      {
+        "name": "composite",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the combobox is a composed with other composite widgets like tabs"
+      },
+      {
+        "name": "disableLayer",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to disable registering this a dismissable layer"
+      },
+      {
+        "name": "onPointerDownOutside",
+        "type": "(event: PointerDownOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the pointer is pressed down outside the component"
+      },
+      {
+        "name": "onFocusOutside",
+        "type": "(event: FocusOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the focus is moved outside the component"
+      },
+      {
+        "name": "onInteractOutside",
+        "type": "(event: InteractOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when an interaction happens outside the component"
+      },
+      {
+        "name": "present",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the node is present (controlled by the user)"
+      },
+      {
+        "name": "onExitComplete",
+        "type": "() => void",
+        "required": false,
+        "description": "Function called when the animation ends in the closed state"
+      },
+      {
+        "name": "immediate",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to synchronize the present change immediately or defer it to the next frame"
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Size",
+        "description": "",
+        "code": "import { Search } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function SizeSample() {\n  return (\n    <Dl>\n      <Dt>Small</Dt>\n      <Dd>\n        <Search\n          items={[\"React\", \"Vue\", \"Angular\", \"Svelte\", \"Ember\"]}\n          size=\"small\"\n        />\n      </Dd>\n\n      <Dt>Medium</Dt>\n      <Dd>\n        <Search\n          items={[\"React\", \"Vue\", \"Angular\", \"Svelte\", \"Ember\"]}\n          size=\"medium\"\n        />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "SizeSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { Search } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function StateSample() {\n  return (\n    <Dl>\n      <Dt>Enabled</Dt>\n      <Dd>\n        <Search items={[\"React\", \"Vue\", \"Angular\", \"Svelte\", \"Ember\"]} />\n      </Dd>\n\n      <Dt>Filled</Dt>\n      <Dd>\n        <Search\n          items={[\"React\", \"Vue\", \"Angular\", \"Svelte\", \"Ember\"]}\n          value={[\"React\"]}\n        />\n      </Dd>\n\n      <Dt>Disabled</Dt>\n      <Dd>\n        <Search\n          items={[\"React\", \"Vue\", \"Angular\", \"Svelte\", \"Ember\"]}\n          disabled\n        />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-search--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-search--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Select",
+    "displayName": "セレクト",
+    "description": "複数の選択肢を格納し、ユーザーは1つの選択肢を選ぶコンポーネントです。選択肢ではなくアクションを表示する場合は、DropdownMenuを使用してください。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/select",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select is required"
+      },
+      {
+        "name": "invalidMessage",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "The initial open state of the select when it is first rendered.\nUse when you do not need to control its open state."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "required": false,
+        "description": "The initial value of the select when it is first rendered.\nUse when you do not need to control the state of the select."
+      },
+      {
+        "name": "items",
+        "type": "selectItem[] | readonly selectItem[]",
+        "required": true,
+        "description": "The options of the select"
+      },
+      {
+        "name": "itemToValue",
+        "type": "(item: selectItem) => string",
+        "required": false,
+        "description": "The value of the item"
+      },
+      {
+        "name": "itemToString",
+        "type": "(item: selectItem) => string",
+        "required": false,
+        "description": "The label of the item"
+      },
+      {
+        "name": "isItemDisabled",
+        "type": "(item: selectItem) => boolean",
+        "required": false,
+        "description": "Whether the item is disabled"
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "form",
+        "type": "string",
+        "required": false,
+        "description": "The associate form of the underlying select."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; content: string; control: string; trigger: string; clearTrigger: string; label: string; hiddenSelect: string; positioner: string; item(id: string | number): string; itemGroup(id: string | number): string; itemGroupLabel(id: string | number): string; }>",
+        "required": false,
+        "description": "The ids of the elements in the select. Useful for composition."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "The `name` attribute of the underlying select."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select is disabled"
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select is invalid"
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select is read-only"
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the select should close after an item is selected"
+      },
+      {
+        "name": "onHighlightChange",
+        "type": "(details: HighlightChangeDetails<selectItem>) => void",
+        "required": false,
+        "description": "The callback fired when the highlighted item changes."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(details: ValueChangeDetails<selectItem>) => void",
+        "required": false,
+        "description": "The callback fired when the selected item changes."
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(details: OpenChangeDetails) => void",
+        "required": false,
+        "description": "Function called when the popup is opened"
+      },
+      {
+        "name": "positioning",
+        "type": "PositioningOptions",
+        "required": false,
+        "description": "The positioning options of the menu."
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "required": false,
+        "description": "The keys of the selected items"
+      },
+      {
+        "name": "highlightedValue",
+        "type": "string",
+        "required": false,
+        "description": "The key of the highlighted item"
+      },
+      {
+        "name": "loopFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to loop the keyboard navigation through the options"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to allow multiple selection"
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select menu is open"
+      },
+      {
+        "name": "scrollToIndexFn",
+        "type": "(details: ScrollToIndexDetails) => void",
+        "required": false,
+        "description": "Function to scroll to a specific index"
+      },
+      {
+        "name": "composite",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the select is a composed with other composite widgets like tabs or combobox"
+      },
+      {
+        "name": "deselectable",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the value can be cleared by clicking the selected item.\n\n**Note:** this is only applicable for single selection"
+      },
+      {
+        "name": "onPointerDownOutside",
+        "type": "(event: PointerDownOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the pointer is pressed down outside the component"
+      },
+      {
+        "name": "onFocusOutside",
+        "type": "(event: FocusOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when the focus is moved outside the component"
+      },
+      {
+        "name": "onInteractOutside",
+        "type": "(event: InteractOutsideEvent) => void",
+        "required": false,
+        "description": "Function called when an interaction happens outside the component"
+      },
+      {
+        "name": "present",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the node is present (controlled by the user)"
+      },
+      {
+        "name": "onExitComplete",
+        "type": "() => void",
+        "required": false,
+        "description": "Function called when the animation ends in the closed state"
+      },
+      {
+        "name": "immediate",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to synchronize the present change immediately or defer it to the next frame"
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Size",
+        "description": "",
+        "code": "import { Select } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function SizeSample() {\n  return (\n    <Dl>\n      <Dt>Small</Dt>\n      <Dd>\n        <Select\n          size=\"small\"\n          label=\"ラベル\"\n          placeholder=\"選択してください\"\n          required\n          items={[\n            { label: \"React\", value: \"React\" },\n            { label: \"Vue\", value: \"Vue\" },\n            { label: \"Angular\", value: \"Angular\" },\n            { label: \"Svelte\", value: \"Svelte\" },\n            { label: \"Ember\", value: \"Ember\" },\n          ]}\n        />\n      </Dd>\n\n      <Dt>Medium</Dt>\n      <Dd>\n        <Select\n          size=\"medium\"\n          label=\"ラベル\"\n          placeholder=\"選択してください\"\n          required\n          items={[\n            { label: \"React\", value: \"React\" },\n            { label: \"Vue\", value: \"Vue\" },\n            { label: \"Angular\", value: \"Angular\" },\n            { label: \"Svelte\", value: \"Svelte\" },\n            { label: \"Ember\", value: \"Ember\" },\n          ]}\n        />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "SizeSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { Select } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function StateSample() {\n  return (\n    <Dl>\n      <Dt>Enabled</Dt>\n      <Dd>\n        <Select\n          label=\"ラベル\"\n          placeholder=\"選択してください\"\n          required\n          items={[\n            { label: \"React\", value: \"React\" },\n            { label: \"Vue\", value: \"Vue\" },\n            { label: \"Angular\", value: \"Angular\" },\n            { label: \"Svelte\", value: \"Svelte\" },\n            { label: \"Ember\", value: \"Ember\" },\n          ]}\n        />\n      </Dd>\n\n      <Dt>Error</Dt>\n      <Dd>\n        <Select\n          label=\"ラベル\"\n          placeholder=\"選択してください\"\n          required\n          invalid\n          invalidMessage=\"エラーメッセージ\"\n          items={[\n            { label: \"React\", value: \"React\" },\n            { label: \"Vue\", value: \"Vue\" },\n            { label: \"Angular\", value: \"Angular\" },\n            { label: \"Svelte\", value: \"Svelte\" },\n            { label: \"Ember\", value: \"Ember\" },\n          ]}\n        />\n      </Dd>\n\n      <Dt>Disabled</Dt>\n      <Dd>\n        <Select\n          label=\"ラベル\"\n          placeholder=\"選択してください\"\n          required\n          disabled\n          items={[\n            { label: \"React\", value: \"React\" },\n            { label: \"Vue\", value: \"Vue\" },\n            { label: \"Angular\", value: \"Angular\" },\n            { label: \"Svelte\", value: \"Svelte\" },\n            { label: \"Ember\", value: \"Ember\" },\n          ]}\n        />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サイズ",
+        "path": "/story/components-select--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-select--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Switch",
+    "displayName": "スイッチ",
+    "description": "オン/オフの2つの状態を切り替えるためのコンポーネントです。設定画面などでその状態を視覚的に伝えることができます。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/switch",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": "Specifies the localized strings that identifies the accessibility elements and their states"
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; hiddenInput: string; control: string; label: string; thumb: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the switch. Useful for composition."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the switch is disabled."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": "If `true`, the switch is marked as invalid."
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "If `true`, the switch input is marked as required,"
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the switch is read-only"
+      },
+      {
+        "name": "onCheckedChange",
+        "type": "(details: CheckedChangeDetails) => void",
+        "required": false,
+        "description": "Function to call when the switch is clicked."
+      },
+      {
+        "name": "checked",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the switch is checked."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "The name of the input field in a switch\n(Useful for form submission)."
+      },
+      {
+        "name": "value",
+        "type": "string | number",
+        "required": false,
+        "defaultValue": "\"on\"",
+        "description": "The value of switch input. Useful for form submission."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      },
+      {
+        "name": "helperText",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { Switch } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function StateSample() {\n  return (\n    <Dl>\n      <Dt>Enabled</Dt>\n      <Dd>\n        <Switch label={\"スイッチラベル\"} />\n      </Dd>\n      <Dt>Checked</Dt>\n      <Dd>\n        <Switch checked={true} label={\"スイッチラベル\"} />\n      </Dd>\n      <Dt>Disabled</Dt>\n      <Dd>\n        <Switch checked={false} disabled label={\"スイッチラベル\"} />\n      </Dd>\n      <Dt>Selected - Disabled</Dt>\n      <Dd>\n        <Switch checked={true} disabled label={\"スイッチラベル\"} />\n      </Dd>\n      <Dt>Focused</Dt>\n      <Dd>\n        <Switch checked={false} data-focus label={\"スイッチラベル\"} />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Type",
+        "description": "",
+        "code": "import { Switch } from \"@serendie/ui\";\nimport { useState } from \"react\";\n\nexport function TypeSample() {\n  const [checked, setChecked] = useState(false);\n  const handleClick = () => {\n    setChecked(!checked);\n  };\n\n  return (\n    <Switch\n      checked={checked}\n      onCheckedChange={handleClick}\n      label={\"スイッチラベル\"}\n    />\n  );\n}\n",
+        "fileName": "TypeSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サンプル",
+        "path": "/story/components-switch--default",
+        "variant": "default"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-switch--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Tabs",
+    "displayName": "タブ",
+    "description": "複数のビューを切り替えるためのコンポーネントです。TopAppBarやBottomNavigationはグローバルなナビゲーションとして使用しますが、Tabsはローカルなナビゲーションであることに注意してください。",
+    "category": "Layout",
+    "importPath": "@serendie/ui/tabs",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "required": false,
+        "description": "The initial value of the tabs when it is first rendered.\nUse when you do not need to control the state of the tabs."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the machine."
+      },
+      {
+        "name": "ids",
+        "type": "Partial<{ root: string; trigger: string; list: string; content: string; indicator: string; }>",
+        "required": false,
+        "description": "The ids of the elements in the tabs. Useful for composition."
+      },
+      {
+        "name": "translations",
+        "type": "IntlTranslations",
+        "required": false,
+        "description": "Specifies the localized strings that identifies the accessibility elements and their states"
+      },
+      {
+        "name": "loopFocus",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true",
+        "description": "Whether the keyboard navigation will loop from last tab to first, and vice versa."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": "The selected tab id"
+      },
+      {
+        "name": "orientation",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"horizontal\"",
+        "description": "The orientation of the tabs. Can be `horizontal` or `vertical`\n- `horizontal`: only left and right arrow key navigation will work.\n- `vertical`: only up and down arrow key navigation will work."
+      },
+      {
+        "name": "activationMode",
+        "type": "enum",
+        "required": false,
+        "defaultValue": "\"automatic\"",
+        "description": "The activation mode of the tabs. Can be `manual` or `automatic`\n- `manual`: Tabs are activated when clicked or press `enter` key.\n- `automatic`: Tabs are activated when receiving focus"
+      },
+      {
+        "name": "onValueChange",
+        "type": "(details: ValueChangeDetails) => void",
+        "required": false,
+        "description": "Callback to be called when the selected/active tab changes"
+      },
+      {
+        "name": "onFocusChange",
+        "type": "(details: FocusChangeDetails) => void",
+        "required": false,
+        "description": "Callback to be called when the focused tab changes"
+      },
+      {
+        "name": "composite",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the tab is composite"
+      },
+      {
+        "name": "deselectable",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the active tab can be deselected when clicking on it."
+      },
+      {
+        "name": "lazyMount",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to enable lazy mounting"
+      },
+      {
+        "name": "unmountOnExit",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false",
+        "description": "Whether to unmount on exit."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": "Use the provided child element as the default rendered element, combining their props and behavior."
+      }
+    ],
+    "examples": [
+      {
+        "title": "State",
+        "description": "",
+        "code": "import { Dd, Dl, Dt } from \"@/components/LayoutUtils\";\nimport { Tabs, TabItem } from \"@serendie/ui\";\n\nexport function StateSample() {\n  return (\n    <Dl\n      style={{\n        gridTemplateColumns: \"80px auto auto\",\n      }}\n    >\n      <Dt></Dt>\n      <Dt\n        style={{\n          textAlign: \"center\",\n        }}\n      >\n        Default\n      </Dt>\n      <Dt\n        style={{\n          textAlign: \"center\",\n        }}\n      >\n        Selected\n      </Dt>\n\n      <Dt>Default</Dt>\n      <Dd>\n        <Tabs>\n          <TabItem title=\"連絡先\" value=\"1\" />\n        </Tabs>\n      </Dd>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" />\n        </Tabs>\n      </Dd>\n\n      <Dt>Focused</Dt>\n      <Dd>\n        <Tabs>\n          <TabItem title=\"連絡先\" value=\"1\" data-focus-visible={true} />\n        </Tabs>\n      </Dd>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" data-focus-visible={true} />\n        </Tabs>\n      </Dd>\n\n      <Dt>Disabled</Dt>\n      <Dd>\n        <Tabs>\n          <TabItem title=\"連絡先\" value=\"1\" disabled />\n        </Tabs>\n      </Dd>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" disabled />\n        </Tabs>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "StateSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Tabs Notification",
+        "description": "",
+        "code": "import { Dd, Dl, Dt } from \"@/components/LayoutUtils\";\nimport { TabItem, Tabs } from \"@serendie/ui\";\n\nexport function TabsNotificationSample() {\n  return (\n    <Dl>\n      <Dt>Default</Dt>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" />\n          <TabItem title=\"トーク\" value=\"2\" />\n          <TabItem title=\"売上履歴\" value=\"3\" />\n          <TabItem title=\"入出金\" value=\"4\" />\n        </Tabs>\n      </Dd>\n\n      <Dt>With Badge</Dt>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" dot />\n          <TabItem title=\"トーク\" value=\"2\" />\n          <TabItem title=\"売上履歴\" value=\"3\" />\n          <TabItem title=\"入出金\" value=\"4\" />\n        </Tabs>\n      </Dd>\n\n      <Dt>With Badge (Number)</Dt>\n      <Dd>\n        <Tabs defaultValue=\"1\">\n          <TabItem title=\"連絡先\" value=\"1\" badge={3} />\n          <TabItem title=\"トーク\" value=\"2\" />\n          <TabItem title=\"売上履歴\" value=\"3\" />\n          <TabItem title=\"入出金\" value=\"4\" />\n        </Tabs>\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "TabsNotificationSample.tsx",
+        "language": "tsx"
+      },
+      {
+        "title": "Tabs",
+        "description": "",
+        "code": "import { TabItem } from \"@serendie/ui\";\nimport { Tabs } from \"@serendie/ui\";\n\nexport function TabsSample() {\n  return (\n    <Tabs defaultValue=\"2\">\n      <TabItem title=\"連絡先\" value=\"1\" />\n      <TabItem title=\"トーク\" value=\"2\" />\n      <TabItem title=\"売上履歴\" value=\"3\" dot />\n      <TabItem title=\"入出金\" value=\"4\" badge={3} disabled />\n    </Tabs>\n  );\n}\n",
+        "fileName": "TabsSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "サンプル",
+        "path": "/story/components-tabs--default",
+        "variant": "default"
+      },
+      {
+        "title": "バリエーション",
+        "path": "/docs/components-tabs--docs",
+        "variant": "docs"
+      },
+      {
+        "title": "状態",
+        "path": "/docs/components-tabs--docs",
+        "variant": "docs"
+      }
+    ]
+  },
+  {
+    "name": "Text Area",
+    "displayName": "テキストエリア",
+    "description": "複数行のテキストを入力するためのコンポーネントです。Buttonなどと合わせてフォームを構成します。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/text-area",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "invalidMessage",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "autoAdjustHeight",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "状態",
+        "path": "/story/components-textarea--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "高さの自動調整",
+        "path": "/story/components-textarea--auto-adjust-height"
+      }
+    ]
+  },
+  {
+    "name": "Text Field",
+    "displayName": "テキストフィールド",
+    "description": "1行のテキストを入力するためのコンポーネントです。Buttonなどと合わせてフォームを構成します。複数行にはTextAreaを使用してください。",
+    "category": "Inputs",
+    "importPath": "@serendie/ui/text-field",
+    "hasStorybook": true,
+    "lastUpdated": "2025-03-21",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "invalidMessage",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftContent",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightContent",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "状態",
+        "path": "/story/components-textfield--basic",
+        "variant": "basic"
+      },
+      {
+        "title": "Password Field",
+        "path": "/story/components-passwordfield--basic",
+        "variant": "basic"
+      }
+    ]
+  },
+  {
+    "name": "Toast",
+    "displayName": "トースト",
+    "description": "画面上に一時的に表示される短い通知メッセージです。アクションの結果やエラーメッセージなどをユーザーに伝えるために使用します。",
+    "category": "Feedback",
+    "importPath": "@serendie/ui/toast",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "toaster",
+        "type": "CreateToasterReturn",
+        "required": true,
+        "description": ""
+      }
+    ],
+    "examples": [
+      {
+        "title": "Toast",
+        "description": "",
+        "code": "import { Button, Toast, toaster } from \"@serendie/ui\";\nimport { Dd, Dl, Dt } from \"src/components/LayoutUtils\";\n\nexport function ToastSample() {\n  return (\n    <Dl>\n      <Dt>Default</Dt>\n      <Dd>\n        <Button\n          styleType=\"outlined\"\n          onClick={() =>\n            toaster.create({\n              title: \"お知らせメッセージ\",\n              duration: 1500,\n            })\n          }\n        >\n          Show Toast\n        </Button>\n        <Toast toaster={toaster} />\n      </Dd>\n      <Dt>Success</Dt>\n      <Dd>\n        <Button\n          styleType=\"outlined\"\n          onClick={() =>\n            toaster.create({\n              type: \"success\",\n              title: \"成功しました\",\n              duration: 1500,\n            })\n          }\n        >\n          Show Toast\n        </Button>\n        <Toast toaster={toaster} />\n      </Dd>\n      <Dt>Error</Dt>\n      <Dd>\n        <Button\n          styleType=\"outlined\"\n          onClick={() =>\n            toaster.create({\n              type: \"error\",\n              title: \"エラーがあります\",\n              duration: 1500,\n            })\n          }\n        >\n          Show Toast\n        </Button>\n        <Toast toaster={toaster} />\n      </Dd>\n    </Dl>\n  );\n}\n",
+        "fileName": "ToastSample.tsx",
+        "language": "tsx"
+      }
+    ],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-toast--default",
+        "variant": "default"
+      }
+    ]
+  },
+  {
+    "name": "Top App Bar",
+    "displayName": "トップアップバー",
+    "description": "画面上部に配置するモバイルやタブレット向けのグローバルなナビゲーションです。",
+    "category": "Layout",
+    "importPath": "@serendie/ui/top-app-bar",
+    "hasStorybook": true,
+    "lastUpdated": "2024-11-1",
+    "props": [
+      {
+        "name": "headingIconButton",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "trailingIconButtons",
+        "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "badge",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "enum",
+        "required": true,
+        "description": ""
+      }
+    ],
+    "examples": [],
+    "storybookUrls": [
+      {
+        "title": "バリエーション",
+        "path": "/story/components-topappbar--all",
+        "variant": "all"
+      }
+    ]
+  }
+]

@@ -4,6 +4,7 @@ import {
   getDesignTokensTool,
   getDesignTokenDetailTool,
 } from "./tools/design-tokens";
+import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -17,6 +18,8 @@ export function createMcpServer() {
   getSymbolDetailTool(mcpServer);
   getDesignTokensTool(mcpServer);
   getDesignTokenDetailTool(mcpServer);
+  getComponentsTool(mcpServer);
+  getComponentDetailTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(

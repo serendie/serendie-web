@@ -25,7 +25,8 @@ interface MCPResponse {
 }
 
 // Get port from command line argument or use default
-const PORT = process.argv[2] || "4321";
+// npm run test:mcp -- 4321 passes args after -- as process.argv[3]
+const PORT = process.argv[3] || process.argv[2] || "4321";
 const MCP_URL = `http://localhost:${PORT}/sse`;
 
 // Output directory for test results
@@ -175,25 +176,29 @@ async function testGetDesignTokens() {
   }
 }
 
-async function testGetComponentInfo() {
-  console.log("\nTesting get-component-info tool...");
+async function testGetComponents() {
+  console.log("\nTesting get-components tool...");
 
   const testCases = [
-    {}, // Get all components
-    { componentName: "button" },
-    { componentName: "modal-dialog" },
-    { componentName: "non-existent" }, // Test error case
+    { description: "All components", params: {} },
+    { description: "Search Button", params: { search: "Button" } },
+    { description: "Actions category", params: { category: "Actions" } },
+    { description: "Limit 5", params: { limit: 5 } },
+    {
+      description: "Search Text with limit",
+      params: { search: "Text", limit: 3 },
+    },
   ];
 
-  for (const params of testCases) {
-    console.log(`  Testing with params:`, params);
+  for (const testCase of testCases) {
+    console.log(`  Testing: ${testCase.description}`);
 
     const request: MCPRequest = {
       jsonrpc: "2.0",
       method: "tools/call",
       params: {
-        name: "get-component-info",
-        arguments: params,
+        name: "get-components",
+        arguments: testCase.params,
       },
       id: 3,
     };
@@ -202,10 +207,47 @@ async function testGetComponentInfo() {
       const response = await sendMCPRequest(request);
       console.log(`  ✓ Response received`);
 
-      const fileName = params.componentName
-        ? `component-info-${params.componentName}`
-        : "component-info-all";
-      await saveOutput(fileName, response);
+      await saveOutput(
+        `components-${testCase.description.replace(/\s+/g, "-")}`,
+        response
+      );
+    } catch (error) {
+      console.error(`  ✗ Failed:`, error);
+    }
+  }
+}
+
+async function testGetComponentDetail() {
+  console.log("\nTesting get-component-detail tool...");
+
+  const testCases = [
+    "Button",
+    "TextField",
+    "Modal Dialog",
+    "NonExistentComponent", // Test error case
+  ];
+
+  for (const componentName of testCases) {
+    console.log(`  Testing component detail: ${componentName}`);
+
+    const request: MCPRequest = {
+      jsonrpc: "2.0",
+      method: "tools/call",
+      params: {
+        name: "get-component-detail",
+        arguments: { name: componentName },
+      },
+      id: 4,
+    };
+
+    try {
+      const response = await sendMCPRequest(request);
+      console.log(`  ✓ Response received`);
+
+      await saveOutput(
+        `component-detail-${componentName.replace(/\s+/g, "-")}`,
+        response
+      );
     } catch (error) {
       console.error(`  ✗ Failed:`, error);
     }
@@ -232,7 +274,7 @@ async function testSearchDocumentation() {
         name: "search-documentation",
         arguments: params,
       },
-      id: 4,
+      id: 5,
     };
 
     try {
@@ -278,7 +320,8 @@ async function listTools() {
 
 async function checkServerStatus(): Promise<boolean> {
   try {
-    const response = await fetch(MCP_URL.replace("/sse", "/sse/health"), {
+    // Try to access the base URL first
+    const response = await fetch(`http://localhost:${PORT}/`, {
       method: "GET",
     });
     return response.ok;
@@ -315,7 +358,8 @@ async function main() {
     // Test each tool
     await testHealthCheck();
     await testGetDesignTokens();
-    await testGetComponentInfo();
+    await testGetComponents();
+    await testGetComponentDetail();
     await testSearchDocumentation();
 
     console.log("\n✅ All tests completed!");

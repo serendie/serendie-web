@@ -22,6 +22,7 @@ npm run dev              # Start dev server (builds Panda CSS first)
 npm run build            # Full production build
 npm run build:panda      # Regenerate Panda CSS styles and types
 npm run build:tokens     # Rebuild design tokens from Style Dictionary
+npm run build:components # Regenerate component manifest for MCP server
 
 # Code Quality
 npm run lint             # Run ESLint
@@ -61,6 +62,11 @@ src/
 
 styled-system/         # Generated PandaCSS output
 tokens/               # Design token configuration
+scripts/              # Build and utility scripts
+├── generateComponentsManifest/  # Component manifest generator
+├── figmaLocalStyles2PandaTokens/  # Figma to Panda tokens converter
+├── figmaSvgConverter/  # Figma SVG converter
+└── token2cssVars/  # Token to CSS variables converter
 ```
 
 ### Design System Integration
@@ -91,6 +97,7 @@ tokens/               # Design token configuration
    - Tokens are transformed for both CSS and PandaCSS
 
 4. **Content Management**:
+
    - Content collections defined in `src/content/config.ts`
    - Frontmatter controls navigation and metadata
    - MDX allows React components in documentation
