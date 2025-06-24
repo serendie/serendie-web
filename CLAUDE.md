@@ -101,6 +101,11 @@ tokens/               # Design token configuration
    - **IMPORTANT**: Always run `npm run test:mcp` after modifying MCP server code
    - Tests are located in `src/mcp/__tests__/`
    - **Note**: The dev server must be running (`npm run dev`) before running MCP tests
+   - **Documentation**: When adding or modifying MCP tools, always update `src/mcp/README.md` with:
+     - Tool descriptions and parameters
+     - Return value specifications
+     - Usage examples
+     - Any new patterns or best practices
 
 ### Important Configuration Files
 

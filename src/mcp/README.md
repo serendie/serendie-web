@@ -8,6 +8,8 @@ The MCP server allows AI assistants to interact with the Serendie Design System 
 
 - Getting list of available symbols/icons from the design system
 - Getting detailed information about specific symbols
+- Getting design tokens from the design system
+- Getting detailed information about specific design tokens
 - Health checking the server status
 
 ## File Structure
@@ -16,11 +18,13 @@ The MCP server allows AI assistants to interact with the Serendie Design System 
 src/mcp/
 ├── server.ts              # Main MCP server configuration
 ├── tools/                 # Tool implementations
-│   └── symbols.ts         # Symbol list and detail retrieval
+│   ├── symbols.ts         # Symbol list and detail retrieval
+│   └── design-tokens.ts   # Design token list and detail retrieval
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── tools/
-│   │   └── symbols.test.ts
+│   │   ├── symbols.test.ts
+│   │   └── design-tokens.test.ts
 │   └── outputs/          # Test output files (gitignored)
 ├── test-client.ts        # Manual test client
 └── README.md            # This file
@@ -96,6 +100,33 @@ The test client will:
      - Available variants
      - Import statement
      - Usage examples (basic, outlined, filled)
+
+4. **get-design-tokens**
+   - Parameters:
+     - `search`: string (optional) - Filter tokens by key (partial match, case-insensitive)
+     - `type`: string (optional) - Filter by token type (color, typography, dimension, elevation, radius, spacing, opacity)
+     - `category`: string (optional) - Filter by category (reference, system)
+     - `theme`: string (optional) - Filter by theme (asagi, konjo, kurikawa, sumire, tsutsuji)
+     - `limit`: number (optional) - Maximum number of results to return
+   - Returns list of design tokens:
+     - Total count and filtered count
+     - Returned count (after limit)
+     - Available token types
+     - Array of token objects with key, path, type, value, originalValue, category, and theme
+
+5. **get-design-token-detail**
+   - Parameters:
+     - `key`: string (required) - The key of the token to get details for (e.g., "sd.system.color.impression.primaryContainer")
+   - Returns detailed information about a specific design token:
+     - Token existence check
+     - Path array
+     - Token type
+     - Actual value and original value
+     - Category (reference/system/theme)
+     - Theme (if applicable)
+     - CSS variable format
+     - Usage examples (CSS and PandaCSS)
+     - Reference information (for system tokens)
 
 ## Expected Output Format
 
@@ -274,6 +305,7 @@ Follow MCP best practices for tool naming:
 **Examples in this Project**:
 
 - Tools with multiple functions: `src/mcp/tools/symbols.ts` (list + detail)
+- Tools with complex filtering: `src/mcp/tools/design-tokens.ts` (multi-parameter filtering)
 - Direct registration: See `health-check` in `src/mcp/server.ts`
 
 #### 6. Common Patterns
