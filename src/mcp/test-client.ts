@@ -102,21 +102,26 @@ async function testGetDesignTokens() {
   console.log("\nTesting get-design-tokens tool...");
 
   const testCases = [
-    { theme: "asagi", category: "color" },
-    { theme: "konjo", category: "color" },
-    { category: "all" }, // Test default theme
-    { theme: "sumire", category: "spacing" },
+    { description: "All tokens", params: {} },
+    { description: "Color tokens", params: { type: "color" } },
+    { description: "System tokens", params: { category: "system" } },
+    { description: "Reference tokens", params: { category: "reference" } },
+    { description: "Search primary", params: { search: "primary" } },
+    {
+      description: "Color system tokens",
+      params: { type: "color", category: "system", limit: 10 },
+    },
   ];
 
-  for (const params of testCases) {
-    console.log(`  Testing with params:`, params);
+  for (const testCase of testCases) {
+    console.log(`  Testing: ${testCase.description}`);
 
     const request: MCPRequest = {
       jsonrpc: "2.0",
       method: "tools/call",
       params: {
         name: "get-design-tokens",
-        arguments: params,
+        arguments: testCase.params,
       },
       id: 2,
     };
@@ -125,7 +130,45 @@ async function testGetDesignTokens() {
       const response = await sendMCPRequest(request);
       console.log(`  ✓ Response received`);
 
-      await saveOutput(`design-tokens-${JSON.stringify(params)}`, response);
+      await saveOutput(
+        `design-tokens-${testCase.description.replace(/\s+/g, "-")}`,
+        response
+      );
+    } catch (error) {
+      console.error(`  ✗ Failed:`, error);
+    }
+  }
+
+  // Test get-design-token-detail
+  console.log("\nTesting get-design-token-detail tool...");
+
+  const detailTestCases = [
+    { key: "sd.reference.color.scale.gray.100" },
+    { key: "sd.system.color.impression.primaryContainer" },
+    { key: "invalid.token.key" },
+  ];
+
+  for (const params of detailTestCases) {
+    console.log(`  Testing token detail:`, params.key);
+
+    const request: MCPRequest = {
+      jsonrpc: "2.0",
+      method: "tools/call",
+      params: {
+        name: "get-design-token-detail",
+        arguments: params,
+      },
+      id: 3,
+    };
+
+    try {
+      const response = await sendMCPRequest(request);
+      console.log(`  ✓ Response received`);
+
+      await saveOutput(
+        `design-token-detail-${params.key.replace(/\./g, "-")}`,
+        response
+      );
     } catch (error) {
       console.error(`  ✗ Failed:`, error);
     }

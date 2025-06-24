@@ -1,5 +1,9 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { getSymbolsTool, getSymbolDetailTool } from "./tools/symbols";
+import {
+  getDesignTokensTool,
+  getDesignTokenDetailTool,
+} from "./tools/design-tokens";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -11,6 +15,8 @@ export function createMcpServer() {
   // Register tools
   getSymbolsTool(mcpServer);
   getSymbolDetailTool(mcpServer);
+  getDesignTokensTool(mcpServer);
+  getDesignTokenDetailTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(

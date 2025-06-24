@@ -1,0 +1,445 @@
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+import tokens from "@serendie/design-token/token-list";
+
+/**
+ * Serendie Design Systemのデザイントークン一覧を取得するMCPツール
+ *
+ * @param mcpServer - MCPサーバーインスタンス
+ *
+ * @example
+ * // 全てのデザイントークンを取得
+ * const result = await tool.call({});
+ *
+ * @example
+ * // "primary"を含むトークンを検索
+ * const result = await tool.call({ search: "primary" });
+ *
+ * @example
+ * // カラートークンのみを取得
+ * const result = await tool.call({ type: "color" });
+ *
+ * @example
+ * // システムトークンのみを取得
+ * const result = await tool.call({ category: "system" });
+ *
+ * @returns 以下の構造のJSONデータを返します：
+ * ```json
+ * {
+ *   "total": 1234,        // 全トークン数
+ *   "filtered": 50,       // フィルタリング後の数
+ *   "types": ["color", "typography", ...],  // 見つかったタイプ一覧
+ *   "tokens": [{
+ *     "key": "sd.reference.color.scale.gray.100",
+ *     "path": ["sd", "reference", "color", "scale", "gray", "100"],
+ *     "type": "color",
+ *     "value": "#FAFAFA",
+ *     "originalValue": "#FAFAFA",
+ *     "category": "reference",
+ *     "theme": null
+ *   }]
+ * }
+ * ```
+ */
+export function getDesignTokensTool(mcpServer: McpServer) {
+  mcpServer.registerTool(
+    "get-design-tokens",
+    {
+      title: "Get Design Tokens List",
+      description:
+        "Get a list of Serendie design tokens with optional filtering by search, type, category, or theme",
+      inputSchema: {
+        /**
+         * トークン名でフィルタリングするための検索クエリ（オプション）
+         * 部分一致で検索され、大文字小文字は区別されません
+         * @example "primary", "gray", "spacing"
+         */
+        search: z
+          .string()
+          .optional()
+          .describe("Optional search query to filter tokens by key"),
+        /**
+         * トークンタイプでフィルタリング（オプション）
+         * @example "color", "typography", "dimension"
+         */
+        type: z
+          .enum([
+            "color",
+            "typography",
+            "dimension",
+            "elevation",
+            "radius",
+            "spacing",
+            "opacity",
+          ])
+          .optional()
+          .describe("Filter tokens by type"),
+        /**
+         * トークンカテゴリでフィルタリング（オプション）
+         * reference: 生の値を持つトークン
+         * system: リファレンストークンを参照するトークン
+         */
+        category: z
+          .enum(["reference", "system"])
+          .optional()
+          .describe("Filter tokens by category (reference or system)"),
+        /**
+         * 返す結果の最大数（オプション）
+         * 指定しない場合は全ての結果を返します
+         * @example 10, 20, 50
+         */
+        limit: z
+          .number()
+          .optional()
+          .describe("Maximum number of results to return (default: all)"),
+        /**
+         * 特定のテーマでフィルタリング（オプション）
+         * @example "asagi", "konjo"
+         */
+        theme: z
+          .enum(["asagi", "konjo", "kurikawa", "sumire", "tsutsuji"])
+          .optional()
+          .describe("Filter tokens by theme"),
+      },
+    },
+    async ({ search, type, category, theme, limit }) => {
+      try {
+        // トークンをフィルタリング
+        let filteredTokens = [...tokens];
+
+        // カテゴリでフィルタリング
+        if (category) {
+          filteredTokens = filteredTokens.filter((token) => {
+            if (category === "reference") {
+              return token.key.includes("sd.reference");
+            } else if (category === "system") {
+              return (
+                token.key.includes("sd.system") && !token.key.includes("themes")
+              );
+            }
+            return false;
+          });
+        }
+
+        // タイプでフィルタリング
+        if (type) {
+          filteredTokens = filteredTokens.filter(
+            (token) => token.type === type
+          );
+        }
+
+        // テーマでフィルタリング
+        if (theme) {
+          filteredTokens = filteredTokens.filter((token) =>
+            token.key.includes(`themes.${theme}`)
+          );
+        }
+
+        // 検索クエリでフィルタリング
+        if (search) {
+          const searchLower = search.toLowerCase();
+          filteredTokens = filteredTokens.filter((token) =>
+            token.key.toLowerCase().includes(searchLower)
+          );
+        }
+
+        // 結果数の制限を適用
+        const totalFiltered = filteredTokens.length;
+        if (limit && limit > 0) {
+          filteredTokens = filteredTokens.slice(0, limit);
+        }
+
+        // トークンデータを整形
+        const formattedTokens = filteredTokens.map((token) => {
+          // カテゴリを判定
+          let tokenCategory: "reference" | "system" | "theme" = "system";
+          if (token.key.includes("sd.reference")) {
+            tokenCategory = "reference";
+          } else if (token.key.includes("themes")) {
+            tokenCategory = "theme";
+          }
+
+          // テーマを抽出
+          let tokenTheme: string | null = null;
+          const themeMatch = token.key.match(/themes\.(\w+)\./);
+          if (themeMatch) {
+            tokenTheme = themeMatch[1];
+          }
+
+          return {
+            key: token.key,
+            path: token.path,
+            type: token.type,
+            value: token.value,
+            originalValue: token.originalValue,
+            category: tokenCategory,
+            theme: tokenTheme,
+          };
+        });
+
+        // 見つかったタイプ一覧を取得
+        const types = [...new Set(formattedTokens.map((token) => token.type))];
+
+        // レスポンスデータを準備
+        const tokenData = {
+          /**
+           * @serendie/design-token パッケージに含まれる全トークン数
+           */
+          total: tokens.length,
+          /**
+           * フィルタリング後のトークン数
+           */
+          filtered: totalFiltered,
+          /**
+           * 返されたトークン数（limit適用後）
+           */
+          returned: formattedTokens.length,
+          /**
+           * 見つかったトークンタイプ一覧
+           */
+          types: types.sort(),
+          /**
+           * トークンの配列
+           */
+          tokens: formattedTokens,
+        };
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(tokenData, null, 2),
+            },
+          ],
+        };
+      } catch (error) {
+        /**
+         * エラー時のレスポンス
+         * 主に@serendie/design-tokenパッケージの読み込みエラーなど
+         */
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                error: "Failed to fetch design tokens",
+                message:
+                  error instanceof Error ? error.message : "Unknown error",
+              }),
+            },
+          ],
+        };
+      }
+    }
+  );
+}
+
+/**
+ * 特定のデザイントークンの詳細情報を取得するMCPツール
+ *
+ * @param mcpServer - MCPサーバーインスタンス
+ *
+ * @example
+ * // 特定のトークンの詳細を取得
+ * const result = await tool.call({ key: "sd.system.color.impression.primaryContainer" });
+ *
+ * @returns 以下の構造のJSONデータを返します：
+ * ```json
+ * {
+ *   "key": "sd.system.color.impression.primaryContainer",
+ *   "exists": true,
+ *   "path": ["sd", "system", "color", "impression", "primaryContainer"],
+ *   "type": "color",
+ *   "value": "#0A69CF",
+ *   "originalValue": "{sd.reference.color.scale.blue.500}",
+ *   "category": "system",
+ *   "theme": null,
+ *   "cssVariable": "var(--sd-system-color-impression-primaryContainer)",
+ *   "usage": {
+ *     "css": "background-color: var(--sd-system-color-impression-primaryContainer);",
+ *     "pandacss": "bgColor: 'sd.system.color.impression.primaryContainer'"
+ *   }
+ * }
+ * ```
+ *
+ * トークンが存在しない場合：
+ * ```json
+ * {
+ *   "key": "invalid.token",
+ *   "exists": false,
+ *   "message": "Token 'invalid.token' not found in @serendie/design-token"
+ * }
+ * ```
+ */
+export function getDesignTokenDetailTool(mcpServer: McpServer) {
+  mcpServer.registerTool(
+    "get-design-token-detail",
+    {
+      title: "Get Design Token Detail",
+      description:
+        "Get detailed information about a specific design token including usage examples",
+      inputSchema: {
+        /**
+         * 詳細を取得したいトークンのキー（必須）
+         * @example "sd.system.color.impression.primaryContainer"
+         */
+        key: z.string().describe("The key of the token to get details for"),
+      },
+    },
+    async ({ key }) => {
+      try {
+        // トークンを検索
+        const token = tokens.find((t) => t.key === key);
+
+        if (!token) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify(
+                  {
+                    key,
+                    exists: false,
+                    message: `Token '${key}' not found in @serendie/design-token`,
+                  },
+                  null,
+                  2
+                ),
+              },
+            ],
+          };
+        }
+
+        // カテゴリを判定
+        let category: "reference" | "system" | "theme" = "system";
+        if (token.key.includes("sd.reference")) {
+          category = "reference";
+        } else if (token.key.includes("themes")) {
+          category = "theme";
+        }
+
+        // テーマを抽出
+        let theme: string | null = null;
+        const themeMatch = token.key.match(/themes\.(\w+)\./);
+        if (themeMatch) {
+          theme = themeMatch[1];
+        }
+
+        // CSS変数名を生成
+        const cssVariable = `var(--${token.key.replace(/\./g, "-")})`;
+
+        // 使用例を生成
+        const usage: Record<string, string> = {
+          css: "",
+          pandacss: "",
+        };
+
+        switch (token.type) {
+          case "color":
+            usage.css = `color: ${cssVariable};`;
+            usage.pandacss = `color: '${token.key}'`;
+            break;
+          case "typography":
+            usage.css = `font-family: ${cssVariable};`;
+            usage.pandacss = `fontFamily: '${token.key}'`;
+            break;
+          case "dimension":
+          case "spacing":
+            usage.css = `margin: ${cssVariable};`;
+            usage.pandacss = `margin: '${token.key}'`;
+            break;
+          case "radius":
+            usage.css = `border-radius: ${cssVariable};`;
+            usage.pandacss = `borderRadius: '${token.key}'`;
+            break;
+          case "elevation":
+            usage.css = `box-shadow: ${cssVariable};`;
+            usage.pandacss = `boxShadow: '${token.key}'`;
+            break;
+          case "opacity":
+            usage.css = `opacity: ${cssVariable};`;
+            usage.pandacss = `opacity: '${token.key}'`;
+            break;
+        }
+
+        // トークンの詳細情報
+        const tokenDetail = {
+          /**
+           * トークンキー
+           */
+          key: token.key,
+          /**
+           * トークンが存在するかどうか
+           */
+          exists: true,
+          /**
+           * トークンのパス配列
+           */
+          path: token.path,
+          /**
+           * トークンタイプ
+           */
+          type: token.type,
+          /**
+           * 実際の値
+           */
+          value: token.value,
+          /**
+           * 元の値（リファレンス含む）
+           */
+          originalValue: token.originalValue,
+          /**
+           * トークンカテゴリ
+           */
+          category,
+          /**
+           * テーマ（テーマ固有トークンの場合）
+           */
+          theme,
+          /**
+           * CSS変数形式
+           */
+          cssVariable,
+          /**
+           * 使用例
+           */
+          usage,
+          /**
+           * リファレンス情報（システムトークンの場合）
+           */
+          references:
+            typeof token.originalValue === "string" &&
+            token.originalValue.startsWith("{") &&
+            token.originalValue.endsWith("}")
+              ? token.originalValue.slice(1, -1)
+              : null,
+        };
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(tokenDetail, null, 2),
+            },
+          ],
+        };
+      } catch (error) {
+        /**
+         * エラー時のレスポンス
+         */
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                error: "Failed to fetch token detail",
+                message:
+                  error instanceof Error ? error.message : "Unknown error",
+              }),
+            },
+          ],
+        };
+      }
+    }
+  );
+}
