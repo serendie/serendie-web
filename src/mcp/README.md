@@ -79,8 +79,9 @@ The test client will:
 
 - Check if the dev server is running
 - List all available tools
-- Test all 7 available tools with various parameters:
+- Test all 8 available tools with various parameters:
   - health-check
+  - get-serendie-ui-overview
   - get-symbols and get-symbol-detail
   - get-design-tokens and get-design-token-detail (both tested in the same function)
   - get-components and get-component-detail
@@ -95,7 +96,28 @@ The test client will:
    - No parameters required
    - Returns server status and timestamp
 
-2. **get-symbols**
+2. **get-serendie-ui-overview** ⚠️ **MUST BE CALLED FIRST**
+
+   - No parameters required
+   - **CRITICAL**: AI assistants MUST call this tool FIRST before any Serendie-related work
+   - Returns essential prerequisite knowledge about @serendie/ui design system
+   - Prevents common mistakes like adding reset CSS or using px values
+   - Returns comprehensive information including:
+     - Overview and version information
+     - Architecture and dependencies
+     - Component categories
+     - Import patterns for components and icons
+     - Theme system
+     - Styling approach with PandaCSS
+     - Development guidelines
+     - Common patterns and best practices
+     - Related resources
+     - Initial setup instructions (includes warnings about NOT adding reset CSS)
+     - Package relationships (how @serendie/ui, @serendie/design-token, and @serendie/symbols work together)
+     - Design token guidelines (emphasizes using tokens for spacing, colors, etc.)
+     - Figma integration details (explains Figma Variables and Code Connect)
+
+3. **get-symbols**
 
    - Parameters:
      - `search`: string (optional) - Filter symbols by name

@@ -101,6 +101,28 @@ async function testHealthCheck() {
   }
 }
 
+async function testGetSerendieUIOverview() {
+  console.log("\nTesting get-serendie-ui-overview tool...");
+
+  const request: MCPRequest = {
+    jsonrpc: "2.0",
+    method: "tools/call",
+    params: {
+      name: "get-serendie-ui-overview",
+      arguments: {},
+    },
+    id: 2,
+  };
+
+  try {
+    const response = await sendMCPRequest(request);
+    console.log("✓ get-serendie-ui-overview response received");
+    await saveOutput("serendie-ui-overview", response);
+  } catch (error) {
+    console.error("✗ get-serendie-ui-overview failed:", error);
+  }
+}
+
 async function testGetSymbols() {
   console.log("\nTesting get-symbols tool...");
 
@@ -394,6 +416,7 @@ async function main() {
 
     // Test each tool
     await testHealthCheck();
+    await testGetSerendieUIOverview();
     await testGetSymbols();
     await testGetSymbolDetail();
     await testGetDesignTokens();
