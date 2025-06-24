@@ -26,7 +26,9 @@ interface MCPResponse {
 
 // Get port from command line argument or use default
 // npm run test:mcp -- 4321 passes args after -- as process.argv[3]
-const PORT = process.argv[3] || process.argv[2] || "4321";
+// Skip "--" argument if present
+const args = process.argv.slice(2).filter((arg) => arg !== "--");
+const PORT = args[0] || "4321";
 const MCP_URL = `http://localhost:${PORT}/sse`;
 
 // Output directory for test results

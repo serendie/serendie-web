@@ -26,7 +26,7 @@ export default function McpDemo() {
   const [error, setError] = useState<string>("");
 
   const { state, tools, callTool } = useMcp({
-    url: "https://serendie-web-workers.takram-spread.workers.dev/sse",
+    url: "http://localhost:4321/sse",
     clientName: "Serendie Web Demo",
     autoReconnect: true,
   });

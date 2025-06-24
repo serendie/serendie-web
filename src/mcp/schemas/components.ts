@@ -32,6 +32,7 @@ export const ComponentSummarySchema = z.object({
   displayName: z.string(),
   description: z.string(),
   category: z.string(),
+  relatedComponents: z.array(z.string()),
 });
 
 // get-componentsレスポンススキーマ
@@ -41,6 +42,14 @@ export const GetComponentsResponseSchema = z.object({
   returned: z.number(),
   categories: z.array(z.string()),
   components: z.array(ComponentSummarySchema),
+});
+
+// 関連コンポーネントのスキーマ
+export const RelatedComponentSchema = z.object({
+  name: z.string(),
+  displayName: z.string(),
+  description: z.string(),
+  hasDocumentation: z.boolean(),
 });
 
 // コンポーネント詳細（get-component-detail用）
@@ -64,6 +73,7 @@ export const ComponentDetailSchema = z.object({
     basic: z.string(),
     withProps: z.string().optional(),
   }),
+  relatedComponents: z.array(z.string()),
 });
 
 // コンポーネントが存在しない場合のスキーマ
@@ -84,6 +94,7 @@ export type PropDefinition = z.infer<typeof PropDefinitionSchema>;
 export type ComponentExample = z.infer<typeof ComponentExampleSchema>;
 export type StorybookUrl = z.infer<typeof StorybookUrlSchema>;
 export type ComponentSummary = z.infer<typeof ComponentSummarySchema>;
+export type RelatedComponent = z.infer<typeof RelatedComponentSchema>;
 export type GetComponentsResponse = z.infer<typeof GetComponentsResponseSchema>;
 export type ComponentDetail = z.infer<typeof ComponentDetailSchema>;
 export type ComponentNotFound = z.infer<typeof ComponentNotFoundSchema>;

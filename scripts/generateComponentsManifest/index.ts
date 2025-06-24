@@ -20,6 +20,7 @@ interface ComponentManifest {
   props: PropDefinition[];
   examples: ComponentExample[];
   storybookUrls: StorybookUrl[];
+  relatedComponents: string[]; // Names of components in the same directory
 }
 
 interface PropDefinition {
@@ -521,6 +522,11 @@ async function generateManifest() {
         console.log(`    ⚠️  No props found`);
       }
 
+      // Get related components (other components in the same directory)
+      const relatedComponents = subComponents
+        .filter((name) => name !== componentName)
+        .filter((name) => name !== "index"); // Exclude index files
+
       const manifest: ComponentManifest = {
         name: componentName,
         displayName,
@@ -532,6 +538,7 @@ async function generateManifest() {
         props,
         examples,
         storybookUrls,
+        relatedComponents,
       };
 
       components.push(manifest);

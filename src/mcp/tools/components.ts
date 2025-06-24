@@ -1,17 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { readFile } from "fs/promises";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import {
   GetComponentsResponseSchema,
   GetComponentDetailResponseSchema,
   type GetComponentsResponse,
   type GetComponentDetailResponse,
 } from "../schemas/components.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// ビルド時に生成されるマニフェストを静的インポート
+import componentsManifest from "../data/components-manifest.json";
 
 // コンポーネントマニフェストのインターフェース
 interface ComponentManifest {
@@ -25,6 +21,7 @@ interface ComponentManifest {
   props: PropDefinition[];
   examples: ComponentExample[];
   storybookUrls: StorybookUrl[];
+  relatedComponents: string[];
 }
 
 interface PropDefinition {
@@ -49,30 +46,9 @@ interface StorybookUrl {
   variant?: string;
 }
 
-// マニフェストのキャッシュ
-let manifestCache: ComponentManifest[] | null = null;
-
-// マニフェストを読み込む
-async function loadManifest(): Promise<ComponentManifest[]> {
-  if (manifestCache) {
-    return manifestCache;
-  }
-
-  try {
-    const manifestPath = join(
-      __dirname,
-      "..",
-      "data",
-      "components-manifest.json"
-    );
-    const content = await readFile(manifestPath, "utf-8");
-    manifestCache = JSON.parse(content);
-    return manifestCache || [];
-  } catch (error) {
-    console.warn("Failed to load components manifest:", error);
-    return [];
-  }
-}
+// 静的にインポートしたマニフェストを使用
+const manifestData: ComponentManifest[] =
+  componentsManifest as ComponentManifest[];
 
 /**
  * Serendie UIコンポーネントの一覧を取得するMCPツール
@@ -144,7 +120,7 @@ export function getComponentsTool(mcpServer: McpServer) {
     },
     async ({ search, category, limit }) => {
       try {
-        const components = await loadManifest();
+        const components = manifestData;
 
         // コンポーネントをフィルタリング
         let filteredComponents = [...components];
@@ -184,6 +160,7 @@ export function getComponentsTool(mcpServer: McpServer) {
           displayName: component.displayName,
           description: component.description,
           category: component.category,
+          relatedComponents: component.relatedComponents || [],
         }));
 
         // レスポンスデータを準備
@@ -284,7 +261,13 @@ export function getComponentsTool(mcpServer: McpServer) {
  *   "usage": {
  *     "basic": "<Button>Click me</Button>",
  *     "withProps": "<Button variant=\"outline\" size=\"sm\">Click me</Button>"
- *   }
+ *   },
+ *   "relatedComponents": [{
+ *     "name": "IconButton",
+ *     "displayName": "アイコンボタン",
+ *     "description": "アイコンのみを含むボタンコンポーネント",
+ *     "hasDocumentation": true
+ *   }]
  * }
  * ```
  *
@@ -316,7 +299,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
     },
     async ({ name }) => {
       try {
-        const components = await loadManifest();
+        const components = manifestData;
 
         // コンポーネントを検索
         const component = components.find((c) => c.name === name);
@@ -446,6 +429,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
            * 基本的な使用方法
            */
           usage,
+          /**
+           * 関連コンポーネント
+           */
+          relatedComponents: component.relatedComponents || [],
         };
 
         // スキーマで検証

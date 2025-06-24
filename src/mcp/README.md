@@ -163,6 +163,7 @@ The test client will:
      - Code examples with title, description, code, and filename
      - Storybook URLs with title, path, fullPath, and variant
      - Basic usage examples
+     - Related components (components in the same directory/module) with name, displayName, description, and documentation status
 
 ## Expected Output Format
 

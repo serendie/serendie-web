@@ -4,7 +4,7 @@ import { readFile } from "fs/promises";
 import {
   GetComponentsResponseSchema,
   GetComponentDetailResponseSchema,
-} from "../schemas/components";
+} from "../../schemas/components";
 
 // Mock fs/promises
 vi.mock("fs/promises", () => ({
@@ -22,6 +22,7 @@ const mockComponentsManifest = [
     hasDocumentation: true,
     source: "mdx" as const,
     lastUpdated: "2024-11-1",
+    relatedComponents: [], // Button has no related components
     props: [
       {
         name: "styleType",
@@ -61,6 +62,7 @@ const mockComponentsManifest = [
     hasDocumentation: true,
     source: "mdx" as const,
     lastUpdated: "2024-11-1",
+    relatedComponents: [], // IconButton has no related components
     props: [
       {
         name: "icon",
@@ -80,6 +82,7 @@ const mockComponentsManifest = [
     hasDocumentation: true,
     source: "mdx" as const,
     lastUpdated: "2024-11-1",
+    relatedComponents: [], // TextField has no related components
     props: [
       {
         name: "value",
@@ -99,6 +102,7 @@ const mockComponentsManifest = [
     hasDocumentation: true,
     source: "mdx" as const,
     lastUpdated: "2024-11-1",
+    relatedComponents: [], // Select has no related components
     props: [],
     examples: [],
     storybookUrls: [],
@@ -112,7 +116,96 @@ const mockComponentsManifest = [
     hasDocumentation: true,
     source: "mdx" as const,
     lastUpdated: "2024-11-1",
+    relatedComponents: [], // ModalDialog has no related components
     props: [],
+    examples: [],
+    storybookUrls: [],
+  },
+  // Add components with related components (like Accordion/AccordionGroup)
+  {
+    name: "Accordion",
+    displayName: "アコーディオン",
+    description:
+      "折りたたみ可能なコンテンツセクションを提供するコンポーネントです。",
+    category: "Layout",
+    hasDocumentation: true,
+    source: "mdx" as const,
+    lastUpdated: "2024-11-1",
+    relatedComponents: ["AccordionGroup"], // Accordion is related to AccordionGroup
+    props: [
+      {
+        name: "title",
+        type: "string",
+        required: true,
+        description: "アコーディオンのタイトル",
+      },
+      {
+        name: "isExpanded",
+        type: "boolean",
+        required: false,
+        description: "展開状態",
+      },
+    ],
+    examples: [],
+    storybookUrls: [],
+  },
+  {
+    name: "AccordionGroup",
+    displayName: "アコーディオングループ",
+    description: "複数のアコーディオンをグループ化するコンポーネントです。",
+    category: "Layout",
+    hasDocumentation: true,
+    source: "mdx" as const,
+    lastUpdated: "2024-11-1",
+    relatedComponents: ["Accordion"], // AccordionGroup is related to Accordion
+    props: [
+      {
+        name: "allowMultiple",
+        type: "boolean",
+        required: false,
+        description: "複数のアコーディオンを同時に開くことを許可",
+      },
+    ],
+    examples: [],
+    storybookUrls: [],
+  },
+  {
+    name: "Tabs",
+    displayName: "タブ",
+    description: "タブで切り替え可能なコンテンツを提供するコンポーネントです。",
+    category: "Layout",
+    hasDocumentation: true,
+    source: "mdx" as const,
+    lastUpdated: "2024-11-1",
+    relatedComponents: ["TabItem"], // Tabs is related to TabItem
+    props: [
+      {
+        name: "selectedIndex",
+        type: "number",
+        required: false,
+        description: "選択されているタブのインデックス",
+      },
+    ],
+    examples: [],
+    storybookUrls: [],
+  },
+  {
+    name: "TabItem",
+    displayName: "タブアイテム",
+    description: "タブの個別アイテムを表すコンポーネントです。",
+    category: "Layout",
+    hasDocumentation: true,
+    source: "mdx" as const,
+    lastUpdated: "2024-11-1",
+    relatedComponents: ["Tabs"], // TabItem is related to Tabs
+    props: [
+      {
+        name: "label",
+        type: "string",
+        required: true,
+        description: "タブのラベル",
+      },
+    ],
     examples: [],
     storybookUrls: [],
   },
@@ -207,7 +300,7 @@ describe("Components Tools", () => {
 
       it("should return all components when no search query", () => {
         const filtered = mockComponentsManifest.filter(() => true);
-        expect(filtered).toHaveLength(5);
+        expect(filtered).toHaveLength(9);
       });
     });
 
@@ -221,12 +314,13 @@ describe("Components Tools", () => {
         expect(filtered.every((c) => c.category === "Actions")).toBe(true);
       });
 
-      it("should return empty array for category with no components", () => {
+      it("should filter Layout category components correctly", () => {
         const filtered = mockComponentsManifest.filter(
           (component) => component.category === "Layout"
         );
 
-        expect(filtered).toHaveLength(0);
+        expect(filtered).toHaveLength(4); // Accordion, AccordionGroup, Tabs, TabItem
+        expect(filtered.every((c) => c.category === "Layout")).toBe(true);
       });
     });
 
@@ -239,10 +333,10 @@ describe("Components Tools", () => {
       });
 
       it("should return all results when limit exceeds total", () => {
-        const limit = 10;
+        const limit = 20;
         const limited = mockComponentsManifest.slice(0, limit);
 
-        expect(limited).toHaveLength(5);
+        expect(limited).toHaveLength(9);
       });
     });
 
@@ -261,12 +355,13 @@ describe("Components Tools", () => {
             displayName: component.displayName,
             description: component.description,
             category: component.category,
+            relatedComponents: component.relatedComponents,
           })),
         };
 
-        expect(expectedOutput).toHaveProperty("total", 5);
-        expect(expectedOutput).toHaveProperty("filtered", 5);
-        expect(expectedOutput).toHaveProperty("returned", 5);
+        expect(expectedOutput).toHaveProperty("total", 9);
+        expect(expectedOutput).toHaveProperty("filtered", 9);
+        expect(expectedOutput).toHaveProperty("returned", 9);
         expect(expectedOutput).toHaveProperty("categories");
         expect(expectedOutput.categories).toContain("Actions");
         expect(expectedOutput.categories).toContain("Inputs");
@@ -280,12 +375,14 @@ describe("Components Tools", () => {
           displayName: component.displayName,
           description: component.description,
           category: component.category,
+          relatedComponents: component.relatedComponents,
         };
 
         expect(summary).toHaveProperty("name");
         expect(summary).toHaveProperty("displayName");
         expect(summary).toHaveProperty("description");
         expect(summary).toHaveProperty("category");
+        expect(summary).toHaveProperty("relatedComponents");
       });
 
       it("should pass schema validation for get-components response", () => {
@@ -293,12 +390,13 @@ describe("Components Tools", () => {
           total: mockComponentsManifest.length,
           filtered: mockComponentsManifest.length,
           returned: mockComponentsManifest.length,
-          categories: ["Actions", "Inputs", "Feedback"],
+          categories: ["Actions", "Feedback", "Inputs", "Layout"],
           components: mockComponentsManifest.map((c) => ({
             name: c.name,
             displayName: c.displayName,
             description: c.description,
             category: c.category,
+            relatedComponents: c.relatedComponents,
           })),
         };
 
@@ -384,6 +482,7 @@ describe("Components Tools", () => {
           props: component.props,
           examples: component.examples,
           storybookUrls: component.storybookUrls,
+          relatedComponents: component.relatedComponents,
           usage: {
             basic: `<${component.name}>Content</${component.name}>`,
             withProps: `<${component.name} prop="value">Content</${component.name}>`,
@@ -400,6 +499,7 @@ describe("Components Tools", () => {
         expect(expectedOutput).toHaveProperty("props");
         expect(expectedOutput).toHaveProperty("examples");
         expect(expectedOutput).toHaveProperty("storybookUrls");
+        expect(expectedOutput).toHaveProperty("relatedComponents");
         expect(expectedOutput).toHaveProperty("usage");
       });
 
@@ -462,6 +562,45 @@ describe("Components Tools", () => {
         expect(usage.withProps).toContain('prop="value"');
       });
 
+      it("should include related components for Accordion", () => {
+        const accordion = mockComponentsManifest.find(
+          (c) => c.name === "Accordion"
+        );
+        expect(accordion).toBeDefined();
+        expect(accordion?.relatedComponents).toEqual(["AccordionGroup"]);
+      });
+
+      it("should include related components for AccordionGroup", () => {
+        const accordionGroup = mockComponentsManifest.find(
+          (c) => c.name === "AccordionGroup"
+        );
+        expect(accordionGroup).toBeDefined();
+        expect(accordionGroup?.relatedComponents).toEqual(["Accordion"]);
+      });
+
+      it("should include related components for Tabs and TabItem", () => {
+        const tabs = mockComponentsManifest.find((c) => c.name === "Tabs");
+        const tabItem = mockComponentsManifest.find(
+          (c) => c.name === "TabItem"
+        );
+
+        expect(tabs).toBeDefined();
+        expect(tabs?.relatedComponents).toEqual(["TabItem"]);
+
+        expect(tabItem).toBeDefined();
+        expect(tabItem?.relatedComponents).toEqual(["Tabs"]);
+      });
+
+      it("should have empty related components for standalone components", () => {
+        const button = mockComponentsManifest.find((c) => c.name === "Button");
+        const textField = mockComponentsManifest.find(
+          (c) => c.name === "Text Field"
+        );
+
+        expect(button?.relatedComponents).toEqual([]);
+        expect(textField?.relatedComponents).toEqual([]);
+      });
+
       it("should pass schema validation for component detail response", () => {
         const component = mockComponentsManifest[0];
         const response = {
@@ -479,6 +618,7 @@ describe("Components Tools", () => {
             ...url,
             fullPath: `https://storybook.serendie.design${url.path}`,
           })),
+          relatedComponents: component.relatedComponents,
           usage: {
             basic: `<${component.name}>Content</${component.name}>`,
             withProps: `<${component.name} styleType="value" size="value">Content</${component.name}>`,
