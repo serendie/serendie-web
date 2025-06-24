@@ -101,6 +101,75 @@ async function testHealthCheck() {
   }
 }
 
+async function testGetSymbols() {
+  console.log("\nTesting get-symbols tool...");
+
+  const testCases = [
+    { description: "All symbols", params: {} },
+    { description: "Search icon", params: { search: "icon" } },
+    { description: "Search with limit", params: { search: "arrow", limit: 5 } },
+  ];
+
+  for (const testCase of testCases) {
+    console.log(`  Testing: ${testCase.description}`);
+
+    const request: MCPRequest = {
+      jsonrpc: "2.0",
+      method: "tools/call",
+      params: {
+        name: "get-symbols",
+        arguments: testCase.params,
+      },
+      id: 2,
+    };
+
+    try {
+      const response = await sendMCPRequest(request);
+      console.log(`  ✓ Response received`);
+
+      await saveOutput(
+        `symbols-${testCase.description.replace(/\s+/g, "-")}`,
+        response
+      );
+    } catch (error) {
+      console.error(`  ✗ Failed:`, error);
+    }
+  }
+}
+
+async function testGetSymbolDetail() {
+  console.log("\nTesting get-symbol-detail tool...");
+
+  const testCases = [
+    "icon_account_circle",
+    "icon_home",
+    "icon_nonexistent", // Test error case
+  ];
+
+  for (const symbolName of testCases) {
+    console.log(`  Testing symbol detail: ${symbolName}`);
+
+    const request: MCPRequest = {
+      jsonrpc: "2.0",
+      method: "tools/call",
+      params: {
+        name: "get-symbol-detail",
+        arguments: { name: symbolName },
+      },
+      id: 3,
+    };
+
+    try {
+      const response = await sendMCPRequest(request);
+      console.log(`  ✓ Response received`);
+
+      await saveOutput(`symbol-detail-${symbolName}`, response);
+    } catch (error) {
+      console.error(`  ✗ Failed:`, error);
+    }
+  }
+}
+
 async function testGetDesignTokens() {
   console.log("\nTesting get-design-tokens tool...");
 
@@ -126,7 +195,7 @@ async function testGetDesignTokens() {
         name: "get-design-tokens",
         arguments: testCase.params,
       },
-      id: 2,
+      id: 4,
     };
 
     try {
@@ -161,7 +230,7 @@ async function testGetDesignTokens() {
         name: "get-design-token-detail",
         arguments: params,
       },
-      id: 3,
+      id: 5,
     };
 
     try {
@@ -202,7 +271,7 @@ async function testGetComponents() {
         name: "get-components",
         arguments: testCase.params,
       },
-      id: 3,
+      id: 6,
     };
 
     try {
@@ -239,7 +308,7 @@ async function testGetComponentDetail() {
         name: "get-component-detail",
         arguments: { name: componentName },
       },
-      id: 4,
+      id: 7,
     };
 
     try {
@@ -250,40 +319,6 @@ async function testGetComponentDetail() {
         `component-detail-${componentName.replace(/\s+/g, "-")}`,
         response
       );
-    } catch (error) {
-      console.error(`  ✗ Failed:`, error);
-    }
-  }
-}
-
-async function testSearchDocumentation() {
-  console.log("\nTesting search-documentation tool...");
-
-  const testCases = [
-    { query: "button" },
-    { query: "button", category: "components" },
-    { query: "getting started", category: "pages" },
-    { query: "theme", limit: 5 },
-  ];
-
-  for (const params of testCases) {
-    console.log(`  Testing with params:`, params);
-
-    const request: MCPRequest = {
-      jsonrpc: "2.0",
-      method: "tools/call",
-      params: {
-        name: "search-documentation",
-        arguments: params,
-      },
-      id: 5,
-    };
-
-    try {
-      const response = await sendMCPRequest(request);
-      console.log(`  ✓ Response received`);
-
-      await saveOutput(`search-${JSON.stringify(params)}`, response);
     } catch (error) {
       console.error(`  ✗ Failed:`, error);
     }
@@ -359,10 +394,11 @@ async function main() {
 
     // Test each tool
     await testHealthCheck();
+    await testGetSymbols();
+    await testGetSymbolDetail();
     await testGetDesignTokens();
     await testGetComponents();
     await testGetComponentDetail();
-    await testSearchDocumentation();
 
     console.log("\n✅ All tests completed!");
     console.log(`Results saved to: ${OUTPUT_DIR}`);

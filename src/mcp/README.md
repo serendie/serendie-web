@@ -23,14 +23,17 @@ src/mcp/
 │   ├── symbols.ts         # Symbol list and detail retrieval
 │   ├── design-tokens.ts   # Design token list and detail retrieval
 │   └── components.ts      # Component list and detail retrieval
+├── schemas/              # Zod schema definitions
+│   └── components.ts      # Component-related schemas for type safety
 ├── data/                  # Generated data files
 │   └── components-manifest.json  # Auto-generated component manifest (run: npm run build:components)
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
-│   ├── components.test.ts # Components tools tests
-│   ├── tools/
-│   │   ├── symbols.test.ts
-│   │   └── design-tokens.test.ts
+│   ├── integration/      # Integration tests (placeholder for future tests)
+│   ├── tools/            # Tool-specific unit tests
+│   │   ├── symbols.test.ts       # Tests for symbol tools
+│   │   ├── design-tokens.test.ts # Tests for design token tools
+│   │   └── components.test.ts    # Tests for component tools
 │   └── outputs/          # Test output files (gitignored)
 ├── test-client.ts        # Manual test client
 └── README.md            # This file
@@ -76,7 +79,11 @@ The test client will:
 
 - Check if the dev server is running
 - List all available tools
-- Test each tool with various parameters
+- Test all 7 available tools with various parameters:
+  - health-check
+  - get-symbols and get-symbol-detail
+  - get-design-tokens and get-design-token-detail (both tested in the same function)
+  - get-components and get-component-detail
 - Save the results to `src/mcp/__tests__/outputs/`
 
 **Note**: The dev server must be running for the MCP tests to work!
@@ -179,6 +186,19 @@ Each tool returns a response in the following format:
   ]
 }
 ```
+
+## Schemas
+
+The `schemas/` directory contains Zod schema definitions for type safety and runtime validation:
+
+- **components.ts**: Defines schemas for component-related data structures including:
+  - Props definitions
+  - Component examples
+  - Storybook URLs
+  - Component summaries and details
+  - Response structures for component tools
+
+These schemas ensure type safety between the MCP server implementation and the component manifest data.
 
 ## Development
 
