@@ -3,6 +3,12 @@ import { z } from "zod";
 import { readFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import {
+  GetComponentsResponseSchema,
+  GetComponentDetailResponseSchema,
+  type GetComponentsResponse,
+  type GetComponentDetailResponse,
+} from "../schemas/components.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,8 +19,8 @@ interface ComponentManifest {
   displayName: string;
   description: string;
   category: string;
-  importPath: string;
-  hasStorybook: boolean;
+  hasDocumentation: boolean;
+  source: "auto-detected" | "mdx";
   lastUpdated: string;
   props: PropDefinition[];
   examples: ComponentExample[];
@@ -25,7 +31,7 @@ interface PropDefinition {
   name: string;
   type: string;
   required: boolean;
-  defaultValue?: unknown;
+  defaultValue?: string | number | boolean;
   description?: string;
 }
 
@@ -95,9 +101,7 @@ async function loadManifest(): Promise<ComponentManifest[]> {
  *     "name": "Button",
  *     "displayName": "ボタン",
  *     "description": "アクションをトリガーするためのクリック可能なコンポーネント",
- *     "category": "Actions",
- *     "importPath": "@serendie/ui/button",
- *     "hasStorybook": true
+ *     "category": "Actions"
  *   }]
  * }
  * ```
@@ -180,12 +184,10 @@ export function getComponentsTool(mcpServer: McpServer) {
           displayName: component.displayName,
           description: component.description,
           category: component.category,
-          importPath: component.importPath,
-          hasStorybook: component.hasStorybook,
         }));
 
         // レスポンスデータを準備
-        const responseData = {
+        const responseData: GetComponentsResponse = {
           /**
            * 全コンポーネント数
            */
@@ -208,11 +210,15 @@ export function getComponentsTool(mcpServer: McpServer) {
           components: componentsSummary,
         };
 
+        // スキーマで検証
+        const validatedResponse =
+          GetComponentsResponseSchema.parse(responseData);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(responseData, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };
@@ -269,9 +275,11 @@ export function getComponentsTool(mcpServer: McpServer) {
  *     "code": "...",
  *     "fileName": "SizeSample.tsx"
  *   }],
+ *   "documentationUrl": "https://serendie.design/components/button",
  *   "storybookUrls": [{
  *     "title": "Medium",
- *     "path": "/story/components-button--medium"
+ *     "path": "/story/components-button--medium",
+ *     "fullPath": "https://storybook.serendie.design/story/components-button--medium"
  *   }],
  *   "usage": {
  *     "basic": "<Button>Click me</Button>",
@@ -314,29 +322,35 @@ export function getComponentDetailTool(mcpServer: McpServer) {
         const component = components.find((c) => c.name === name);
 
         if (!component) {
+          const notFoundResponse: GetComponentDetailResponse = {
+            name,
+            exists: false,
+            message: `Component '${name}' not found in components manifest`,
+          };
+
+          // スキーマで検証
+          const validatedResponse =
+            GetComponentDetailResponseSchema.parse(notFoundResponse);
+
           return {
             content: [
               {
                 type: "text",
-                text: JSON.stringify(
-                  {
-                    name,
-                    exists: false,
-                    message: `Component '${name}' not found in components manifest`,
-                  },
-                  null,
-                  2
-                ),
+                text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
           };
         }
 
-        // インポート文を生成
-        const importStatement = `import { ${component.name} } from "${component.importPath}";`;
+        // インポート文を生成（動的に生成）
+        const importPath = `@serendie/ui/${component.name
+          .replace(/([A-Z])/g, "-$1")
+          .toLowerCase()
+          .replace(/^-/, "")}`;
+        const importStatement = `import { ${component.name} } from "${importPath}";`;
 
         // 使用例を生成
-        const usage: Record<string, string> = {
+        const usage: { basic: string; withProps?: string } = {
           basic: `<${component.name}>Content</${component.name}>`,
         };
 
@@ -366,8 +380,24 @@ export function getComponentDetailTool(mcpServer: McpServer) {
           }
         }
 
+        // Storybook URLをフルパスに変換
+        const storybookUrlsWithFullPath = component.storybookUrls.map(
+          (url) => ({
+            ...url,
+            fullPath: `https://storybook.serendie.design${url.path}`,
+          })
+        );
+
+        // ドキュメントURLを生成（MDXファイルがある場合）
+        const documentationUrl = component.hasDocumentation
+          ? `https://serendie.design/components/${component.name
+              .replace(/([A-Z])/g, "-$1")
+              .toLowerCase()
+              .replace(/^-/, "")}`
+          : null;
+
         // 詳細情報を構築
-        const componentDetail = {
+        const componentDetail: GetComponentDetailResponse = {
           /**
            * コンポーネント名
            */
@@ -375,7 +405,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
           /**
            * コンポーネントが存在するかどうか
            */
-          exists: true,
+          exists: true as const,
           /**
            * 表示名（日本語）
            */
@@ -393,6 +423,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
            */
           lastUpdated: component.lastUpdated,
           /**
+           * ドキュメントURL（存在する場合）
+           */
+          documentationUrl,
+          /**
            * インポート文
            */
           importStatement,
@@ -405,20 +439,24 @@ export function getComponentDetailTool(mcpServer: McpServer) {
            */
           examples: component.examples,
           /**
-           * Storybook URL
+           * Storybook URL（フルパス付き）
            */
-          storybookUrls: component.storybookUrls,
+          storybookUrls: storybookUrlsWithFullPath,
           /**
            * 基本的な使用方法
            */
           usage,
         };
 
+        // スキーマで検証
+        const validatedResponse =
+          GetComponentDetailResponseSchema.parse(componentDetail);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(componentDetail, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };

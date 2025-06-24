@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import { z } from "zod";
 import { readFile } from "fs/promises";
+import {
+  GetComponentsResponseSchema,
+  GetComponentDetailResponseSchema,
+} from "../schemas/components";
 
 // Mock fs/promises
 vi.mock("fs/promises", () => ({
@@ -15,8 +19,8 @@ const mockComponentsManifest = [
     description:
       "アクションをトリガーするためのクリック可能なコンポーネントです。",
     category: "Actions",
-    importPath: "@serendie/ui/button",
-    hasStorybook: true,
+    hasDocumentation: true,
+    source: "mdx" as const,
     lastUpdated: "2024-11-1",
     props: [
       {
@@ -54,8 +58,8 @@ const mockComponentsManifest = [
     displayName: "アイコンボタン",
     description: "アイコンのみを表示するボタンコンポーネントです。",
     category: "Actions",
-    importPath: "@serendie/ui/icon-button",
-    hasStorybook: true,
+    hasDocumentation: true,
+    source: "mdx" as const,
     lastUpdated: "2024-11-1",
     props: [
       {
@@ -73,8 +77,8 @@ const mockComponentsManifest = [
     displayName: "テキストフィールド",
     description: "ユーザーがテキストを入力するためのコンポーネントです。",
     category: "Inputs",
-    importPath: "@serendie/ui/text-field",
-    hasStorybook: true,
+    hasDocumentation: true,
+    source: "mdx" as const,
     lastUpdated: "2024-11-1",
     props: [
       {
@@ -92,8 +96,8 @@ const mockComponentsManifest = [
     displayName: "セレクト",
     description: "選択肢から一つを選ぶためのコンポーネントです。",
     category: "Inputs",
-    importPath: "@serendie/ui/select",
-    hasStorybook: true,
+    hasDocumentation: true,
+    source: "mdx" as const,
     lastUpdated: "2024-11-1",
     props: [],
     examples: [],
@@ -105,8 +109,8 @@ const mockComponentsManifest = [
     description:
       "アプリケーションを覆うレイヤー上にダイアログを表示するコンポーネントです。",
     category: "Feedback",
-    importPath: "@serendie/ui/modal-dialog",
-    hasStorybook: false,
+    hasDocumentation: true,
+    source: "mdx" as const,
     lastUpdated: "2024-11-1",
     props: [],
     examples: [],
@@ -257,8 +261,6 @@ describe("Components Tools", () => {
             displayName: component.displayName,
             description: component.description,
             category: component.category,
-            importPath: component.importPath,
-            hasStorybook: component.hasStorybook,
           })),
         };
 
@@ -278,16 +280,29 @@ describe("Components Tools", () => {
           displayName: component.displayName,
           description: component.description,
           category: component.category,
-          importPath: component.importPath,
-          hasStorybook: component.hasStorybook,
         };
 
         expect(summary).toHaveProperty("name");
         expect(summary).toHaveProperty("displayName");
         expect(summary).toHaveProperty("description");
         expect(summary).toHaveProperty("category");
-        expect(summary).toHaveProperty("importPath");
-        expect(summary).toHaveProperty("hasStorybook");
+      });
+
+      it("should pass schema validation for get-components response", () => {
+        const response = {
+          total: mockComponentsManifest.length,
+          filtered: mockComponentsManifest.length,
+          returned: mockComponentsManifest.length,
+          categories: ["Actions", "Inputs", "Feedback"],
+          components: mockComponentsManifest.map((c) => ({
+            name: c.name,
+            displayName: c.displayName,
+            description: c.description,
+            category: c.category,
+          })),
+        };
+
+        expect(() => GetComponentsResponseSchema.parse(response)).not.toThrow();
       });
     });
   });
@@ -356,7 +371,16 @@ describe("Components Tools", () => {
           description: component.description,
           category: component.category,
           lastUpdated: component.lastUpdated,
-          importStatement: `import { ${component.name} } from "${component.importPath}";`,
+          importStatement: `import { ${component.name} } from "@serendie/ui/${component.name
+            .replace(/([A-Z])/g, "-$1")
+            .toLowerCase()
+            .replace(/^-/, "")}";`,
+          documentationUrl: component.hasDocumentation
+            ? `https://serendie.design/components/${component.name
+                .replace(/([A-Z])/g, "-$1")
+                .toLowerCase()
+                .replace(/^-/, "")}`
+            : null,
           props: component.props,
           examples: component.examples,
           storybookUrls: component.storybookUrls,
@@ -394,7 +418,10 @@ describe("Components Tools", () => {
 
       it("should generate correct import statement", () => {
         const component = mockComponentsManifest[0];
-        const importStatement = `import { ${component.name} } from "${component.importPath}";`;
+        const importStatement = `import { ${component.name} } from "@serendie/ui/${component.name
+          .replace(/([A-Z])/g, "-$1")
+          .toLowerCase()
+          .replace(/^-/, "")}";`;
 
         expect(importStatement).toBe(
           'import { Button } from "@serendie/ui/button";'
@@ -433,6 +460,47 @@ describe("Components Tools", () => {
         expect(usage.basic).toContain("<Button>");
         expect(usage.basic).toContain("</Button>");
         expect(usage.withProps).toContain('prop="value"');
+      });
+
+      it("should pass schema validation for component detail response", () => {
+        const component = mockComponentsManifest[0];
+        const response = {
+          name: component.name,
+          exists: true as const,
+          displayName: component.displayName,
+          description: component.description,
+          category: component.category,
+          lastUpdated: component.lastUpdated,
+          documentationUrl: `https://serendie.design/components/${component.name.toLowerCase()}`,
+          importStatement: `import { ${component.name} } from "@serendie/ui/${component.name.toLowerCase()}";`,
+          props: component.props,
+          examples: component.examples,
+          storybookUrls: component.storybookUrls.map((url) => ({
+            ...url,
+            fullPath: `https://storybook.serendie.design${url.path}`,
+          })),
+          usage: {
+            basic: `<${component.name}>Content</${component.name}>`,
+            withProps: `<${component.name} styleType="value" size="value">Content</${component.name}>`,
+          },
+        };
+
+        expect(() =>
+          GetComponentDetailResponseSchema.parse(response)
+        ).not.toThrow();
+      });
+
+      it("should pass schema validation for component not found response", () => {
+        const response = {
+          name: "NonExistentComponent",
+          exists: false as const,
+          message:
+            "Component 'NonExistentComponent' not found in components manifest",
+        };
+
+        expect(() =>
+          GetComponentDetailResponseSchema.parse(response)
+        ).not.toThrow();
       });
     });
   });

@@ -1,5 +1,5 @@
 import glob from "glob-promise";
-import { readFile, writeFile, mkdir } from "fs/promises";
+import { readFile, writeFile, mkdir, readdir } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as ts from "typescript";
@@ -14,8 +14,8 @@ interface ComponentManifest {
   displayName: string;
   description: string;
   category: string;
-  importPath: string;
-  hasStorybook: boolean;
+  hasDocumentation: boolean;
+  source: "auto-detected" | "mdx";
   lastUpdated: string;
   props: PropDefinition[];
   examples: ComponentExample[];
@@ -136,12 +136,23 @@ function guessCategory(componentName: string): string {
       "TextArea",
       "CheckBox",
       "RadioButton",
+      "RadioGroup",
       "Select",
       "Switch",
       "Search",
       "ChoiceBox",
+      "PasswordField",
     ],
-    Layout: ["Accordion", "Tabs", "Divider", "List", "TopAppBar"],
+    Layout: [
+      "Accordion",
+      "AccordionGroup",
+      "Tabs",
+      "TabItem",
+      "Divider",
+      "List",
+      "ListItem",
+      "TopAppBar",
+    ],
     Display: [
       "Avatar",
       "Badge",
@@ -166,15 +177,6 @@ function guessCategory(componentName: string): string {
   }
 
   return "Other";
-}
-
-// コンポーネント名をファイル名に変換
-function componentNameToFileName(componentName: string): string {
-  // PascalCase to kebab-case
-  return componentName
-    .replace(/([A-Z])/g, "-$1")
-    .toLowerCase()
-    .replace(/^-/, "");
 }
 
 // react-docgen-typescriptの設定
@@ -395,72 +397,145 @@ async function extractPropsFromTypeDefinition(
   }
 }
 
+// Helper function to extract sub-components from index.d.ts
+async function extractSubComponents(componentPath: string): Promise<string[]> {
+  const subComponents: string[] = [];
+  try {
+    const indexContent = await readFile(
+      join(componentPath, "index.d.ts"),
+      "utf-8"
+    );
+    // Match export patterns like: export * from './ComponentName.tsx';
+    const exportPattern = /export\s*\*\s*from\s*['"]\.\/([^'"]+)\.tsx['"]/g;
+    let match;
+    while ((match = exportPattern.exec(indexContent)) !== null) {
+      const componentName = match[1];
+      // Check if the file actually exists
+      try {
+        await readFile(join(componentPath, `${componentName}.d.ts`), "utf-8");
+        subComponents.push(componentName);
+      } catch {
+        // File doesn't exist, skip
+      }
+    }
+  } catch {
+    // index.d.ts doesn't exist or can't be read
+  }
+  return subComponents;
+}
+
 async function generateManifest() {
   console.log("🔨 Generating components manifest...");
 
   const components: ComponentManifest[] = [];
+
+  // First, get all components from @serendie/ui
+  const componentsDir = join(
+    rootDir,
+    "node_modules",
+    "@serendie/ui",
+    "dist",
+    "components"
+  );
+  const componentDirs = await readdir(componentsDir);
+
+  // Create a map of MDX files for quick lookup
   const mdxFiles = await glob("src/content/components/*.mdx", { cwd: rootDir });
+  const mdxMap = new Map<string, string>();
 
   for (const mdxFile of mdxFiles) {
     const mdxPath = join(rootDir, mdxFile);
-    const mdxContent = await readFile(mdxPath, "utf-8");
     const frontmatter = await parseMdxFrontmatter(mdxPath);
-
-    if (!frontmatter) continue;
-
-    const componentName = frontmatter.title || "";
-    const displayName = frontmatter.componentName || componentName;
-    const description = frontmatter.description || "";
-    const lastUpdated =
-      frontmatter.lastUpdated || new Date().toISOString().split("T")[0];
-
-    console.log(`  📄 Processing ${componentName}...`);
-
-    // サンプルコードを読み込み
-    const examples = await loadExamples(componentName);
-
-    // MDXからサンプルの説明を抽出して更新
-    examples.forEach((example) => {
-      const descRegex = new RegExp(
-        `title="${example.title}"[^>]*>[^<]*<[^>]+description="([^"]+)"`,
-        "s"
-      );
-      const match = mdxContent.match(descRegex);
-      if (match) {
-        example.description = match[1];
-      }
-    });
-
-    // Storybookのパスを抽出
-    const storybookUrls = extractStorybookPaths(mdxContent);
-
-    // Props情報の取得を試みる
-    const props = await extractPropsFromTypeDefinition(componentName);
-
-    if (props.length > 0) {
-      console.log(`  ✅ Found ${props.length} props`);
-    } else {
-      console.log(`  ⚠️  No props found`);
+    if (frontmatter && frontmatter.title) {
+      const normalizedName = frontmatter.title.replace(/\s+/g, "");
+      mdxMap.set(normalizedName.toLowerCase(), mdxPath);
     }
+  }
 
-    // スペースを含むコンポーネント名の処理
-    const normalizedComponentName = componentName.replace(/\s+/g, "");
-    const importPath = `@serendie/ui/${componentNameToFileName(normalizedComponentName)}`;
+  // Process each component directory from the UI library
+  for (const componentDirName of componentDirs) {
+    const componentPath = join(componentsDir, componentDirName);
 
-    const manifest: ComponentManifest = {
-      name: componentName,
-      displayName,
-      description,
-      category: guessCategory(normalizedComponentName),
-      importPath,
-      hasStorybook: storybookUrls.length > 0,
-      lastUpdated,
-      props,
-      examples,
-      storybookUrls,
-    };
+    // Get all sub-components in this directory
+    const subComponents = await extractSubComponents(componentPath);
 
-    components.push(manifest);
+    // Process each component (including sub-components)
+    for (const componentName of subComponents) {
+      console.log(`  🔍 Processing ${componentName}...`);
+
+      // Initialize component data with defaults
+      let displayName = componentName;
+      let description = "";
+      let lastUpdated = new Date().toISOString().split("T")[0];
+      let examples: ComponentExample[] = [];
+      let storybookUrls: StorybookUrl[] = [];
+      let hasDocumentation = false;
+      let source: "auto-detected" | "mdx" = "auto-detected";
+
+      // Check if MDX file exists for this component
+      const mdxPath = mdxMap.get(componentName.toLowerCase());
+
+      if (mdxPath) {
+        hasDocumentation = true;
+        source = "mdx";
+
+        const mdxContent = await readFile(mdxPath, "utf-8");
+        const frontmatter = await parseMdxFrontmatter(mdxPath);
+
+        if (frontmatter) {
+          // Use MDX frontmatter data if available
+          displayName =
+            frontmatter.componentName || frontmatter.title || componentName;
+          description = frontmatter.description || "";
+          lastUpdated = frontmatter.lastUpdated || lastUpdated;
+
+          // Load examples
+          const mdxComponentName = frontmatter.title || componentName;
+          examples = await loadExamples(mdxComponentName);
+
+          // Extract example descriptions from MDX
+          examples.forEach((example) => {
+            const descRegex = new RegExp(
+              `title="${example.title}"[^>]*>[^<]*<[^>]+description="([^"]+)"`,
+              "s"
+            );
+            const match = mdxContent.match(descRegex);
+            if (match) {
+              example.description = match[1];
+            }
+          });
+
+          // Extract Storybook paths
+          storybookUrls = extractStorybookPaths(mdxContent);
+        }
+      } else {
+        console.log(`    ⚠️  No MDX documentation found`);
+      }
+
+      // Extract Props information (works regardless of MDX existence)
+      const props = await extractPropsFromTypeDefinition(componentName);
+
+      if (props.length > 0) {
+        console.log(`    ✅ Found ${props.length} props`);
+      } else {
+        console.log(`    ⚠️  No props found`);
+      }
+
+      const manifest: ComponentManifest = {
+        name: componentName,
+        displayName,
+        description,
+        category: guessCategory(componentName),
+        hasDocumentation,
+        source,
+        lastUpdated,
+        props,
+        examples,
+        storybookUrls,
+      };
+
+      components.push(manifest);
+    }
   }
 
   // マニフェストファイルを保存
@@ -470,7 +545,16 @@ async function generateManifest() {
   const outputPath = join(outputDir, "components-manifest.json");
   await writeFile(outputPath, JSON.stringify(components, null, 2));
 
+  // Sort components by name for consistency
+  components.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Summary statistics
+  const documented = components.filter((c) => c.hasDocumentation).length;
+  const undocumented = components.length - documented;
+
   console.log(`\n✅ Generated manifest for ${components.length} components`);
+  console.log(`   📄 Documented: ${documented}`);
+  console.log(`   ⚠️  Undocumented: ${undocumented}`);
   console.log(`📁 Output: ${outputPath}`);
 }
 

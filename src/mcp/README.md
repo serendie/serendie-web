@@ -24,7 +24,7 @@ src/mcp/
 │   ├── design-tokens.ts   # Design token list and detail retrieval
 │   └── components.ts      # Component list and detail retrieval
 ├── data/                  # Generated data files
-│   └── components-manifest.json  # Auto-generated component manifest
+│   └── components-manifest.json  # Auto-generated component manifest (run: npm run build:components)
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── components.test.ts # Components tools tests
@@ -147,7 +147,8 @@ The test client will:
      - Total count and filtered count
      - Returned count (after limit)
      - Available categories
-     - Array of component summaries with name, displayName, description, category, importPath, and hasStorybook flag
+     - Array of component summaries with name, displayName, description, and category
+   - Note: This tool returns ALL components from @serendie/ui, including those without documentation
 
 7. **get-component-detail**
    - Parameters:
@@ -156,10 +157,11 @@ The test client will:
      - Component existence check
      - Display name (Japanese) and description
      - Category and last updated date
+     - Documentation URL (if documentation exists)
      - Import statement
      - Props definitions with name, type, required flag, default value, and description
      - Code examples with title, description, code, and filename
-     - Storybook URLs with title, path, and variant
+     - Storybook URLs with title, path, fullPath, and variant
      - Basic usage examples
 
 ## Expected Output Format
@@ -391,6 +393,46 @@ To use this MCP server with an AI assistant:
 - Enable debug logging in `src/mcp/server.ts` if needed
 - Unit tests use mocked file system operations
 - Manual tests use the actual file system and API
+
+## Components Manifest
+
+The components manifest (`src/mcp/data/components-manifest.json`) is automatically generated from the @serendie/ui package. It serves as the primary data source for component information.
+
+### Generation Process
+
+1. **Source**: Scans all components from `@serendie/ui/dist/components/`
+2. **Props Extraction**: Uses react-docgen-typescript to extract component props
+3. **Documentation**: Supplements with MDX file information when available
+4. **Output**: Creates a unified manifest with all component metadata
+
+### Manifest Structure
+
+Each component entry includes:
+
+- `name`: Component name from the UI library
+- `displayName`: Japanese display name (from MDX or defaults to name)
+- `description`: Component description (from MDX)
+- `category`: Component category (Actions, Inputs, Layout, Display, Feedback, Other)
+- `hasDocumentation`: Whether MDX documentation exists
+- `source`: Data source ("mdx" or "auto-detected")
+- `lastUpdated`: Last update date
+- `props`: Array of prop definitions with types and descriptions
+- `examples`: Code examples (from MDX)
+- `storybookUrls`: Storybook URLs (from MDX)
+
+### Rebuilding the Manifest
+
+Run this command to regenerate the manifest:
+
+```bash
+npm run build:components
+```
+
+This command should be run:
+
+- After updating @serendie/ui package
+- After adding/modifying MDX documentation
+- As part of the build process
 
 ## Troubleshooting
 
