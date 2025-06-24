@@ -58,6 +58,7 @@
     "style-dictionary-utils": "^2.0.7",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.16.0",
+    "use-mcp": "^0.0.9",
     "zod": "^3.25.67"
   },
   "devDependencies": {

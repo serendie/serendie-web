@@ -1,0 +1,98 @@
+---
+title: MCPデモ
+slug: get-started/mcp-demo
+illustType: "B"
+description: "MCPサーバーのインタラクティブデモ"
+lastUpdated: "2025-06-24"
+parent: "get-started/mcp"
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+import McpDemo from "../../../components/McpDemo.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>MCPサーバーデモ</PageHeadLine>
+
+このページでは、MCPサーバーの機能をインタラクティブに試すことができます。実際にMCPツールを呼び出して、レスポンスを確認できます。
+
+## 使い方
+
+1. 下のデモセクションで試したいツールを選択
+2. 必要なパラメータを入力
+3. 「実行」ボタンをクリック
+4. レスポンスを確認
+
+**注意**: このデモを使用するには、開発サーバーが起動している必要があります（`npm run dev`）。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>インタラクティブデモ</PageHeadLine>
+
+  <McpDemo client:load />
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>使用例</PageHeadLine>
+
+## シンボル検索の例
+
+`get-symbols`ツールを使用して、特定のキーワードでシンボルを検索：
+
+  <CodeBox code={`// 検索パラメータ
+{
+  "search": "arrow",
+  "limit": 10
+}
+
+// レスポンス例
+{
+"totalCount": 150,
+"filteredCount": 8,
+"returnedCount": 8,
+"availableVariants": ["outlined", "filled"],
+"symbols": [
+"arrow_back",
+"arrow_forward",
+"arrow_downward",
+"arrow_upward",
+"arrow_drop_down",
+"arrow_drop_up",
+"arrow_left",
+"arrow_right"
+]
+}`} language="json" />
+
+## デザイントークン取得の例
+
+`get-design-tokens`ツールを使用して、カラートークンを取得：
+
+  <CodeBox code={`// 検索パラメータ
+{
+  "type": "color",
+  "category": "system",
+  "limit": 5
+}
+
+// レスポンス例
+{
+"totalCount": 450,
+"filteredCount": 120,
+"returnedCount": 5,
+"availableTypes": ["color", "typography", "dimension", "elevation", "radius", "spacing", "opacity"],
+"tokens": [
+{
+"key": "sd.system.color.primary",
+"path": ["sd", "system", "color", "primary"],
+"type": "color",
+"value": "#0066CC",
+"originalValue": "{sd.reference.color.blue.60}",
+"category": "system"
+},
+// ... 他のトークン
+]
+}`} language="json" />
+
+</PageSection>

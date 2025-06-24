@@ -1,0 +1,378 @@
+---
+title: MCPサーバー
+slug: get-started/mcp
+illustType: "B"
+description: "Serendie Design Systemドキュメント用のModel Context Protocol (MCP)サーバー実装"
+lastUpdated: "2025-06-24"
+subLinks:
+  [
+    { name: "ドキュメント", path: "/get-started/mcp" },
+    { name: "デモ", path: "/get-started/mcp-demo" },
+  ]
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>概要</PageHeadLine>
+
+  このディレクトリにはSerendie Design Systemドキュメント用のModel Context Protocol (MCP)サーバー実装が含まれています。
+
+  MCPサーバーにより、AIアシスタントがSerendie Design Systemドキュメントとプログラム的にやり取りできるようになります。以下のツールを提供しています：
+
+  - デザインシステムから利用可能なシンボル/アイコンのリストを取得
+  - 特定のシンボルの詳細情報を取得
+  - デザインシステムからデザイントークンを取得
+  - 特定のデザイントークンの詳細情報を取得
+  - サーバーステータスのヘルスチェック
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>ファイル構造</PageHeadLine>
+
+  <CodeBox code={`src/mcp/
+├── server.ts              # メインMCPサーバー設定
+├── tools/                 # ツール実装
+│   ├── symbols.ts         # シンボルリストと詳細取得
+│   └── design-tokens.ts   # デザイントークンリストと詳細取得
+├── __tests__/            # テストファイル
+│   ├── server.test.ts    # メインサーバーテスト
+│   ├── tools/
+│   │   ├── symbols.test.ts
+│   │   └── design-tokens.test.ts
+│   └── outputs/          # テスト出力ファイル (gitignored)
+├── test-client.ts        # 手動テストクライアント
+└── README.md            # このファイル`} language="text" />
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>テストの実行</PageHeadLine>
+
+  ## ユニットテスト
+
+  すべてのテストを実行:
+
+  <CodeBox code={`npm test`} language="bash" />
+
+  UIでテストを実行:
+
+  <CodeBox code={`npm run test:ui`} language="bash" />
+
+  カバレッジ付きでテストを実行:
+
+  <CodeBox code={`npm run test:coverage`} language="bash" />
+
+  ## MCPクライアントでの手動テスト
+
+  1. **開発サーバーを起動** (1つ目のターミナルで):
+
+  <CodeBox code={`npm run dev`} language="bash" />
+
+  2. **MCPテストを実行** (別のターミナルで):
+
+  <CodeBox code={`npm run test:mcp`} language="bash" />
+
+  テストクライアントは以下を実行します:
+
+  - 開発サーバーが実行中かチェック
+  - 利用可能なすべてのツールをリスト
+  - 各ツールを様々なパラメータでテスト
+  - 結果を `src/mcp/__tests__/outputs/` に保存
+
+  **注意**: MCPテストが動作するには開発サーバーが実行中である必要があります！
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>利用可能なMCPツール</PageHeadLine>
+
+  ## 1. health-check
+
+  - パラメータ不要
+  - サーバーステータスとタイムスタンプを返す
+
+  ## 2. get-symbols
+
+  - パラメータ:
+    - `search`: string (オプション) - 名前でシンボルをフィルタ
+    - `limit`: number (オプション) - 返す結果の最大数
+  - 利用可能なSerendieシンボル名のリストを返す:
+    - 総数とフィルタ後の数
+    - 利用可能なバリアント（すべてのシンボルに共通）
+    - シンボル名の配列
+
+  ## 3. get-symbol-detail
+
+  - パラメータ:
+    - `name`: string (必須) - 詳細を取得するシンボルの名前
+  - 特定のシンボルの詳細情報を返す:
+    - シンボルの存在確認
+    - 利用可能なバリアント
+    - インポート文
+    - 使用例（basic、outlined、filled）
+
+  ## 4. get-design-tokens
+
+  - パラメータ:
+    - `search`: string (オプション) - キーでトークンをフィルタ（部分一致、大文字小文字を区別しない）
+    - `type`: string (オプション) - トークンタイプでフィルタ（color、typography、dimension、elevation、radius、spacing、opacity）
+    - `category`: string (オプション) - カテゴリでフィルタ（reference、system）
+    - `theme`: string (オプション) - テーマでフィルタ（asagi、konjo、kurikawa、sumire、tsutsuji）
+    - `limit`: number (オプション) - 返す結果の最大数
+  - デザイントークンのリストを返す:
+    - 総数とフィルタ後の数
+    - 返された数（制限適用後）
+    - 利用可能なトークンタイプ
+    - key、path、type、value、originalValue、category、themeを含むトークンオブジェクトの配列
+
+  ## 5. get-design-token-detail
+
+  - パラメータ:
+    - `key`: string (必須) - 詳細を取得するトークンのキー（例："sd.system.color.impression.primaryContainer"）
+  - 特定のデザイントークンの詳細情報を返す:
+    - トークンの存在確認
+    - パス配列
+    - トークンタイプ
+    - 実際の値と元の値
+    - カテゴリ（reference/system/theme）
+    - テーマ（該当する場合）
+    - CSS変数形式
+    - 使用例（CSSとPandaCSS）
+    - 参照情報（システムトークンの場合）
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>期待される出力形式</PageHeadLine>
+
+  各ツールは以下の形式でレスポンスを返します:
+
+  <CodeBox code={`{
+  "content": [
+    {
+      "type": "text",
+      "text": "ツール固有のデータを含むJSON文字列"
+    }
+  ]
+}`} language="json" />
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={5}>開発</PageHeadLine>
+
+  ## 新しいMCPツールの作成 - 完全ガイド
+
+  ### 1. ツールの計画
+
+  実装前に以下を検討してください:
+
+  - **目的**: このツールが提供する具体的な機能は何か？
+  - **対象ユーザー**: 誰がこのツールを使用するか（AIアシスタント、開発者）？
+  - **データソース**: ツールはどこからデータを取得するか（ファイル、API、計算）？
+  - **パフォーマンス**: このツールにはキャッシングや最適化が必要か？
+  - **エラーケース**: 何が問題になりうるか、エラーはどのように処理すべきか？
+
+  ### 2. 命名規則
+
+  MCPのベストプラクティスに従ったツール命名:
+
+  - **kebab-case**を使用（例：`get-symbols`、`search-documentation`）
+  - アクションを説明する**動詞**で始める（get、search、list、check、validate）
+  - **説明的**かつ**簡潔**に
+  - 例:
+    - ✅ `get-symbols`（明確なアクション + ターゲット）
+    - ✅ `get-symbol-detail`（アクション + 特定のリソース）
+    - ❌ `symbols`（動詞なし、不明確）
+    - ❌ `getSymbolDetailWithUsageExamples`（冗長すぎる、ケースが間違っている）
+
+  ### 3. 実装手順
+
+  1. **ツールファイルを作成** `src/mcp/tools/your-tool-name.ts`に:
+
+  <CodeBox code={`import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+export function getYourToolName(mcpServer: McpServer) {
+  mcpServer.registerTool(
+    "your-tool-name",
+    {
+      title: "ツールのタイトル",
+      description: "このツールが何をするかの明確な説明",
+      inputSchema: {
+        // ここにパラメータを定義
+      },
+    },
+    async (params) => {
+      // ツールのロジックを実装
+    }
+  );
+}`} language="typescript" />
+
+  2. **Zodを使用して入力スキーマを定義**:
+
+  <CodeBox code={`inputSchema: {
+  requiredParam: z
+    .string()
+    .describe("この必須パラメータの説明"),
+  optionalParam: z
+    .number()
+    .optional()
+    .describe("このオプションパラメータの説明"),
+}`} language="typescript" />
+
+  3. **適切なエラーハンドリングを含むツールロジックの実装**:
+
+  <CodeBox code={`async (params) => {
+  try {
+    // 実装
+    const result = await processData(params);
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
+  } catch (error) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify({
+            error: "説明的なエラーメッセージ",
+            message:
+              error instanceof Error ? error.message : "不明なエラー",
+          }),
+        },
+      ],
+    };
+  }
+};`} language="typescript" />
+
+  4. **`src/mcp/server.ts`でツールを登録**:
+
+  <CodeBox code={`import { getYourToolName } from "./tools/your-tool-name";
+
+// createMcpServer関数内で:
+getYourToolName(mcpServer);`} language="typescript" />
+
+  5. **`src/mcp/__tests__/tools/your-tool-name.test.ts`にテストを作成**:
+
+  - 入力検証のテスト
+  - 正常実行のテスト
+  - エラーハンドリングのテスト
+  - エッジケースのテスト
+
+  6. **ドキュメントの更新**:
+  - このREADMEにツールを追加
+  - パラメータの説明を含める
+  - 使用例を提供
+
+  ### 4. ベストプラクティス
+
+  **入力検証**:
+
+  - 型安全な検証のためにZodスキーマを使用
+  - 各パラメータに明確な説明を提供
+  - オプションパラメータに妥当なデフォルト値を設定
+  - 範囲とフォーマットを検証
+
+  **エラーハンドリング**:
+
+  - 常にロジックをtry-catchブロックでラップ
+  - 構造化されたエラーレスポンスを返す
+  - 有用なエラーメッセージを含める
+  - 機密情報を公開しない
+
+  **パフォーマンス**:
+
+  - 高コストな操作にはキャッシングを検討
+  - 大規模データセットにはページネーションを実装
+  - 妥当なタイムアウトを追加
+  - 必要に応じて大きなレスポンスにはストリーミングを使用
+
+  **テスト**:
+
+  - 外部依存関係をモック
+  - 成功と失敗の両方のケースをテスト
+  - 出力構造を検証
+  - 現実的なデータでテスト
+
+  ### 5. リソース
+
+  **MCPドキュメント**:
+
+  - <PageARef href="https://modelcontextprotocol.io/introduction">MCP Introduction</PageARef>
+  - <PageARef href="https://modelcontextprotocol.io/docs/concepts/tools">MCP Tools Concept</PageARef>
+  - <PageARef href="https://modelcontextprotocol.io/docs/concepts/architecture">MCP Architecture</PageARef>
+  - <PageARef href="https://modelcontextprotocol.io/docs/sdk/typescript">MCP TypeScript SDK</PageARef>
+
+  **このプロジェクトの例**:
+
+  - 複数の機能を持つツール: `src/mcp/tools/symbols.ts` (リスト + 詳細)
+  - 複雑なフィルタリングを持つツール: `src/mcp/tools/design-tokens.ts` (複数パラメータフィルタリング)
+  - 直接登録: `src/mcp/server.ts`の`health-check`を参照
+
+  ### 6. 一般的なパターン
+
+  **検索/フィルタパターン**:
+
+  <CodeBox code={`inputSchema: {
+  search: z.string().optional().describe("検索クエリ"),
+  limit: z.number().optional().describe("最大結果数"),
+  category: z.enum(["a", "b", "c"]).optional().describe("カテゴリでフィルタ"),
+}`} language="typescript" />
+
+  **リソース取得パターン**:
+
+  <CodeBox code={`inputSchema: {
+  id: z.string().optional().describe("特定のリソースID"),
+  includeDetails: z.boolean().optional().describe("完全な詳細を含める"),
+}`} language="typescript" />
+
+  **検証パターン**:
+
+  <CodeBox code={`inputSchema: {
+  data: z.string().describe("検証するデータ"),
+  schema: z.enum(["type1", "type2"]).describe("検証に使用するスキーマ"),
+}`} language="typescript" />
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={6}>APIエンドポイント</PageHeadLine>
+
+  MCPサーバーは開発サーバー実行時に `/sse` で公開されます。MCPクライアントとの通信にHTTPストリーミングトランスポートを使用します。
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={7}>統合</PageHeadLine>
+
+  AIアシスタントでこのMCPサーバーを使用するには:
+
+  1. MCPクライアントを `http://localhost:4321/sse` に接続するよう設定
+  2. `npm run dev` 実行時にサーバーが自動的に利用可能になります
+  3. 利用可能なツールを使用してSerendieドキュメントとやり取り
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={8}>デバッグ</PageHeadLine>
+
+  - 実際のAPIレスポンスは `src/mcp/__tests__/outputs/` を確認
+  - `/sse` にアクセスする際はブラウザのDevToolsネットワークタブを使用
+  - 必要に応じて `src/mcp/server.ts` でデバッグログを有効化
+  - ユニットテストはモックされたファイルシステム操作を使用
+  - 手動テストは実際のファイルシステムとAPIを使用
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={9}>トラブルシューティング</PageHeadLine>
+
+  **よくある問題**:
+
+  1. **"Dev server is not running"** - まず `npm run dev` で開発サーバーを起動
+  2. **ツールが見つからない** - ツールが `server.ts` に登録されていることを確認
+  3. **無効なパラメータ** - Zodスキーマが入力と一致することを確認
+  4. **空のレスポンス** - データソースが存在し、アクセス可能であることを確認
+</PageSection>
