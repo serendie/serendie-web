@@ -25,8 +25,21 @@ export default function McpDemo() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
+  const getMcpUrl = () => {
+    if (typeof window === "undefined") return "";
+    const { hostname, port, protocol } = window.location;
+
+    // For localhost, use the same protocol and port
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return `${protocol}//${hostname}${port ? `:${port}` : ""}/sse`;
+    }
+
+    // For production/staging, use HTTPS
+    return `https://${hostname}/sse`;
+  };
+
   const { state, tools, callTool } = useMcp({
-    url: "https://serendie-web-workers.takram-spread.workers.dev/sse",
+    url: getMcpUrl(),
     clientName: "Serendie Web Demo",
     autoReconnect: true,
   });
