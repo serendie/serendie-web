@@ -111,8 +111,9 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
           resources: {
             documentation: "https://serendie.design/",
             storybook: "https://storybook.serendie.design/",
-            github: "https://github.com/mi-col/serendie",
-            figma: "利用可能",
+            github: "https://github.com/serendie/serendie",
+            figma:
+              "https://www.figma.com/community/file/1433690846108785966/serendie-ui-kit",
           },
           bestPractices: [
             "デザイントークンを必ず使用（特にスペーシング）",
@@ -157,19 +158,29 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             designFlow: "Figma Variables → design-token → UI → App",
           },
           designTokenGuidelines: {
-            importance: "必須。px値禁止。",
+            importance: "必須。px値禁止。リファレンストークン直接使用禁止。",
+            tokenTypes: {
+              reference: "生の値（color.scale.green.500等）。直接使用禁止。",
+              system:
+                "リファレンスを参照（color.impression.primary等）。必ずこちらを使用。",
+            },
             priority: [
+              "必ずシステムトークンを使用（sd.system.で始まるトークン）",
+              "リファレンストークン（sd.reference.）の直接使用は禁止",
               "スペーシング: p: 4, gap: 2 (px値禁止)",
               "色: color: 'sd.system.color.impression.primary' (HEX禁止)",
             ],
             commonMistakes: [
               "padding: '16px' → p: 4",
               "color: '#333' → color: 'sd.system.color.component.onSurface'",
+              "color: 'sd.reference.color.scale.gray.500' → color: 'sd.system.color.text.primary'",
             ],
             examples: {
               correct: {
                 good: "css({ p: 4, color: 'sd.system.color.component.onSurface' })",
                 bad: "css({ padding: '16px', color: '#333' })",
+                veryBad:
+                  "css({ color: 'sd.reference.color.scale.gray.500' }) // リファレンス直接使用NG",
               },
             },
           },

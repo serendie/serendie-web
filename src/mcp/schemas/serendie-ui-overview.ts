@@ -84,14 +84,21 @@ const PackageRelationshipsSchema = z.object({
 // デザイントークンガイドラインのスキーマ
 const DesignTokenGuidelinesSchema = z.object({
   importance: z.string(),
+  tokenTypes: z
+    .object({
+      reference: z.string(),
+      system: z.string(),
+    })
+    .optional(),
   priority: z.array(z.string()),
   commonMistakes: z.array(z.string()),
-  examples: z.record(
-    z.object({
+  examples: z.object({
+    correct: z.object({
       good: z.string(),
       bad: z.string(),
-    })
-  ),
+      veryBad: z.string().optional(),
+    }),
+  }),
 });
 
 // Figma統合のスキーマ

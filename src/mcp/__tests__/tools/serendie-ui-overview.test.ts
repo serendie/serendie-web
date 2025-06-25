@@ -104,8 +104,8 @@ describe("get-serendie-ui-overview", () => {
       // スタイリング方法の確認
       expect(data.stylingApproach.method).toBe("PandaCSS");
       expect(data.stylingApproach.patterns).toContain("css()");
-      expect(data.stylingApproach.patterns).toContain("styled()");
-      // 圧縮版では css() と styled() のみ
+      expect(data.stylingApproach.patterns).toContain("sva()");
+      // 圧縮版では css() と sva() のみ
       expect(data.stylingApproach.patterns).toHaveLength(2);
       expect(data.stylingApproach.tokens).toBeDefined();
       expect(data.stylingApproach.example).toBeDefined();
@@ -128,7 +128,9 @@ describe("get-serendie-ui-overview", () => {
       expect(data.resources.storybook).toBe(
         "https://storybook.serendie.design/"
       );
-      expect(data.resources.github).toBe("https://github.com/mi-col/serendie");
+      expect(data.resources.github).toBe(
+        "https://github.com/serendie/serendie"
+      );
       expect(data.resources.figma).toBeDefined();
 
       // 初期セットアップの確認
@@ -154,7 +156,19 @@ describe("get-serendie-ui-overview", () => {
       // デザイントークンガイドラインの確認
       expect(data.designTokenGuidelines).toBeDefined();
       expect(data.designTokenGuidelines.importance).toBeDefined();
+      expect(data.designTokenGuidelines.tokenTypes).toBeDefined();
+      if (data.designTokenGuidelines.tokenTypes) {
+        expect(data.designTokenGuidelines.tokenTypes.reference).toContain(
+          "直接使用禁止"
+        );
+        expect(data.designTokenGuidelines.tokenTypes.system).toContain(
+          "必ずこちらを使用"
+        );
+      }
       expect(data.designTokenGuidelines.priority).toBeInstanceOf(Array);
+      expect(data.designTokenGuidelines.priority[0]).toContain(
+        "システムトークン"
+      );
       expect(data.designTokenGuidelines.commonMistakes).toBeInstanceOf(Array);
       // 圧縮版では correct のみ
       expect(data.designTokenGuidelines.examples).toHaveProperty("correct");
@@ -162,6 +176,9 @@ describe("get-serendie-ui-overview", () => {
         "good"
       );
       expect(data.designTokenGuidelines.examples.correct).toHaveProperty("bad");
+      expect(data.designTokenGuidelines.examples.correct).toHaveProperty(
+        "veryBad"
+      );
 
       // Figma統合の確認
       expect(data.figmaIntegration).toBeDefined();
@@ -250,12 +267,17 @@ describe("get-serendie-ui-overview", () => {
       },
       designTokenGuidelines: {
         importance: "Test importance",
+        tokenTypes: {
+          reference: "Test reference",
+          system: "Test system",
+        },
         priority: ["Priority 1"],
         commonMistakes: ["Mistake 1"],
         examples: {
           correct: {
             good: "Good example",
             bad: "Bad example",
+            veryBad: "Very bad example",
           },
         },
       },
