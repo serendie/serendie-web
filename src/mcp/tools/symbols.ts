@@ -1,6 +1,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { symbolNames } from "@serendie/symbols";
+import {
+  GetSymbolsResponseSchema,
+  GetSymbolDetailResponseSchema,
+  type GetSymbolsResponse,
+  type GetSymbolDetailResponse,
+} from "../schemas/symbols.js";
 
 /**
  * Serendieデザインシステムのシンボル（アイコン）一覧を取得するMCPツール
@@ -75,7 +81,7 @@ export function getSymbolsTool(mcpServer: McpServer) {
         }
 
         // レスポンスデータを準備（軽量版）
-        const symbolData = {
+        const symbolData: GetSymbolsResponse = {
           /**
            * @serendie/symbols パッケージに含まれる全シンボル数
            * 現在は305個のシンボルが利用可能
@@ -96,11 +102,14 @@ export function getSymbolsTool(mcpServer: McpServer) {
           symbols: filteredSymbols,
         };
 
+        // スキーマで検証
+        const validatedResponse = GetSymbolsResponseSchema.parse(symbolData);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(symbolData, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };
@@ -180,26 +189,28 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
         const exists = (symbolNames as readonly string[]).includes(name);
 
         if (!exists) {
+          const notFoundResponse: GetSymbolDetailResponse = {
+            name,
+            exists: false,
+            message: `Symbol '${name}' not found in @serendie/symbols`,
+          };
+
+          // スキーマで検証
+          const validatedResponse =
+            GetSymbolDetailResponseSchema.parse(notFoundResponse);
+
           return {
             content: [
               {
                 type: "text",
-                text: JSON.stringify(
-                  {
-                    name,
-                    exists: false,
-                    message: `Symbol '${name}' not found in @serendie/symbols`,
-                  },
-                  null,
-                  2
-                ),
+                text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
           };
         }
 
         // シンボルの詳細情報を生成
-        const symbolDetail = {
+        const symbolDetail: GetSymbolDetailResponse = {
           /**
            * シンボル名
            */
@@ -207,7 +218,7 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
           /**
            * シンボルが存在するかどうか
            */
-          exists: true,
+          exists: true as const,
           /**
            * 利用可能なバリアント
            */
@@ -227,11 +238,15 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
           },
         };
 
+        // スキーマで検証
+        const validatedResponse =
+          GetSymbolDetailResponseSchema.parse(symbolDetail);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(symbolDetail, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };

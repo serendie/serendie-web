@@ -1,4 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import {
+  GetDesignTokensResponseSchema,
+  GetDesignTokenDetailResponseSchema,
+  TokenTypeSchema,
+  TokenCategorySchema,
+  ThemeSchema,
+  type GetDesignTokensResponse,
+  type GetDesignTokenDetailResponse,
+} from "../../schemas/design-tokens";
 
 // Mock @serendie/design-token
 vi.mock("@serendie/design-token/token-list", () => ({
@@ -79,65 +88,93 @@ describe("Design Tokens Tools", () => {
 
       expect(response).toBeDefined();
       expect(response.content).toHaveLength(1);
+      expect(response.content[0].type).toBe("text");
 
+      // Parse and validate the response with schema
       const data = JSON.parse(response.content[0].text);
-      expect(data).toMatchObject({
-        total: expect.any(Number),
-        filtered: expect.any(Number),
-        returned: expect.any(Number),
-        types: expect.any(Array),
-        tokens: expect.any(Array),
-      });
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
 
-      expect(data.total).toBe(6); // Based on our mock data
-      expect(data.filtered).toBe(data.total);
-      expect(data.tokens.length).toBe(6);
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.total).toBe(6); // Based on our mock data
+        expect(validatedData.filtered).toBe(validatedData.total);
+        expect(validatedData.returned).toBe(6);
+        expect(validatedData.tokens).toHaveLength(6);
+        expect(validatedData.types).toContain("color");
+        expect(validatedData.types).toContain("typography");
+        expect(validatedData.types).toContain("dimension");
+      }
     });
 
     it("should filter tokens by search query", async () => {
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ search: "primary" });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.filtered).toBeLessThan(data.total);
-      expect(data.tokens).toHaveLength(1);
-      data.tokens.forEach((token: { key: string }) => {
-        expect(token.key.toLowerCase()).toContain("primary");
-      });
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.filtered).toBeLessThan(validatedData.total);
+        expect(validatedData.tokens).toHaveLength(1);
+        validatedData.tokens.forEach((token) => {
+          expect(token.key.toLowerCase()).toContain("primary");
+        });
+      }
     });
 
     it("should filter tokens by type", async () => {
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ type: "color" });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.filtered).toBe(4); // We have 4 color tokens in mock
-      data.tokens.forEach((token: { type: string }) => {
-        expect(token.type).toBe("color");
-      });
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.filtered).toBe(4); // We have 4 color tokens in mock
+        validatedData.tokens.forEach((token) => {
+          expect(token.type).toBe("color");
+        });
+      }
     });
 
     it("should filter tokens by category", async () => {
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ category: "reference" });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.filtered).toBe(4); // We have 4 reference tokens in mock
-      data.tokens.forEach((token: { key: string; category: string }) => {
-        expect(token.key).toContain("sd.reference");
-        expect(token.category).toBe("reference");
-      });
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.filtered).toBe(4); // We have 4 reference tokens in mock
+        validatedData.tokens.forEach((token) => {
+          expect(token.key).toContain("sd.reference");
+          expect(token.category).toBe("reference");
+        });
+      }
     });
 
     it("should respect limit parameter", async () => {
       const limit = 3;
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ limit });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.returned).toBe(limit);
-      expect(data.tokens.length).toBe(limit);
-      expect(data.filtered).toBe(6); // Total filtered before limit
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.returned).toBe(limit);
+        expect(validatedData.tokens).toHaveLength(limit);
+        expect(validatedData.filtered).toBe(6); // Total filtered before limit
+      }
     });
 
     it("should combine multiple filters", async () => {
@@ -148,16 +185,20 @@ describe("Design Tokens Tools", () => {
         search: "impression",
         limit: 5,
       });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.tokens.length).toBe(2); // Two system color tokens with "impression"
-      data.tokens.forEach(
-        (token: { type: string; category: string; key: string }) => {
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokensResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.tokens).toHaveLength(2); // Two system color tokens with "impression"
+        validatedData.tokens.forEach((token) => {
           expect(token.type).toBe("color");
           expect(token.category).toBe("system");
           expect(token.key.toLowerCase()).toContain("impression");
-        }
-      );
+        });
+      }
     });
   });
 
@@ -183,35 +224,54 @@ describe("Design Tokens Tools", () => {
       const response = await handler!({
         key: "sd.reference.color.scale.gray.100",
       });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data).toMatchObject({
-        key: "sd.reference.color.scale.gray.100",
-        exists: true,
-        path: ["sd", "reference", "color", "scale", "gray", "100"],
-        type: "color",
-        value: "#F5F5F5",
-        originalValue: "#F5F5F5",
-        category: "reference",
-        theme: null,
-        cssVariable: "var(--sd-reference-color-scale-gray-100)",
-        usage: expect.objectContaining({
-          css: expect.any(String),
-          pandacss: expect.any(String),
-        }),
-      });
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokenDetailResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        if (validatedData.exists) {
+          expect(validatedData.key).toBe("sd.reference.color.scale.gray.100");
+          expect(validatedData.exists).toBe(true);
+          expect(validatedData.path).toEqual([
+            "sd",
+            "reference",
+            "color",
+            "scale",
+            "gray",
+            "100",
+          ]);
+          expect(validatedData.type).toBe("color");
+          expect(validatedData.value).toBe("#F5F5F5");
+          expect(validatedData.originalValue).toBe("#F5F5F5");
+          expect(validatedData.category).toBe("reference");
+          expect(validatedData.theme).toBeNull();
+          expect(validatedData.cssVariable).toBe(
+            "var(--sd-reference-color-scale-gray-100)"
+          );
+          expect(validatedData.usage.css).toContain("color:");
+          expect(validatedData.usage.pandacss).toContain("color:");
+        }
+      }
     });
 
     it("should return error for non-existent token", async () => {
       const handler = registeredTools.get("get-design-token-detail");
       const response = await handler!({ key: "invalid.token.key" });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data).toMatchObject({
-        key: "invalid.token.key",
-        exists: false,
-        message: expect.stringContaining("not found"),
-      });
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokenDetailResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        if (!validatedData.exists) {
+          expect(validatedData.key).toBe("invalid.token.key");
+          expect(validatedData.exists).toBe(false);
+          expect(validatedData.message).toContain("not found");
+        }
+      }
     });
 
     it("should include reference information for system tokens", async () => {
@@ -219,11 +279,131 @@ describe("Design Tokens Tools", () => {
       const response = await handler!({
         key: "sd.system.color.impression.primaryContainer",
       });
-      const data = JSON.parse(response.content[0].text);
 
-      expect(data.category).toBe("system");
-      expect(data.originalValue).toBe("{sd.reference.color.scale.blue.500}");
-      expect(data.references).toBe("sd.reference.color.scale.blue.500");
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetDesignTokenDetailResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        if (validatedData.exists) {
+          expect(validatedData.category).toBe("system");
+          expect(validatedData.originalValue).toBe(
+            "{sd.reference.color.scale.blue.500}"
+          );
+          expect(validatedData.references).toBe(
+            "sd.reference.color.scale.blue.500"
+          );
+        }
+      }
+    });
+  });
+
+  describe("Schema Validation", () => {
+    it("should validate TokenTypeSchema correctly", () => {
+      // Valid types
+      expect(() => TokenTypeSchema.parse("color")).not.toThrow();
+      expect(() => TokenTypeSchema.parse("typography")).not.toThrow();
+      expect(() => TokenTypeSchema.parse("dimension")).not.toThrow();
+
+      // Invalid types
+      expect(() => TokenTypeSchema.parse("invalid")).toThrow();
+      expect(() => TokenTypeSchema.parse(123)).toThrow();
+    });
+
+    it("should validate TokenCategorySchema correctly", () => {
+      // Valid categories
+      expect(() => TokenCategorySchema.parse("reference")).not.toThrow();
+      expect(() => TokenCategorySchema.parse("system")).not.toThrow();
+      expect(() => TokenCategorySchema.parse("theme")).not.toThrow();
+
+      // Invalid categories
+      expect(() => TokenCategorySchema.parse("invalid")).toThrow();
+    });
+
+    it("should validate ThemeSchema correctly", () => {
+      // Valid themes
+      expect(() => ThemeSchema.parse("asagi")).not.toThrow();
+      expect(() => ThemeSchema.parse("konjo")).not.toThrow();
+
+      // Invalid themes
+      expect(() => ThemeSchema.parse("invalid-theme")).toThrow();
+    });
+
+    it("should validate GetDesignTokensResponseSchema structure", () => {
+      const validResponse: GetDesignTokensResponse = {
+        total: 100,
+        filtered: 50,
+        returned: 10,
+        types: ["color", "typography"],
+        tokens: [
+          {
+            key: "test.token",
+            path: ["test", "token"],
+            type: "color",
+            value: "#000000",
+            originalValue: "#000000",
+            category: "reference",
+            theme: null,
+          },
+        ],
+      };
+
+      const validation = GetDesignTokensResponseSchema.safeParse(validResponse);
+      expect(validation.success).toBe(true);
+
+      // Invalid response
+      const invalidResponse = {
+        total: "not a number",
+        filtered: 50,
+      };
+      const invalidValidation =
+        GetDesignTokensResponseSchema.safeParse(invalidResponse);
+      expect(invalidValidation.success).toBe(false);
+    });
+
+    it("should validate GetDesignTokenDetailResponseSchema for both success and error cases", () => {
+      // Success case
+      const successResponse: GetDesignTokenDetailResponse = {
+        key: "test.token",
+        exists: true,
+        path: ["test", "token"],
+        type: "color",
+        value: "#000000",
+        originalValue: "#000000",
+        category: "reference",
+        theme: null,
+        cssVariable: "var(--test-token)",
+        usage: {
+          css: "color: var(--test-token);",
+          pandacss: "color: 'test.token'",
+        },
+        references: null,
+      };
+
+      const successValidation =
+        GetDesignTokenDetailResponseSchema.safeParse(successResponse);
+      expect(successValidation.success).toBe(true);
+
+      // Error case
+      const errorResponse: GetDesignTokenDetailResponse = {
+        key: "invalid.token",
+        exists: false,
+        message: "Token 'invalid.token' not found",
+      };
+
+      const errorValidation =
+        GetDesignTokenDetailResponseSchema.safeParse(errorResponse);
+      expect(errorValidation.success).toBe(true);
+
+      // Invalid response
+      const invalidResponse = {
+        key: "test",
+        exists: "not a boolean",
+      };
+      const invalidValidation =
+        GetDesignTokenDetailResponseSchema.safeParse(invalidResponse);
+      expect(invalidValidation.success).toBe(false);
     });
   });
 });

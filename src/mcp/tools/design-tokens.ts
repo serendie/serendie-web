@@ -1,6 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import tokens from "@serendie/design-token/token-list";
+import {
+  TokenTypeSchema,
+  TokenCategorySchema,
+  ThemeSchema,
+  GetDesignTokensResponseSchema,
+  GetDesignTokenDetailResponseSchema,
+  type GetDesignTokensResponse,
+  type GetDesignTokenDetailResponse,
+  type TokenCategory,
+  type TokenType,
+} from "../schemas/design-tokens.js";
 
 /**
  * Serendie Design Systemのデザイントークン一覧を取得するMCPツール
@@ -62,27 +73,15 @@ export function getDesignTokensTool(mcpServer: McpServer) {
          * トークンタイプでフィルタリング（オプション）
          * @example "color", "typography", "dimension"
          */
-        type: z
-          .enum([
-            "color",
-            "typography",
-            "dimension",
-            "elevation",
-            "radius",
-            "spacing",
-            "opacity",
-          ])
-          .optional()
-          .describe("Filter tokens by type"),
+        type: TokenTypeSchema.optional().describe("Filter tokens by type"),
         /**
          * トークンカテゴリでフィルタリング（オプション）
          * reference: 生の値を持つトークン
          * system: リファレンストークンを参照するトークン
          */
-        category: z
-          .enum(["reference", "system"])
-          .optional()
-          .describe("Filter tokens by category (reference or system)"),
+        category: TokenCategorySchema.optional().describe(
+          "Filter tokens by category (reference or system)"
+        ),
         /**
          * 返す結果の最大数（オプション）
          * 指定しない場合は全ての結果を返します
@@ -96,10 +95,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
          * 特定のテーマでフィルタリング（オプション）
          * @example "asagi", "konjo"
          */
-        theme: z
-          .enum(["asagi", "konjo", "kurikawa", "sumire", "tsutsuji"])
-          .optional()
-          .describe("Filter tokens by theme"),
+        theme: ThemeSchema.optional().describe("Filter tokens by theme"),
       },
     },
     async ({ search, type, category, theme, limit }) => {
@@ -152,7 +148,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
         // トークンデータを整形
         const formattedTokens = filteredTokens.map((token) => {
           // カテゴリを判定
-          let tokenCategory: "reference" | "system" | "theme" = "system";
+          let tokenCategory: TokenCategory = "system";
           if (token.key.includes("sd.reference")) {
             tokenCategory = "reference";
           } else if (token.key.includes("themes")) {
@@ -169,7 +165,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
           return {
             key: token.key,
             path: token.path,
-            type: token.type,
+            type: token.type as TokenType,
             value: token.value,
             originalValue: token.originalValue,
             category: tokenCategory,
@@ -181,7 +177,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
         const types = [...new Set(formattedTokens.map((token) => token.type))];
 
         // レスポンスデータを準備
-        const tokenData = {
+        const tokenData: GetDesignTokensResponse = {
           /**
            * @serendie/design-token パッケージに含まれる全トークン数
            */
@@ -204,11 +200,15 @@ export function getDesignTokensTool(mcpServer: McpServer) {
           tokens: formattedTokens,
         };
 
+        // スキーマで検証
+        const validatedResponse =
+          GetDesignTokensResponseSchema.parse(tokenData);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(tokenData, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };
@@ -292,26 +292,28 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
         const token = tokens.find((t) => t.key === key);
 
         if (!token) {
+          const notFoundResponse: GetDesignTokenDetailResponse = {
+            key,
+            exists: false,
+            message: `Token '${key}' not found in @serendie/design-token`,
+          };
+
+          // スキーマで検証
+          const validatedResponse =
+            GetDesignTokenDetailResponseSchema.parse(notFoundResponse);
+
           return {
             content: [
               {
                 type: "text",
-                text: JSON.stringify(
-                  {
-                    key,
-                    exists: false,
-                    message: `Token '${key}' not found in @serendie/design-token`,
-                  },
-                  null,
-                  2
-                ),
+                text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
           };
         }
 
         // カテゴリを判定
-        let category: "reference" | "system" | "theme" = "system";
+        let category: TokenCategory = "system";
         if (token.key.includes("sd.reference")) {
           category = "reference";
         } else if (token.key.includes("themes")) {
@@ -329,7 +331,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
         const cssVariable = `var(--${token.key.replace(/\./g, "-")})`;
 
         // 使用例を生成
-        const usage: Record<string, string> = {
+        const usage: { css: string; pandacss: string } = {
           css: "",
           pandacss: "",
         };
@@ -363,7 +365,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
         }
 
         // トークンの詳細情報
-        const tokenDetail = {
+        const tokenDetail: GetDesignTokenDetailResponse = {
           /**
            * トークンキー
            */
@@ -371,7 +373,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
           /**
            * トークンが存在するかどうか
            */
-          exists: true,
+          exists: true as const,
           /**
            * トークンのパス配列
            */
@@ -379,7 +381,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
           /**
            * トークンタイプ
            */
-          type: token.type,
+          type: token.type as TokenType,
           /**
            * 実際の値
            */
@@ -415,11 +417,15 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
               : null,
         };
 
+        // スキーマで検証
+        const validatedResponse =
+          GetDesignTokenDetailResponseSchema.parse(tokenDetail);
+
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify(tokenDetail, null, 2),
+              text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
         };

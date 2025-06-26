@@ -1,5 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
-import { z } from "zod";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import {
+  GetSymbolsResponseSchema,
+  GetSymbolDetailResponseSchema,
+  SymbolVariantSchema,
+  type GetSymbolsResponse,
+  type GetSymbolDetailResponse,
+} from "../../schemas/symbols";
 
 // Mock @serendie/symbols
 vi.mock("@serendie/symbols", () => ({
@@ -27,217 +33,292 @@ vi.mock("@serendie/symbols", () => ({
   ],
 }));
 
-// Test data
-const mockSymbolNames = [
-  "home",
-  "search",
-  "settings",
-  "user",
-  "close",
-  "menu",
-  "arrow_back",
-  "arrow_forward",
-  "check",
-  "error",
-  "warning",
-  "info",
-  "star",
-  "favorite",
-  "delete",
-  "edit",
-  "add",
-  "remove",
-  "refresh",
-  "more_vert",
-];
+// Import after mocking
+import { getSymbolsTool, getSymbolDetailTool } from "../../tools/symbols";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-describe("get-symbols Tool", () => {
-  // Define the input schema similar to how it's defined in the tool
-  const inputSchema = {
-    search: z
-      .string()
-      .optional()
-      .describe("Optional search query to filter symbols by name"),
-    limit: z
-      .number()
-      .optional()
-      .describe("Maximum number of results to return (default: all)"),
-  };
+describe("Symbols Tools", () => {
+  describe("get-symbols", () => {
+    let mcpServer: McpServer;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let registeredTools: Map<string, (args: any) => Promise<any>>;
 
-  describe("Input Schema Validation", () => {
-    it("should accept valid search string", () => {
-      expect(() => inputSchema.search.parse("arrow")).not.toThrow();
-      expect(() => inputSchema.search.parse("")).not.toThrow();
+    beforeEach(() => {
+      registeredTools = new Map();
+      mcpServer = {
+        registerTool: vi.fn((name, _schema, handler) => {
+          registeredTools.set(name, handler);
+        }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any;
+
+      getSymbolsTool(mcpServer);
     });
 
-    it("should accept valid limit number", () => {
-      expect(() => inputSchema.limit.parse(10)).not.toThrow();
-      expect(() => inputSchema.limit.parse(1)).not.toThrow();
-      expect(() => inputSchema.limit.parse(100)).not.toThrow();
+    it("should return all symbols when no filters are provided", async () => {
+      const handler = registeredTools.get("get-symbols");
+      const response = await handler!({});
+
+      expect(response).toBeDefined();
+      expect(response.content).toHaveLength(1);
+      expect(response.content[0].type).toBe("text");
+
+      // Parse and validate the response with schema
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolsResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.total).toBe(20); // Based on our mock data
+        expect(validatedData.filtered).toBe(validatedData.total);
+        expect(validatedData.symbols).toHaveLength(20);
+        expect(validatedData.variants).toEqual(["outlined", "filled"]);
+      }
     });
 
-    it("should allow undefined values (optional)", () => {
-      expect(inputSchema.search.parse(undefined)).toBeUndefined();
-      expect(inputSchema.limit.parse(undefined)).toBeUndefined();
+    it("should filter symbols by search query", async () => {
+      const handler = registeredTools.get("get-symbols");
+      const response = await handler!({ search: "arrow" });
+
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolsResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.filtered).toBeLessThan(validatedData.total);
+        expect(validatedData.symbols).toHaveLength(2);
+        expect(validatedData.symbols).toContain("arrow_back");
+        expect(validatedData.symbols).toContain("arrow_forward");
+      }
     });
 
-    it("should reject invalid types", () => {
-      expect(() => inputSchema.search.parse(123)).toThrow();
-      expect(() => inputSchema.limit.parse("10")).toThrow();
+    it("should perform case-insensitive search", async () => {
+      const handler = registeredTools.get("get-symbols");
+      const response = await handler!({ search: "STAR" });
+
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolsResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.symbols).toHaveLength(1);
+        expect(validatedData.symbols).toContain("star");
+      }
+    });
+
+    it("should respect limit parameter", async () => {
+      const limit = 5;
+      const handler = registeredTools.get("get-symbols");
+      const response = await handler!({ limit });
+
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolsResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.symbols).toHaveLength(limit);
+        expect(validatedData.total).toBe(20); // Total symbols available
+        expect(validatedData.filtered).toBe(limit); // filtered shows the actual returned count
+      }
+    });
+
+    it("should combine search and limit filters", async () => {
+      const handler = registeredTools.get("get-symbols");
+      const response = await handler!({ search: "e", limit: 3 });
+
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolsResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        expect(validatedData.symbols.length).toBeLessThanOrEqual(3);
+        validatedData.symbols.forEach((symbol) => {
+          expect(symbol.toLowerCase()).toContain("e");
+        });
+      }
     });
   });
 
-  describe("Search Functionality", () => {
-    it("should filter symbols by search query", () => {
-      const searchQuery = "arrow";
-      const filtered = mockSymbolNames.filter((name) =>
-        name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+  describe("get-symbol-detail", () => {
+    let mcpServer: McpServer;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let registeredTools: Map<string, (args: any) => Promise<any>>;
 
-      expect(filtered).toEqual(["arrow_back", "arrow_forward"]);
+    beforeEach(() => {
+      registeredTools = new Map();
+      mcpServer = {
+        registerTool: vi.fn((name, _schema, handler) => {
+          registeredTools.set(name, handler);
+        }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any;
+
+      getSymbolDetailTool(mcpServer);
     });
 
-    it("should perform case-insensitive search", () => {
-      const searchQuery = "ARROW";
-      const filtered = mockSymbolNames.filter((name) =>
-        name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+    it("should return detailed information for existing symbol", async () => {
+      const handler = registeredTools.get("get-symbol-detail");
+      const response = await handler!({ name: "home" });
 
-      expect(filtered).toEqual(["arrow_back", "arrow_forward"]);
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolDetailResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        if (validatedData.exists) {
+          expect(validatedData.name).toBe("home");
+          expect(validatedData.exists).toBe(true);
+          expect(validatedData.variants).toEqual(["outlined", "filled"]);
+          expect(validatedData.importStatement).toBe(
+            'import { SerendieSymbol } from "@serendie/symbols";'
+          );
+          expect(validatedData.usage.basic).toBe(
+            '<SerendieSymbol name="home" />'
+          );
+          expect(validatedData.usage.outlined).toBe(
+            '<SerendieSymbol name="home" variant="outlined" />'
+          );
+          expect(validatedData.usage.filled).toBe(
+            '<SerendieSymbol name="home" variant="filled" />'
+          );
+        }
+      }
     });
 
-    it("should return all symbols when no search query", () => {
-      const filtered = mockSymbolNames.filter(() => true);
-      expect(filtered).toHaveLength(20);
+    it("should return error for non-existent symbol", async () => {
+      const handler = registeredTools.get("get-symbol-detail");
+      const response = await handler!({ name: "nonexistent" });
+
+      const data = JSON.parse(response.content[0].text);
+      const validation = GetSymbolDetailResponseSchema.safeParse(data);
+      expect(validation.success).toBe(true);
+
+      if (validation.success) {
+        const validatedData = validation.data;
+        if (!validatedData.exists) {
+          expect(validatedData.name).toBe("nonexistent");
+          expect(validatedData.exists).toBe(false);
+          expect(validatedData.message).toContain("not found");
+        }
+      }
     });
   });
 
-  describe("Expected Output Structure", () => {
-    it("should return correct structure with all symbols", () => {
-      const expectedOutput = {
-        total: mockSymbolNames.length,
-        filtered: mockSymbolNames.length,
+  describe("Schema Validation", () => {
+    it("should validate SymbolVariantSchema correctly", () => {
+      // Valid variants
+      expect(() => SymbolVariantSchema.parse("outlined")).not.toThrow();
+      expect(() => SymbolVariantSchema.parse("filled")).not.toThrow();
+
+      // Invalid variants
+      expect(() => SymbolVariantSchema.parse("invalid")).toThrow();
+      expect(() => SymbolVariantSchema.parse(123)).toThrow();
+    });
+
+    it("should validate GetSymbolsResponseSchema structure", () => {
+      const validResponse: GetSymbolsResponse = {
+        total: 100,
+        filtered: 50,
         variants: ["outlined", "filled"],
-        symbols: mockSymbolNames,
+        symbols: ["home", "search", "settings"],
       };
 
-      expect(expectedOutput).toHaveProperty("total", 20);
-      expect(expectedOutput).toHaveProperty("filtered", 20);
-      expect(expectedOutput).toHaveProperty("variants");
-      expect(expectedOutput.variants).toEqual(["outlined", "filled"]);
-      expect(expectedOutput).toHaveProperty("symbols");
-      expect(expectedOutput.symbols).toHaveLength(20);
-    });
+      const validation = GetSymbolsResponseSchema.safeParse(validResponse);
+      expect(validation.success).toBe(true);
 
-    it("should return correct structure with filtered results", () => {
-      const searchQuery = "star";
-      const filtered = mockSymbolNames.filter((name) =>
-        name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-
-      const expectedOutput = {
-        total: mockSymbolNames.length,
-        filtered: filtered.length,
-        variants: ["outlined", "filled"],
-        symbols: filtered,
+      // Invalid response
+      const invalidResponse = {
+        total: "not a number",
+        filtered: 50,
       };
-
-      expect(expectedOutput.total).toBe(20);
-      expect(expectedOutput.filtered).toBe(1);
-      expect(expectedOutput.symbols).toEqual(["star"]);
-    });
-  });
-});
-
-describe("get-symbol-detail Tool", () => {
-  // Define the input schema
-  const inputSchema = {
-    name: z.string().describe("The name of the symbol to get details for"),
-  };
-
-  describe("Input Schema Validation", () => {
-    it("should accept valid symbol name", () => {
-      expect(() => inputSchema.name.parse("activity")).not.toThrow();
-      expect(() => inputSchema.name.parse("alert-circle")).not.toThrow();
+      const invalidValidation =
+        GetSymbolsResponseSchema.safeParse(invalidResponse);
+      expect(invalidValidation.success).toBe(false);
     });
 
-    it("should reject invalid types", () => {
-      expect(() => inputSchema.name.parse(123)).toThrow();
-      expect(() => inputSchema.name.parse(null)).toThrow();
-      expect(() => inputSchema.name.parse(undefined)).toThrow();
-    });
-
-    it("should require name parameter", () => {
-      expect(() => inputSchema.name.parse(undefined)).toThrow();
-    });
-  });
-
-  describe("Symbol Existence Check", () => {
-    it("should correctly identify existing symbols", () => {
-      const exists = mockSymbolNames.includes("home");
-      expect(exists).toBe(true);
-    });
-
-    it("should correctly identify non-existing symbols", () => {
-      const exists = mockSymbolNames.includes("nonexistent");
-      expect(exists).toBe(false);
-    });
-  });
-
-  describe("Expected Output Structure", () => {
-    it("should return correct structure for existing symbol", () => {
-      const symbolName = "activity";
-      const expectedOutput = {
-        name: symbolName,
+    it("should validate GetSymbolDetailResponseSchema for both success and error cases", () => {
+      // Success case
+      const successResponse: GetSymbolDetailResponse = {
+        name: "home",
         exists: true,
         variants: ["outlined", "filled"],
         importStatement: 'import { SerendieSymbol } from "@serendie/symbols";',
         usage: {
-          basic: `<SerendieSymbol name="${symbolName}" />`,
-          outlined: `<SerendieSymbol name="${symbolName}" variant="outlined" />`,
-          filled: `<SerendieSymbol name="${symbolName}" variant="filled" />`,
+          basic: '<SerendieSymbol name="home" />',
+          outlined: '<SerendieSymbol name="home" variant="outlined" />',
+          filled: '<SerendieSymbol name="home" variant="filled" />',
         },
       };
 
-      expect(expectedOutput).toHaveProperty("name", symbolName);
-      expect(expectedOutput).toHaveProperty("exists", true);
-      expect(expectedOutput).toHaveProperty("variants");
-      expect(expectedOutput.variants).toEqual(["outlined", "filled"]);
-      expect(expectedOutput).toHaveProperty("importStatement");
-      expect(expectedOutput).toHaveProperty("usage");
-      expect(expectedOutput.usage).toHaveProperty("basic");
-      expect(expectedOutput.usage).toHaveProperty("outlined");
-      expect(expectedOutput.usage).toHaveProperty("filled");
-    });
+      const successValidation =
+        GetSymbolDetailResponseSchema.safeParse(successResponse);
+      expect(successValidation.success).toBe(true);
 
-    it("should return correct structure for non-existing symbol", () => {
-      const symbolName = "nonexistent";
-      const expectedOutput = {
-        name: symbolName,
+      // Error case
+      const errorResponse: GetSymbolDetailResponse = {
+        name: "invalid-symbol",
         exists: false,
-        message: `Symbol '${symbolName}' not found in @serendie/symbols`,
+        message: "Symbol 'invalid-symbol' not found",
       };
 
-      expect(expectedOutput).toHaveProperty("name", symbolName);
-      expect(expectedOutput).toHaveProperty("exists", false);
-      expect(expectedOutput).toHaveProperty("message");
+      const errorValidation =
+        GetSymbolDetailResponseSchema.safeParse(errorResponse);
+      expect(errorValidation.success).toBe(true);
+
+      // Invalid response
+      const invalidResponse = {
+        name: "test",
+        exists: "not a boolean",
+      };
+      const invalidValidation =
+        GetSymbolDetailResponseSchema.safeParse(invalidResponse);
+      expect(invalidValidation.success).toBe(false);
     });
-  });
 
-  describe("Usage Examples", () => {
-    it("should generate correct JSX usage examples", () => {
-      const symbolName = "home";
+    it("should validate symbol usage structure", () => {
       const usage = {
-        basic: `<SerendieSymbol name="${symbolName}" />`,
-        outlined: `<SerendieSymbol name="${symbolName}" variant="outlined" />`,
-        filled: `<SerendieSymbol name="${symbolName}" variant="filled" />`,
+        basic: '<SerendieSymbol name="test" />',
+        outlined: '<SerendieSymbol name="test" variant="outlined" />',
+        filled: '<SerendieSymbol name="test" variant="filled" />',
       };
 
-      expect(usage.basic).toContain(symbolName);
-      expect(usage.outlined).toContain(symbolName);
-      expect(usage.outlined).toContain('variant="outlined"');
-      expect(usage.filled).toContain(symbolName);
-      expect(usage.filled).toContain('variant="filled"');
+      // Test by creating a full response and validating it
+      const responseWithUsage = {
+        name: "test",
+        exists: true,
+        variants: ["outlined", "filled"],
+        importStatement: 'import { SerendieSymbol } from "@serendie/symbols";',
+        usage,
+      };
+
+      const validation =
+        GetSymbolDetailResponseSchema.safeParse(responseWithUsage);
+      expect(validation.success).toBe(true);
+
+      // Invalid usage
+      const invalidUsage = {
+        basic: 123,
+        outlined: "valid",
+        filled: "valid",
+      };
+
+      const invalidResponse = {
+        name: "test",
+        exists: true,
+        variants: ["outlined", "filled"],
+        importStatement: 'import { SerendieSymbol } from "@serendie/symbols";',
+        usage: invalidUsage,
+      };
+
+      const invalidValidation =
+        GetSymbolDetailResponseSchema.safeParse(invalidResponse);
+      expect(invalidValidation.success).toBe(false);
     });
   });
 });
