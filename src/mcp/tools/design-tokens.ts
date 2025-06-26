@@ -58,6 +58,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
       inputSchema: {
         /**
          * トークンタイプでフィルタリング（オプション）
+         * Available types: "color", "dimension", "fontFamily", "fontWeight", "number", "shadow", "typography"
          * @example "color", "typography", "dimension"
          */
         type: TokenTypeSchema.optional().describe("Filter tokens by type"),
@@ -321,25 +322,31 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
             usage.pandacss = `color: '${token.key}'`;
             break;
           case "typography":
+            // Typography tokens have composite values, so we apply them as a mixin
+            usage.css = `/* Apply typography token as CSS variables */\nfont-size: var(--${token.key.replace(/\./g, "-")}-fontSize);\nfont-weight: var(--${token.key.replace(/\./g, "-")}-fontWeight);\nfont-family: var(--${token.key.replace(/\./g, "-")}-fontFamily);\nline-height: var(--${token.key.replace(/\./g, "-")}-lineHeight);`;
+            usage.pandacss = `textStyle: '${token.key}'`;
+            break;
+          case "dimension":
+            usage.css = `width: ${cssVariable};`;
+            usage.pandacss = `width: '${token.key}'`;
+            break;
+          case "fontFamily":
             usage.css = `font-family: ${cssVariable};`;
             usage.pandacss = `fontFamily: '${token.key}'`;
             break;
-          case "dimension":
-          case "spacing":
-            usage.css = `margin: ${cssVariable};`;
-            usage.pandacss = `margin: '${token.key}'`;
+          case "fontWeight":
+            usage.css = `font-weight: ${cssVariable};`;
+            usage.pandacss = `fontWeight: '${token.key}'`;
             break;
-          case "radius":
-            usage.css = `border-radius: ${cssVariable};`;
-            usage.pandacss = `borderRadius: '${token.key}'`;
-            break;
-          case "elevation":
-            usage.css = `box-shadow: ${cssVariable};`;
-            usage.pandacss = `boxShadow: '${token.key}'`;
-            break;
-          case "opacity":
+          case "number":
+            // Number tokens are typically used for opacity or other numeric properties
             usage.css = `opacity: ${cssVariable};`;
             usage.pandacss = `opacity: '${token.key}'`;
+            break;
+          case "shadow":
+            // Shadow tokens have composite values
+            usage.css = `box-shadow: ${cssVariable};`;
+            usage.pandacss = `boxShadow: '${token.key}'`;
             break;
         }
 

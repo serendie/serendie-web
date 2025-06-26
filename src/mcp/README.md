@@ -93,6 +93,23 @@ The test client will:
 
 **Note**: The dev server must be running for the MCP tests to work!
 
+### Testing with Real Data
+
+The MCP server tests use real data from the `@serendie/design-token` package instead of mocks:
+
+- **Unit Tests** (`design-tokens.test.ts`) - Uses actual token data to test tool functionality
+- **Integration Tests** (`design-tokens.integration.test.ts`) - Comprehensive tests that validate:
+  - All token types match the actual data (color, dimension, fontFamily, fontWeight, number, shadow, typography)
+  - Filtering by type, category, and theme works correctly
+  - Schema validation handles real token structures properly
+  - Edge cases and data consistency
+
+Run tests:
+```bash
+npm test src/mcp/__tests__/tools/design-tokens.test.ts
+npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
+```
+
 ## Available MCP Tools
 
 1. **health-check**
@@ -147,7 +164,7 @@ The test client will:
 5. **get-design-tokens**
 
    - Parameters:
-     - `type`: string (optional) - Filter by token type (color, typography, dimension, elevation, radius, spacing, opacity)
+     - `type`: string (optional) - Filter by token type (color, dimension, fontFamily, fontWeight, number, shadow, typography)
      - `category`: string (optional) - Filter by category (reference, system)
      - `theme`: string (optional) - Filter by theme (asagi, konjo, kurikawa, sumire, tsutsuji)
      - `limit`: number (optional) - Maximum number of results to return

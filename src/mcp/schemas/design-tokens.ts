@@ -1,14 +1,15 @@
 import { z } from "zod";
 
 // Design token type enum
+// Based on actual types found in @serendie/design-token package
 export const TokenTypeSchema = z.enum([
   "color",
-  "typography",
   "dimension",
-  "elevation",
-  "radius",
-  "spacing",
-  "opacity",
+  "fontFamily",
+  "fontWeight",
+  "number",
+  "shadow",
+  "typography",
 ]);
 
 // Token category enum

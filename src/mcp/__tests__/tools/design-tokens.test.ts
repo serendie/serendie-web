@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   GetDesignTokensResponseSchema,
   GetDesignTokenDetailResponseSchema,
@@ -8,61 +8,14 @@ import {
   type GetDesignTokensResponse,
   type GetDesignTokenDetailResponse,
 } from "../../schemas/design-tokens";
-
-// Mock @serendie/design-token
-vi.mock("@serendie/design-token/token-list", () => ({
-  default: [
-    {
-      path: ["sd", "reference", "color", "scale", "gray", "100"],
-      key: "sd.reference.color.scale.gray.100",
-      type: "color",
-      value: "#F5F5F5",
-      originalValue: "#F5F5F5",
-    },
-    {
-      path: ["sd", "reference", "color", "scale", "blue", "500"],
-      key: "sd.reference.color.scale.blue.500",
-      type: "color",
-      value: "#0A69CF",
-      originalValue: "#0A69CF",
-    },
-    {
-      path: ["sd", "system", "color", "impression", "primaryContainer"],
-      key: "sd.system.color.impression.primaryContainer",
-      type: "color",
-      value: "#0A69CF",
-      originalValue: "{sd.reference.color.scale.blue.500}",
-    },
-    {
-      path: ["sd", "system", "color", "impression", "secondaryContainer"],
-      key: "sd.system.color.impression.secondaryContainer",
-      type: "color",
-      value: "#F5F5F5",
-      originalValue: "{sd.reference.color.scale.gray.100}",
-    },
-    {
-      path: ["sd", "reference", "typography", "scale", "expanded", "small"],
-      key: "sd.reference.typography.scale.expanded.small",
-      type: "typography",
-      value: { fontSize: "14px", lineHeight: "20px" },
-      originalValue: { fontSize: "14px", lineHeight: "20px" },
-    },
-    {
-      path: ["sd", "reference", "dimension", "scale", "8"],
-      key: "sd.reference.dimension.scale.8",
-      type: "dimension",
-      value: "8px",
-      originalValue: "8px",
-    },
-  ],
-}));
-
-// Import after mocking
 import {
   getDesignTokensTool,
   getDesignTokenDetailTool,
 } from "../../tools/design-tokens";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+// 実際のデータを使用
+import tokens from "@serendie/design-token/token-list";
 
 describe("Design Tokens Tools", () => {
   describe("get-design-tokens", () => {
@@ -73,9 +26,16 @@ describe("Design Tokens Tools", () => {
     beforeEach(() => {
       registeredTools = new Map();
       mcpServer = {
-        registerTool: vi.fn((name, _schema, handler) => {
-          registeredTools.set(name, handler);
-        }),
+        registerTool: vi.fn(
+          (
+            name: string,
+            _schema: unknown,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            handler: (args: any) => Promise<any>
+          ) => {
+            registeredTools.set(name, handler);
+          }
+        ),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any;
 
@@ -97,13 +57,24 @@ describe("Design Tokens Tools", () => {
 
       if (validation.success) {
         const validatedData = validation.data;
-        expect(validatedData.total).toBe(6); // Based on our mock data
+        expect(validatedData.total).toBe(tokens.length); // 実際のトークン数
         expect(validatedData.filtered).toBe(validatedData.total);
-        expect(validatedData.returned).toBe(6);
-        expect(validatedData.tokens).toHaveLength(6);
-        expect(validatedData.types).toContain("color");
-        expect(validatedData.types).toContain("typography");
-        expect(validatedData.types).toContain("dimension");
+        expect(validatedData.returned).toBe(tokens.length);
+        expect(validatedData.tokens).toHaveLength(tokens.length);
+
+        // 実際のトークンタイプを確認
+        const expectedTypes = [
+          "color",
+          "dimension",
+          "fontFamily",
+          "fontWeight",
+          "number",
+          "shadow",
+          "typography",
+        ];
+        expectedTypes.forEach((type) => {
+          expect(validatedData.types).toContain(type);
+        });
       }
     });
 
@@ -117,7 +88,8 @@ describe("Design Tokens Tools", () => {
 
       if (validation.success) {
         const validatedData = validation.data;
-        expect(validatedData.filtered).toBe(4); // We have 4 color tokens in mock
+        const expectedCount = tokens.filter((t) => t.type === "color").length;
+        expect(validatedData.filtered).toBe(expectedCount);
         validatedData.tokens.forEach((token) => {
           expect(token.type).toBe("color");
         });
@@ -134,7 +106,10 @@ describe("Design Tokens Tools", () => {
 
       if (validation.success) {
         const validatedData = validation.data;
-        expect(validatedData.filtered).toBe(4); // We have 4 reference tokens in mock
+        const expectedCount = tokens.filter((t) =>
+          t.key.includes("sd.reference")
+        ).length;
+        expect(validatedData.filtered).toBe(expectedCount);
         validatedData.tokens.forEach((token) => {
           expect(token.key).toContain("sd.reference");
           expect(token.category).toBe("reference");
@@ -143,7 +118,7 @@ describe("Design Tokens Tools", () => {
     });
 
     it("should respect limit parameter", async () => {
-      const limit = 3;
+      const limit = 10;
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ limit });
 
@@ -155,7 +130,7 @@ describe("Design Tokens Tools", () => {
         const validatedData = validation.data;
         expect(validatedData.returned).toBe(limit);
         expect(validatedData.tokens).toHaveLength(limit);
-        expect(validatedData.filtered).toBe(6); // Total filtered before limit
+        expect(validatedData.filtered).toBe(tokens.length); // Total filtered before limit
       }
     });
 
@@ -173,7 +148,14 @@ describe("Design Tokens Tools", () => {
 
       if (validation.success) {
         const validatedData = validation.data;
-        expect(validatedData.tokens).toHaveLength(2); // Two system color tokens
+        const expectedTokens = tokens.filter(
+          (t) =>
+            t.type === "color" &&
+            t.key.includes("sd.system") &&
+            !t.key.includes("themes")
+        );
+        expect(validatedData.returned).toBeLessThanOrEqual(5);
+        expect(validatedData.filtered).toBe(expectedTokens.length);
         validatedData.tokens.forEach((token) => {
           expect(token.type).toBe("color");
           expect(token.category).toBe("system");
@@ -190,9 +172,16 @@ describe("Design Tokens Tools", () => {
     beforeEach(() => {
       registeredTools = new Map();
       mcpServer = {
-        registerTool: vi.fn((name, _schema, handler) => {
-          registeredTools.set(name, handler);
-        }),
+        registerTool: vi.fn(
+          (
+            name: string,
+            _schema: unknown,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            handler: (args: any) => Promise<any>
+          ) => {
+            registeredTools.set(name, handler);
+          }
+        ),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any;
 
@@ -201,8 +190,14 @@ describe("Design Tokens Tools", () => {
 
     it("should return detailed information for existing token", async () => {
       const handler = registeredTools.get("get-design-token-detail");
+      // 実際のトークンから1つ選択
+      const sampleToken = tokens.find(
+        (t) => t.type === "color" && t.key.includes("reference")
+      );
+      expect(sampleToken).toBeDefined();
+
       const response = await handler!({
-        key: "sd.reference.color.scale.gray.100",
+        key: sampleToken!.key,
       });
 
       const data = JSON.parse(response.content[0].text);
@@ -212,23 +207,18 @@ describe("Design Tokens Tools", () => {
       if (validation.success) {
         const validatedData = validation.data;
         if (validatedData.exists) {
-          expect(validatedData.key).toBe("sd.reference.color.scale.gray.100");
+          expect(validatedData.key).toBe(sampleToken!.key);
           expect(validatedData.exists).toBe(true);
-          expect(validatedData.path).toEqual([
-            "sd",
-            "reference",
-            "color",
-            "scale",
-            "gray",
-            "100",
-          ]);
-          expect(validatedData.type).toBe("color");
-          expect(validatedData.value).toBe("#F5F5F5");
-          expect(validatedData.originalValue).toBe("#F5F5F5");
+          expect(validatedData.path).toEqual(sampleToken!.path);
+          expect(validatedData.type).toBe(sampleToken!.type);
+          expect(validatedData.value).toEqual(sampleToken!.value);
+          expect(validatedData.originalValue).toEqual(
+            sampleToken!.originalValue
+          );
           expect(validatedData.category).toBe("reference");
           expect(validatedData.theme).toBeNull();
           expect(validatedData.cssVariable).toBe(
-            "var(--sd-reference-color-scale-gray-100)"
+            `var(--${sampleToken!.key.replace(/\./g, "-")})`
           );
           expect(validatedData.usage.css).toContain("color:");
           expect(validatedData.usage.pandacss).toContain("color:");
@@ -256,24 +246,35 @@ describe("Design Tokens Tools", () => {
 
     it("should include reference information for system tokens", async () => {
       const handler = registeredTools.get("get-design-token-detail");
-      const response = await handler!({
-        key: "sd.system.color.impression.primaryContainer",
-      });
+      // リファレンスを持つシステムトークンを探す
+      const systemTokenWithRef = tokens.find(
+        (t) =>
+          t.key.includes("sd.system") &&
+          typeof t.originalValue === "string" &&
+          t.originalValue.startsWith("{") &&
+          t.originalValue.endsWith("}")
+      );
 
-      const data = JSON.parse(response.content[0].text);
-      const validation = GetDesignTokenDetailResponseSchema.safeParse(data);
-      expect(validation.success).toBe(true);
+      if (systemTokenWithRef) {
+        const response = await handler!({
+          key: systemTokenWithRef.key,
+        });
 
-      if (validation.success) {
-        const validatedData = validation.data;
-        if (validatedData.exists) {
-          expect(validatedData.category).toBe("system");
-          expect(validatedData.originalValue).toBe(
-            "{sd.reference.color.scale.blue.500}"
-          );
-          expect(validatedData.references).toBe(
-            "sd.reference.color.scale.blue.500"
-          );
+        const data = JSON.parse(response.content[0].text);
+        const validation = GetDesignTokenDetailResponseSchema.safeParse(data);
+        expect(validation.success).toBe(true);
+
+        if (validation.success) {
+          const validatedData = validation.data;
+          if (validatedData.exists) {
+            expect(validatedData.category).toBe("system");
+            expect(validatedData.originalValue).toBe(
+              systemTokenWithRef.originalValue
+            );
+            expect(validatedData.references).toBe(
+              (systemTokenWithRef.originalValue as string).slice(1, -1)
+            );
+          }
         }
       }
     });
