@@ -23,10 +23,6 @@ import {
  * const result = await tool.call({});
  *
  * @example
- * // "primary"を含むトークンを検索
- * const result = await tool.call({ search: "primary" });
- *
- * @example
  * // カラートークンのみを取得
  * const result = await tool.call({ type: "color" });
  *
@@ -58,17 +54,8 @@ export function getDesignTokensTool(mcpServer: McpServer) {
     {
       title: "Get Design Tokens List",
       description:
-        "Get a list of Serendie design tokens with optional filtering by search, type, category, or theme",
+        "Get a list of Serendie design tokens with optional filtering by type, category, or theme",
       inputSchema: {
-        /**
-         * トークン名でフィルタリングするための検索クエリ（オプション）
-         * 部分一致で検索され、大文字小文字は区別されません
-         * @example "primary", "gray", "spacing"
-         */
-        search: z
-          .string()
-          .optional()
-          .describe("Optional search query to filter tokens by key"),
         /**
          * トークンタイプでフィルタリング（オプション）
          * @example "color", "typography", "dimension"
@@ -98,7 +85,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
         theme: ThemeSchema.optional().describe("Filter tokens by theme"),
       },
     },
-    async ({ search, type, category, theme, limit }) => {
+    async ({ type, category, theme, limit }) => {
       try {
         // トークンをフィルタリング
         let filteredTokens = [...tokens];
@@ -128,14 +115,6 @@ export function getDesignTokensTool(mcpServer: McpServer) {
         if (theme) {
           filteredTokens = filteredTokens.filter((token) =>
             token.key.includes(`themes.${theme}`)
-          );
-        }
-
-        // 検索クエリでフィルタリング
-        if (search) {
-          const searchLower = search.toLowerCase();
-          filteredTokens = filteredTokens.filter((token) =>
-            token.key.toLowerCase().includes(searchLower)
           );
         }
 

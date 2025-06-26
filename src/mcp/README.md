@@ -147,7 +147,6 @@ The test client will:
 5. **get-design-tokens**
 
    - Parameters:
-     - `search`: string (optional) - Filter tokens by key (partial match, case-insensitive)
      - `type`: string (optional) - Filter by token type (color, typography, dimension, elevation, radius, spacing, opacity)
      - `category`: string (optional) - Filter by category (reference, system)
      - `theme`: string (optional) - Filter by theme (asagi, konjo, kurikawa, sumire, tsutsuji)

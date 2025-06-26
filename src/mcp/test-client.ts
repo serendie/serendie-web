@@ -200,7 +200,6 @@ async function testGetDesignTokens() {
     { description: "Color tokens", params: { type: "color" } },
     { description: "System tokens", params: { category: "system" } },
     { description: "Reference tokens", params: { category: "reference" } },
-    { description: "Search primary", params: { search: "primary" } },
     {
       description: "Color system tokens",
       params: { type: "color", category: "system", limit: 10 },

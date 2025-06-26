@@ -107,24 +107,6 @@ describe("Design Tokens Tools", () => {
       }
     });
 
-    it("should filter tokens by search query", async () => {
-      const handler = registeredTools.get("get-design-tokens");
-      const response = await handler!({ search: "primary" });
-
-      const data = JSON.parse(response.content[0].text);
-      const validation = GetDesignTokensResponseSchema.safeParse(data);
-      expect(validation.success).toBe(true);
-
-      if (validation.success) {
-        const validatedData = validation.data;
-        expect(validatedData.filtered).toBeLessThan(validatedData.total);
-        expect(validatedData.tokens).toHaveLength(1);
-        validatedData.tokens.forEach((token) => {
-          expect(token.key.toLowerCase()).toContain("primary");
-        });
-      }
-    });
-
     it("should filter tokens by type", async () => {
       const handler = registeredTools.get("get-design-tokens");
       const response = await handler!({ type: "color" });
@@ -182,7 +164,6 @@ describe("Design Tokens Tools", () => {
       const response = await handler!({
         type: "color",
         category: "system",
-        search: "impression",
         limit: 5,
       });
 
@@ -192,11 +173,10 @@ describe("Design Tokens Tools", () => {
 
       if (validation.success) {
         const validatedData = validation.data;
-        expect(validatedData.tokens).toHaveLength(2); // Two system color tokens with "impression"
+        expect(validatedData.tokens).toHaveLength(2); // Two system color tokens
         validatedData.tokens.forEach((token) => {
           expect(token.type).toBe("color");
           expect(token.category).toBe("system");
-          expect(token.key.toLowerCase()).toContain("impression");
         });
       }
     });
