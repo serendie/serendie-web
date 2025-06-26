@@ -7,6 +7,7 @@ import {
   type GetSymbolsResponse,
   type GetSymbolDetailResponse,
 } from "../schemas/symbols.js";
+import symbolKeywords from "../data/symbol-keywords.json";
 
 /**
  * Serendieデザインシステムのシンボル（アイコン）一覧を取得するMCPツール
@@ -44,14 +45,16 @@ export function getSymbolsTool(mcpServer: McpServer) {
         "Get a list of available Serendie symbol names with optional search filtering",
       inputSchema: {
         /**
-         * シンボル名でフィルタリングするための検索クエリ（オプション）
+         * シンボル名または関連キーワードでフィルタリングするための検索クエリ（オプション）
          * 部分一致で検索され、大文字小文字は区別されません
-         * @example "arrow", "alert", "zoom"
+         * @example "arrow", "alert", "zoom", "user", "ユーザー"
          */
         search: z
           .string()
           .optional()
-          .describe("Optional search query to filter symbols by name"),
+          .describe(
+            "Optional search query to filter symbols by name or related keywords"
+          ),
         /**
          * 返す結果の最大数（オプション）
          * 指定しない場合は全ての結果を返します
@@ -70,9 +73,24 @@ export function getSymbolsTool(mcpServer: McpServer) {
 
         if (search) {
           const searchLower = search.toLowerCase();
-          filteredSymbols = filteredSymbols.filter((name) =>
-            name.toLowerCase().includes(searchLower)
-          );
+
+          // シンボル名での検索と関連キーワードでの検索を組み合わせる
+          filteredSymbols = filteredSymbols.filter((name) => {
+            // シンボル名での部分一致
+            if (name.toLowerCase().includes(searchLower)) {
+              return true;
+            }
+
+            // 関連キーワードでの検索
+            const keywords = (symbolKeywords as Record<string, string[]>)[name];
+            if (keywords) {
+              return keywords.some((keyword) =>
+                keyword.toLowerCase().includes(searchLower)
+              );
+            }
+
+            return false;
+          });
         }
 
         // 結果数の制限を適用

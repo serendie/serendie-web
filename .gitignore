@@ -33,4 +33,4 @@ src/mcp/__tests__/outputs/
 
 .wrangler
 
-src/mcp/data
+src/mcp/data/components-manifest.json

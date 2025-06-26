@@ -124,12 +124,15 @@ The test client will:
 3. **get-symbols**
 
    - Parameters:
-     - `search`: string (optional) - Filter symbols by name
+     - `search`: string (optional) - Filter symbols by name or related keywords (supports Japanese/English)
      - `limit`: number (optional) - Maximum number of results to return
    - Returns list of available Serendie symbol names:
      - Total count and filtered count
      - Available variants (common to all symbols)
      - Array of symbol names
+   - **New Feature**: Supports related keyword search
+     - Example: Searching "user" or "ユーザー" finds icon_account_circle, icon_person, etc.
+     - Keywords are defined in `data/symbol-keywords.json`
 
 4. **get-symbol-detail**
 
