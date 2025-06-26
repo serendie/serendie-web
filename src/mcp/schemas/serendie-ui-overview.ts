@@ -42,6 +42,7 @@ const StylingApproachSchema = z.object({
   patterns: z.array(z.string()),
   tokens: z.string(),
   example: z.string(),
+  textStyles: z.string().optional(),
 });
 
 // 一般的なPropsパターンのスキーマ
@@ -99,6 +100,14 @@ const DesignTokenGuidelinesSchema = z.object({
       veryBad: z.string().optional(),
     }),
   }),
+  spacingMapping: z
+    .object({
+      overview: z.string(),
+      guideline: z.array(z.string()),
+      usage: z.string(),
+      examples: z.array(z.string()),
+    })
+    .optional(),
 });
 
 // Figma統合のスキーマ
@@ -107,6 +116,30 @@ const FigmaIntegrationSchema = z.object({
   figmaVariables: z.string(),
   codeConnect: z.string(),
   workflow: z.array(z.string()),
+});
+
+// コンポーネントのデフォルトスタイルのスキーマ
+const ComponentDefaultsSchema = z.object({
+  overview: z.string(),
+  components: z.record(
+    z.object({
+      defaults: z.array(z.string()),
+      override: z.string().optional(),
+    })
+  ),
+});
+
+// 実践的な使用例のスキーマ
+const PracticalExamplesSchema = z.object({
+  overview: z.string(),
+  examples: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      code: z.string(),
+      notes: z.array(z.string()).optional(),
+    })
+  ),
 });
 
 // 全体のレスポンススキーマ
@@ -132,6 +165,8 @@ export const SerendieUIOverviewResponseSchema = z.object({
   packageRelationships: PackageRelationshipsSchema,
   designTokenGuidelines: DesignTokenGuidelinesSchema,
   figmaIntegration: FigmaIntegrationSchema,
+  componentDefaults: ComponentDefaultsSchema.optional(),
+  practicalExamples: PracticalExamplesSchema.optional(),
 });
 
 export type SerendieUIOverviewResponse = z.infer<

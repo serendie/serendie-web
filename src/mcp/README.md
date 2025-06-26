@@ -129,14 +129,21 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Component categories
      - Import patterns for components and icons
      - Theme system
-     - Styling approach with PandaCSS
+     - Styling approach with PandaCSS (includes textStyle usage for typography tokens)
      - Development guidelines
      - Common patterns and best practices
      - Related resources
      - Initial setup instructions (includes warnings about NOT adding reset CSS)
      - Package relationships (how @serendie/ui, @serendie/design-token, and @serendie/symbols work together)
      - Design token guidelines (emphasizes using tokens for spacing, colors, etc.)
+       - **NEW**: Spacing token mapping table (px values to token names)
+       - Shows how to use system tokens instead of numeric values
      - Figma integration details (explains Figma Variables and Code Connect)
+     - **NEW**: Component defaults information (e.g., TextField/PasswordField maxWidth)
+     - **NEW**: Practical examples including:
+       - Login form implementation with proper layout
+       - Responsive card layout with Grid
+       - Best practices for forms and layouts
 
 3. **get-symbols**
 

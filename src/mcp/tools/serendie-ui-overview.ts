@@ -89,10 +89,12 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
           },
           stylingApproach: {
             method: "PandaCSS",
-            patterns: ["css()", "sva()"],
+            patterns: ["css()", "sva()", "textStyle"],
             tokens: "styled-system経由",
             example:
-              "css({ p: 4, color: 'sd.system.color.impression.primary' })",
+              "css({ p: 'sd.system.dimension.spacing.medium', color: 'sd.system.color.impression.primary' })",
+            textStyles:
+              "textStyle: 'sd.system.typography.headline.small_expanded' でtypographyトークンを適用",
           },
           developmentGuidelines: [
             "デザイントークン必須使用",
@@ -167,21 +169,38 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             priority: [
               "必ずシステムトークンを使用（sd.system.で始まるトークン）",
               "リファレンストークン（sd.reference.）の直接使用は禁止",
-              "スペーシング: p: 4, gap: 2 (px値禁止)",
+              "スペーシング: 必ずsd.system.dimension.spacing.*トークンを使用 (px値や数値の直接指定禁止)",
               "色: color: 'sd.system.color.impression.primary' (HEX禁止)",
             ],
             commonMistakes: [
-              "padding: '16px' → p: 4",
+              "padding: '16px' → p: 'sd.system.dimension.spacing.*' (適切なトークンを使用)",
               "color: '#333' → color: 'sd.system.color.component.onSurface'",
               "color: 'sd.reference.color.scale.gray.500' → color: 'sd.system.color.text.primary'",
+              "margin: 8 → m: 'sd.system.dimension.spacing.*' (適切なトークンを使用)",
             ],
             examples: {
               correct: {
-                good: "css({ p: 4, color: 'sd.system.color.component.onSurface' })",
+                good: "css({ p: 'sd.system.dimension.spacing.medium', color: 'sd.system.color.component.onSurface' })",
                 bad: "css({ padding: '16px', color: '#333' })",
                 veryBad:
                   "css({ color: 'sd.reference.color.scale.gray.500' }) // リファレンス直接使用NG",
               },
+            },
+            spacingMapping: {
+              overview:
+                "スペーシングにはsd.system.dimension.spacingトークンを使用",
+              guideline: [
+                "数値の直接指定は禁止（px値、数値など）",
+                "必ずsd.system.dimension.spacing.* トークンを使用",
+                "具体的なトークン一覧と値はget-design-tokensツールで確認",
+                "type: 'dimension', category: 'system'でフィルタ可能",
+              ],
+              usage: "p: 'sd.system.dimension.spacing.medium' // paddingの例",
+              examples: [
+                "gap: 'sd.system.dimension.spacing.large'",
+                "m: 'sd.system.dimension.spacing.extraSmall'",
+                "py: 'sd.system.dimension.spacing.small'",
+              ],
             },
           },
           figmaIntegration: {
@@ -189,6 +208,64 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             figmaVariables: "デザイントークン自動更新",
             codeConnect: "実装コード直接参照可能",
             workflow: [],
+          },
+          componentDefaults: {
+            overview: "コンポーネントのデフォルトスタイル情報",
+            components: {
+              TextField: {
+                defaults: ["maxWidthのデフォルト値が設定されている"],
+                override: "width: '100%' で制限を解除",
+              },
+              PasswordField: {
+                defaults: ["maxWidthのデフォルト値が設定されている"],
+                override: "width: '100%' で制限を解除",
+              },
+            },
+          },
+          practicalExamples: {
+            overview: "実践的なコンポーネントの組み合わせ例",
+            examples: [
+              {
+                title: "ログインフォームの実装",
+                description: "ユーザー名とパスワードの入力フォーム",
+                code: `<Stack gap="sd.system.dimension.spacing.large">
+  <TextField label="ユーザー名" width="100%" />
+  <PasswordField label="パスワード" width="100%" />
+  <Button width="100%" variant="solid" colorScheme="primary">
+    ログイン
+  </Button>
+</Stack>`,
+                notes: [
+                  "Stackで垂直方向のレイアウト",
+                  "width: '100%'でフィールドのmaxWidth制限を解除",
+                  "スペーシングはデザイントークンを使用",
+                ],
+              },
+              {
+                title: "レスポンシブカードレイアウト",
+                description: "Gridを使用したカードのグリッド表示",
+                code: `<Grid 
+  templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+  gap="sd.system.dimension.spacing.extraLarge"
+>
+  {items.map(item => (
+    <Card key={item.id} p="sd.system.dimension.spacing.large">
+      <Text textStyle="sd.system.typography.headline.small_expanded">
+        {item.title}
+      </Text>
+      <Text color="sd.system.color.text.secondary">
+        {item.description}
+      </Text>
+    </Card>
+  ))}
+</Grid>`,
+                notes: [
+                  "Gridでレスポンシブなカードレイアウト",
+                  "textStyleでtypographyトークンを適用",
+                  "スペーシングと色は必ずデザイントークンを使用",
+                ],
+              },
+            ],
           },
         };
 
