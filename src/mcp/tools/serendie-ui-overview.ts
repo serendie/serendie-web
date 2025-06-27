@@ -71,9 +71,8 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
           },
           importPatterns: {
             component: {
-              pattern:
-                "import { ComponentName } from '@serendie/ui/component-name'",
-              example: "import { Button } from '@serendie/ui/button'",
+              pattern: "import { ComponentName } from '@serendie/ui'",
+              example: "import { Button } from '@serendie/ui'",
               note: "PascalCase → kebab-case",
             },
             icons: {
@@ -124,6 +123,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             "@serendie/ui、@serendie/design-token、@serendie/symbols を使用",
             "Figma Variablesと自動同期",
             "詳細はMCPツールで確認",
+            "デザイントークン選択時は必ずget-design-tokensツールを活用して利用可能なトークンを確認",
           ],
           initialSetup: {
             overview: "最小限の設定で開始可能",
@@ -194,6 +194,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
                 "必ずsd.system.dimension.spacing.* トークンを使用",
                 "具体的なトークン一覧と値はget-design-tokensツールで確認",
                 "type: 'dimension', category: 'system'でフィルタ可能",
+                "MCPツールを活用例: get-design-tokens({ type: 'dimension', category: 'system' })",
               ],
               usage: "p: 'sd.system.dimension.spacing.medium' // paddingの例",
               examples: [
@@ -214,11 +215,11 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             components: {
               TextField: {
                 defaults: ["maxWidthのデフォルト値が設定されている"],
-                override: "width: '100%' で制限を解除",
+                override: "classNameにてwidth: '100%'指定で制限を解除",
               },
               PasswordField: {
                 defaults: ["maxWidthのデフォルト値が設定されている"],
-                override: "width: '100%' で制限を解除",
+                override: "classNameにてwidth: '100%'指定で制限を解除",
               },
             },
           },
