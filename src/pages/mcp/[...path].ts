@@ -8,7 +8,7 @@ import { createMcpServer } from "../../mcp/server";
 export const prerender = false;
 
 // Create a new Hono instance with base path
-const app = new Hono().basePath("/sse");
+const app = new Hono().basePath("/mcp");
 
 // Add CORS middleware (you can configure this as needed)
 app.use("*", cors());

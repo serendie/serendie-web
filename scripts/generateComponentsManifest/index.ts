@@ -4,6 +4,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as ts from "typescript";
 import * as reactDocgen from "react-docgen-typescript";
+import { getCategoryForComponent } from "../../src/mcp/data/component-categories.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -130,54 +131,7 @@ async function loadExamples(
 
 // コンポーネントのカテゴリを推測
 function guessCategory(componentName: string): string {
-  const categories: Record<string, string[]> = {
-    Actions: ["Button", "IconButton", "BottomNavigation"],
-    Inputs: [
-      "TextField",
-      "TextArea",
-      "CheckBox",
-      "RadioButton",
-      "RadioGroup",
-      "Select",
-      "Switch",
-      "Search",
-      "ChoiceBox",
-      "PasswordField",
-    ],
-    Layout: [
-      "Accordion",
-      "AccordionGroup",
-      "Tabs",
-      "TabItem",
-      "Divider",
-      "List",
-      "ListItem",
-      "TopAppBar",
-    ],
-    Display: [
-      "Avatar",
-      "Badge",
-      "NotificationBadge",
-      "DashboardWidget",
-      "ProgressIndicator",
-    ],
-    Feedback: [
-      "Banner",
-      "Toast",
-      "Drawer",
-      "ModalDialog",
-      "DropdownMenu",
-      "Pagination",
-    ],
-  };
-
-  for (const [category, components] of Object.entries(categories)) {
-    if (components.includes(componentName)) {
-      return category;
-    }
-  }
-
-  return "Other";
+  return getCategoryForComponent(componentName);
 }
 
 // react-docgen-typescriptの設定

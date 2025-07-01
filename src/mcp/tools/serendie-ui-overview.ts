@@ -3,6 +3,7 @@ import {
   SerendieUIOverviewResponseSchema,
   type SerendieUIOverviewResponse,
 } from "../schemas/serendie-ui-overview.js";
+import { getCategoryDescriptions } from "../data/component-categories.js";
 
 /**
  * @serendie/uiデザインシステムの前提知識を提供するMCPツール
@@ -61,14 +62,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
               "@serendie/symbols": "",
             },
           },
-          componentCategories: {
-            Actions: "ボタン、リンク等",
-            Inputs: "入力系",
-            Layout: "レイアウト系",
-            Display: "表示系",
-            Feedback: "フィードバック系",
-            Other: "その他",
-          },
+          componentCategories: getCategoryDescriptions(),
           importPatterns: {
             component: {
               pattern: "import { ComponentName } from '@serendie/ui'",

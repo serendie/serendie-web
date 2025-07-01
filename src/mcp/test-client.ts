@@ -29,7 +29,7 @@ interface MCPResponse {
 // Skip "--" argument if present
 const args = process.argv.slice(2).filter((arg) => arg !== "--");
 const PORT = args[0] || "4321";
-const MCP_URL = `http://localhost:${PORT}/sse`;
+const MCP_URL = `http://localhost:${PORT}/mcp`;
 
 // Output directory for test results
 const OUTPUT_DIR = path.join(process.cwd(), "src/mcp/__tests__/outputs");

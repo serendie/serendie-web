@@ -105,6 +105,7 @@ The MCP server tests use real data from the `@serendie/design-token` package ins
   - Edge cases and data consistency
 
 Run tests:
+
 ```bash
 npm test src/mcp/__tests__/tools/design-tokens.test.ts
 npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
@@ -244,6 +245,7 @@ Each tool returns a response in the following format:
 The `schemas/` directory contains Zod schema definitions for type safety and runtime validation:
 
 - **components.ts**: Defines schemas for component-related data structures including:
+
   - Props definitions
   - Component examples
   - Storybook URLs
@@ -470,20 +472,20 @@ inputSchema: {}, // Often no parameters needed
 
 ### API Endpoint
 
-The MCP server is exposed at `/sse` when the dev server is running. It uses HTTP streaming transport for communication with MCP clients.
+The MCP server is exposed at `/mcp` when the dev server is running. It uses HTTP streaming transport for communication with MCP clients.
 
 ## Integration
 
 To use this MCP server with an AI assistant:
 
-1. Configure your MCP client to connect to `http://localhost:4321/sse`
+1. Configure your MCP client to connect to `http://localhost:4321/mcp`
 2. The server will automatically be available when running `npm run dev`
 3. Use the available tools to interact with the Serendie documentation
 
 ## Debugging
 
 - Check `src/mcp/__tests__/outputs/` for actual API responses
-- Use the browser DevTools Network tab when accessing `/sse`
+- Use the browser DevTools Network tab when accessing `/mcp`
 - Enable debug logging in `src/mcp/server.ts` if needed
 - Unit tests use mocked file system operations
 - Manual tests use the actual file system and API

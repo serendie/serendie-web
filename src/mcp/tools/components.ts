@@ -8,6 +8,7 @@ import {
 } from "../schemas/components.js";
 // ビルド時に生成されるマニフェストを静的インポート
 import componentsManifest from "../data/components-manifest.json";
+import { getCategoryKeys } from "../data/component-categories.js";
 
 // コンポーネントマニフェストのインターフェース
 interface ComponentManifest {
@@ -104,8 +105,11 @@ export function getComponentsTool(mcpServer: McpServer) {
          * @example "Actions", "Inputs", "Layout"
          */
         category: z
-          .enum(["Actions", "Inputs", "Layout", "Display", "Feedback"])
+          .string()
           .optional()
+          .refine((val) => !val || getCategoryKeys().includes(val), {
+            message: `Invalid category. Must be one of: ${getCategoryKeys().join(", ")}`,
+          })
           .describe("Filter components by category"),
         /**
          * 返す結果の最大数（オプション）
@@ -149,10 +153,8 @@ export function getComponentsTool(mcpServer: McpServer) {
           filteredComponents = filteredComponents.slice(0, limit);
         }
 
-        // カテゴリ一覧を取得
-        const categories = [
-          ...new Set(components.map((c) => c.category)),
-        ].sort();
+        // カテゴリ一覧を取得（定義されたカテゴリを使用）
+        const categories = getCategoryKeys();
 
         // サマリー情報のみを返す
         const componentsSummary = filteredComponents.map((component) => ({
