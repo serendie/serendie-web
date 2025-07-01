@@ -9,6 +9,7 @@ import {
   type SymbolVariant,
 } from "@serendie/symbols";
 import { Menu } from "@ark-ui/react";
+import symbolKeywords from "@/mcp/data/symbol-keywords.json";
 
 const Container = styled("div", {
   base: {
@@ -88,7 +89,7 @@ export const IconPage: React.FC = () => {
           onInputValueChange={(e) => {
             setSearchText(e.inputValue.toLowerCase());
           }}
-          placeholder="アイコン名を入力..."
+          placeholder="アイコン名やキーワードを入力（例: user, ユーザー）"
         />
         <Switch
           label={"Filled"}
@@ -107,7 +108,22 @@ export const IconPage: React.FC = () => {
 
       <IconContainer>
         {symbolNames
-          .filter((icon) => icon.includes(searchText))
+          .filter((icon) => {
+            // シンボル名での検索
+            if (icon.includes(searchText)) {
+              return true;
+            }
+
+            // 関連キーワードでの検索
+            const keywords = (symbolKeywords as Record<string, string[]>)[icon];
+            if (keywords) {
+              return keywords.some((keyword) =>
+                keyword.toLowerCase().includes(searchText)
+              );
+            }
+
+            return false;
+          })
           .map((icon) => (
             <IconMenu key={icon} name={icon} variant={variant}>
               <IconBoxSvg>

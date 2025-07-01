@@ -26,3 +26,11 @@ public/storybook/
 ## Panda
 styled-system
 styled-system-studio
+
+## Test
+coverage/
+src/mcp/__tests__/outputs/
+
+.wrangler
+
+src/mcp/data/components-manifest.json

@@ -1,0 +1,1882 @@
+{
+  "activity": [
+    "activity",
+    "fitness",
+    "health",
+    "exercise",
+    "アクティビティ",
+    "活動",
+    "運動"
+  ],
+  "airplay": [
+    "airplay",
+    "cast",
+    "stream",
+    "display",
+    "エアプレイ",
+    "キャスト",
+    "配信"
+  ],
+  "alert-circle": [
+    "alert",
+    "warning",
+    "error",
+    "attention",
+    "アラート",
+    "警告",
+    "注意"
+  ],
+  "alert-octagon": [
+    "stop",
+    "danger",
+    "critical",
+    "halt",
+    "停止",
+    "危険",
+    "重大"
+  ],
+  "alert-triangle": [
+    "warning",
+    "caution",
+    "hazard",
+    "alert",
+    "警告",
+    "注意",
+    "危険"
+  ],
+  "align-center": [
+    "center",
+    "middle",
+    "align",
+    "format",
+    "中央",
+    "整列",
+    "フォーマット"
+  ],
+  "align-justify": [
+    "justify",
+    "align",
+    "format",
+    "text",
+    "両端揃え",
+    "整列",
+    "テキスト"
+  ],
+  "align-left": [
+    "left",
+    "align",
+    "format",
+    "text",
+    "左寄せ",
+    "整列",
+    "テキスト"
+  ],
+  "align-right": [
+    "right",
+    "align",
+    "format",
+    "text",
+    "右寄せ",
+    "整列",
+    "テキスト"
+  ],
+  "anchor": [
+    "anchor",
+    "link",
+    "bookmark",
+    "reference",
+    "アンカー",
+    "リンク",
+    "ブックマーク"
+  ],
+  "apps-circle": [
+    "apps",
+    "grid",
+    "menu",
+    "dashboard",
+    "アプリ",
+    "グリッド",
+    "メニュー"
+  ],
+  "apps-square": [
+    "apps",
+    "grid",
+    "menu",
+    "dashboard",
+    "アプリ",
+    "グリッド",
+    "メニュー"
+  ],
+  "archive": [
+    "archive",
+    "storage",
+    "backup",
+    "save",
+    "アーカイブ",
+    "保管",
+    "バックアップ"
+  ],
+  "arrow-down-circle": [
+    "down",
+    "download",
+    "arrow",
+    "circle",
+    "下",
+    "ダウンロード",
+    "矢印"
+  ],
+  "arrow-down-left": ["diagonal", "arrow", "southwest", "下左", "斜め", "矢印"],
+  "arrow-down-right": [
+    "diagonal",
+    "arrow",
+    "southeast",
+    "下右",
+    "斜め",
+    "矢印"
+  ],
+  "arrow-down": ["down", "arrow", "descend", "下", "矢印", "降順"],
+  "arrow-left-circle": [
+    "left",
+    "back",
+    "previous",
+    "circle",
+    "左",
+    "戻る",
+    "前へ"
+  ],
+  "arrow-left": ["left", "back", "previous", "return", "左", "戻る", "前へ"],
+  "arrow-right-circle": [
+    "right",
+    "next",
+    "forward",
+    "circle",
+    "右",
+    "次へ",
+    "進む"
+  ],
+  "arrow-right": ["right", "next", "forward", "proceed", "右", "次へ", "進む"],
+  "arrow-turn-down": [
+    "turn",
+    "down",
+    "enter",
+    "return",
+    "下向き",
+    "エンター",
+    "改行"
+  ],
+  "arrow-turn-left": [
+    "turn",
+    "left",
+    "undo",
+    "back",
+    "左向き",
+    "元に戻す",
+    "戻る"
+  ],
+  "arrow-turn-right": [
+    "turn",
+    "right",
+    "redo",
+    "forward",
+    "右向き",
+    "やり直し",
+    "進む"
+  ],
+  "arrow-turn-up": ["turn", "up", "level up", "上向き", "レベルアップ", "上昇"],
+  "arrow-up-circle": [
+    "up",
+    "upload",
+    "arrow",
+    "circle",
+    "上",
+    "アップロード",
+    "矢印"
+  ],
+  "arrow-up-left": ["diagonal", "arrow", "northwest", "上左", "斜め", "矢印"],
+  "arrow-up-right": ["diagonal", "arrow", "northeast", "上右", "斜め", "矢印"],
+  "arrow-up": ["up", "arrow", "ascend", "上", "矢印", "昇順"],
+  "article": [
+    "article",
+    "document",
+    "text",
+    "read",
+    "記事",
+    "文書",
+    "テキスト"
+  ],
+  "at-symbol": [
+    "at",
+    "email",
+    "address",
+    "mention",
+    "アット",
+    "メール",
+    "アドレス"
+  ],
+  "attachment": [
+    "attach",
+    "paperclip",
+    "file",
+    "link",
+    "添付",
+    "クリップ",
+    "ファイル"
+  ],
+  "award": ["award", "prize", "achievement", "medal", "賞", "表彰", "達成"],
+  "battery-charging": [
+    "battery",
+    "charging",
+    "power",
+    "energy",
+    "バッテリー",
+    "充電",
+    "電源"
+  ],
+  "battery": [
+    "battery",
+    "power",
+    "energy",
+    "charge",
+    "バッテリー",
+    "電源",
+    "電池"
+  ],
+  "bed": ["bed", "sleep", "rest", "hotel", "ベッド", "睡眠", "休憩"],
+  "bell-off": [
+    "bell",
+    "mute",
+    "silent",
+    "off",
+    "ベル",
+    "ミュート",
+    "サイレント"
+  ],
+  "bell": ["bell", "notification", "alert", "ring", "ベル", "通知", "アラート"],
+  "bicycle": [
+    "bicycle",
+    "bike",
+    "cycling",
+    "transport",
+    "自転車",
+    "バイク",
+    "サイクリング"
+  ],
+  "bike": [
+    "bike",
+    "bicycle",
+    "cycling",
+    "transport",
+    "バイク",
+    "自転車",
+    "サイクリング"
+  ],
+  "bluetooth": [
+    "bluetooth",
+    "wireless",
+    "connect",
+    "device",
+    "ブルートゥース",
+    "無線",
+    "接続"
+  ],
+  "bold": [
+    "bold",
+    "text",
+    "format",
+    "strong",
+    "太字",
+    "テキスト",
+    "フォーマット"
+  ],
+  "book-open": ["book", "read", "open", "study", "本", "読書", "開く"],
+  "book": ["book", "read", "library", "study", "本", "読書", "図書"],
+  "bookmark": [
+    "bookmark",
+    "save",
+    "favorite",
+    "mark",
+    "ブックマーク",
+    "保存",
+    "お気に入り"
+  ],
+  "briefcase": [
+    "briefcase",
+    "work",
+    "business",
+    "job",
+    "ブリーフケース",
+    "仕事",
+    "ビジネス"
+  ],
+  "bug": ["bug", "error", "issue", "debug", "バグ", "エラー", "問題"],
+  "bus": ["bus", "transport", "public", "travel", "バス", "交通", "公共"],
+  "calendar": [
+    "calendar",
+    "date",
+    "schedule",
+    "event",
+    "カレンダー",
+    "日付",
+    "スケジュール"
+  ],
+  "camera-off": [
+    "camera",
+    "off",
+    "disable",
+    "private",
+    "カメラ",
+    "オフ",
+    "無効"
+  ],
+  "camera": ["camera", "photo", "picture", "capture", "カメラ", "写真", "撮影"],
+  "car": ["car", "vehicle", "transport", "drive", "車", "乗り物", "運転"],
+  "cast": ["cast", "stream", "broadcast", "share", "キャスト", "配信", "共有"],
+  "chat-circle": [
+    "chat",
+    "message",
+    "talk",
+    "circle",
+    "チャット",
+    "メッセージ",
+    "会話"
+  ],
+  "chat-rectangle": [
+    "chat",
+    "message",
+    "talk",
+    "rectangle",
+    "チャット",
+    "メッセージ",
+    "会話"
+  ],
+  "check-circle": [
+    "check",
+    "done",
+    "complete",
+    "success",
+    "チェック",
+    "完了",
+    "成功"
+  ],
+  "check-shield": [
+    "check",
+    "security",
+    "protect",
+    "safe",
+    "チェック",
+    "セキュリティ",
+    "保護"
+  ],
+  "check-square": [
+    "check",
+    "checkbox",
+    "done",
+    "select",
+    "チェック",
+    "チェックボックス",
+    "選択"
+  ],
+  "check": ["check", "done", "complete", "tick", "チェック", "完了", "確認"],
+  "chevron-double-down": [
+    "chevron",
+    "down",
+    "expand",
+    "more",
+    "シェブロン",
+    "下",
+    "展開"
+  ],
+  "chevron-double-left": [
+    "chevron",
+    "left",
+    "rewind",
+    "back",
+    "シェブロン",
+    "左",
+    "巻き戻し"
+  ],
+  "chevron-double-right": [
+    "chevron",
+    "right",
+    "forward",
+    "next",
+    "シェブロン",
+    "右",
+    "早送り"
+  ],
+  "chevron-double-up": [
+    "chevron",
+    "up",
+    "collapse",
+    "less",
+    "シェブロン",
+    "上",
+    "折りたたみ"
+  ],
+  "chevron-down": [
+    "chevron",
+    "down",
+    "expand",
+    "arrow",
+    "シェブロン",
+    "下",
+    "展開"
+  ],
+  "chevron-left-right": [
+    "chevron",
+    "horizontal",
+    "resize",
+    "expand",
+    "シェブロン",
+    "水平",
+    "リサイズ"
+  ],
+  "chevron-left": [
+    "chevron",
+    "left",
+    "back",
+    "previous",
+    "シェブロン",
+    "左",
+    "戻る"
+  ],
+  "chevron-right": [
+    "chevron",
+    "right",
+    "next",
+    "forward",
+    "シェブロン",
+    "右",
+    "次へ"
+  ],
+  "chevron-up-down": [
+    "chevron",
+    "vertical",
+    "resize",
+    "expand",
+    "シェブロン",
+    "垂直",
+    "リサイズ"
+  ],
+  "chevron-up": [
+    "chevron",
+    "up",
+    "collapse",
+    "arrow",
+    "シェブロン",
+    "上",
+    "折りたたみ"
+  ],
+  "circle": ["circle", "shape", "round", "dot", "円", "形", "丸"],
+  "clipboard": [
+    "clipboard",
+    "copy",
+    "paste",
+    "board",
+    "クリップボード",
+    "コピー",
+    "貼り付け"
+  ],
+  "clock": [
+    "clock",
+    "time",
+    "schedule",
+    "watch",
+    "時計",
+    "時間",
+    "スケジュール"
+  ],
+  "close-circle": [
+    "close",
+    "cancel",
+    "circle",
+    "exit",
+    "閉じる",
+    "キャンセル",
+    "終了"
+  ],
+  "close-octagon": [
+    "close",
+    "stop",
+    "octagon",
+    "cancel",
+    "閉じる",
+    "停止",
+    "キャンセル"
+  ],
+  "close-square": [
+    "close",
+    "cancel",
+    "square",
+    "exit",
+    "閉じる",
+    "キャンセル",
+    "終了"
+  ],
+  "close": ["close", "cancel", "exit", "x", "閉じる", "キャンセル", "終了"],
+  "cloud-off": [
+    "cloud",
+    "offline",
+    "disconnect",
+    "off",
+    "クラウド",
+    "オフライン",
+    "切断"
+  ],
+  "cloud": [
+    "cloud",
+    "storage",
+    "online",
+    "sync",
+    "クラウド",
+    "ストレージ",
+    "オンライン"
+  ],
+  "coffee": ["coffee", "drink", "break", "cafe", "コーヒー", "飲み物", "休憩"],
+  "collapse-diagonal-alt": [
+    "collapse",
+    "diagonal",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "斜め",
+    "最小化"
+  ],
+  "collapse-diagonal": [
+    "collapse",
+    "diagonal",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "斜め",
+    "最小化"
+  ],
+  "collapse-horizontal": [
+    "collapse",
+    "horizontal",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "水平",
+    "最小化"
+  ],
+  "collapse-left": [
+    "collapse",
+    "left",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "左",
+    "最小化"
+  ],
+  "collapse-right": [
+    "collapse",
+    "right",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "右",
+    "最小化"
+  ],
+  "collapse-vertical": [
+    "collapse",
+    "vertical",
+    "minimize",
+    "shrink",
+    "折りたたみ",
+    "垂直",
+    "最小化"
+  ],
+  "command": ["command", "cmd", "control", "key", "コマンド", "制御", "キー"],
+  "compass": [
+    "compass",
+    "navigation",
+    "direction",
+    "explore",
+    "コンパス",
+    "ナビゲーション",
+    "方向"
+  ],
+  "compose": ["compose", "write", "create", "edit", "作成", "書く", "編集"],
+  "contract-left-right": [
+    "contract",
+    "horizontal",
+    "shrink",
+    "narrow",
+    "収縮",
+    "水平",
+    "狭める"
+  ],
+  "contract-up-down": [
+    "contract",
+    "vertical",
+    "shrink",
+    "narrow",
+    "収縮",
+    "垂直",
+    "狭める"
+  ],
+  "copy": ["copy", "duplicate", "clone", "paste", "コピー", "複製", "貼り付け"],
+  "corner-down-left": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-down-right": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-left-down": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-left-up": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-right-down": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-right-up": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-up-left": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "corner-up-right": [
+    "corner",
+    "arrow",
+    "turn",
+    "navigate",
+    "コーナー",
+    "矢印",
+    "曲がる"
+  ],
+  "cpu": [
+    "cpu",
+    "processor",
+    "chip",
+    "hardware",
+    "CPU",
+    "プロセッサ",
+    "チップ"
+  ],
+  "credit-card": [
+    "credit",
+    "card",
+    "payment",
+    "finance",
+    "クレジットカード",
+    "支払い",
+    "決済"
+  ],
+  "crop": [
+    "crop",
+    "trim",
+    "cut",
+    "resize",
+    "クロップ",
+    "トリミング",
+    "切り取り"
+  ],
+  "cube": ["cube", "3d", "box", "shape", "キューブ", "立方体", "箱"],
+  "cursor": [
+    "cursor",
+    "pointer",
+    "mouse",
+    "select",
+    "カーソル",
+    "ポインター",
+    "マウス"
+  ],
+  "cycling": [
+    "cycling",
+    "bike",
+    "sport",
+    "exercise",
+    "サイクリング",
+    "自転車",
+    "スポーツ"
+  ],
+  "data": [
+    "data",
+    "database",
+    "storage",
+    "information",
+    "データ",
+    "データベース",
+    "情報"
+  ],
+  "delete": ["delete", "remove", "trash", "erase", "削除", "除去", "消去"],
+  "disc": ["disc", "cd", "dvd", "media", "ディスク", "CD", "メディア"],
+  "divide": ["divide", "split", "separate", "math", "分割", "分ける", "数学"],
+  "dollar-sign": [
+    "dollar",
+    "money",
+    "currency",
+    "price",
+    "ドル",
+    "お金",
+    "通貨"
+  ],
+  "download-cloud": [
+    "download",
+    "cloud",
+    "save",
+    "get",
+    "ダウンロード",
+    "クラウド",
+    "保存"
+  ],
+  "download": [
+    "download",
+    "save",
+    "get",
+    "arrow",
+    "ダウンロード",
+    "保存",
+    "取得"
+  ],
+  "drag-move": [
+    "drag",
+    "move",
+    "reorder",
+    "handle",
+    "ドラッグ",
+    "移動",
+    "並び替え"
+  ],
+  "edit": ["edit", "pencil", "write", "modify", "編集", "鉛筆", "書く"],
+  "eject": ["eject", "remove", "extract", "out", "取り出し", "削除", "排出"],
+  "expand-diagonal-alt": [
+    "expand",
+    "diagonal",
+    "maximize",
+    "fullscreen",
+    "拡大",
+    "斜め",
+    "最大化"
+  ],
+  "expand-diagonal-linked-alt": [
+    "expand",
+    "diagonal",
+    "linked",
+    "maximize",
+    "拡大",
+    "斜め",
+    "リンク"
+  ],
+  "expand-diagonal-linked": [
+    "expand",
+    "diagonal",
+    "linked",
+    "maximize",
+    "拡大",
+    "斜め",
+    "リンク"
+  ],
+  "expand-diagonal": [
+    "expand",
+    "diagonal",
+    "maximize",
+    "fullscreen",
+    "拡大",
+    "斜め",
+    "最大化"
+  ],
+  "expand-horizontal-linked": [
+    "expand",
+    "horizontal",
+    "linked",
+    "resize",
+    "拡大",
+    "水平",
+    "リンク"
+  ],
+  "expand-horizontal": [
+    "expand",
+    "horizontal",
+    "resize",
+    "widen",
+    "拡大",
+    "水平",
+    "リサイズ"
+  ],
+  "expand-left": [
+    "expand",
+    "left",
+    "resize",
+    "widen",
+    "拡大",
+    "左",
+    "リサイズ"
+  ],
+  "expand-right": [
+    "expand",
+    "right",
+    "resize",
+    "widen",
+    "拡大",
+    "右",
+    "リサイズ"
+  ],
+  "expand-vertical-linked": [
+    "expand",
+    "vertical",
+    "linked",
+    "resize",
+    "拡大",
+    "垂直",
+    "リンク"
+  ],
+  "expand-vertical": [
+    "expand",
+    "vertical",
+    "resize",
+    "height",
+    "拡大",
+    "垂直",
+    "リサイズ"
+  ],
+  "external-link": [
+    "external",
+    "link",
+    "open",
+    "new",
+    "外部リンク",
+    "開く",
+    "新規"
+  ],
+  "eye-hidden": ["eye", "hidden", "invisible", "hide", "目", "非表示", "隠す"],
+  "eye": ["eye", "view", "visible", "show", "目", "表示", "見る"],
+  "file-add": ["file", "add", "new", "create", "ファイル", "追加", "新規"],
+  "file-download": [
+    "file",
+    "download",
+    "save",
+    "get",
+    "ファイル",
+    "ダウンロード",
+    "保存"
+  ],
+  "file-text": [
+    "file",
+    "text",
+    "document",
+    "page",
+    "ファイル",
+    "テキスト",
+    "文書"
+  ],
+  "file-upload": [
+    "file",
+    "upload",
+    "send",
+    "share",
+    "ファイル",
+    "アップロード",
+    "送信"
+  ],
+  "file": ["file", "document", "page", "paper", "ファイル", "文書", "ページ"],
+  "film": ["film", "movie", "video", "cinema", "フィルム", "映画", "動画"],
+  "filter": [
+    "filter",
+    "funnel",
+    "sort",
+    "refine",
+    "フィルター",
+    "絞り込み",
+    "ソート"
+  ],
+  "flag": ["flag", "mark", "report", "country", "フラグ", "マーク", "報告"],
+  "folder-add": ["folder", "add", "new", "create", "フォルダ", "追加", "新規"],
+  "folder": [
+    "folder",
+    "directory",
+    "files",
+    "organize",
+    "フォルダ",
+    "ディレクトリ",
+    "ファイル"
+  ],
+  "forward-10": [
+    "forward",
+    "skip",
+    "10",
+    "seconds",
+    "早送り",
+    "スキップ",
+    "10秒"
+  ],
+  "forward-15": [
+    "forward",
+    "skip",
+    "15",
+    "seconds",
+    "早送り",
+    "スキップ",
+    "15秒"
+  ],
+  "forward-5": ["forward", "skip", "5", "seconds", "早送り", "スキップ", "5秒"],
+  "forward-end": ["forward", "end", "last", "finish", "最後", "終了", "エンド"],
+  "forward": [
+    "forward",
+    "skip",
+    "next",
+    "advance",
+    "早送り",
+    "スキップ",
+    "次へ"
+  ],
+  "frown": ["frown", "sad", "unhappy", "emotion", "悲しい", "不満", "感情"],
+  "funnel": [
+    "funnel",
+    "filter",
+    "sort",
+    "narrow",
+    "じょうご",
+    "フィルター",
+    "絞り込み"
+  ],
+  "gear": [
+    "gear",
+    "settings",
+    "config",
+    "options",
+    "歯車",
+    "設定",
+    "オプション"
+  ],
+  "gift": [
+    "gift",
+    "present",
+    "box",
+    "surprise",
+    "ギフト",
+    "プレゼント",
+    "贈り物"
+  ],
+  "globe": ["globe", "world", "earth", "international", "地球", "世界", "国際"],
+  "group": [
+    "group",
+    "people",
+    "team",
+    "users",
+    "グループ",
+    "チーム",
+    "ユーザー"
+  ],
+  "hard-drive": [
+    "drive",
+    "storage",
+    "disk",
+    "memory",
+    "ドライブ",
+    "ストレージ",
+    "ディスク"
+  ],
+  "hash": ["hash", "hashtag", "tag", "number", "ハッシュ", "タグ", "番号"],
+  "headphone": [
+    "headphone",
+    "audio",
+    "music",
+    "listen",
+    "ヘッドフォン",
+    "オーディオ",
+    "音楽"
+  ],
+  "heart": ["heart", "love", "like", "favorite", "ハート", "愛", "お気に入り"],
+  "hexagon": ["hexagon", "shape", "polygon", "six", "六角形", "形", "多角形"],
+  "history": ["history", "time", "past", "clock", "履歴", "過去", "時間"],
+  "home": ["home", "house", "main", "dashboard", "ホーム", "家", "メイン"],
+  "image": [
+    "image",
+    "photo",
+    "picture",
+    "gallery",
+    "画像",
+    "写真",
+    "ギャラリー"
+  ],
+  "inbox": [
+    "inbox",
+    "mail",
+    "message",
+    "receive",
+    "受信箱",
+    "メール",
+    "メッセージ"
+  ],
+  "information": [
+    "info",
+    "information",
+    "help",
+    "about",
+    "情報",
+    "ヘルプ",
+    "について"
+  ],
+  "italic": [
+    "italic",
+    "text",
+    "format",
+    "style",
+    "斜体",
+    "テキスト",
+    "フォーマット"
+  ],
+  "key": [
+    "key",
+    "password",
+    "security",
+    "unlock",
+    "鍵",
+    "パスワード",
+    "セキュリティ"
+  ],
+  "laptop": [
+    "laptop",
+    "computer",
+    "device",
+    "notebook",
+    "ラップトップ",
+    "コンピューター",
+    "ノートPC"
+  ],
+  "layer": ["layer", "stack", "level", "depth", "レイヤー", "層", "レベル"],
+  "layout-alt": [
+    "layout",
+    "grid",
+    "arrange",
+    "design",
+    "レイアウト",
+    "グリッド",
+    "配置"
+  ],
+  "layout-bottom": [
+    "layout",
+    "bottom",
+    "footer",
+    "dock",
+    "レイアウト",
+    "下部",
+    "フッター"
+  ],
+  "layout-column": [
+    "layout",
+    "column",
+    "vertical",
+    "stack",
+    "レイアウト",
+    "列",
+    "縦"
+  ],
+  "layout-grid-alt": [
+    "layout",
+    "grid",
+    "tiles",
+    "matrix",
+    "レイアウト",
+    "グリッド",
+    "タイル"
+  ],
+  "layout-grid": [
+    "layout",
+    "grid",
+    "tiles",
+    "matrix",
+    "レイアウト",
+    "グリッド",
+    "タイル"
+  ],
+  "layout-left": [
+    "layout",
+    "left",
+    "sidebar",
+    "panel",
+    "レイアウト",
+    "左",
+    "サイドバー"
+  ],
+  "layout-right": [
+    "layout",
+    "right",
+    "sidebar",
+    "panel",
+    "レイアウト",
+    "右",
+    "サイドバー"
+  ],
+  "layout-row": [
+    "layout",
+    "row",
+    "horizontal",
+    "inline",
+    "レイアウト",
+    "行",
+    "横"
+  ],
+  "layout-sidebar-alt": [
+    "layout",
+    "sidebar",
+    "panel",
+    "aside",
+    "レイアウト",
+    "サイドバー",
+    "パネル"
+  ],
+  "layout-sidebar": [
+    "layout",
+    "sidebar",
+    "panel",
+    "aside",
+    "レイアウト",
+    "サイドバー",
+    "パネル"
+  ],
+  "layout-top": [
+    "layout",
+    "top",
+    "header",
+    "navbar",
+    "レイアウト",
+    "上部",
+    "ヘッダー"
+  ],
+  "layout": [
+    "layout",
+    "template",
+    "design",
+    "structure",
+    "レイアウト",
+    "テンプレート",
+    "デザイン"
+  ],
+  "life-buoy": [
+    "life",
+    "buoy",
+    "help",
+    "support",
+    "救命浮環",
+    "ヘルプ",
+    "サポート"
+  ],
+  "lightning": [
+    "lightning",
+    "bolt",
+    "electric",
+    "fast",
+    "稲妻",
+    "電気",
+    "高速"
+  ],
+  "link": ["link", "chain", "connect", "url", "リンク", "接続", "URL"],
+  "list-bullet": [
+    "list",
+    "bullet",
+    "unordered",
+    "items",
+    "リスト",
+    "箇条書き",
+    "項目"
+  ],
+  "list-dash": ["list", "dash", "items", "todo", "リスト", "ダッシュ", "項目"],
+  "list-number": [
+    "list",
+    "number",
+    "ordered",
+    "steps",
+    "リスト",
+    "番号",
+    "順序"
+  ],
+  "loader": [
+    "loader",
+    "loading",
+    "spinner",
+    "wait",
+    "ローダー",
+    "読み込み",
+    "待機"
+  ],
+  "lock-unlocked": [
+    "lock",
+    "unlocked",
+    "open",
+    "access",
+    "ロック",
+    "解除",
+    "開く"
+  ],
+  "lock": [
+    "lock",
+    "secure",
+    "private",
+    "password",
+    "ロック",
+    "セキュア",
+    "プライベート"
+  ],
+  "login": [
+    "login",
+    "signin",
+    "enter",
+    "access",
+    "ログイン",
+    "サインイン",
+    "入る"
+  ],
+  "logout": [
+    "logout",
+    "signout",
+    "exit",
+    "leave",
+    "ログアウト",
+    "サインアウト",
+    "退出"
+  ],
+  "magnifying-glass": [
+    "search",
+    "magnify",
+    "find",
+    "zoom",
+    "虫眼鏡",
+    "検索",
+    "探す"
+  ],
+  "mail": [
+    "mail",
+    "email",
+    "message",
+    "envelope",
+    "メール",
+    "メッセージ",
+    "封筒"
+  ],
+  "map": [
+    "map",
+    "location",
+    "navigation",
+    "gps",
+    "地図",
+    "場所",
+    "ナビゲーション"
+  ],
+  "maximize": [
+    "maximize",
+    "fullscreen",
+    "expand",
+    "enlarge",
+    "最大化",
+    "フルスクリーン",
+    "拡大"
+  ],
+  "media": [
+    "media",
+    "video",
+    "audio",
+    "multimedia",
+    "メディア",
+    "動画",
+    "音声"
+  ],
+  "menu": [
+    "menu",
+    "hamburger",
+    "navigation",
+    "options",
+    "メニュー",
+    "ハンバーガー",
+    "ナビゲーション"
+  ],
+  "mic-muted": [
+    "mic",
+    "muted",
+    "microphone",
+    "off",
+    "マイク",
+    "ミュート",
+    "オフ"
+  ],
+  "mic": [
+    "mic",
+    "microphone",
+    "audio",
+    "record",
+    "マイク",
+    "マイクロフォン",
+    "録音"
+  ],
+  "minimize": [
+    "minimize",
+    "reduce",
+    "shrink",
+    "small",
+    "最小化",
+    "縮小",
+    "小さく"
+  ],
+  "minus-square": [
+    "minus",
+    "square",
+    "remove",
+    "subtract",
+    "マイナス",
+    "四角",
+    "削除"
+  ],
+  "minus": [
+    "minus",
+    "subtract",
+    "remove",
+    "decrease",
+    "マイナス",
+    "引く",
+    "削除"
+  ],
+  "monitor": [
+    "monitor",
+    "screen",
+    "display",
+    "desktop",
+    "モニター",
+    "画面",
+    "ディスプレイ"
+  ],
+  "moon": ["moon", "night", "dark", "theme", "月", "夜", "ダーク"],
+  "more-horizontal": [
+    "more",
+    "ellipsis",
+    "options",
+    "menu",
+    "その他",
+    "省略",
+    "オプション"
+  ],
+  "more-vertical": [
+    "more",
+    "ellipsis",
+    "options",
+    "menu",
+    "その他",
+    "省略",
+    "オプション"
+  ],
+  "music-alt": ["music", "audio", "sound", "note", "音楽", "オーディオ", "音"],
+  "music": ["music", "audio", "sound", "note", "音楽", "オーディオ", "音"],
+  "navigation": [
+    "navigation",
+    "compass",
+    "direction",
+    "gps",
+    "ナビゲーション",
+    "方向",
+    "GPS"
+  ],
+  "octagon": ["octagon", "stop", "shape", "eight", "八角形", "停止", "形"],
+  "package": [
+    "package",
+    "box",
+    "delivery",
+    "parcel",
+    "パッケージ",
+    "箱",
+    "配送"
+  ],
+  "pause-circle": [
+    "pause",
+    "circle",
+    "stop",
+    "break",
+    "一時停止",
+    "円",
+    "休止"
+  ],
+  "pause": ["pause", "stop", "break", "hold", "一時停止", "停止", "休止"],
+  "pen": ["pen", "write", "draw", "ink", "ペン", "書く", "描く"],
+  "pencil": ["pencil", "write", "edit", "draw", "鉛筆", "書く", "編集"],
+  "percent": [
+    "percent",
+    "percentage",
+    "discount",
+    "rate",
+    "パーセント",
+    "割合",
+    "割引"
+  ],
+  "phone-off": ["phone", "off", "mute", "silent", "電話", "オフ", "サイレント"],
+  "phone": ["phone", "call", "telephone", "contact", "電話", "通話", "連絡"],
+  "pie-chart": [
+    "pie",
+    "chart",
+    "graph",
+    "statistics",
+    "円グラフ",
+    "チャート",
+    "統計"
+  ],
+  "pin": ["pin", "location", "map", "marker", "ピン", "場所", "マーカー"],
+  "placeholder": [
+    "placeholder",
+    "empty",
+    "template",
+    "blank",
+    "プレースホルダー",
+    "空",
+    "テンプレート"
+  ],
+  "plane": [
+    "plane",
+    "airplane",
+    "flight",
+    "travel",
+    "飛行機",
+    "フライト",
+    "旅行"
+  ],
+  "play-circle": ["play", "circle", "start", "video", "再生", "円", "開始"],
+  "play": ["play", "start", "video", "music", "再生", "開始", "動画"],
+  "plus-square": ["plus", "square", "add", "new", "プラス", "四角", "追加"],
+  "plus": ["plus", "add", "new", "create", "プラス", "追加", "新規"],
+  "printer": [
+    "printer",
+    "print",
+    "paper",
+    "document",
+    "プリンター",
+    "印刷",
+    "用紙"
+  ],
+  "question": [
+    "question",
+    "help",
+    "support",
+    "ask",
+    "質問",
+    "ヘルプ",
+    "サポート"
+  ],
+  "radio": ["radio", "broadcast", "audio", "signal", "ラジオ", "放送", "音声"],
+  "record-circle": ["record", "circle", "capture", "red", "録画", "円", "記録"],
+  "refresh": [
+    "refresh",
+    "reload",
+    "sync",
+    "update",
+    "更新",
+    "リロード",
+    "同期"
+  ],
+  "repeat": ["repeat", "loop", "replay", "again", "繰り返し", "ループ", "再生"],
+  "rewind-10": ["rewind", "back", "10", "seconds", "巻き戻し", "戻る", "10秒"],
+  "rewind-15": ["rewind", "back", "15", "seconds", "巻き戻し", "戻る", "15秒"],
+  "rewind-5": ["rewind", "back", "5", "seconds", "巻き戻し", "戻る", "5秒"],
+  "rewind-start": [
+    "rewind",
+    "start",
+    "beginning",
+    "first",
+    "最初",
+    "開始",
+    "冒頭"
+  ],
+  "rewind": [
+    "rewind",
+    "back",
+    "previous",
+    "reverse",
+    "巻き戻し",
+    "戻る",
+    "前へ"
+  ],
+  "rss": ["rss", "feed", "subscribe", "news", "RSS", "フィード", "購読"],
+  "run": ["run", "play", "execute", "start", "実行", "再生", "開始"],
+  "sailboat": ["sailboat", "boat", "ship", "marine", "ヨット", "船", "海洋"],
+  "save": ["save", "disk", "store", "keep", "保存", "ディスク", "記録"],
+  "seal": ["seal", "stamp", "approve", "official", "印鑑", "スタンプ", "承認"],
+  "send": ["send", "share", "deliver", "mail", "送信", "共有", "配信"],
+  "server": [
+    "server",
+    "database",
+    "host",
+    "backend",
+    "サーバー",
+    "データベース",
+    "ホスト"
+  ],
+  "share-alt": [
+    "share",
+    "social",
+    "network",
+    "connect",
+    "共有",
+    "ソーシャル",
+    "ネットワーク"
+  ],
+  "share": ["share", "send", "social", "distribute", "共有", "送信", "配信"],
+  "shield-off": [
+    "shield",
+    "off",
+    "unprotected",
+    "vulnerable",
+    "シールド",
+    "オフ",
+    "無防備"
+  ],
+  "shield": [
+    "shield",
+    "protect",
+    "security",
+    "safe",
+    "シールド",
+    "保護",
+    "セキュリティ"
+  ],
+  "ship": ["ship", "boat", "vessel", "marine", "船", "船舶", "海洋"],
+  "shopping-bag": [
+    "shopping",
+    "bag",
+    "buy",
+    "store",
+    "買い物袋",
+    "購入",
+    "ストア"
+  ],
+  "shopping-cart": [
+    "shopping",
+    "cart",
+    "buy",
+    "ecommerce",
+    "ショッピングカート",
+    "購入",
+    "Eコマース"
+  ],
+  "shuffle": [
+    "shuffle",
+    "random",
+    "mix",
+    "reorder",
+    "シャッフル",
+    "ランダム",
+    "混ぜる"
+  ],
+  "skip-back": [
+    "skip",
+    "back",
+    "previous",
+    "rewind",
+    "スキップ",
+    "戻る",
+    "前へ"
+  ],
+  "skip-down": ["skip", "down", "next", "forward", "スキップ", "下", "次へ"],
+  "skip-forward": [
+    "skip",
+    "forward",
+    "next",
+    "advance",
+    "スキップ",
+    "進む",
+    "次へ"
+  ],
+  "skip-left": ["skip", "left", "previous", "back", "スキップ", "左", "前へ"],
+  "skip-right": ["skip", "right", "next", "forward", "スキップ", "右", "次へ"],
+  "skip-up": ["skip", "up", "previous", "back", "スキップ", "上", "前へ"],
+  "slash": [
+    "slash",
+    "divide",
+    "separate",
+    "split",
+    "スラッシュ",
+    "分割",
+    "区切り"
+  ],
+  "slider-horizontal": [
+    "slider",
+    "horizontal",
+    "adjust",
+    "control",
+    "スライダー",
+    "水平",
+    "調整"
+  ],
+  "slider-vertical": [
+    "slider",
+    "vertical",
+    "adjust",
+    "control",
+    "スライダー",
+    "垂直",
+    "調整"
+  ],
+  "smartphone": [
+    "smartphone",
+    "mobile",
+    "phone",
+    "device",
+    "スマートフォン",
+    "携帯",
+    "デバイス"
+  ],
+  "smile": ["smile", "happy", "emotion", "face", "笑顔", "幸せ", "感情"],
+  "speaker": [
+    "speaker",
+    "audio",
+    "sound",
+    "volume",
+    "スピーカー",
+    "音声",
+    "音量"
+  ],
+  "square": ["square", "shape", "box", "rectangle", "四角", "形", "ボックス"],
+  "star": [
+    "star",
+    "favorite",
+    "bookmark",
+    "rating",
+    "星",
+    "お気に入り",
+    "評価"
+  ],
+  "sticky-note": [
+    "sticky",
+    "note",
+    "memo",
+    "reminder",
+    "付箋",
+    "メモ",
+    "リマインダー"
+  ],
+  "stop-circle": ["stop", "circle", "end", "finish", "停止", "円", "終了"],
+  "stop": ["stop", "end", "finish", "halt", "停止", "終了", "中止"],
+  "sun": ["sun", "light", "day", "bright", "太陽", "光", "明るい"],
+  "tablet": [
+    "tablet",
+    "ipad",
+    "device",
+    "touchscreen",
+    "タブレット",
+    "デバイス",
+    "タッチスクリーン"
+  ],
+  "tag": ["tag", "label", "category", "mark", "タグ", "ラベル", "カテゴリー"],
+  "target": ["target", "aim", "goal", "bullseye", "ターゲット", "目標", "的"],
+  "taxi": ["taxi", "cab", "transport", "vehicle", "タクシー", "キャブ", "交通"],
+  "terminal": [
+    "terminal",
+    "console",
+    "command",
+    "code",
+    "ターミナル",
+    "コンソール",
+    "コマンド"
+  ],
+  "thumb-down": ["thumb", "down", "dislike", "bad", "親指", "下", "いまいち"],
+  "thumb-up": ["thumb", "up", "like", "good", "親指", "上", "いいね"],
+  "tool": ["tool", "wrench", "settings", "repair", "ツール", "レンチ", "設定"],
+  "train": ["train", "railway", "transport", "metro", "電車", "鉄道", "交通"],
+  "trash": ["trash", "delete", "bin", "remove", "ゴミ箱", "削除", "消去"],
+  "trending-down": [
+    "trend",
+    "down",
+    "decrease",
+    "chart",
+    "下降",
+    "減少",
+    "チャート"
+  ],
+  "trending-up": [
+    "trend",
+    "up",
+    "increase",
+    "chart",
+    "上昇",
+    "増加",
+    "チャート"
+  ],
+  "triangle": ["triangle", "shape", "delta", "three", "三角", "形", "デルタ"],
+  "truck": [
+    "truck",
+    "delivery",
+    "transport",
+    "vehicle",
+    "トラック",
+    "配送",
+    "輸送"
+  ],
+  "tv": ["tv", "television", "monitor", "screen", "テレビ", "モニター", "画面"],
+  "type": [
+    "type",
+    "text",
+    "font",
+    "typography",
+    "タイプ",
+    "テキスト",
+    "フォント"
+  ],
+  "umbrella": ["umbrella", "rain", "weather", "protect", "傘", "雨", "天気"],
+  "underline": [
+    "underline",
+    "text",
+    "format",
+    "style",
+    "下線",
+    "テキスト",
+    "フォーマット"
+  ],
+  "upload-cloud": [
+    "upload",
+    "cloud",
+    "send",
+    "share",
+    "アップロード",
+    "クラウド",
+    "送信"
+  ],
+  "user-check": [
+    "user",
+    "check",
+    "verify",
+    "approve",
+    "ユーザー",
+    "チェック",
+    "確認"
+  ],
+  "user-circle": [
+    "user",
+    "profile",
+    "avatar",
+    "account",
+    "ユーザー",
+    "プロフィール",
+    "アカウント"
+  ],
+  "user-minus": [
+    "user",
+    "remove",
+    "delete",
+    "subtract",
+    "ユーザー",
+    "削除",
+    "マイナス"
+  ],
+  "user-plus": ["user", "add", "invite", "new", "ユーザー", "追加", "招待"],
+  "user-x": [
+    "user",
+    "remove",
+    "delete",
+    "cancel",
+    "ユーザー",
+    "削除",
+    "キャンセル"
+  ],
+  "user": [
+    "user",
+    "person",
+    "profile",
+    "account",
+    "ユーザー",
+    "人",
+    "プロフィール"
+  ],
+  "users": ["users", "people", "group", "team", "ユーザー", "人々", "グループ"],
+  "verified-badge": [
+    "verified",
+    "badge",
+    "check",
+    "approved",
+    "認証",
+    "バッジ",
+    "承認"
+  ],
+  "video-off": ["video", "off", "camera", "mute", "ビデオ", "オフ", "カメラ"],
+  "video": ["video", "camera", "film", "record", "ビデオ", "カメラ", "録画"],
+  "voicemail": [
+    "voicemail",
+    "message",
+    "audio",
+    "record",
+    "ボイスメール",
+    "メッセージ",
+    "音声"
+  ],
+  "volume-high": ["volume", "high", "loud", "audio", "音量", "高", "大きい"],
+  "volume-low": ["volume", "low", "quiet", "audio", "音量", "低", "小さい"],
+  "volume-muted": [
+    "volume",
+    "muted",
+    "silent",
+    "off",
+    "音量",
+    "ミュート",
+    "サイレント"
+  ],
+  "volume-none": ["volume", "none", "silent", "mute", "音量", "なし", "無音"],
+  "walk": ["walk", "pedestrian", "person", "step", "歩く", "歩行者", "歩み"],
+  "watch": ["watch", "clock", "time", "wrist", "時計", "腕時計", "時間"],
+  "wifi-off": ["wifi", "off", "disconnect", "offline", "WiFi", "オフ", "切断"],
+  "wifi": [
+    "wifi",
+    "wireless",
+    "internet",
+    "connect",
+    "WiFi",
+    "無線",
+    "インターネット"
+  ],
+  "zoom-in": [
+    "zoom",
+    "in",
+    "magnify",
+    "enlarge",
+    "ズームイン",
+    "拡大",
+    "大きく"
+  ],
+  "zoom-out": [
+    "zoom",
+    "out",
+    "shrink",
+    "reduce",
+    "ズームアウト",
+    "縮小",
+    "小さく"
+  ]
+}
