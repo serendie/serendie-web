@@ -49,11 +49,15 @@ import { chartColors } from "@/data/chartColors.ts";
 <div
   className={css({
     mt: "sd.system.dimension.spacing.twoExtraLarge",
-    maxWidth: "calc(100vw - 48px)",
-    overflowX: "auto",
+    mb: "sd.system.dimension.spacing.medium",
+    overflowX: "visible",
+    overflowY: "visible",
+    position: "relative",
+    px: "sd.system.dimension.spacing.medium",
+    mx: "-sd.system.dimension.spacing.medium",
   })}
 >
-  <ChartColorMatrix data={chartColors.single} />
+  <ChartColorMatrix data={chartColors.single} client:idle />
 </div>
 
 ## Semantic
@@ -76,11 +80,15 @@ import { chartColors } from "@/data/chartColors.ts";
 <div
   className={css({
     mt: "sd.system.dimension.spacing.twoExtraLarge",
-    maxWidth: "calc(100vw - 48px)",
-    overflowX: "auto",
+    mb: "sd.system.dimension.spacing.medium",
+    overflowX: "visible",
+    overflowY: "visible",
+    position: "relative",
+    px: "sd.system.dimension.spacing.medium",
+    mx: "-sd.system.dimension.spacing.medium",
   })}
 >
-  <ChartColorMatrix data={chartColors.semantic} />
+  <ChartColorMatrix data={chartColors.semantic} client:idle />
 </div>
 
 ## Multi（複数色相）
@@ -103,11 +111,15 @@ import { chartColors } from "@/data/chartColors.ts";
 <div
   className={css({
     mt: "sd.system.dimension.spacing.twoExtraLarge",
-    maxWidth: "calc(100vw - 48px)",
-    overflowX: "auto",
+    mb: "sd.system.dimension.spacing.medium",
+    overflowX: "visible",
+    overflowY: "visible",
+    position: "relative",
+    px: "sd.system.dimension.spacing.medium",
+    mx: "-sd.system.dimension.spacing.medium",
   })}
 >
-  <ChartColorMatrix data={chartColors.multi} />
+  <ChartColorMatrix data={chartColors.multi} client:idle />
 </div>
 
 </PageSection>
@@ -133,11 +145,15 @@ import { chartColors } from "@/data/chartColors.ts";
 <div
   className={css({
     mt: "sd.system.dimension.spacing.twoExtraLarge",
-    maxWidth: "calc(100vw - 48px)",
-    overflowX: "auto",
+    mb: "sd.system.dimension.spacing.medium",
+    overflowX: "visible",
+    overflowY: "visible",
+    position: "relative",
+    px: "sd.system.dimension.spacing.medium",
+    mx: "-sd.system.dimension.spacing.medium",
   })}
 >
-  <ChartColorMatrix data={chartColors.component} />
+  <ChartColorMatrix data={chartColors.component} client:idle />
 </div>
 
 </PageSection>

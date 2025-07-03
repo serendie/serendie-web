@@ -5,6 +5,7 @@ import { css } from "styled-system/css";
 export interface ChartColorRow {
   name: string;
   colors: Record<string, string>;
+  tokenNames?: Record<string, string>;
 }
 
 export interface ChartColorData {
@@ -14,14 +15,6 @@ export interface ChartColorData {
 
 export interface ChartColorMatrixProps {
   data: ChartColorData;
-}
-
-// Helper functions
-function getTextColor(bgColor: string): string {
-  const rgb = hexToRgb(bgColor);
-  const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-  const threshold = 169;
-  return luminance > threshold ? "#000000" : "#FFFFFF";
 }
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
@@ -35,16 +28,31 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
     : { r: 0, g: 0, b: 0 };
 }
 
+function isLightColor(color: string): boolean {
+  const rgb = hexToRgb(color);
+  // 輝度を計算
+  const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+  // 240以上を白に近い色と判定
+  return luminance > 240;
+}
+
 export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
-  const handleColorClick = (color: string, element: HTMLDivElement) => {
-    navigator.clipboard.writeText(color);
-    const span = element.querySelector("span");
-    if (span) {
-      const originalText = span.textContent;
-      span.textContent = "Copied";
-      setTimeout(() => {
-        span.textContent = originalText;
-      }, 1000);
+  const [copiedToken, setCopiedToken] = React.useState<string | null>(null);
+  const [hoveredCell, setHoveredCell] = React.useState<string | null>(null);
+
+  const handleCellClick = (tokenName: string | undefined) => {
+    if (tokenName && navigator.clipboard) {
+      navigator.clipboard
+        .writeText(tokenName)
+        .then(() => {
+          setCopiedToken(tokenName);
+          setTimeout(() => {
+            setCopiedToken(null);
+          }, 1000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy:", err);
+        });
     }
   };
 
@@ -55,22 +63,58 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "sd.system.color.component.outline",
+    overflow: "visible",
     _hover: {
       "& span": {
         opacity: 1,
       },
+      "& .tooltip": {
+        opacity: 1,
+        visibility: "visible",
+      },
     },
   });
 
-  const textClass = css({
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-    fontSize: "x-small",
-    opacity: 0,
-    transition: "opacity 0.2s",
-  });
+  // ツールチップのスタイルを生成する関数
+  const getTooltipClass = (isVisible: boolean = false) => {
+    return css({
+      position: "absolute",
+      bottom: "calc(50% + 6px)",
+      left: "50%",
+      transform: "translateX(-50%)",
+      bg: "sd.system.color.component.inverseSurface",
+      color: "sd.system.color.component.inverseOnSurface",
+      px: "sd.system.dimension.spacing.small",
+      py: "sd.system.dimension.spacing.extraSmall",
+      borderRadius: "4px",
+      fontSize: "12px",
+      lineHeight: 1.5,
+      boxShadow: "sd.system.elevation.shadow.level3",
+      fontFamily: "sd.reference.typography.fontFamily.monospace",
+      whiteSpace: "nowrap",
+      opacity: isVisible ? 1 : 0,
+      visibility: isVisible ? "visible" : "hidden",
+      transition: "opacity 0.2s, visibility 0.2s",
+      zIndex: 1000,
+      pointerEvents: "none",
+      minWidth: "48px",
+      _after: {
+        content: '""',
+        position: "absolute",
+        top: "100%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 0,
+        height: 0,
+        borderStyle: "solid",
+        borderWidth: "6px 6px 0 6px",
+        borderLeftColor: "rgba(0, 0, 0, 0)",
+        borderRightColor: "rgba(0, 0, 0, 0)",
+        borderBottomColor: "rgba(0, 0, 0, 0)",
+        borderTopColor: "sd.system.color.component.inverseSurface",
+      },
+    });
+  };
 
   return (
     <table
@@ -78,11 +122,17 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
         borderCollapse: "separate",
         borderSpacing: "0 16px",
         width: "100%",
+        position: "relative",
+        overflow: "visible",
       })}
     >
       <thead>
         <tr>
-          <th></th>
+          <th
+            className={css({
+              paddingTop: "40px",
+            })}
+          ></th>
           {data.shades.map((shade) => (
             <th
               key={shade}
@@ -91,6 +141,7 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
                 fontSize: "12px",
                 lineHeight: 1.2,
                 pb: "sd.system.dimension.spacing.extraSmall",
+                pt: "40px",
                 color: "sd.system.color.component.onSurfaceVariant",
                 fontWeight: 400,
               })}
@@ -120,6 +171,9 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
             </th>
             {data.shades.map((shade) => {
               const color = row.colors[shade as keyof typeof row.colors];
+              const tokenName =
+                row.tokenNames?.[shade as keyof typeof row.tokenNames];
+
               return color ? (
                 <td
                   key={shade}
@@ -135,16 +189,26 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
                     className={cellClass}
                     style={{
                       backgroundColor: color,
-                      borderWidth: color === "#ffffff" ? 1 : 0,
+                      borderWidth: isLightColor(color) ? 1 : 0,
                     }}
-                    onClick={(e) => handleColorClick(color, e.currentTarget)}
+                    onClick={() => {
+                      handleCellClick(tokenName);
+                    }}
+                    onMouseEnter={() =>
+                      tokenName && setHoveredCell(`${row.name}-${shade}`)
+                    }
+                    onMouseLeave={() => setHoveredCell(null)}
                   >
-                    <span
-                      className={textClass}
-                      style={{ color: getTextColor(color) }}
-                    >
-                      {color}
-                    </span>
+                    {tokenName && (
+                      <div
+                        className={`tooltip tooltip-${row.name}-${shade} ${getTooltipClass(
+                          copiedToken === tokenName ||
+                            hoveredCell === `${row.name}-${shade}`
+                        )}`}
+                      >
+                        {copiedToken === tokenName ? "Copied!" : tokenName}
+                      </div>
+                    )}
                   </div>
                 </td>
               ) : null;
