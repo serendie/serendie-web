@@ -21,7 +21,8 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "test:mcp": "tsx src/mcp/test-client.ts"
+    "test:mcp": "tsx src/mcp/test-client.ts",
+    "svg:tokenize": "tsx scripts/svgColorToToken/index.ts"
   },
   "dependencies": {
     "@ark-ui/react": "^3.5.0",

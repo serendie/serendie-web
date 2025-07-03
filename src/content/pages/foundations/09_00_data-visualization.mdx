@@ -22,30 +22,50 @@ import {
 import StickySideNav from "../../../components/StickySideNav.astro";
 import { css } from "styled-system/css";
 import { CalloutSection } from "../../../components/CalloutSection.tsx";
+import Image1 from "../../../assets/content/foundations/data-visualization/1.tokenized.svg?react";
+import Image2 from "../../../assets/content/foundations/data-visualization/2.tokenized.svg?react";
+import Image3 from "../../../assets/content/foundations/data-visualization/3.tokenized.svg?react";
+import Image4 from "../../../assets/content/foundations/data-visualization/4.tokenized.svg?react";
+import Image5 from "../../../assets/content/foundations/data-visualization/5.tokenized.svg?react";
+import Image6 from "../../../assets/content/foundations/data-visualization/6.tokenized.svg?react";
+import Image7 from "../../../assets/content/foundations/data-visualization/7.tokenized.svg?react";
+import Image8 from "../../../assets/content/foundations/data-visualization/8.svg?react";
+import Image9 from "../../../assets/content/foundations/data-visualization/9.tokenized.svg?react";
+import Image10 from "../../../assets/content/foundations/data-visualization/10.tokenized.svg?react";
+import Image11 from "../../../assets/content/foundations/data-visualization/11.tokenized.svg?react";
+import Image12 from "../../../assets/content/foundations/data-visualization/12.tokenized.svg?react";
+import Image13 from "../../../assets/content/foundations/data-visualization/13.tokenized.svg?react";
 
 <PageSection>
   <PageHeadLine number={1}>カラーロール</PageHeadLine>
 
 デジタルプロダクトのUIデザインではチャートを扱う際に、チャート要素とUI要素がエリア内に同居することがあります。チャート要素はデータビジュアライゼーション用に設定しているカラートークン、UI要素は通常のカラートークンを使用してください。
 
+<Image1 />
+
 <CalloutSection
   number="1"
   title="UI要素"
   description="Dashboard WidgetやUIカラー (sd.system.color.component) を使用"
-/>
+>
+  <Image2 />
+</CalloutSection>
 
 <CalloutSection
   number="2"
   title="Chart要素"
   description="チャート専用のカラートークンを使用"
-/>
+>
+  <Image3 />
+</CalloutSection>
 
 <CalloutSection
   number="3"
   title="Chart背景要素"
   description="チャートの背景に使用する要素"
-/>
-
+>
+  <Image4 />
+</CalloutSection>
 </PageSection>
 
 <PageSection>
@@ -59,21 +79,21 @@ import { CalloutSection } from "../../../components/CalloutSection.tsx";
 
 単色色相の中の１つの明度で表せるものは、なるべくchart.mark.primary.05のみ使用するようにしてください。（例１参照）
 
+<Image6 />
+
 ## 複数色相を使用する場合
 
 異なるカテゴリー、分析軸（ディメンション）、指標（メトリクス）を表す場合は、異なる色相を使用してください。
 
 表す値が違う複数のグラフ種類を組み合わせる場合は、色相環の中での組み合わせを使用してください。（例２、複数のグラフ種類を組み合わせる場合を参照）
 
-### 複数のグラフ種類を組み合わせる場合
+<Image7 />
 
-以下色相環の中で指定している対角にある組み合わせを使用してください。
-
-<CalloutSection>
-  <div className={css({ textAlign: "center", padding: "40px 0" })}>
-    {/* ここに色相環のSVG図版が入ります */}
-    <p>色相環の図版</p>
-  </div>
+<CalloutSection
+  title="複数のグラフ種類を組み合わせる場合"
+  description={`以下色相環の中で指定している対角にある組み合わせを使用してください。\n\n例：上記の積み上げグラフのマークはKonjoパレットで色相間内のうち０１に近い青系統なので、温度の値を組み合わせる際は０１の反対側にある０３のMultiカラーを使用する。`}
+>
+  <Image8 />
 </CalloutSection>
 
 </PageSection>
@@ -85,21 +105,28 @@ import { CalloutSection } from "../../../components/CalloutSection.tsx";
 
 複数／単色の色相両方において、マークの連続するカラートークン間 (例: mark.primary.01とmark.primary.02) には十分なコントラスト比がありません。この場合はマークに白線やマージンを入れて区別できるようにしてください。
 
+<Image9 />
+
 ## マーク上のテキスト
 
 マーク上にテキストを置く際は、以下の組み合わせを使用してください。
-
 マークの面積が小さすぎて置けない場合は、Tooltipを使用してホバー時にテキストが表示されるようにしてください。
+
+<Image10 />
 
 <CalloutSection
   title="テキストカラーの組み合わせ"
   description="データビジュアライゼーションにおいては、WCAG3.0 APCAを基準にコントラスト比を設計しています。マークとテキストの組み合わせは下記に従ってください。"
 >
-  {/* ここにテキストカラーの組み合わせ表が入ります */}
+<Image11 />
+
+<Image12 />
 </CalloutSection>
 
 ## 色だけに頼らない識別
 
 グラフの種類を識別させる際に色だけで差を出すことは避け、シェイプ、ライン、パターン、テキストなどの補助要素を使用するようにしてください。
+
+<Image13 />
 
 </PageSection>

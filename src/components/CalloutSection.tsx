@@ -83,6 +83,7 @@ export function CalloutSection({
             color: "web.system.color.component.onSurface",
             lineHeight: 1.6,
             mt: "4px !important",
+            whiteSpace: "pre-wrap",
           })}
         >
           {description}
