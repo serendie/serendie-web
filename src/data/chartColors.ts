@@ -166,7 +166,7 @@ export const chartColors: Record<string, ChartColorData> = {
     ],
   },
   multi: {
-    shades: ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
+    shades: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"],
     rows: [
       {
         name: "Multi",

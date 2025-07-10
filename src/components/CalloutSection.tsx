@@ -38,8 +38,7 @@ export function CalloutSection({
           {number && (
             <div
               className={css({
-                backgroundColor:
-                  "sd.system.color.impression.onPrimaryContainer",
+                backgroundColor: "web.system.color.component.surface",
                 width: "32px",
                 height: "32px",
                 display: "flex",
