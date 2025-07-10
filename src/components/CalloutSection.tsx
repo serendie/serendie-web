@@ -89,7 +89,15 @@ export function CalloutSection({
           {description}
         </p>
       )}
-      {children && <div className={css({})}>{children}</div>}
+      {children && (
+        <div
+          className={css({
+            marginTop: "16px",
+          })}
+        >
+          {children}
+        </div>
+      )}
     </div>
   );
 }

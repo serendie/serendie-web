@@ -41,14 +41,22 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
 
 デジタルプロダクトのUIデザインではチャートを扱う際に、チャート要素とUI要素がエリア内に同居することがあります。チャート要素はデータビジュアライゼーション用に設定しているカラートークン、UI要素は通常のカラートークンを使用してください。
 
-<Image1 />
+<Image1
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 <CalloutSection
   number="1"
   title="UI要素"
   description="Dashboard WidgetやUIカラー (sd.system.color.component) を使用"
 >
-  <Image2 />
+  <Image2
+    className={css({
+      borderRadius: "0 !important",
+    })}
+  />
 </CalloutSection>
 
 <CalloutSection
@@ -56,7 +64,11 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
   title="Chart要素"
   description="チャート専用のカラートークンを使用"
 >
-  <Image3 />
+  <Image3
+    className={css({
+      borderRadius: "0 !important",
+    })}
+  />
 </CalloutSection>
 
 <CalloutSection
@@ -64,7 +76,10 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
   title="Chart背景要素"
   description="チャートの背景に使用する要素"
 >
-  <Image4 />
+  <Image4 
+  className={css({
+    borderRadius: "0 !important",
+  })}/>
 </CalloutSection>
 </PageSection>
 
@@ -79,7 +94,11 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
 
 単色色相の中の１つの明度で表せるものは、なるべくchart.mark.primary.05のみ使用するようにしてください。（例１参照）
 
-<Image6 />
+<Image6
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 ## 複数色相を使用する場合
 
@@ -87,13 +106,21 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
 
 表す値が違う複数のグラフ種類を組み合わせる場合は、色相環の中での組み合わせを使用してください。（例２、複数のグラフ種類を組み合わせる場合を参照）
 
-<Image7 />
+<Image7
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 <CalloutSection
   title="複数のグラフ種類を組み合わせる場合"
   description={`以下色相環の中で指定している対角にある組み合わせを使用してください。\n\n例：上記の積み上げグラフのマークはKonjoパレットで色相間内のうち０１に近い青系統なので、温度の値を組み合わせる際は０１の反対側にある０３のMultiカラーを使用する。`}
 >
-  <Image8 />
+  <Image8
+    className={css({
+      borderRadius: "0 !important",
+    })}
+  />
 </CalloutSection>
 
 </PageSection>
@@ -105,28 +132,46 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
 
 複数／単色の色相両方において、マークの連続するカラートークン間 (例: mark.primary.01とmark.primary.02) には十分なコントラスト比がありません。この場合はマークに白線やマージンを入れて区別できるようにしてください。
 
-<Image9 />
+<Image9
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 ## マーク上のテキスト
 
 マーク上にテキストを置く際は、以下の組み合わせを使用してください。
 マークの面積が小さすぎて置けない場合は、Tooltipを使用してホバー時にテキストが表示されるようにしてください。
 
-<Image10 />
+<Image10
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 <CalloutSection
   title="テキストカラーの組み合わせ"
   description="データビジュアライゼーションにおいては、WCAG3.0 APCAを基準にコントラスト比を設計しています。マークとテキストの組み合わせは下記に従ってください。"
 >
-<Image11 />
+<Image11 
+  className={css({
+    borderRadius: "0 !important",
+  })}/>
 
-<Image12 />
+<Image12 
+  className={css({
+    borderRadius: "0 !important",
+  })}/>
 </CalloutSection>
 
 ## 色だけに頼らない識別
 
 グラフの種類を識別させる際に色だけで差を出すことは避け、シェイプ、ライン、パターン、テキストなどの補助要素を使用するようにしてください。
 
-<Image13 />
+<Image13
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
 
 </PageSection>

@@ -73,6 +73,11 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
         visibility: "visible",
       },
     },
+    expandedDown: {
+      cursor: "default",
+      overflowX: "auto",
+      overflowY: "hidden",
+    },
   });
 
   // ツールチップのスタイルを生成する関数
@@ -113,109 +118,139 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
         borderBottomColor: "rgba(0, 0, 0, 0)",
         borderTopColor: "sd.system.color.component.inverseSurface",
       },
+      expandedDown: {
+        display: "none",
+      },
     });
   };
 
   return (
-    <table
+    <div
       className={css({
-        borderCollapse: "separate",
-        borderSpacing: "0 16px",
-        width: "100%",
+        mt: "sd.system.dimension.spacing.twoExtraLarge",
+        mb: "sd.system.dimension.spacing.medium",
+        overflowX: "visible",
+        overflowY: "visible",
         position: "relative",
-        overflow: "visible",
+        px: "sd.system.dimension.spacing.extraLarge",
+        mx: "-sd.system.dimension.spacing.extraLarge",
+        expandedDown: {
+          overflowX: "auto",
+          overflowY: "visible",
+        },
       })}
     >
-      <thead>
-        <tr>
-          <th
-            className={css({
-              paddingTop: "40px",
-            })}
-          ></th>
-          {data.shades.map((shade) => (
-            <th
-              key={shade}
-              className={css({
-                fontFamily: "sd.reference.typography.fontFamily.monospace",
-                fontSize: "12px",
-                lineHeight: 1.2,
-                pb: "sd.system.dimension.spacing.extraSmall",
-                pt: "40px",
-                color: "sd.system.color.component.onSurfaceVariant",
-                fontWeight: 400,
-              })}
-            >
-              {shade}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.rows.map((row) => (
-          <tr key={row.name} className="group">
-            <th
-              className={css({
-                position: "sticky",
-                left: 0,
-                bg: "sd.system.color.component.surface",
-                zIndex: 1,
-                textAlign: "left",
-                fontSize: "14px",
-                lineHeight: 1.2,
-                pr: "sd.system.dimension.spacing.extraSmall",
-                fontWeight: 400,
-              })}
-            >
-              <div>{row.name}</div>
-            </th>
-            {data.shades.map((shade) => {
-              const color = row.colors[shade as keyof typeof row.colors];
-              const tokenName =
-                row.tokenNames?.[shade as keyof typeof row.tokenNames];
-
-              return color ? (
-                <td
-                  key={shade}
-                  className={css({
-                    textAlign: "center",
-                    position: "relative",
-                    height: "48px",
-                    boxSizing: "content-box",
-                    minWidth: "48px",
-                  })}
-                >
-                  <div
-                    className={cellClass}
-                    style={{
-                      backgroundColor: color,
-                      borderWidth: isLightColor(color) ? 1 : 0,
-                    }}
-                    onClick={() => {
-                      handleCellClick(tokenName);
-                    }}
-                    onMouseEnter={() =>
-                      tokenName && setHoveredCell(`${row.name}-${shade}`)
-                    }
-                    onMouseLeave={() => setHoveredCell(null)}
-                  >
-                    {tokenName && (
-                      <div
-                        className={`tooltip tooltip-${row.name}-${shade} ${getTooltipClass(
-                          copiedToken === tokenName ||
-                            hoveredCell === `${row.name}-${shade}`
-                        )}`}
-                      >
-                        {copiedToken === tokenName ? "Copied!" : tokenName}
-                      </div>
-                    )}
-                  </div>
-                </td>
-              ) : null;
-            })}
+      <table
+        className={css({
+          borderCollapse: "separate",
+          borderSpacing: "0 16px",
+          width: "100%",
+          position: "relative",
+          overflow: "visible",
+          expandedDown: {
+            overflowX: "auto",
+            overflowY: "hidden",
+          },
+        })}
+      >
+        <thead>
+          <tr>
+            <th className={css({})}></th>
+            {data.shades.map((shade) => (
+              <th
+                key={shade}
+                className={css({
+                  fontFamily: "sd.reference.typography.fontFamily.monospace",
+                  fontSize: "12px",
+                  lineHeight: 1.2,
+                  pb: "sd.system.dimension.spacing.extraSmall",
+                  color: "sd.system.color.component.onSurfaceVariant",
+                  fontWeight: 400,
+                })}
+              >
+                {shade}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.rows.map((row) => (
+            <tr key={row.name} className="group">
+              <th
+                className={css({
+                  position: "sticky",
+                  left: 0,
+                  bg: "sd.system.color.component.surface",
+                  zIndex: 1,
+                  textAlign: "left",
+                  fontSize: "14px",
+                  lineHeight: 1.2,
+                  pr: "sd.system.dimension.spacing.extraSmall",
+                  fontWeight: 400,
+                  expandedDown: {
+                    _before: {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: "-24px",
+                      width: "24px",
+                      height: "100%",
+                      backgroundColor: "sd.system.color.component.surface",
+                    },
+                  },
+                })}
+              >
+                <div>{row.name}</div>
+              </th>
+              {data.shades.map((shade) => {
+                const color = row.colors[shade as keyof typeof row.colors];
+                const tokenName =
+                  "sd." +
+                  row.tokenNames?.[shade as keyof typeof row.tokenNames];
+
+                return color ? (
+                  <td
+                    key={shade}
+                    className={css({
+                      textAlign: "center",
+                      position: "relative",
+                      height: "48px",
+                      boxSizing: "content-box",
+                      minWidth: "48px",
+                    })}
+                  >
+                    <div
+                      className={cellClass}
+                      style={{
+                        backgroundColor: color,
+                        borderWidth: isLightColor(color) ? 1 : 0,
+                      }}
+                      onClick={() => {
+                        handleCellClick(tokenName);
+                      }}
+                      onMouseEnter={() =>
+                        tokenName && setHoveredCell(`${row.name}-${shade}`)
+                      }
+                      onMouseLeave={() => setHoveredCell(null)}
+                    >
+                      {tokenName && (
+                        <div
+                          className={`tooltip tooltip-${row.name}-${shade} ${getTooltipClass(
+                            copiedToken === tokenName ||
+                              hoveredCell === `${row.name}-${shade}`
+                          )}`}
+                        >
+                          {copiedToken === tokenName ? "Copied!" : tokenName}
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                ) : null;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

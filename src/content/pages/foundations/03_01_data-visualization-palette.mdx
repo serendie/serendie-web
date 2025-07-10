@@ -1,5 +1,5 @@
 ---
-title: データビジュアライゼーション - カラーパレット
+title: データビジュアライゼーション
 slug: foundations/data-visualization-palette
 lastUpdated: "2025-06-19"
 illustType: A
@@ -46,19 +46,7 @@ import { chartColors } from "@/data/chartColors.ts";
   sd.system.color.chart.mark.primary
 </div>
 
-<div
-  className={css({
-    mt: "sd.system.dimension.spacing.twoExtraLarge",
-    mb: "sd.system.dimension.spacing.medium",
-    overflowX: "visible",
-    overflowY: "visible",
-    position: "relative",
-    px: "sd.system.dimension.spacing.medium",
-    mx: "-sd.system.dimension.spacing.medium",
-  })}
->
-  <ChartColorMatrix data={chartColors.single} client:idle />
-</div>
+<ChartColorMatrix data={chartColors.single} client:idle />
 
 ## Semantic
 
@@ -77,20 +65,7 @@ import { chartColors } from "@/data/chartColors.ts";
   sd.system.color.chart.mark
 </div>
 
-<div
-  className={css({
-    mt: "sd.system.dimension.spacing.twoExtraLarge",
-    mb: "sd.system.dimension.spacing.medium",
-    overflowX: "visible",
-    overflowY: "visible",
-    position: "relative",
-    px: "sd.system.dimension.spacing.medium",
-    mx: "-sd.system.dimension.spacing.medium",
-  })}
->
-  <ChartColorMatrix data={chartColors.semantic} client:idle />
-</div>
-
+<ChartColorMatrix data={chartColors.semantic} client:idle />
 ## Multi（複数色相）
 
 チャート本体に使用する複数色相のカラーパレットです。各色を個別に分類が認識できるように、パレットの番号の順番に従って使用してください。
@@ -108,19 +83,7 @@ import { chartColors } from "@/data/chartColors.ts";
   sd.system.color.chart.mark.multi
 </div>
 
-<div
-  className={css({
-    mt: "sd.system.dimension.spacing.twoExtraLarge",
-    mb: "sd.system.dimension.spacing.medium",
-    overflowX: "visible",
-    overflowY: "visible",
-    position: "relative",
-    px: "sd.system.dimension.spacing.medium",
-    mx: "-sd.system.dimension.spacing.medium",
-  })}
->
-  <ChartColorMatrix data={chartColors.multi} client:idle />
-</div>
+<ChartColorMatrix data={chartColors.multi} client:idle />
 
 </PageSection>
 
@@ -142,18 +105,6 @@ import { chartColors } from "@/data/chartColors.ts";
   sd.system.color.chart.component
 </div>
 
-<div
-  className={css({
-    mt: "sd.system.dimension.spacing.twoExtraLarge",
-    mb: "sd.system.dimension.spacing.medium",
-    overflowX: "visible",
-    overflowY: "visible",
-    position: "relative",
-    px: "sd.system.dimension.spacing.medium",
-    mx: "-sd.system.dimension.spacing.medium",
-  })}
->
-  <ChartColorMatrix data={chartColors.component} client:idle />
-</div>
+<ChartColorMatrix data={chartColors.component} client:idle />
 
 </PageSection>
