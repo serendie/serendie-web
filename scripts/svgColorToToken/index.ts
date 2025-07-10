@@ -100,6 +100,33 @@ export function replaceColors(svgContent: string): {
 }
 
 /**
+ * Find SVG files in directory
+ */
+export function findSVGFiles(
+  dirPath: string,
+  recursive: boolean = false
+): string[] {
+  const svgFiles: string[] = [];
+
+  function scanDirectory(currentPath: string): void {
+    const items = fs.readdirSync(currentPath, { withFileTypes: true });
+
+    for (const item of items) {
+      const fullPath = path.join(currentPath, item.name);
+
+      if (item.isDirectory() && recursive) {
+        scanDirectory(fullPath);
+      } else if (item.isFile() && item.name.toLowerCase().endsWith(".svg")) {
+        svgFiles.push(fullPath);
+      }
+    }
+  }
+
+  scanDirectory(dirPath);
+  return svgFiles.sort();
+}
+
+/**
  * Process SVG file
  */
 export function processSVGFile(
@@ -175,13 +202,19 @@ This script replaces color values in SVG files with Serendie design token CSS va
 
 Usage:
   tsx scripts/svgColorToToken/index.ts <svg-file> [options]
+  tsx scripts/svgColorToToken/index.ts --directory <directory> [options]
 
 Options:
   --in-place    Replace the original file instead of creating a new one
+  --directory   Process all SVG files in the specified directory
+  --recursive   Process SVG files in subdirectories as well (use with --directory)
 
 Examples:
   tsx scripts/svgColorToToken/index.ts chart.svg
   tsx scripts/svgColorToToken/index.ts chart.svg --in-place
+  tsx scripts/svgColorToToken/index.ts --directory ./icons
+  tsx scripts/svgColorToToken/index.ts --directory ./icons --recursive
+  tsx scripts/svgColorToToken/index.ts --directory ./icons --in-place --recursive
 
 Color Mappings:
 `);
@@ -192,18 +225,86 @@ Color Mappings:
     process.exit(0);
   }
 
-  const filePath = args[0];
   const inPlace = args.includes("--in-place");
+  const recursive = args.includes("--recursive");
+  const directoryIndex = args.indexOf("--directory");
 
-  if (!fs.existsSync(filePath)) {
-    console.error(`Error: File not found: ${filePath}`);
-    process.exit(1);
+  if (directoryIndex !== -1) {
+    // Directory mode
+    const dirPath = args[directoryIndex + 1];
+
+    if (!dirPath) {
+      console.error("Error: Directory path is required when using --directory");
+      process.exit(1);
+    }
+
+    processDirectory(dirPath, inPlace, recursive);
+  } else {
+    // Single file mode
+    const filePath = args[0];
+
+    if (!filePath) {
+      console.error("Error: File path is required");
+      process.exit(1);
+    }
+
+    if (!fs.existsSync(filePath)) {
+      console.error(`Error: File not found: ${filePath}`);
+      process.exit(1);
+    }
+
+    if (!filePath.toLowerCase().endsWith(".svg")) {
+      console.error("Error: File must be an SVG file");
+      process.exit(1);
+    }
+
+    processSVGFile(filePath, inPlace);
+  }
+}
+
+/**
+ * Process all SVG files in directory
+ */
+export function processDirectory(
+  dirPath: string,
+  inPlace: boolean = false,
+  recursive: boolean = false
+): void {
+  console.log(`\nProcessing directory: ${dirPath}`);
+  console.log(`Recursive: ${recursive}`);
+  console.log(`In-place: ${inPlace}`);
+
+  if (!fs.existsSync(dirPath)) {
+    console.error(`Error: Directory not found: ${dirPath}`);
+    return;
   }
 
-  if (!filePath.toLowerCase().endsWith(".svg")) {
-    console.error("Error: File must be an SVG file");
-    process.exit(1);
+  if (!fs.statSync(dirPath).isDirectory()) {
+    console.error(`Error: Path is not a directory: ${dirPath}`);
+    return;
   }
 
-  processSVGFile(filePath, inPlace);
+  const svgFiles = findSVGFiles(dirPath, recursive);
+
+  if (svgFiles.length === 0) {
+    console.log("No SVG files found in the specified directory.");
+    return;
+  }
+
+  console.log(`\nFound ${svgFiles.length} SVG file(s):`);
+  svgFiles.forEach((file, index) => {
+    console.log(`  ${index + 1}. ${file}`);
+  });
+
+  console.log(`\n${"=".repeat(60)}`);
+
+  svgFiles.forEach((file, index) => {
+    console.log(
+      `\n[${index + 1}/${svgFiles.length}] Processing: ${path.basename(file)}`
+    );
+    processSVGFile(file, inPlace);
+  });
+
+  console.log(`\n${"=".repeat(60)}`);
+  console.log(`\nProcessing complete! ${svgFiles.length} files processed.`);
 }
