@@ -34,10 +34,7 @@ const products: Product[] = [
 ];
 
 export function ColumnHelperSample() {
-  // 1. 型を指定してColumnHelperを作成
   const columnHelper = DataTable.createColumnHelper<Product>();
-
-  // 2. 列定義を作成
   const columns = [
     columnHelper.accessor("id", {
       header: "ID",

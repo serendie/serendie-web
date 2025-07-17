@@ -45,7 +45,6 @@ const users: User[] = [
 ];
 
 export function DataTypeSample() {
-  // User型用のColumnHelperを作成
   const userColumnHelper = DataTable.createColumnHelper<User>();
 
   const columns = [
