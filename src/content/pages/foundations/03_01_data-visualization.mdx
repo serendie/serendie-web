@@ -4,11 +4,10 @@ slug: foundations/data-visualization
 lastUpdated: "2025-07-17"
 illustType: A
 description: 基本カラーパレットを拡張する形で、データ可視化用のカラーパレットをシステムトークンとして提供しています。凡例や目盛りなどチャートに関連するシステムトークンも合わせて定義しています。
-parent: foundations/data-visualization
 subLinks:
   [
     { name: "カラーパレット", path: "/foundations/data-visualization" },
-    { name: "カラーの使い方", path: "/foundations/data-visualization-role" },
+    { name: "カラーロール", path: "/foundations/data-visualization-role" },
   ]
 ---
 
@@ -105,6 +104,10 @@ import { chartColors } from "@/data/chartColors.ts";
   sd.system.color.chart.component
 </div>
 
-<ChartColorMatrix data={chartColors.component} matrixId="component" client:idle />
+<ChartColorMatrix
+  data={chartColors.component}
+  matrixId="component"
+  client:idle
+/>
 
 </PageSection>
