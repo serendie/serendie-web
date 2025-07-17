@@ -41,17 +41,42 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
   data,
   matrixId = "default",
 }) => {
-  const [copiedCell, setCopiedCell] = React.useState<string | null>(null);
   const [hoveredCell, setHoveredCell] = React.useState<string | null>(null);
+  const [showingCopied, setShowingCopied] = React.useState<string | null>(null);
+  const [justCopied, setJustCopied] = React.useState<string | null>(null);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const justCopiedTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handleCellClick = (tokenName: string | undefined, cellId: string) => {
     if (tokenName && navigator.clipboard) {
       navigator.clipboard
         .writeText(tokenName)
         .then(() => {
-          setCopiedCell(`${matrixId}-${cellId}`);
-          setTimeout(() => {
-            setCopiedCell(null);
+          const fullCellId = `${matrixId}-${cellId}`;
+
+          // Clear any existing timeouts
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+          }
+          if (justCopiedTimeoutRef.current) {
+            clearTimeout(justCopiedTimeoutRef.current);
+          }
+
+          setShowingCopied(fullCellId);
+          setJustCopied(fullCellId);
+          // Hide hover tooltip immediately when copying
+          setHoveredCell(null);
+
+          timeoutRef.current = setTimeout(() => {
+            // Clear both showingCopied and hoveredCell to prevent token name from flashing
+            console.log("Clearing showingCopied and hoveredCell");
+            setShowingCopied(null);
+            setHoveredCell(null);
+            // Keep justCopied set for a longer period to prevent any tooltip from appearing
+            justCopiedTimeoutRef.current = setTimeout(() => {
+              console.log("Clearing justCopied");
+              setJustCopied(null);
+            }, 500);
           }, 1000);
         })
         .catch((err) => {
@@ -85,7 +110,10 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
   });
 
   // ツールチップのスタイルを生成する関数
-  const getTooltipClass = (isVisible: boolean = false) => {
+  const getTooltipClass = (
+    isVisible: boolean = false,
+    skipTransition: boolean = false
+  ) => {
     return css({
       position: "absolute",
       bottom: "calc(50% + 6px)",
@@ -103,7 +131,7 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
       whiteSpace: "nowrap",
       opacity: isVisible ? 1 : 0,
       visibility: isVisible ? "visible" : "hidden",
-      transition: "opacity 0.2s, visibility 0.2s",
+      transition: skipTransition ? "none" : "opacity 0.2s, visibility 0.2s",
       zIndex: 1000,
       pointerEvents: "none",
       minWidth: "48px",
@@ -232,24 +260,48 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
                       onClick={() => {
                         handleCellClick(tokenName, `${row.name}-${shade}`);
                       }}
-                      onMouseEnter={() =>
-                        tokenName &&
-                        setHoveredCell(`${matrixId}-${row.name}-${shade}`)
-                      }
-                      onMouseLeave={() => setHoveredCell(null)}
+                      onMouseEnter={() => {
+                        const cellId = `${matrixId}-${row.name}-${shade}`;
+
+                        // If there's a "Copied!" showing on a different cell, end it immediately
+                        if (showingCopied && showingCopied !== cellId) {
+                          if (timeoutRef.current) {
+                            clearTimeout(timeoutRef.current);
+                          }
+                          if (justCopiedTimeoutRef.current) {
+                            clearTimeout(justCopiedTimeoutRef.current);
+                          }
+                          setShowingCopied(null);
+                          setJustCopied(null);
+                        }
+
+                        // Don't show hover tooltip only if this specific cell just copied
+                        if (tokenName && justCopied !== cellId) {
+                          setHoveredCell(cellId);
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCell(null);
+                      }}
                     >
-                      {tokenName && (
-                        <div
-                          className={`tooltip tooltip-${matrixId}-${row.name}-${shade} ${getTooltipClass(
-                            copiedCell === `${matrixId}-${row.name}-${shade}` ||
-                              hoveredCell === `${matrixId}-${row.name}-${shade}`
-                          )}`}
-                        >
-                          {copiedCell === `${matrixId}-${row.name}-${shade}`
-                            ? "Copied!"
-                            : tokenName}
-                        </div>
-                      )}
+                      {tokenName &&
+                        (() => {
+                          const currentCellId = `${matrixId}-${row.name}-${shade}`;
+                          const isShowingCopied =
+                            showingCopied === currentCellId;
+                          const isHovering =
+                            hoveredCell === currentCellId &&
+                            justCopied !== currentCellId;
+                          const shouldShow = isShowingCopied || isHovering;
+
+                          return shouldShow ? (
+                            <div
+                              className={`tooltip tooltip-${matrixId}-${row.name}-${shade} ${getTooltipClass(true)}`}
+                            >
+                              {isShowingCopied ? "Copied!" : tokenName}
+                            </div>
+                          ) : null;
+                        })()}
                     </div>
                   </td>
                 ) : null;
