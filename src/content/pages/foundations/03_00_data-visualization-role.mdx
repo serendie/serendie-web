@@ -1,13 +1,13 @@
 ---
 title: データビジュアライゼーション
-slug: foundations/data-visualization
-lastUpdated: "2025-06-19"
+slug: foundations/data-visualization-role
+lastUpdated: "2025-07-17"
 illustType: A
-description: インフォグラフィックスやダッシュボードで使用するチャートのガイドラインです。データの可視化における色使いやチャートの選び方について説明します。
+description: データ可視化用のカラーパレットは、データの性質に合わせてデザイントークンの使い分けが必要です。またアクセシビリティ上の配慮も重要です。
 subLinks:
   [
-    { name: "カラーの使い方", path: "/foundations/data-visualization" },
-    { name: "カラーパレット", path: "/foundations/data-visualization-palette" },
+    { name: "カラーパレット", path: "/foundations/data-visualization" },
+    { name: "カラーロール", path: "/foundations/data-visualization-role" },
   ]
 ---
 
@@ -84,15 +84,15 @@ import Image13 from "../../../assets/content/foundations/data-visualization/13.t
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={2}>単色と複数色相の使い分け</PageHeadLine>
+  <PageHeadLine number={2}>単色相と複数色相の使い分け</PageHeadLine>
 
-データビジュアライゼーション用のカラーパレットは、単色色相と複数色相の2つを用意しています。目的や扱うデータの種類によって使い分けてください。Serendie Design Systemの各カラーテーマとの共存やプロダクト画面をシンプルに保つために、複数色相を使用しないと表現できないケース以外では、**基本的に単色色相の使用を推奨します**。
+データビジュアライゼーション用のカラーパレットは、単色相と複数色相の2つを用意しています。目的や扱うデータの種類によって使い分けてください。Serendie Design Systemの各カラーテーマとの共存やプロダクト画面をシンプルに保つために、複数色相を使用しないと表現できないケース以外では、**基本的に単色相の使用を推奨します**。
 
-## 単色色相を使用する場合
+## 単色相を使用する場合
 
 同じカテゴリー、分析軸（ディメンション）、指標（メトリクス）、連続する数を表す場合は、同一の色を使用してください。明度はカラーパレットの01か06から、連続した数字を使ってください。
 
-単色色相の中の１つの明度で表せるものは、なるべくchart.mark.primary.05のみ使用するようにしてください。（例１参照）
+単色相の中の１つの明度で表せるものは、なるべくchart.mark.primary.05のみ使用するようにしてください。（例１参照）
 
 <Image6
   className={css({

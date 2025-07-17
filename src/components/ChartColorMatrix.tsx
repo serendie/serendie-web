@@ -15,6 +15,7 @@ export interface ChartColorData {
 
 export interface ChartColorMatrixProps {
   data: ChartColorData;
+  matrixId?: string; // Optional unique identifier for the matrix
 }
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
@@ -36,18 +37,21 @@ function isLightColor(color: string): boolean {
   return luminance > 240;
 }
 
-export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
-  const [copiedToken, setCopiedToken] = React.useState<string | null>(null);
+export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
+  data,
+  matrixId = "default",
+}) => {
+  const [copiedCell, setCopiedCell] = React.useState<string | null>(null);
   const [hoveredCell, setHoveredCell] = React.useState<string | null>(null);
 
-  const handleCellClick = (tokenName: string | undefined) => {
+  const handleCellClick = (tokenName: string | undefined, cellId: string) => {
     if (tokenName && navigator.clipboard) {
       navigator.clipboard
         .writeText(tokenName)
         .then(() => {
-          setCopiedToken(tokenName);
+          setCopiedCell(`${matrixId}-${cellId}`);
           setTimeout(() => {
-            setCopiedToken(null);
+            setCopiedCell(null);
           }, 1000);
         })
         .catch((err) => {
@@ -226,21 +230,24 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({ data }) => {
                         borderWidth: isLightColor(color) ? 1 : 0,
                       }}
                       onClick={() => {
-                        handleCellClick(tokenName);
+                        handleCellClick(tokenName, `${row.name}-${shade}`);
                       }}
                       onMouseEnter={() =>
-                        tokenName && setHoveredCell(`${row.name}-${shade}`)
+                        tokenName &&
+                        setHoveredCell(`${matrixId}-${row.name}-${shade}`)
                       }
                       onMouseLeave={() => setHoveredCell(null)}
                     >
                       {tokenName && (
                         <div
-                          className={`tooltip tooltip-${row.name}-${shade} ${getTooltipClass(
-                            copiedToken === tokenName ||
-                              hoveredCell === `${row.name}-${shade}`
+                          className={`tooltip tooltip-${matrixId}-${row.name}-${shade} ${getTooltipClass(
+                            copiedCell === `${matrixId}-${row.name}-${shade}` ||
+                              hoveredCell === `${matrixId}-${row.name}-${shade}`
                           )}`}
                         >
-                          {copiedToken === tokenName ? "Copied!" : tokenName}
+                          {copiedCell === `${matrixId}-${row.name}-${shade}`
+                            ? "Copied!"
+                            : tokenName}
                         </div>
                       )}
                     </div>
