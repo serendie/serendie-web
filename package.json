@@ -36,7 +36,7 @@
     "@serendie/design-token": "^1.1.1",
     "@serendie/style-dictionary-formatter": "^0.0.3",
     "@serendie/symbols": "^1.0.1",
-    "@serendie/ui": "^2.0.0",
+    "@serendie/ui": "https://pkg.pr.new/serendie/serendie/@serendie/ui@77",
     "@types/eslint__js": "^8.42.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

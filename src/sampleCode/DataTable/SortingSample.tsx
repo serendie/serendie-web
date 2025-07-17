@@ -53,6 +53,7 @@ export function SortingSample() {
     columnHelper.accessor("region", {
       header: "地域",
       enableSorting: true,
+      sortDescFirst: true,
     }),
     columnHelper.accessor("salesperson", {
       header: "営業担当",
@@ -68,12 +69,5 @@ export function SortingSample() {
     }),
   ];
 
-  return (
-    <DataTable<Sales>
-      data={salesData}
-      columns={columns}
-      initialSorting={[{ id: "amount", desc: true }]}
-      onSortingChange={(sorting) => console.log("ソート変更:", sorting)}
-    />
-  );
+  return <DataTable<Sales> data={salesData} columns={columns} />;
 }

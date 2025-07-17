@@ -1,8 +1,17 @@
-import { DataTable } from "@serendie/ui";
+import { Badge, DataTable } from "@serendie/ui";
 import { Button } from "@serendie/ui";
 import { ModalDialog } from "@serendie/ui";
+import { List, ListItem } from "@serendie/ui";
 import { css } from "@serendie/ui/css";
 import { useState } from "react";
+import { SerendieSymbol } from "@serendie/symbols";
+
+type RowSelectionState = Record<string, boolean>;
+type OnRowSelectionChange = (
+  updaterOrValue:
+    | RowSelectionState
+    | ((old: RowSelectionState) => RowSelectionState)
+) => void;
 
 export type Order = {
   id: number;
@@ -16,7 +25,7 @@ export type Order = {
 const orders: Order[] = [
   {
     id: 1001,
-    customer: "田中商事",
+    customer: "A",
     product: "ノートPC",
     quantity: 5,
     total: 450000,
@@ -24,7 +33,7 @@ const orders: Order[] = [
   },
   {
     id: 1002,
-    customer: "佐藤工業",
+    customer: "B",
     product: "プリンター",
     quantity: 2,
     total: 80000,
@@ -32,7 +41,7 @@ const orders: Order[] = [
   },
   {
     id: 1003,
-    customer: "山田建設",
+    customer: "C",
     product: "タブレット",
     quantity: 10,
     total: 250000,
@@ -40,7 +49,7 @@ const orders: Order[] = [
   },
   {
     id: 1004,
-    customer: "鈴木電機",
+    customer: "D",
     product: "モニター",
     quantity: 3,
     total: 105000,
@@ -49,7 +58,7 @@ const orders: Order[] = [
 ];
 
 export function CallbacksSample() {
-  const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>({});
+  const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const columnHelper = DataTable.createColumnHelper<Order>();
 
@@ -87,26 +96,24 @@ export function CallbacksSample() {
     }),
   ];
 
-  const handleRowSelectionChange = (selection: Record<string, boolean>) => {
+  const handleRowSelectionChange: OnRowSelectionChange = (updaterOrValue) => {
+    const selection =
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(selectedRows)
+        : updaterOrValue;
     console.log("選択された注文:", selection);
     setSelectedRows(selection);
   };
 
-  const handleSortingChange = (
-    sorting: Array<{ id: string; desc: boolean }>
-  ) => {
-    console.log("ソート変更:", sorting);
-  };
-
-  const selectedOrderIndices = Object.keys(selectedRows).filter(
+  const selectedOrderIds = Object.keys(selectedRows).filter(
     (key) => selectedRows[key]
   );
-  const selectedOrders = orders.filter((order, index) =>
-    selectedOrderIndices.includes(index.toString())
+  const selectedOrders = orders.filter((order) =>
+    selectedOrderIds.includes(order.id.toString())
   );
 
   const handleShowModal = () => {
-    if (selectedOrderIndices.length > 0) {
+    if (selectedOrderIds.length > 0) {
       setIsModalOpen(true);
     }
   };
@@ -130,24 +137,30 @@ export function CallbacksSample() {
         </p>
         <Button
           onClick={handleShowModal}
-          disabled={selectedOrderIndices.length === 0}
+          disabled={selectedOrderIds.length === 0}
         >
-          選択した注文を確認 ({selectedOrderIndices.length}件)
+          選択した注文を確認 ({selectedOrderIds.length}件)
         </Button>
       </div>
 
       <DataTable<Order>
         data={orders}
         columns={columns}
+        enableRowSelection={true}
+        getRowId={(row) => row.id.toString()}
         onRowSelectionChange={handleRowSelectionChange}
-        onSortingChange={handleSortingChange}
-        initialSorting={[{ id: "total", desc: true }]}
+        state={{
+          rowSelection: selectedRows,
+        }}
+        initialState={{
+          sorting: [{ id: "total", desc: true }],
+        }}
       />
 
       <ModalDialog
         isOpen={isModalOpen}
         title="選択された注文"
-        submitButtonLabel="閉じる"
+        submitButtonLabel="完了"
         onButtonClick={handleCloseModal}
         onOpenChange={(details) => {
           if (!details.open) {
@@ -155,51 +168,55 @@ export function CallbacksSample() {
           }
         }}
       >
-        <div className={css({ padding: "sd.system.dimension.spacing.medium" })}>
-          {selectedOrders.length > 0 ? (
-            <div>
-              <p
-                className={css({
-                  marginBottom: "sd.system.dimension.spacing.medium",
-                })}
-              >
-                {selectedOrders.length}件の注文が選択されています：
-              </p>
+        {selectedOrders.length > 0 ? (
+          <div>
+            <p
+              className={css({
+                marginBottom: "sd.system.dimension.spacing.medium",
+              })}
+            >
+              {selectedOrders.length}件の注文が選択されています：
+            </p>
+            <List>
               {selectedOrders.map((order) => (
-                <div
+                <ListItem
                   key={order.id}
-                  className={css({
-                    marginBottom: "sd.system.dimension.spacing.small",
-                    padding: "sd.system.dimension.spacing.small",
-                    border: "1px solid sd.system.color.outline.default",
-                    borderRadius: "sd.system.dimension.corner.small",
-                  })}
+                  title={`注文ID: ${order.id}`}
+                  description={`顧客: ${order.customer} | 商品: ${order.product}`}
+                  leftIcon={<SerendieSymbol name="package" />}
+                  isLargeLeftIcon
                 >
-                  <p>
-                    <strong>注文ID:</strong> {order.id}
-                  </p>
-                  <p>
-                    <strong>顧客名:</strong> {order.customer}
-                  </p>
-                  <p>
-                    <strong>商品:</strong> {order.product}
-                  </p>
-                  <p>
-                    <strong>数量:</strong> {order.quantity}個
-                  </p>
-                  <p>
-                    <strong>合計金額:</strong> ¥{order.total.toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>ステータス:</strong> {order.status}
-                  </p>
-                </div>
+                  <div
+                    className={css({
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: "sd.system.dimension.spacing.small",
+                    })}
+                  >
+                    <Badge
+                      size="small"
+                      styleColor={
+                        order.status === "完了"
+                          ? "green"
+                          : order.status === "配送中"
+                            ? "yellow"
+                            : "gray"
+                      }
+                    >
+                      {order.status}
+                    </Badge>
+                    <span>
+                      {`数量: ${order.quantity}個 | ¥${order.total.toLocaleString()}`}
+                    </span>
+                  </div>
+                </ListItem>
               ))}
-            </div>
-          ) : (
-            <p>注文が選択されていません。</p>
-          )}
-        </div>
+            </List>
+          </div>
+        ) : (
+          <p>注文が選択されていません。</p>
+        )}
       </ModalDialog>
     </div>
   );
