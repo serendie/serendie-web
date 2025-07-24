@@ -28,9 +28,9 @@ import { chartColors } from "@/data/chartColors.ts";
 <PageSection>
   <PageHeadLine number={1}>Mark</PageHeadLine>
 
-## Single（単色色相）
+## Single（単色相）
 
-チャート本体に使用する単色色相のカラーパレットです。データ数が３以下の場合は偶数のカラーを使用してください。
+チャート本体に使用する単色相のカラーパレットです。データ数が３以下の場合は偶数のカラーを使用してください。
 
 <div
   className={css({
@@ -67,7 +67,7 @@ import { chartColors } from "@/data/chartColors.ts";
 <ChartColorMatrix data={chartColors.semantic} matrixId="semantic" client:idle />
 ## Multi（複数色相）
 
-チャート本体に使用する複数色相のカラーパレットです。各色を個別に分類が認識できるように、パレットの番号の順番に従って使用してください。
+チャート本体に使用する複数色相のカラーパレットです。**各色を個別に分類が認識できるように、パレットの番号の順番に従って使用してください。**
 
 <div
   className={css({

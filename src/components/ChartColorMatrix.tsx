@@ -1,5 +1,5 @@
 import React from "react";
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 
 // Type definitions for chart color data
 export interface ChartColorRow {
@@ -179,35 +179,78 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
           width: "100%",
           position: "relative",
           overflow: "visible",
+          display: "grid",
+          gap: "24px",
           expandedDown: {
             overflowX: "auto",
             overflowY: "hidden",
           },
         })}
       >
-        <thead>
-          <tr>
-            <th className={css({})}></th>
-            {data.shades.map((shade) => (
-              <th
-                key={shade}
-                className={css({
-                  fontFamily: "sd.reference.typography.fontFamily.monospace",
-                  fontSize: "12px",
-                  lineHeight: 1.2,
-                  pb: "sd.system.dimension.spacing.extraSmall",
-                  color: "sd.system.color.component.onSurfaceVariant",
-                  fontWeight: 400,
-                })}
-              >
-                {shade}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
+        {data.shades.length > 1 && (
+          <thead>
+            <tr
+              className={
+                (cx("group"),
+                css({
+                  display: "grid",
+                  gridTemplateColumns: `var(--grid-template-columns)`,
+                  width: "100%",
+                }))
+              }
+              style={{
+                ...({
+                  "--grid-template-columns": `164px repeat(${data.shades.length}, minmax(48px, 120px))`,
+                } as React.CSSProperties),
+              }}
+            >
+              <th className={css({})}></th>
+              {data.shades.map((shade) => (
+                <th
+                  key={shade}
+                  className={css({
+                    fontFamily: "sd.reference.typography.fontFamily.monospace",
+                    fontSize: "12px",
+                    lineHeight: 1.2,
+                    pb: "sd.system.dimension.spacing.extraSmall",
+                    color: "sd.system.color.component.onSurfaceVariant",
+                    fontWeight: 400,
+                  })}
+                >
+                  {shade}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody
+          className={css({
+            display: "grid",
+            gridTemplateColumns: `var(--grid-template-columns)`,
+            rowGap: "24px",
+            width: "100%",
+          })}
+          style={{
+            ...({
+              "--grid-template-columns":
+                data.shades.length > 1
+                  ? `164px repeat(${data.shades.length}, minmax(48px, 120px))`
+                  : `164px repeat(6, minmax(48px, 120px))`,
+            } as React.CSSProperties),
+          }}
+        >
           {data.rows.map((row) => (
-            <tr key={row.name} className="group">
+            <tr
+              key={row.name}
+              className={cx(
+                "group",
+                css({
+                  display: "grid",
+                  gridTemplateColumns: "subgrid",
+                  gridColumn: "1 / -1",
+                })
+              )}
+            >
               <th
                 className={css({
                   position: "sticky",
@@ -219,6 +262,11 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
                   lineHeight: 1.2,
                   pr: "sd.system.dimension.spacing.extraSmall",
                   fontWeight: 400,
+                  height: "48px",
+                  maxWidth: "164px",
+                  alignItems: "center",
+                  display: "flex",
+                  wordBreak: "break-all",
                   expandedDown: {
                     _before: {
                       content: '""',
@@ -232,7 +280,7 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
                   },
                 })}
               >
-                <div>{row.name}</div>
+                <span>{row.name}</span>
               </th>
               {data.shades.map((shade) => {
                 const color = row.colors[shade as keyof typeof row.colors];

@@ -201,7 +201,7 @@ export const chartColors: Record<string, ChartColorData> = {
     shades: [""],
     rows: [
       {
-        name: "Surface",
+        name: "chartSurface",
         colors: {
           "": token("colors.sd.system.color.chart.component.chartSurface"),
         },
@@ -210,7 +210,7 @@ export const chartColors: Record<string, ChartColorData> = {
         },
       },
       {
-        name: "onSurface",
+        name: "onChartSurface",
         colors: {
           "": token("colors.sd.system.color.chart.component.onChartSurface"),
         },
@@ -239,7 +239,7 @@ export const chartColors: Record<string, ChartColorData> = {
         },
       },
       {
-        name: "scaleMark",
+        name: "scalemark",
         colors: {
           "": token("colors.sd.system.color.chart.component.scalemark"),
         },
