@@ -46,7 +46,7 @@ export const PageSection = styled("section", {
     },
     "& p": {
       lineHeight: "1.7",
-      mt: "sd.system.dimension.spacing.extraLarge",
+      mt: "sd.system.dimension.spacing.medium",
     },
     "& p + p:has(img), & p + img, & p + svg, & p + figure, & p + pre, & p + a, & .codeBox":
       {
@@ -63,7 +63,13 @@ export const PageSection = styled("section", {
       mb: "sd.system.dimension.spacing.medium",
       expanded: {
         mt: "sd.system.dimension.spacing.twoExtraLarge",
-        mb: "sd.system.dimension.spacing.extraLarge",
+        mb: "sd.system.dimension.spacing.medium",
+      },
+    },
+    "& astro-page-headline + h2": {
+      mt: "sd.system.dimension.spacing.extraLarge",
+      expanded: {
+        mt: "sd.system.dimension.spacing.extraLarge",
       },
     },
     "& h2": {

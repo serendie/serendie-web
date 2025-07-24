@@ -56,9 +56,13 @@ export const SideMenuListItemLink = styled("a", {
     textStyle: "sd.system.typography.label.extraLarge_compact",
     lineHeight: 1.5,
     py: "sd.system.dimension.spacing.extraSmall",
-    px: "sd.system.dimension.spacing.extraLarge",
+    pl: "sd.system.dimension.spacing.extraLarge",
+    pr: "sd.system.dimension.spacing.small",
     _hover: {
       background: "sd.system.color.interaction.hoveredVariant",
+    },
+    "&[data-title-length-long='true']": {
+      letterSpacing: "-0.02em",
     },
   },
   variants: {
@@ -86,7 +90,11 @@ export const SideMenu = ({ links }: { links: Links[] }) => {
       >
         {links.map((link, i) => (
           <li key={i}>
-            <SideMenuListItemLink href={link.href} active={link.isActive}>
+            <SideMenuListItemLink
+              href={link.href}
+              active={link.isActive}
+              data-title-length-long={link.title.length >= 12}
+            >
               {link.title}
             </SideMenuListItemLink>
           </li>
