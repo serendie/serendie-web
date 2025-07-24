@@ -211,8 +211,7 @@ export const ChartColorMatrix: React.FC<ChartColorMatrixProps> = ({
                   className={css({
                     fontFamily: "sd.reference.typography.fontFamily.monospace",
                     fontSize: "12px",
-                    lineHeight: 1.2,
-                    pb: "sd.system.dimension.spacing.extraSmall",
+                    lineHeight: 1,
                     color: "sd.system.color.component.onSurfaceVariant",
                     fontWeight: 400,
                   })}
