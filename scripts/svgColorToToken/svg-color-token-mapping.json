@@ -1,0 +1,194 @@
+{
+  "description": "SVG color to Serendie design token mapping based on Figma variable definitions",
+  "mappings": {
+    "#ffffff": {
+      "tokens": ["sd.system.color.chart.component.chartSurface"],
+      "cssVariable": "var(--colors-sd-system-color-chart-component-chart-surface)",
+      "usage": "Chart background/surface"
+    },
+    "#000000": {
+      "tokens": [
+        "sd.system.color.chart.component.onMarkLabel",
+        "sd.system.color.component.onSurface"
+      ],
+      "cssVariable": "var(--colors-sd-system-color-chart-component-onMarkLabel)",
+      "usage": "Text on chart marks, general on-surface text"
+    },
+    "#696966": {
+      "tokens": [
+        "sd.system.color.chart.component.onChartSurface",
+        "sd.system.color.component.onSurfaceVariant"
+      ],
+      "cssVariable": "var(--colors-sd-system-color-chart-component-onChartSurface)",
+      "usage": "Secondary text on charts, axis labels"
+    },
+    "#C8C7C2": {
+      "tokens": ["sd.system.color.component.outline"],
+      "cssVariable": "var(--colors-sd-system-color-component-outline)",
+      "usage": "Borders and outlines"
+    },
+    "#D9D8D3": {
+      "tokens": ["sd.system.color.chart.component.scalemark"],
+      "cssVariable": "var(--colors-sd-system-color-chart-component-scalemark)",
+      "usage": "Scale marks, grid lines"
+    },
+    "#428CFE": {
+      "tokens": [
+        "sd.system.color.chart.mark.primary.04",
+        "sd.system.color.chart.component.threshold"
+      ],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-04)",
+      "usage": "Primary chart color 4, threshold lines"
+    },
+    "#8FAEFE": {
+      "tokens": ["sd.system.color.chart.mark.primary.03"],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-03)",
+      "usage": "Primary chart color 3"
+    },
+    "#BFCEFC": {
+      "tokens": ["sd.system.color.chart.mark.primary.02"],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-02)",
+      "usage": "Primary chart color 2"
+    },
+    "#D7DEFB": {
+      "tokens": ["sd.system.color.chart.mark.primary.01"],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-01)",
+      "usage": "Primary chart color 1 (lightest)"
+    },
+    "#0A69CF": {
+      "tokens": ["sd.system.color.chart.mark.primary.05"],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-05)",
+      "usage": "Primary chart color 5"
+    },
+    "#073165": {
+      "tokens": ["sd.system.color.chart.mark.primary.06"],
+      "cssVariable": "var(--colors-sd-system-color-chart-mark-primary-06)",
+      "usage": "Primary chart color 6 (darkest)"
+    },
+    "#6ED0AE": {
+      "tokens": ["sd.system.color.chart.mark.multi.02"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-02)",
+      "usage": "Multi-color chart mark 02 - green"
+    },
+    "#FF8F8F": {
+      "tokens": ["sd.system.color.chart.mark.multi.03"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-03)",
+      "usage": "Multi-color chart mark 03 - pink"
+    },
+    "#AA61C2": {
+      "tokens": ["sd.system.color.chart.mark.multi.04"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-04)",
+      "usage": "Multi-color chart mark 04 - purple"
+    },
+    "#803510": {
+      "tokens": ["sd.system.color.chart.mark.multi.05"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-05)",
+      "usage": "Multi-color chart mark 05 - brown"
+    },
+    "#64CCD3": {
+      "tokens": ["sd.system.color.chart.mark.multi.06"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-06)",
+      "usage": "Multi-color chart mark 06 - cyan"
+    },
+    "#FFE885": {
+      "tokens": ["sd.system.color.chart.mark.multi.07"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-07)",
+      "usage": "Multi-color chart mark 07 - yellow"
+    },
+    "#AB4919": {
+      "tokens": ["sd.system.color.chart.mark.multi.08"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-08)",
+      "usage": "Multi-color chart mark 08 - orange"
+    },
+    "#932653": {
+      "tokens": ["sd.system.color.chart.mark.multi.09"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-09)",
+      "usage": "Multi-color chart mark 09 - maroon"
+    },
+    "#AF8245": {
+      "tokens": ["sd.system.color.chart.mark.multi.10"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-10)",
+      "usage": "Multi-color chart mark 10 - tan"
+    },
+    "#F84258": {
+      "tokens": ["sd.system.color.chart.mark.negative.04"],
+      "cssVariable": "var(--sd-system-color-chart-mark-negative-04)",
+      "usage": "Negative chart mark 04 - red"
+    },
+    "#6ed0ae": {
+      "tokens": ["sd.system.color.chart.mark.multi.02"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-02)",
+      "usage": "Multi-color chart mark 02 - green"
+    },
+    "#ff8f8f": {
+      "tokens": ["sd.system.color.chart.mark.multi.03"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-03)",
+      "usage": "Multi-color chart mark 03 - pink"
+    },
+    "#aa61c2": {
+      "tokens": ["sd.system.color.chart.mark.multi.04"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-04)",
+      "usage": "Multi-color chart mark 04 - purple"
+    },
+    "#803510": {
+      "tokens": ["sd.system.color.chart.mark.multi.05"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-05)",
+      "usage": "Multi-color chart mark 05 - brown"
+    },
+    "#64ccd3": {
+      "tokens": ["sd.system.color.chart.mark.multi.06"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-06)",
+      "usage": "Multi-color chart mark 06 - cyan"
+    },
+    "#ffe885": {
+      "tokens": ["sd.system.color.chart.mark.multi.07"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-07)",
+      "usage": "Multi-color chart mark 07 - yellow"
+    },
+    "#ab4919": {
+      "tokens": ["sd.system.color.chart.mark.multi.08"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-08)",
+      "usage": "Multi-color chart mark 08 - orange"
+    },
+    "#932653": {
+      "tokens": ["sd.system.color.chart.mark.multi.09"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-09)",
+      "usage": "Multi-color chart mark 09 - maroon"
+    },
+    "#af8245": {
+      "tokens": ["sd.system.color.chart.mark.multi.10"],
+      "cssVariable": "var(--sd-system-color-chart-mark-multi-10)",
+      "usage": "Multi-color chart mark 10 - tan"
+    },
+    "#f84258": {
+      "tokens": ["sd.system.color.chart.mark.negative.04"],
+      "cssVariable": "var(--sd-system-color-chart-mark-negative-04)",
+      "usage": "Negative chart mark 04 - red"
+    },
+    "#AFAEAA": {
+      "tokens": ["sd.system.color.interaction.disabledOnSurface"],
+      "cssVariable": "var(--sd-system-color-interaction-disabled-on-surface)",
+      "usage": "Disabled on surface text/strokes"
+    },
+    "#afaeaa": {
+      "tokens": ["sd.system.color.interaction.disabledOnSurface"],
+      "cssVariable": "var(--sd-system-color-interaction-disabled-on-surface)",
+      "usage": "Disabled on surface text/strokes"
+    },
+    "#232322": {
+      "tokens": ["sd.system.color.component.inverseSurface"],
+      "cssVariable": "var(--sd-system-color-component-inverse-surface)",
+      "usage": "Inverse surface - dark background"
+    },
+    "#8C8B87": {
+      "tokens": ["sd.system.color.component.onSurfaceVariant"],
+      "cssVariable": "var(--sd-system-color-component-on-surface-variant)",
+      "usage": "On surface variant - secondary text"
+    },
+    "#8c8b87": {
+      "tokens": ["sd.system.color.component.onSurfaceVariant"],
+      "cssVariable": "var(--sd-system-color-component-on-surface-variant)",
+      "usage": "On surface variant - secondary text"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chart background -->
+  <rect x="0" y="0" width="400" height="300" fill="#ffffff" />
+  
+  <!-- Chart bars with primary colors -->
+  <rect x="50" y="200" width="60" height="80" fill="#D7DEFB" />
+  <rect x="120" y="150" width="60" height="130" fill="#BFCEFC" />
+  <rect x="190" y="100" width="60" height="180" fill="#8FAEFE" />
+  <rect x="260" y="50" width="60" height="230" fill="#428CFE" />
+  
+  <!-- Scale marks -->
+  <line x1="40" y1="280" x2="360" y2="280" stroke="#D9D8D3" stroke-width="2" />
+  <line x1="40" y1="200" x2="360" y2="200" stroke="#D9D8D3" stroke-width="1" />
+  <line x1="40" y1="120" x2="360" y2="120" stroke="#D9D8D3" stroke-width="1" />
+  
+  <!-- Threshold line -->
+  <line x1="40" y1="160" x2="360" y2="160" stroke="#428CFE" stroke-width="2" stroke-dasharray="5,5" />
+  
+  <!-- Text labels -->
+  <text x="80" y="195" text-anchor="middle" fill="#000000" font-size="14">Q1</text>
+  <text x="150" y="145" text-anchor="middle" fill="#000000" font-size="14">Q2</text>
+  <text x="220" y="95" text-anchor="middle" fill="#000000" font-size="14">Q3</text>
+  <text x="290" y="45" text-anchor="middle" fill="#000000" font-size="14">Q4</text>
+  
+  <!-- Axis labels -->
+  <text x="30" y="285" text-anchor="end" fill="#696966" font-size="12">0</text>
+  <text x="30" y="205" text-anchor="end" fill="#696966" font-size="12">50</text>
+  <text x="30" y="125" text-anchor="end" fill="#696966" font-size="12">100</text>
+  
+  <!-- Chart title -->
+  <text x="200" y="25" text-anchor="middle" fill="#073165" font-size="18" font-weight="bold">Quarterly Sales</text>
+  
+  <!-- Border -->
+  <rect x="0" y="0" width="400" height="300" fill="none" stroke="#C8C7C2" stroke-width="1" />
+</svg>
