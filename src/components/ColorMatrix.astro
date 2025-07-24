@@ -26,7 +26,7 @@ export function getColorValue(color: keyof typeof colorScale, shade: string) {
 }
 
 function getShades(color: keyof typeof colorScale) {
-  return Object.keys(colorScale[color]).reverse();
+  return Object.keys(colorScale[color]);
 }
 
 function toCamelCase(color: string) {
