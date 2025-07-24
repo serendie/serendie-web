@@ -18,7 +18,7 @@ export function CalloutSection({
     <div
       className={css({
         backgroundColor: "sd.reference.color.scale.blue.100",
-        borderRadius: "24px",
+        borderRadius: "12px",
         padding: "24px",
         position: "relative",
         marginBottom: "24px",
