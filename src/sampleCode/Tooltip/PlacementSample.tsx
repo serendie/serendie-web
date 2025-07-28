@@ -23,7 +23,7 @@ const GridItem = styled("div", {
 
 const Span = styled("span", {
   base: {
-    width: 'fit-content',
+    width: "fit-content",
   },
 });
 
