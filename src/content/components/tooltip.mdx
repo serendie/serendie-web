@@ -10,8 +10,6 @@ import { BasicSample } from "@/sampleCode/Tooltip/BasicSample";
 import basicSampleRaw from "@/sampleCode/Tooltip/BasicSample.tsx?raw";
 import { PlacementSample } from "@/sampleCode/Tooltip/PlacementSample";
 import placementSampleRaw from "@/sampleCode/Tooltip/PlacementSample.tsx?raw";
-import { DelaySample } from "@/sampleCode/Tooltip/DelaySample";
-import delaySampleRaw from "@/sampleCode/Tooltip/DelaySample.tsx?raw";
 import { StateSample } from "@/sampleCode/Tooltip/StateSample";
 import stateSampleRaw from "@/sampleCode/Tooltip/StateSample.tsx?raw";
 
@@ -31,15 +29,6 @@ import stateSampleRaw from "@/sampleCode/Tooltip/StateSample.tsx?raw";
   storyPath="/story/components-tooltip--positions"
 >
   <PlacementSample client:load />
-</Code>
-
-<Code
-  title="表示タイミング"
-  description="openDelayとcloseDelayプロパティで、ツールチップの表示・非表示のタイミングを調整できます。ユーザー体験を考慮して適切な遅延時間を設定してください。"
-  code={delaySampleRaw}
-  storyPath="/story/components-tooltip--custom-delay"
->
-  <DelaySample client:load />
 </Code>
 
 <Code

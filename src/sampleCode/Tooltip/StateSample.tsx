@@ -42,21 +42,14 @@ export function StateSample() {
       <GridItemContainer>
         <Label>プロパティなし:</Label>
         <Tooltip content="これは有効なツールチップです">
-          <Span><Button>有効なボタン</Button></Span>
+          <Span><Button>enabledの場合</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
       <GridItemContainer>
         <Label>disabled:</Label>
         <Tooltip content="このツールチップは表示されません" disabled>
-          <Span><Button>無効なツールチップ</Button></Span>
-        </Tooltip>
-      </GridItemContainer>
-
-      <GridItemContainer>
-        <Label>内部要素にdisabled:</Label>
-        <Tooltip content="ボタンが無効な場合はツールチップも無効">
-          <Span><Button disabled>無効なボタン</Button></Span>
+          <Span><Button>disabledの場合</Button></Span>
         </Tooltip>
       </GridItemContainer>
     </Grid>
