@@ -1,5 +1,5 @@
 import { Tooltip, Button } from "@serendie/ui";
-import { styled } from "../../../styled-system/jsx";
+import { styled } from "styled-system/jsx";
 
 const Label = styled("span", {
   base: {
@@ -30,20 +30,26 @@ const GridItemContainer = styled("div", {
   },
 });
 
+const Span = styled("span", {
+  base: {
+    width: 'fit-content',
+  },
+});
+
 export function DelaySample() {
   return (
     <Grid>
       <GridItemContainer>
         <Label>即座に表示:</Label>
         <Tooltip content="遅延なしで即座に表示されます" openDelay={0}>
-          <Button>すぐ表示</Button>
+          <Span><Button>すぐ表示</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
       <GridItemContainer>
         <Label>表示時に遅延 (1秒):</Label>
         <Tooltip content="1秒後に表示されます" openDelay={1000}>
-          <Button>1秒後に表示</Button>
+          <Span><Button>1秒後に表示</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
@@ -53,7 +59,7 @@ export function DelaySample() {
           content="マウスを離してから2秒後に非表示になります"
           closeDelay={2000}
         >
-          <Button>2秒後に非表示</Button>
+          <Span><Button>2秒後に非表示</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
@@ -64,7 +70,7 @@ export function DelaySample() {
           openDelay={500}
           closeDelay={1000}
         >
-          <Button>両方遅延</Button>
+          <Span><Button>両方遅延</Button></Span>
         </Tooltip>
       </GridItemContainer>
     </Grid>

@@ -1,6 +1,12 @@
 import { Tooltip, Button } from "@serendie/ui";
 import { styled } from "../../../styled-system/jsx";
 
+const Span = styled("span", {
+  base: {
+    width: 'fit-content',
+  },
+});
+
 const Label = styled("span", {
   base: {
     fontSize: "sm",
@@ -36,21 +42,21 @@ export function StateSample() {
       <GridItemContainer>
         <Label>プロパティなし:</Label>
         <Tooltip content="これは有効なツールチップです">
-          <Button>有効なボタン</Button>
+          <Span><Button>有効なボタン</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
       <GridItemContainer>
         <Label>disabled:</Label>
         <Tooltip content="このツールチップは表示されません" disabled>
-          <Button>無効なツールチップ</Button>
+          <Span><Button>無効なツールチップ</Button></Span>
         </Tooltip>
       </GridItemContainer>
 
       <GridItemContainer>
-        <Label>内部要素がdisabled:</Label>
+        <Label>内部要素にdisabled:</Label>
         <Tooltip content="ボタンが無効な場合はツールチップも無効">
-          <Button disabled>無効なボタン</Button>
+          <Span><Button disabled>無効なボタン</Button></Span>
         </Tooltip>
       </GridItemContainer>
     </Grid>
