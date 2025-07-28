@@ -1,14 +1,12 @@
-# SDS Website
+# Serendie Design System Website
 
-Cloudflare Pagesでホスティングしています。
+## Staging
 
-## ステージング環境へのデプロイ
-
-URL: https://dev.serendie-web.pages.dev/ (要Basic認証)
+URL: https://dev.serendie-web.pages.dev/
 
 `dev`ブランチにpushすると、ステージング環境へデプロイされます。
 
-## プロダクション環境へのデプロイ
+## Production
 
 URL: https://serendie.design/
 
