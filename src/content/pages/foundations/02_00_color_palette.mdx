@@ -3,7 +3,7 @@ title: カラー
 slug: foundations/color
 description: Serendieらしさを視覚的に表現するための基礎となるカラーパレットです。このパレットに基づくことでプロダクト間の一貫性を強化できます。カラーパレットはリファレンストークンとして定義されています。
 illustType: A
-lastUpdated: "2025-1-28"
+lastUpdated: "2025-07-28"
 subLinks:
   [
     { name: "カラーパレット", path: "/foundations/color" },
@@ -19,7 +19,7 @@ import PageHeadline from "../../../components/PageHeadLine.astro";
 <PageSection>
   <PageHeadline number={1}>カラーパレット</PageHeadline>
 
-[Serendieブランド](https://www.mitsubishielectric.co.jp/serendie/)では日本の伝統色をベースにしたカラーを多様に組み合わせ、オフィス空間やコミュニケーションツールなど様々なタッチポイントで使用しています。Serendie Design Systemではその多様さを[5つのカラーテーマ](/foundations/theming)として定義し、それを継承したデータビジュアライゼーション用のカラーパレットも備えています。本カラーパレットはそれらの基盤となります。
+[Serendieブランド](https://www.mitsubishielectric.co.jp/serendie/)では日本の伝統色をベースにしたカラーを多様に組み合わせ、オフィス空間やコミュニケーションツールなど様々なタッチポイントで使用しています。Serendie Design Systemではその多様さを[5つのカラーテーマ](/foundations/theming)として定義し、それを継承した[データビジュアライゼーション用のカラーパレット](/foundations/data-visualization/)も備えています。本カラーパレットはそれらの基盤となります。
 
 基本的に色相ごとに10段階の明度でスケールを設計していますが、UIのなかで必要となるWhiteとBlack、Transparencyは例外です。Transparencyの用途は[カラーロール](/foundations/color/role#section-4)を参照してください。
 
@@ -39,7 +39,7 @@ import PageHeadline from "../../../components/PageHeadLine.astro";
 
 Serendieブランドの特性や、テーミングやデータビジュアライゼーションなど多様な用途の基盤となることを踏まえて、カラーパレットのコントラスト基準としてAPCA (Advanced Perceptual Contrast Algorithm) を採用しています。APCAはWCAG 3.0での採用が検討されており、より人間の知覚に近い基準として期待されています。
 
-APCAのコントラスト基準 (Lc値) を前提に、色相ごとの人間の知覚特性を考慮しながら、色相間の明度レベルが揃うように調整しています。また、カラートークンとしての使いやすさを考慮し、明度のジャンプ率には意図的な傾斜をつけています。読みやすさが重要なテキストにおいては、600以上 (Lc値の75以上) を使用してください。
+APCAのコントラスト基準 (Lc値) を前提に、色相ごとの人間の知覚特性を考慮しながら、色相間の明度レベルが揃うように調整しています。また、カラートークンとしての使いやすさを考慮し、明度のジャンプ率には意図的な傾斜をつけています。読みやすさが重要なテキストにおいては、600以上 (Lc値の75以上) を使用してください。読みやすさが重要なテキストにおいては、カラートークン600番以上 (Lc値の75以上) を使用してください。読みやすさが重要なテキストにおいては、カラートークン600番以上 (Lc値の75以上) を使用してください。
 
 また、現在提供している[5つのカラーテーマ](/foundations/theming)は、前景色(テキスト色)と背景色がAPCAのコントラスト基準を満たすように設計しています。そのため、UIコンポーネントを追加設計する際は、[カラーロール](/foundations/color/role)を適切に使用してください。例えば、primaryとonPrimaryは合わせて使うことが推奨され、primaryとonPrimaryContainerを組み合わせることは非推奨です。
 
