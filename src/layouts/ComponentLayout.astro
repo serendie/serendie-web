@@ -16,11 +16,13 @@ interface Props {
 const { data } = Astro.props;
 const components = await getCollection("components");
 
-const componentLinks = components.map((component) => ({
-  href: `/components/${component.slug}`,
-  title: component.data.title,
-  isActive: component.data.title === data.title,
-}));
+const componentLinks = components
+  .map((component) => ({
+    href: `/components/${component.slug}`,
+    title: component.data.title,
+    isActive: component.data.title === data.title,
+  }))
+  .sort((a, b) => a.title.localeCompare(b.title));
 
 componentLinks.unshift({
   href: "/components",
