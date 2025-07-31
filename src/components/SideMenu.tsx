@@ -93,7 +93,9 @@ export const SideMenu = ({ links }: { links: Links[] }) => {
             <SideMenuListItemLink
               href={link.href}
               active={link.isActive}
-              data-title-length-long={link.title.length >= 12}
+              data-title-length-long={/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]{12,}/.test(
+                link.title
+              )}
             >
               {link.title}
             </SideMenuListItemLink>
