@@ -1,7 +1,10 @@
-import { Select as ArkSelect, type SelectRootProps } from "@ark-ui/react";
+import {
+  Select as ArkSelect,
+  createListCollection,
+  type SelectRootProps,
+} from "@ark-ui/react";
 import { type RecipeVariantProps, css, cx, sva } from "styled-system/css";
 
-import { useId } from "react";
 import { type RefObject } from "react";
 import { Portal } from "@ark-ui/react";
 import { SerendieSymbol } from "@serendie/symbols";
@@ -179,6 +182,7 @@ type Props = {
   invalidMessage?: string;
   buttonClassName?: string;
   containerRef?: RefObject<HTMLElement>;
+  items: selectItem[];
 };
 
 type selectItem = {
@@ -187,7 +191,7 @@ type selectItem = {
 };
 
 type SelectStyleProps = Props &
-  SelectRootProps<selectItem> &
+  Omit<SelectRootProps<selectItem>, "collection"> &
   RecipeVariantProps<typeof SelectStyle>;
 
 export const ThemeSelect: React.FC<SelectStyleProps> = ({
@@ -199,11 +203,17 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
   className,
   buttonClassName,
   containerRef,
+  items,
   ...props
 }) => {
   const [variantProps, elementProps] = SelectStyle.splitVariantProps(props);
   const styles = SelectStyle(variantProps);
-  const id = useId(); // TODO: Ark UI 3.0.0 からIDの指定いらなくなる
+
+  const collection = createListCollection({
+    items,
+    itemToString: (item: selectItem) => item.label,
+    itemToValue: (item: selectItem) => item.value,
+  });
 
   return (
     <ArkSelect.Root
@@ -211,6 +221,7 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
       invalid={invalid}
       className={cx(styles.root, className)}
       positioning={{ sameWidth: true }}
+      collection={collection}
     >
       {label && variantProps.size != "small" && (
         // smallの場合はラベルを表示しない
@@ -262,8 +273,8 @@ export const ThemeSelect: React.FC<SelectStyleProps> = ({
         <ArkSelect.Positioner>
           {/* TODO: 上部に僅かに隙間があるので詰めたいがAPIが見つからない、、、 */}
           <ArkSelect.Content className={styles.content}>
-            <ArkSelect.ItemGroup id={id}>
-              {props.items.map((item, i) => (
+            <ArkSelect.ItemGroup>
+              {collection.items.map((item, i) => (
                 <ArkSelect.Item key={i} item={item} className={styles.item}>
                   <ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
                   <figure
