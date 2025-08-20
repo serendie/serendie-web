@@ -22,9 +22,10 @@ const ImportPatternSchema = z.object({
 });
 
 const IconImportSchema = z.object({
-  pattern: z.string().describe("アイコンのインポートパターン"),
-  example: z.string().describe("具体的な例"),
+  import: z.string().describe("アイコンのインポート文"),
+  usage: z.string().describe("JSXでの使用例"),
   variants: z.array(z.string()).describe("利用可能なバリアント"),
+  note: z.string().optional().describe("補足説明"),
 });
 
 // テーマ情報のスキーマ
