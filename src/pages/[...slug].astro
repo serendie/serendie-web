@@ -45,6 +45,13 @@ const siblings = await getCollection(
     !page.data.parent
 );
 
+// Sort siblings by filename with natural numeric sorting
+siblings.sort((a, b) => {
+  const filenameA = a.id.split("/").pop() || "";
+  const filenameB = b.id.split("/").pop() || "";
+  return filenameA.localeCompare(filenameB, undefined, { numeric: true, sensitivity: 'base' });
+});
+
 const propsForMdx = {
   siblings,
 };
