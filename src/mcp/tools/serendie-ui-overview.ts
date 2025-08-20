@@ -70,9 +70,10 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
               note: "PascalCase → kebab-case",
             },
             icons: {
-              pattern: "import { IconName } from '@serendie/symbols'",
-              example: "import { AddIcon } from '@serendie/symbols'",
-              variants: ["", "Outlined", "Filled"],
+              import: "import { SerendieSymbol } from '@serendie/symbols'",
+              usage: '<SerendieSymbol name="activity" variant="outlined" />',
+              variants: ["", "outlined", "filled"],
+              note: "SerendieSymbolコンポーネントのみを使用",
             },
           },
           themes: {
@@ -209,11 +210,11 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             components: {
               TextField: {
                 defaults: ["maxWidthのデフォルト値が設定されている"],
-                override: "classNameにてwidth: '100%'指定で制限を解除",
+                override: "className={css({ width: '100%' })}で制限を解除",
               },
               PasswordField: {
                 defaults: ["maxWidthのデフォルト値が設定されている"],
-                override: "classNameにてwidth: '100%'指定で制限を解除",
+                override: "className={css({ width: '100%' })}で制限を解除",
               },
             },
           },
@@ -223,39 +224,52 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
               {
                 title: "ログインフォームの実装",
                 description: "ユーザー名とパスワードの入力フォーム",
-                code: `<Stack gap="sd.system.dimension.spacing.large">
-  <TextField label="ユーザー名" width="100%" />
-  <PasswordField label="パスワード" width="100%" />
-  <Button width="100%" variant="solid" colorScheme="primary">
+                code: `<div className={css({ 
+  display: "flex", 
+  flexDirection: "column", 
+  gap: "sd.system.dimension.spacing.large" 
+})}>
+  <TextField label="ユーザー名" className={css({ width: "100%" })} />
+  <PasswordField label="パスワード" className={css({ width: "100%" })} />
+  <Button className={css({ width: "100%" })} variant="solid" colorScheme="primary">
     ログイン
   </Button>
-</Stack>`,
+</div>`,
                 notes: [
-                  "Stackで垂直方向のレイアウト",
-                  "width: '100%'でフィールドのmaxWidth制限を解除",
+                  "classNameとcss()でフィールドのmaxWidth制限を解除",
                   "スペーシングはデザイントークンを使用",
                 ],
               },
               {
                 title: "レスポンシブカードレイアウト",
-                description: "Gridを使用したカードのグリッド表示",
-                code: `<Grid 
-  templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-  gap="sd.system.dimension.spacing.extraLarge"
->
+                description: "CSS Gridを使用したカードのグリッド表示",
+                code: `<div className={css({ 
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+  gap: "sd.system.dimension.spacing.extraLarge"
+})}>
   {items.map(item => (
-    <Card key={item.id} p="sd.system.dimension.spacing.large">
-      <Text textStyle="sd.system.typography.headline.small_expanded">
+    <div key={item.id} className={css({ 
+      padding: "sd.system.dimension.spacing.large",
+      backgroundColor: "sd.system.color.component.surface",
+      borderRadius: "sd.system.dimension.radius.medium",
+      boxShadow: "sd.system.shadow.elevation.low"
+    })}>
+      <h3 className={css({ 
+        textStyle: "sd.system.typography.headline.small_expanded",
+        marginBottom: "sd.system.dimension.spacing.small"
+      })}>
         {item.title}
-      </Text>
-      <Text color="sd.system.color.text.secondary">
+      </h3>
+      <p className={css({ 
+        color: "sd.system.color.component.onSurfaceVariant"
+      })}>
         {item.description}
-      </Text>
-    </Card>
+      </p>
+    </div>
   ))}
-</Grid>`,
+</div>`,
                 notes: [
-                  "Gridでレスポンシブなカードレイアウト",
                   "textStyleでtypographyトークンを適用",
                   "スペーシングと色は必ずデザイントークンを使用",
                 ],
