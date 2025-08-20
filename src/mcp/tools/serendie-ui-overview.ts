@@ -170,7 +170,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
             commonMistakes: [
               "padding: '16px' → p: 'sd.system.dimension.spacing.*' (適切なトークンを使用)",
               "color: '#333' → color: 'sd.system.color.component.onSurface'",
-              "color: 'sd.reference.color.scale.gray.500' → color: 'sd.system.color.text.primary'",
+              "color: 'sd.reference.color.scale.gray.500' → color: 'sd.system.color.component.onSurface'",
               "margin: 8 → m: 'sd.system.dimension.spacing.*' (適切なトークンを使用)",
             ],
             examples: {
@@ -253,7 +253,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
       padding: "sd.system.dimension.spacing.large",
       backgroundColor: "sd.system.color.component.surface",
       borderRadius: "sd.system.dimension.radius.medium",
-      boxShadow: "sd.system.shadow.elevation.low"
+      boxShadow: "sd.system.elevation.shadow.level1"
     })}>
       <h3 className={css({ 
         textStyle: "sd.system.typography.headline.small_expanded",
