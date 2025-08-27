@@ -2,11 +2,11 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
   SerendieUIOverviewResponseSchema,
   type SerendieUIOverviewResponse,
-} from "../schemas/serendie-ui-overview.js";
+} from "../schemas/serendie-ui-overview";
 import {
   SECTION_SUMMARIES,
   getContextualHelp,
-} from "../data/serendie-ui-sections.js";
+} from "../data/serendie-ui-sections";
 
 /**
  * @serendie/uiデザインシステムの概要を提供するMCPツール（軽量版）
