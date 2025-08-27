@@ -113,40 +113,68 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
 
 ## Available MCP Tools
 
-1. **health-check**
+### Walkthrough System (Start Here)
+
+The MCP server now uses a walkthrough system to provide information progressively:
+
+1. **get-serendie-ui-overview** ⚠️ **MUST BE CALLED FIRST**
+
+   - No parameters required
+   - Returns a lightweight overview with 12 sections
+   - Each section has a `detailCommand` for getting full details
+   - Includes `contextualHelp` for task-specific guidance
+   - `nextStep` at the bottom shows the next command to run
+
+   **Usage Flow**:
+   ```
+   1. Call get-serendie-ui-overview → Get sections list
+   2. Follow nextStep command → Get first section details
+   3. Continue through all 12 sections for complete walkthrough
+   ```
+
+2. **get-serendie-ui-detail** (NEW)
+
+   - Parameters:
+     - `section`: string (required) - Section ID to get details for
+   - Available sections:
+     - `architecture` - React 18 + PandaCSS architecture
+     - `import-patterns` - Component and icon imports
+     - `styling-approach` - PandaCSS styling methods
+     - `design-tokens` - Token usage guidelines
+     - `component-categories` - Component organization
+     - `common-patterns` - Props and composition patterns
+     - `initial-setup` - Installation and configuration
+     - `package-relationships` - Package ecosystem
+     - `figma-integration` - Figma Variables and Code Connect
+     - `component-defaults` - Default component styles
+     - `practical-examples` - Real-world code examples
+     - `best-practices` - Development guidelines
+   - Returns detailed information with progress indicator
+   - Includes `nextStep` to continue walkthrough
+
+   **Example Walkthrough**:
+   ```typescript
+   // For first-time users (complete walkthrough):
+   get-serendie-ui-overview()  // Start here
+   get-serendie-ui-detail({ section: 'architecture' })  // 1/12
+   get-serendie-ui-detail({ section: 'import-patterns' })  // 2/12
+   // ... continue through all sections
+
+   // For specific tasks (use contextualHelp):
+   get-serendie-ui-overview()  // Check contextualHelp
+   // If working on styling, use forStyling sections:
+   get-serendie-ui-detail({ section: 'styling-approach' })
+   get-serendie-ui-detail({ section: 'design-tokens' })
+   ```
+
+### Original Tools
+
+3. **health-check**
 
    - No parameters required
    - Returns server status and timestamp
 
-2. **get-serendie-ui-overview** ⚠️ **MUST BE CALLED FIRST**
-
-   - No parameters required
-   - **CRITICAL**: AI assistants MUST call this tool FIRST before any Serendie-related work
-   - Returns essential prerequisite knowledge about @serendie/ui design system
-   - Prevents common mistakes like adding reset CSS or using px values
-   - Returns comprehensive information including:
-     - Overview and version information
-     - Architecture and dependencies
-     - Component categories
-     - Import patterns for components and icons
-     - Theme system
-     - Styling approach with PandaCSS (includes textStyle usage for typography tokens)
-     - Development guidelines
-     - Common patterns and best practices
-     - Related resources
-     - Initial setup instructions (includes warnings about NOT adding reset CSS)
-     - Package relationships (how @serendie/ui, @serendie/design-token, and @serendie/symbols work together)
-     - Design token guidelines (emphasizes using tokens for spacing, colors, etc.)
-       - **NEW**: Spacing token mapping table (px values to token names)
-       - Shows how to use system tokens instead of numeric values
-     - Figma integration details (explains Figma Variables and Code Connect)
-     - **NEW**: Component defaults information (e.g., TextField/PasswordField maxWidth)
-     - **NEW**: Practical examples including:
-       - Login form implementation with proper layout
-       - Responsive card layout with Grid
-       - Best practices for forms and layouts
-
-3. **get-symbols**
+4. **get-symbols**
 
    - Parameters:
      - `search`: string (optional) - Filter symbols by name or related keywords (supports Japanese/English)
@@ -159,7 +187,7 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Example: Searching "user" or "ユーザー" finds icon_account_circle, icon_person, etc.
      - Keywords are defined in `data/symbol-keywords.json`
 
-4. **get-symbol-detail**
+5. **get-symbol-detail**
 
    - Parameters:
      - `name`: string (required) - The name of the symbol to get details for
@@ -169,7 +197,7 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Import statement
      - Usage examples (basic, outlined, filled)
 
-5. **get-design-tokens**
+6. **get-design-tokens**
 
    - Parameters:
      - `type`: string (optional) - Filter by token type (color, dimension, fontFamily, fontWeight, number, shadow, typography)
@@ -182,7 +210,7 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Available token types
      - Array of token objects with key, path, type, value, originalValue, category, and theme
 
-6. **get-design-token-detail**
+7. **get-design-token-detail**
 
    - Parameters:
      - `key`: string (required) - The key of the token to get details for (e.g., "sd.system.color.impression.primaryContainer")
@@ -197,7 +225,7 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Usage examples (CSS and PandaCSS)
      - Reference information (for system tokens)
 
-7. **get-components**
+8. **get-components**
 
    - Parameters:
      - `search`: string (optional) - Filter components by name (partial match, case-insensitive)
@@ -210,7 +238,7 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Array of component summaries with name, displayName, description, and category
    - Note: This tool returns ALL components from @serendie/ui, including those without documentation
 
-8. **get-component-detail**
+9. **get-component-detail**
    - Parameters:
      - `name`: string (required) - The name of the component to get details for (e.g., "Button", "TextField")
    - Returns detailed information about a specific component:

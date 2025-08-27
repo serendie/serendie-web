@@ -6,6 +6,7 @@ import {
 } from "./tools/design-tokens";
 import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
+import { getSerendieUIDetailTool } from "./tools/serendie-ui-detail";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -16,6 +17,7 @@ export function createMcpServer() {
 
   // Register tools
   getSerendieUIOverviewTool(mcpServer);
+  getSerendieUIDetailTool(mcpServer);
   getSymbolsTool(mcpServer);
   getSymbolDetailTool(mcpServer);
   getDesignTokensTool(mcpServer);
