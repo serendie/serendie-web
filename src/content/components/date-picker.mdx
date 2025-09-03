@@ -1,0 +1,41 @@
+---
+title: DatePicker
+componentName: デートピッカー
+description: 日付を選択するためのコンポーネントです。カレンダー形式で日付を選択できます。
+lastUpdated: "2025-09-03"
+---
+
+import Code from "@/components/Code.astro";
+import { BasicSample } from "@/sampleCode/DatePicker/BasicSample";
+import basicSampleRaw from "@/sampleCode/DatePicker/BasicSample.tsx?raw";
+import { RangeSample } from "@/sampleCode/DatePicker/RangeSample";
+import rangeSampleRaw from "@/sampleCode/DatePicker/RangeSample.tsx?raw";
+import { StateSample } from "@/sampleCode/DatePicker/StateSample";
+import stateSampleRaw from "@/sampleCode/DatePicker/StateSample.tsx?raw";
+
+<Code
+  title="基本"
+  description="単一の日付を選択する基本的なデートピッカーです。"
+  code={basicSampleRaw}
+  storyPath="/story/components-datepicker--basic"
+>
+  <BasicSample client:load />
+</Code>
+
+<Code
+  title="日付範囲"
+  description="開始日と終了日を選択できる範囲選択型のデートピッカーです。"
+  code={rangeSampleRaw}
+  storyPath="/story/components-datepicker--range"
+>
+  <RangeSample client:load />
+</Code>
+
+<Code
+  title="状態"
+  description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
+  code={stateSampleRaw}
+  storyPath="/story/components-datepicker--states"
+>
+  <StateSample client:load />
+</Code>
