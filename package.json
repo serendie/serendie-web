@@ -39,7 +39,7 @@
     "@serendie/design-token": "dev",
     "@serendie/style-dictionary-formatter": "^0.0.3",
     "@serendie/symbols": "^1.0.1",
-    "@serendie/ui": "dev",
+    "@serendie/ui": "npm:@serendie/ui@dev",
     "@types/eslint__js": "^8.42.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
