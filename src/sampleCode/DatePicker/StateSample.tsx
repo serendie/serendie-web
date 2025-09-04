@@ -1,5 +1,4 @@
-import { parseDate } from "@ark-ui/react";
-import { DatePicker } from "@serendie/ui";
+import { DatePicker, parseDate } from "@serendie/ui";
 import { Dd, Dl, Dt } from "src/components/LayoutUtils";
 
 export function StateSample() {
