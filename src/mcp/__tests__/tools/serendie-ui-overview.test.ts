@@ -88,9 +88,9 @@ describe("get-serendie-ui-overview", () => {
       expect(data.importPatterns.component.pattern).toContain("@serendie/ui");
       expect(data.importPatterns.component.example).toContain("Button");
       expect(data.importPatterns.component.note).toBeDefined();
-      expect(data.importPatterns.icons.pattern).toContain("@serendie/symbols");
-      expect(data.importPatterns.icons.variants).toContain("Outlined");
-      expect(data.importPatterns.icons.variants).toContain("Filled");
+      expect(data.importPatterns.icons.import).toContain("@serendie/symbols");
+      expect(data.importPatterns.icons.variants).toContain("outlined");
+      expect(data.importPatterns.icons.variants).toContain("filled");
 
       // テーマの確認
       expect(data.themes.available).toContain("asagi");
@@ -105,8 +105,9 @@ describe("get-serendie-ui-overview", () => {
       expect(data.stylingApproach.method).toBe("PandaCSS");
       expect(data.stylingApproach.patterns).toContain("css()");
       expect(data.stylingApproach.patterns).toContain("sva()");
-      // 圧縮版では css() と sva() のみ
-      expect(data.stylingApproach.patterns).toHaveLength(2);
+      expect(data.stylingApproach.patterns).toContain("textStyle");
+      // 圧縮版では css(), sva(), textStyle
+      expect(data.stylingApproach.patterns).toHaveLength(3);
       expect(data.stylingApproach.tokens).toBeDefined();
       expect(data.stylingApproach.example).toBeDefined();
 
@@ -215,9 +216,10 @@ describe("get-serendie-ui-overview", () => {
           example: "Test example",
         },
         icons: {
-          pattern: "Test pattern",
-          example: "Test example",
+          import: "Test import",
+          usage: "Test usage",
           variants: ["test"],
+          note: "Test note",
         },
       },
       themes: {
