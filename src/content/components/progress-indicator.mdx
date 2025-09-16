@@ -8,12 +8,45 @@ lastUpdated: "2024-11-1"
 import Code from "@/components/Code.astro";
 import { SizeSample } from "@/sampleCode/ProgressIndicator/SizeSample";
 import sizeSampleRaw from "@/sampleCode/ProgressIndicator/SizeSample.tsx?raw";
+import { DeterminateTypeSample } from "@/sampleCode/ProgressIndicator/DeterminateTypeSample";
+import determinateTypeSampleRaw from "@/sampleCode/ProgressIndicator/DeterminateTypeSample.tsx?raw";
+import { IndeterminateTypeSample } from "@/sampleCode/ProgressIndicator/IndeterminateTypeSample";
+import indeterminateTypeSampleRaw from "@/sampleCode/ProgressIndicator/IndeterminateTypeSample.tsx?raw";
+import { IndeterminateColorSample } from "@/sampleCode/ProgressIndicator/IndeterminateColorSample";
+import indeterminateColorSampleRaw from "@/sampleCode/ProgressIndicator/IndeterminateColorSample.tsx?raw";
 
 <Code
   title="サイズ"
-  description="Small、Medium、Largeの3種類があります。"
+  description="Circular は Small、Medium、Large の3種類があります。Linear は Medium と Large を使用してください。"
   code={sizeSampleRaw}
-  storyPath="/story/components-progressindicator--small"
+  storyPath="/docs/components-progressindicator--docs"
 >
   <SizeSample client:load />
+</Code>
+
+<Code
+  title="確定値（Determinate）"
+  description="処理の進捗が数値で把握できる場合に使用します。Linearは横方向に進捗が伸び、Circularは円弧で進捗を示します。値は value / max から算出されます。"
+  code={determinateTypeSampleRaw}
+  storyPath="/docs/components-progressindicator--docs"
+>
+  <DeterminateTypeSample client:load />
+</Code>
+
+<Code
+  title="不確定値（Indeterminate）"
+  description="処理時間が読めない待機状態を示す場合に使用します。Linearはスライドアニメーション、Circularは回転する円弧アニメーションで待機を表現します。"
+  code={indeterminateTypeSampleRaw}
+  storyPath="/docs/components-progressindicatorindeterminate--docs"
+>
+  <IndeterminateTypeSample client:load />
+</Code>
+
+<Code
+  title="カラー（Indeterminate）"
+  description="不確定値では color を Primary と Subtle から選べます。状況に応じて重要度や背景とのコントラストを考慮して使い分けてください。"
+  code={indeterminateColorSampleRaw}
+  storyPath="/docs/components-progressindicatorindeterminate--docs"
+>
+  <IndeterminateColorSample client:load />
 </Code>
