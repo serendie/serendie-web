@@ -40,5 +40,7 @@ export default defineConfig({
   },
 
   trailingSlash: "never",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: "compile",
+  }),
 });
