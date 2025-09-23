@@ -2,20 +2,20 @@
 
 ## 概要
 
-@serendie/uiは三菱電機のReactベースデザインシステムで、PandaCSSと統合済みのコンポーネントライブラリです。既にアクセシビリティに配慮したArk UIベースのコンポーネントやデザイントークンが整備されているため、追加のReset CSSや独自トークンの定義は不要です。
+@serendie/uiは三菱電機のSerendieデザインシステムをベースにしたReactコンポーネントライブラリです。
+ユーザーは@serendie/uiをインストールし、いくつかの設定をすることで、Serendieデザインシステムに準拠したUIコンポーネントを利用できます。
+また、PandaCSSのスタイルシステムが同梱されているため、プロジェクトにPandaCSSを導入することで独自のUIコンポーネントやスタイルを作成することもできます。
 
-## バージョン
+## 関連パッケージ
 
-- 現行バージョン: `1.0.1`
-
-## アーキテクチャ
-
-- フレームワーク: React 18 + PandaCSS
-- スタイリング: PandaCSS + `@serendie/ui`プリセット
-- 主要依存パッケージ:
-  - `@ark-ui/react`: ヘッドレスUIプリミティブ
-  - `@serendie/design-token`: デザイントークン群
-  - `@serendie/symbols`: アイコンライブラリ
+- @serendie/design-token
+  - TBD
+- @serendie/symbols
+  - TBD
+- @ark-ui/react
+  - TBD
+- @pandacss/dev
+  - TBD
 
 ## コンポーネントカテゴリ
 
@@ -28,19 +28,25 @@
 
 ## インポートパターン
 
-- コンポーネント: `import { ComponentName } from '@serendie/ui'`
-  - 例: `import { Button } from '@serendie/ui'`
-  - 補足: ファイル名はPascalCase、クラス名はkebab-caseで出力
-- アイコン: `import { SerendieSymbol } from '@serendie/symbols'`
-  - JSX使用例: `<SerendieSymbol name="activity" variant="outlined" />`
-  - 利用可能バリアント: _(default)_ / `outlined` / `filled`
-  - SerendieSymbolコンポーネントのみを使用すること
+### コンポーネント(@serendie/ui)
+
+```tsx
+import { Button } from "@serendie/ui";
+```
+
+### アイコン(@serendie/symbols)
+
+```tsx
+import {
+  SerendieSymbolHome, // アウトライン
+  SerendieSymbolSettingsFilled, // 塗りつぶし
+} from "@serendie/symbols";
+```
 
 ## テーマ
 
-- 利用可能テーマ: `asagi`, `konjo`, `kurikawa`, `sumire`, `tsutsuji`
-- デフォルトテーマ: `asagi`
-- PandayCSS設定で`theme`を指定して切り替え
+- 利用可能テーマ: `konjo`, `asagi`, `kurikawa`, `sumire`, `tsutsuji`
+- デフォルトテーマ: `konjo`
 
 ## スタイリングアプローチ
 
@@ -69,13 +75,6 @@
   - `colorScheme`: `primary`, `secondary` など
   - `asChild`: ラップ要素の置換に使用
 - Composition: Ark UIのコンポジションパターンに準拠
-
-## 参考リソース
-
-- ドキュメント: https://serendie.design/
-- Storybook: https://storybook.serendie.design/
-- GitHub: https://github.com/serendie/serendie
-- Figma: https://www.figma.com/community/file/1433690846108785966/serendie-ui-kit
 
 ## ベストプラクティス
 
