@@ -5,6 +5,27 @@ import {
   loadSerendieUIOverviewMarkdown,
   serendieUIOverviewMarkdown,
 } from "../../schemas/serendie-ui-overview";
+import { getSerendieUiVersion } from "../../utils/get-serendie-ui-version";
+import packageJson from "../../../../package.json" assert { type: "json" };
+
+const expectedSerendieUiVersion = (() => {
+  if (typeof packageJson !== "object" || packageJson === null) {
+    return "unknown";
+  }
+
+  const { dependencies, devDependencies, peerDependencies } = packageJson as {
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+  };
+
+  return (
+    dependencies?.["@serendie/ui"] ??
+    devDependencies?.["@serendie/ui"] ??
+    peerDependencies?.["@serendie/ui"] ??
+    "unknown"
+  );
+})();
 
 describe("get-serendie-ui-overview", () => {
   it("should be registered when server is created", () => {
@@ -49,10 +70,16 @@ describe("get-serendie-ui-overview", () => {
     const result = await handler({});
 
     expect(result).toBeDefined();
-    expect(result.content).toHaveLength(1);
+    expect(result.content).toHaveLength(2);
     expect(result.content[0].type).toBe("text");
+    expect(result.content[1].type).toBe("text");
 
-    const markdown = result.content[0].text;
+    const versionPayload = JSON.parse(result.content[0].text) as {
+      version: string;
+    };
+    expect(versionPayload.version).toBe(expectedSerendieUiVersion);
+
+    const markdown = result.content[1].text;
     expect(markdown).toContain("npm install @serendie/ui");
   });
 
@@ -61,5 +88,9 @@ describe("get-serendie-ui-overview", () => {
 
     expect(markdownFromHelper).toBe(serendieUIOverviewMarkdown);
     expect(markdownFromHelper).toContain("npm install @serendie/ui");
+  });
+
+  it("should resolve the @serendie/ui version via utility", () => {
+    expect(getSerendieUiVersion()).toBe(expectedSerendieUiVersion);
   });
 });
