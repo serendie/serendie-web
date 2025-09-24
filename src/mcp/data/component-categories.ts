@@ -42,6 +42,7 @@ export const componentCategories: Record<string, ComponentCategory> = {
       "List",
       "ListItem",
       "TopAppBar",
+      "DataTable",
     ],
   },
   Display: {
