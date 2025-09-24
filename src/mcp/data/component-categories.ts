@@ -28,6 +28,7 @@ export const componentCategories: Record<string, ComponentCategory> = {
       "Search",
       "ChoiceBox",
       "PasswordField",
+      "DatePicker",
     ],
   },
   Layout: {
@@ -42,6 +43,7 @@ export const componentCategories: Record<string, ComponentCategory> = {
       "List",
       "ListItem",
       "TopAppBar",
+      "DataTable",
     ],
   },
   Display: {
@@ -53,6 +55,8 @@ export const componentCategories: Record<string, ComponentCategory> = {
       "NotificationBadge",
       "DashboardWidget",
       "ProgressIndicator",
+      "ProgressIndicatorIndeterminate",
+      "Tooltip",
     ],
   },
   Feedback: {
