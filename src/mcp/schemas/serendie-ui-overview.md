@@ -9,13 +9,21 @@
 ## 関連パッケージ
 
 - @serendie/design-token
-  - TBD
+  - Serendieのデザイントークンを提供するパッケージ
+  - PandaCSS用トークンの他に、CSS Variables形式、JSON形式でも提供されており、Serendie UIとは独立して使用することもできます。
+  - Reactは使わないが、Serendie Design Systemを利用する場合などに活用できます。
+  - 関連MCPツール: `get-design-tokens`, `get-design-token-detail`
 - @serendie/symbols
-  - TBD
+  - デジタルプロダクトのなかで汎用性高く使える、Serendie らしい 300 種類以上のアイコンパッケージ
+  - Serendie Symbols は React 環境を前提としています。
+  - 関連MCPツール: `get-symbols`, `get-symbol-detail`
 - @ark-ui/react
-  - TBD
+  - Serendie UIはヘッドレスUIライブラリであるArk UIを利用しています。
+  - プロジェクトに導入する必要はありませんが、UIコンポーネントの細かな利用方法についてはArk UIのAPIリファレンスを参照してください。
 - @pandacss/dev
-  - TBD
+  - Serendie UIはPandaCSSを利用しています。
+  - プロジェクトに導入する必要はありませんが、独自にコンポーネントを作りたい場合などに統合的に利用できます。
+  - PandaCSSの利用方法についてはPandaCSSのAPIリファレンスを参照してください。
 
 ## コンポーネントカテゴリ
 
@@ -25,6 +33,8 @@
 - Display (表示): Avatar、Badge、ProgressIndicatorなど
 - Feedback (フィードバック): Toast、ModalDialog、Paginationなど
 - Other (その他)
+
+コンポーネントのカテゴリは`get-components` MCPツールで確認できます。
 
 ## インポートパターン
 
@@ -47,6 +57,8 @@ import {
 
 - 利用可能テーマ: `konjo`, `asagi`, `kurikawa`, `sumire`, `tsutsuji`
 - デフォルトテーマ: `konjo`
+
+htmlタグなどに、data-panda-theme属性 (konjo, asagi, sumire, tsutusji, kurikawa)を付与することで、CSS 環境であってもテーマを切り替えることができます。
 
 ## スタイリングアプローチ
 
