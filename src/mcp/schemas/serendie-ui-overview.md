@@ -25,6 +25,26 @@
   - プロジェクトに導入する必要はありませんが、独自にコンポーネントを作りたい場合などに統合的に利用できます。
   - PandaCSSの利用方法についてはPandaCSSのAPIリファレンスを参照してください。
 
+## 初期セットアップ
+
+- 概要: 最小限の設定で始められる
+- 手順:
+  1. `npm install @serendie/ui @serendie/design-token @serendie/symbols`
+  2. PandaCSS設定に`@serendie/ui`プリセットを追加
+- 禁止事項:
+  - Reset CSSを追加しない
+  - `box-sizing` の個別設定は不要
+  - 独自スペーシング値を定義しない（必ずトークンを使用）
+
+## パッケージ関係性
+
+- 全体像: 3パッケージが連携してデザイン〜実装を接続
+- 役割:
+  - `@serendie/ui`: UIコンポーネントを提供（MCPツール: `get-components`）
+  - `@serendie/design-token`: 設計値を管理（MCPツール: `get-design-tokens`）
+  - `@serendie/symbols`: アイコンを提供（MCPツール: `get-symbols`）
+- デザインフロー: Figma Variables → design-token → UI → App
+
 ## コンポーネントカテゴリ
 
 - Actions (アクション): ボタンやボトムナビゲーションなど
@@ -62,6 +82,36 @@ htmlタグなどに、data-panda-theme属性 (konjo, asagi, sumire, tsutusji, ku
 
 ## スタイリングアプローチ
 
+PandaCSSをインストールして使うか、CSS Variablesを使うかを選択することができます。
+
+### CSS Variables
+
+@serendie/design-tokenをインストールして
+
+```css
+@import "@serendie/design-token/tokens.css";
+
+h1 {
+  font-size: var(--sd-reference-typography-scale-expanded-large);
+  color: var(--sd-system-color-impression-primary);
+}
+```
+
+のように指定することができます
+
+### PandaCSS
+
+@serendie/uiをインストールして
+
+グローバルなCSSの先頭に
+
+```css
+@layer reset, base, tokens, recipes, utilities;
+@import "@serendie/ui/styles.css";
+```
+
+を記述して下さい。
+
 - 基本メソッド: `css()`, `sva()`, `textStyle`
 - トークン参照: `styled-system`経由で `sd.system.*` を利用
 - スニペット:
@@ -96,26 +146,6 @@ htmlタグなどに、data-panda-theme属性 (konjo, asagi, sumire, tsutusji, ku
 - `@serendie/ui`, `@serendie/design-token`, `@serendie/symbols` を組み合わせて利用
 - Figma Variablesと自動同期される前提で運用する
 - デザイントークン選択時は`get-design-tokens` MCPツールで対応可能なトークンを確認する
-
-## 初期セットアップ
-
-- 概要: 最小限の設定で始められる
-- 手順:
-  1. `npm install @serendie/ui @serendie/design-token @serendie/symbols`
-  2. PandaCSS設定に`@serendie/ui`プリセットを追加
-- 禁止事項:
-  - Reset CSSを追加しない
-  - `box-sizing` の個別設定は不要
-  - 独自スペーシング値を定義しない（必ずトークンを使用）
-
-## パッケージ関係性
-
-- 全体像: 3パッケージが連携してデザイン〜実装を接続
-- 役割:
-  - `@serendie/ui`: UIコンポーネントを提供（MCPツール: `get-components`）
-  - `@serendie/design-token`: 設計値を管理（MCPツール: `get-design-tokens`）
-  - `@serendie/symbols`: アイコンを提供（MCPツール: `get-symbols`）
-- デザインフロー: Figma Variables → design-token → UI → App
 
 ## デザイントークンガイドライン
 
@@ -154,13 +184,6 @@ htmlタグなどに、data-panda-theme属性 (konjo, asagi, sumire, tsutusji, ku
   - `gap: 'sd.system.dimension.spacing.large'`
   - `m: 'sd.system.dimension.spacing.extraSmall'`
   - `py: 'sd.system.dimension.spacing.small'`
-
-## Figma統合
-
-- 概要: Figma Variablesとデザイントークンを自動同期
-- Figma Variables: トークン変更が自動でコードへ反映
-- Code Connect: 実装コードを直接参照可能
-- ワークフロー: 必要に応じて追加予定
 
 ## コンポーネントのデフォルト設定
 
