@@ -130,9 +130,6 @@ async function loadExamples(
 }
 
 // コンポーネントのカテゴリを推測
-function guessCategory(componentName: string): string {
-  return getCategoryForComponent(componentName);
-}
 
 // react-docgen-typescriptの設定
 const parserOptions = {
@@ -160,7 +157,7 @@ function extractPropsFromAST(
       jsx: ts.JsxEmit.React,
       esModuleInterop: true,
       skipLibCheck: true,
-      moduleResolution: ts.ModuleResolutionKind.NodeJs,
+      moduleResolution: ts.ModuleResolutionKind.Node10,
     })
     .getTypeChecker();
 
@@ -218,11 +215,16 @@ function extractPropsFromAST(
 
 // 型定義ファイルからコンポーネントのPropsを解析
 async function extractPropsFromTypeDefinition(
-  componentName: string
+  componentName: string,
+  normalizedComponentName?: string
 ): Promise<PropDefinition[]> {
   try {
-    // スペースを除去してCamelCaseに変換
-    const normalizedComponentName = componentName.replace(/\s+/g, "");
+    // normalizedComponentNameが提供されていない場合は、componentNameから生成
+    if (!normalizedComponentName) {
+      normalizedComponentName = componentName
+        .replace(/\s+/g, "")
+        .replace(/Component$/, "");
+    }
 
     // まず react-docgen-typescript を試す
     const componentPaths = [
@@ -234,6 +236,15 @@ async function extractPropsFromTypeDefinition(
         "components",
         normalizedComponentName,
         `${normalizedComponentName}.d.ts`
+      ),
+      join(
+        rootDir,
+        "node_modules",
+        "@serendie/ui",
+        "dist",
+        "components",
+        normalizedComponentName,
+        `${normalizedComponentName}Component.d.ts`
       ),
       join(
         rootDir,
@@ -256,8 +267,10 @@ async function extractPropsFromTypeDefinition(
         // react-docgen-typescript でパース
         const parser = reactDocgen.parse(componentPath, parserOptions);
         if (parser.length > 0) {
+          // DataTableComponentのような特殊なケースを処理
           const componentDoc =
             parser.find((doc) => doc.displayName === normalizedComponentName) ||
+            parser.find((doc) => doc.displayName === componentName) ||
             parser[0];
           if (componentDoc && componentDoc.props) {
             console.log(`    ✅ Extracted props using react-docgen-typescript`);
@@ -281,18 +294,40 @@ async function extractPropsFromTypeDefinition(
     }
 
     // react-docgen-typescript が失敗した場合、TypeScript AST を直接解析
-    const dtsPath = join(
-      rootDir,
-      "node_modules",
-      "@serendie/ui",
-      "dist",
-      "components",
-      normalizedComponentName,
-      `${normalizedComponentName}.d.ts`
-    );
+    const dtsPaths = [
+      join(
+        rootDir,
+        "node_modules",
+        "@serendie/ui",
+        "dist",
+        "components",
+        normalizedComponentName,
+        `${normalizedComponentName}.d.ts`
+      ),
+      join(
+        rootDir,
+        "node_modules",
+        "@serendie/ui",
+        "dist",
+        "components",
+        normalizedComponentName,
+        `${normalizedComponentName}Component.d.ts`
+      ),
+    ];
 
-    const content = await readFile(dtsPath, "utf-8").catch(() => null);
-    if (!content) {
+    let content: string | null = null;
+    let dtsPath: string | null = null;
+
+    for (const path of dtsPaths) {
+      const fileContent = await readFile(path, "utf-8").catch(() => null);
+      if (fileContent) {
+        content = fileContent;
+        dtsPath = path;
+        break;
+      }
+    }
+
+    if (!content || !dtsPath) {
       console.log(`    ⚠️  Component definition file not found`);
       return [];
     }
@@ -360,7 +395,9 @@ async function extractSubComponents(componentPath: string): Promise<string[]> {
       join(componentPath, "index.d.ts"),
       "utf-8"
     );
-    // Match export patterns like: export * from './ComponentName.tsx';
+
+    // Match both export patterns and import/export statements
+    // Pattern 1: export * from './ComponentName.tsx';
     const exportPattern = /export\s*\*\s*from\s*['"]\.\/([^'"]+)\.tsx['"]/g;
     let match;
     while ((match = exportPattern.exec(indexContent)) !== null) {
@@ -371,6 +408,58 @@ async function extractSubComponents(componentPath: string): Promise<string[]> {
         subComponents.push(componentName);
       } catch {
         // File doesn't exist, skip
+      }
+    }
+
+    // Pattern 2: import { ComponentName } from './ComponentName'; + export { ComponentName };
+    // or export { ComponentName } from './ComponentName';
+    const namedExportPattern =
+      /export\s*{\s*([^}]+)\s*}(?:\s*from\s*['"]\.\/([^'"]+)['"]\s*;)?/g;
+    const importPattern =
+      /import\s*{\s*([^}]+)\s*}\s*from\s*['"]\.\/([^'"]+)['"]/g;
+
+    // Collect all imports first
+    const importedComponents = new Map<string, string>();
+    let importMatch;
+    while ((importMatch = importPattern.exec(indexContent)) !== null) {
+      const components = importMatch[1].split(",").map((s) => s.trim());
+      const sourcePath = importMatch[2];
+      for (const comp of components) {
+        // Handle import with type annotations like DataTableComponentProps
+        const cleanCompName = comp.split(":")[0].trim();
+        if (cleanCompName && !cleanCompName.includes("Props")) {
+          importedComponents.set(cleanCompName, sourcePath);
+        }
+      }
+    }
+
+    // Check exports and match with imports
+    let exportMatch;
+    while ((exportMatch = namedExportPattern.exec(indexContent)) !== null) {
+      const exportedNames = exportMatch[1].split(",").map((s) => s.trim());
+      const sourcePath = exportMatch[2]; // May be undefined for re-exports
+
+      for (const exportName of exportedNames) {
+        const cleanName = exportName.split(":")[0].trim();
+        // Check if this is a component (not Props type)
+        if (cleanName && !cleanName.includes("Props")) {
+          const componentFileName =
+            sourcePath || importedComponents.get(cleanName);
+          if (componentFileName) {
+            // Check if the component file exists
+            try {
+              await readFile(
+                join(componentPath, `${componentFileName}.d.ts`),
+                "utf-8"
+              );
+              if (!subComponents.includes(componentFileName)) {
+                subComponents.push(componentFileName);
+              }
+            } catch {
+              // File doesn't exist, skip
+            }
+          }
+        }
       }
     }
   } catch {
@@ -418,8 +507,11 @@ async function generateManifest() {
     for (const componentName of subComponents) {
       console.log(`  🔍 Processing ${componentName}...`);
 
+      // Normalize component name (remove "Component" suffix if present)
+      const normalizedName = componentName.replace(/Component$/, "");
+
       // Initialize component data with defaults
-      let displayName = componentName;
+      let displayName = normalizedName;
       let description = "";
       let lastUpdated = new Date().toISOString().split("T")[0];
       let examples: ComponentExample[] = [];
@@ -428,7 +520,7 @@ async function generateManifest() {
       let source: "auto-detected" | "mdx" = "auto-detected";
 
       // Check if MDX file exists for this component
-      const mdxPath = mdxMap.get(componentName.toLowerCase());
+      const mdxPath = mdxMap.get(normalizedName.toLowerCase());
 
       if (mdxPath) {
         hasDocumentation = true;
@@ -468,7 +560,10 @@ async function generateManifest() {
       }
 
       // Extract Props information (works regardless of MDX existence)
-      const props = await extractPropsFromTypeDefinition(componentName);
+      const props = await extractPropsFromTypeDefinition(
+        componentName,
+        normalizedName
+      );
 
       if (props.length > 0) {
         console.log(`    ✅ Found ${props.length} props`);
@@ -482,10 +577,10 @@ async function generateManifest() {
         .filter((name) => name !== "index"); // Exclude index files
 
       const manifest: ComponentManifest = {
-        name: componentName,
+        name: normalizedName,
         displayName,
         description,
-        category: guessCategory(componentName),
+        category: getCategoryForComponent(normalizedName),
         hasDocumentation,
         source,
         lastUpdated,
