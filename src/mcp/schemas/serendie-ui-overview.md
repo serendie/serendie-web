@@ -202,6 +202,7 @@ htmlタグなどに、data-panda-theme属性を付与することで、CSS 環�
 - Reset CSSは追加不要（同梱済）
 - `@serendie/ui` と `@serendie/symbols` を組み合わせて利用
 - デザイントークン選択時は`get-design-tokens` MCPツールで対応可能なトークンを確認する
+- TypeScriptの型チェックを活用してコンポーネントのpropsなどに間違いがないかを確認する
 
 ## デザイントークンガイドライン
 
@@ -214,91 +215,42 @@ htmlタグなどに、data-panda-theme属性を付与することで、CSS 環�
   - `sd.reference.`の直接使用は禁止
   - スペーシングは`sd.system.dimension.spacing.*`を利用
   - 色指定は`sd.system.color.*`を利用（HEX禁止）
+  - `textStyle`でタイポグラフィトークンを適用
+  - スペーシングと色は必ずデザイントークンを使用
 - よくある誤り:
   - `padding: '16px'` → `p: 'sd.system.dimension.spacing.*'`
   - `color: '#333'` → `color: 'sd.system.color.component.onSurface'`
   - `color: 'sd.reference.color.scale.gray.500'` → `color: 'sd.system.color.component.onSurface'`
   - `margin: 8` → `m: 'sd.system.dimension.spacing.*'`
+  - `font-size: 16px` → `textStyle: 'sd.system.typography.scale.expanded.large'`
 - 正しい例:
   ```ts
   css({
     p: "sd.system.dimension.spacing.medium",
     color: "sd.system.color.component.onSurface",
+    textStyle: "sd.system.typography.headline.small_expanded",
   });
   ```
 - 注意: 具体的なトークン一覧は`get-design-tokens`ツールで確認
 
-## コンポーネントのデフォルト設定
+## TIPS
+
+### コンポーネントのデフォルト設定
 
 - TextField: `maxWidth`が既定で設定されている → `className={css({ width: '100%' })}`で解除
 - PasswordField: TextFieldと同様に`maxWidth`設定 → `className={css({ width: '100%' })}`で解除
 
-## 実践例
+## インポートパスのルール
 
-### ログインフォーム
-
-```tsx
-<div
-  className={css({
-    display: "flex",
-    flexDirection: "column",
-    gap: "sd.system.dimension.spacing.large",
-  })}
->
-  <TextField label="ユーザー名" className={css({ width: "100%" })} />
-  <PasswordField label="パスワード" className={css({ width: "100%" })} />
-  <Button
-    className={css({ width: "100%" })}
-    variant="solid"
-    colorScheme="primary"
-  >
-    ログイン
-  </Button>
-</div>
-```
-
-- `className`と`css()`で既定の`maxWidth`制限を解除
-- スペーシングはデザイントークンを使用
-
-### レスポンシブカードレイアウト
+コンポーネントのインポートは以下のようにすること
+特にSerendie UIのコンポーネントは`@serendie/ui`からインポートすること。
+また、あらかじめ`use client`が適用されたコンポーネントを `@serendie/ui/client` からインポートして使うこともできます
 
 ```tsx
-<div
-  className={css({
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-    gap: "sd.system.dimension.spacing.extraLarge",
-  })}
->
-  {items.map((item) => (
-    <div
-      key={item.id}
-      className={css({
-        padding: "sd.system.dimension.spacing.large",
-        backgroundColor: "sd.system.color.component.surface",
-        borderRadius: "sd.system.dimension.radius.medium",
-        boxShadow: "sd.system.elevation.shadow.level1",
-      })}
-    >
-      <h3
-        className={css({
-          textStyle: "sd.system.typography.headline.small_expanded",
-          marginBottom: "sd.system.dimension.spacing.small",
-        })}
-      >
-        {item.title}
-      </h3>
-      <p
-        className={css({
-          color: "sd.system.color.component.onSurfaceVariant",
-        })}
-      >
-        {item.description}
-      </p>
-    </div>
-  ))}
-</div>
+// @serendie/uiが提供する機能コンポーネント
+import { TextField, PasswordField, Button, ... } from "@serendie/ui";
+// PandaCSSが提供するスタイルユーティリティ
+import { css } from "@serendie/ui/css";
+// PandaCSSが提供するレイアウトコンポーネント
+import { Box, Center, Flex, Stack, VStack, ... } from "@serendie/ui/jsx";
 ```
-
-- `textStyle`でタイポグラフィトークンを適用
-- スペーシングと色は必ずデザイントークンを使用
