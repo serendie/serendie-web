@@ -202,7 +202,7 @@ htmlタグなどに、data-panda-theme属性を付与することで、CSS 環�
 - Reset CSSは追加不要（同梱済）
 - `@serendie/ui` と `@serendie/symbols` を組み合わせて利用
 - デザイントークン選択時は`get-design-tokens` MCPツールで対応可能なトークンを確認する
-- TypeScriptの型チェックを活用してコンポーネントのpropsなどに間違いがないかを確認する
+- 重要:実装したあとはTypeScriptの型チェックを行い**プロパティに間違いがないかを必ず確認する**
 
 ## デザイントークンガイドライン
 
