@@ -29,6 +29,7 @@ export const StorybookUrlSchema = z.object({
 // コンポーネントサマリー（get-components用）
 export const ComponentSummarySchema = z.object({
   name: z.string(),
+  slug: z.string(),
   displayName: z.string(),
   description: z.string(),
   category: z.string(),
@@ -55,6 +56,7 @@ export const RelatedComponentSchema = z.object({
 // コンポーネント詳細（get-component-detail用）
 export const ComponentDetailSchema = z.object({
   name: z.string(),
+  slug: z.string(),
   exists: z.literal(true),
   displayName: z.string(),
   description: z.string(),

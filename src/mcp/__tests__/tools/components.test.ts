@@ -211,6 +211,15 @@ const mockComponentsManifest = [
   },
 ];
 
+const toComponentSlug = (name: string) =>
+  name
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .replace(/([a-z\d])([A-Z])/g, "$1-$2")
+    .replace(/-{2,}/g, "-")
+    .toLowerCase();
+
 // Setup mock before tests
 beforeAll(() => {
   vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockComponentsManifest));
@@ -352,6 +361,7 @@ describe("Components Tools", () => {
           categories,
           components: mockComponentsManifest.map((component) => ({
             name: component.name,
+            slug: toComponentSlug(component.name),
             displayName: component.displayName,
             description: component.description,
             category: component.category,
@@ -372,6 +382,7 @@ describe("Components Tools", () => {
         const component = mockComponentsManifest[0];
         const summary = {
           name: component.name,
+          slug: toComponentSlug(component.name),
           displayName: component.displayName,
           description: component.description,
           category: component.category,
@@ -393,6 +404,7 @@ describe("Components Tools", () => {
           categories: ["Actions", "Feedback", "Inputs", "Layout"],
           components: mockComponentsManifest.map((c) => ({
             name: c.name,
+            slug: toComponentSlug(c.name),
             displayName: c.displayName,
             description: c.description,
             category: c.category,
@@ -462,30 +474,27 @@ describe("Components Tools", () => {
     describe("Expected Output Structure", () => {
       it("should return correct structure for existing component", () => {
         const component = mockComponentsManifest[0];
+        const componentSlug = toComponentSlug(component.name);
+        const exportName = component.name.replace(/\s+/g, "");
         const expectedOutput = {
           name: component.name,
+          slug: componentSlug,
           exists: true,
           displayName: component.displayName,
           description: component.description,
           category: component.category,
           lastUpdated: component.lastUpdated,
-          importStatement: `import { ${component.name} } from "@serendie/ui/${component.name
-            .replace(/([A-Z])/g, "-$1")
-            .toLowerCase()
-            .replace(/^-/, "")}";`,
+          importStatement: `import { ${exportName} } from "@serendie/ui";`,
           documentationUrl: component.hasDocumentation
-            ? `https://serendie.design/components/${component.name
-                .replace(/([A-Z])/g, "-$1")
-                .toLowerCase()
-                .replace(/^-/, "")}`
+            ? `https://serendie.design/components/${componentSlug}`
             : null,
           props: component.props,
           examples: component.examples,
           storybookUrls: component.storybookUrls,
           relatedComponents: component.relatedComponents,
           usage: {
-            basic: `<${component.name}>Content</${component.name}>`,
-            withProps: `<${component.name} prop="value">Content</${component.name}>`,
+            basic: `<${exportName}>Content</${exportName}>`,
+            withProps: `<${exportName} prop="value">Content</${exportName}>`,
           },
         };
 
@@ -518,13 +527,13 @@ describe("Components Tools", () => {
 
       it("should generate correct import statement", () => {
         const component = mockComponentsManifest[0];
-        const importStatement = `import { ${component.name} } from "@serendie/ui/${component.name
-          .replace(/([A-Z])/g, "-$1")
-          .toLowerCase()
-          .replace(/^-/, "")}";`;
+        const importStatement = `import { ${component.name.replace(
+          /\s+/g,
+          ""
+        )} } from "@serendie/ui";`;
 
         expect(importStatement).toBe(
-          'import { Button } from "@serendie/ui/button";'
+          'import { Button } from "@serendie/ui";'
         );
       });
 
@@ -603,15 +612,18 @@ describe("Components Tools", () => {
 
       it("should pass schema validation for component detail response", () => {
         const component = mockComponentsManifest[0];
+        const componentSlug = toComponentSlug(component.name);
+        const exportName = component.name.replace(/\s+/g, "");
         const response = {
           name: component.name,
+          slug: componentSlug,
           exists: true as const,
           displayName: component.displayName,
           description: component.description,
           category: component.category,
           lastUpdated: component.lastUpdated,
-          documentationUrl: `https://serendie.design/components/${component.name.toLowerCase()}`,
-          importStatement: `import { ${component.name} } from "@serendie/ui/${component.name.toLowerCase()}";`,
+          documentationUrl: `https://serendie.design/components/${componentSlug}`,
+          importStatement: `import { ${exportName} } from "@serendie/ui";`,
           props: component.props,
           examples: component.examples,
           storybookUrls: component.storybookUrls.map((url) => ({
@@ -620,8 +632,8 @@ describe("Components Tools", () => {
           })),
           relatedComponents: component.relatedComponents,
           usage: {
-            basic: `<${component.name}>Content</${component.name}>`,
-            withProps: `<${component.name} styleType="value" size="value">Content</${component.name}>`,
+            basic: `<${exportName}>Content</${exportName}>`,
+            withProps: `<${exportName} styleType="value" size="value">Content</${exportName}>`,
           },
         };
 
