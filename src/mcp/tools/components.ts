@@ -51,6 +51,15 @@ interface StorybookUrl {
 const manifestData: ComponentManifest[] =
   componentsManifest as ComponentManifest[];
 
+const toComponentSlug = (name: string) =>
+  name
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .replace(/([a-z\d])([A-Z])/g, "$1-$2")
+    .replace(/-{2,}/g, "-")
+    .toLowerCase();
+
 /**
  * Serendie UIコンポーネントの一覧を取得するMCPツール
  *
@@ -76,6 +85,7 @@ const manifestData: ComponentManifest[] =
  *   "categories": ["Actions", "Inputs", ...],  // カテゴリ一覧
  *   "components": [{
  *     "name": "Button",
+ *     "slug": "button",
  *     "displayName": "ボタン",
  *     "description": "アクションをトリガーするためのクリック可能なコンポーネント",
  *     "category": "Actions"
@@ -159,6 +169,7 @@ export function getComponentsTool(mcpServer: McpServer) {
         // サマリー情報のみを返す
         const componentsSummary = filteredComponents.map((component) => ({
           name: component.name,
+          slug: toComponentSlug(component.name),
           displayName: component.displayName,
           description: component.description,
           category: component.category,
@@ -235,12 +246,13 @@ export function getComponentsTool(mcpServer: McpServer) {
  * ```json
  * {
  *   "name": "Button",
+ *   "slug": "button",
  *   "exists": true,
  *   "displayName": "ボタン",
  *   "description": "アクションをトリガーするためのクリック可能なコンポーネント",
  *   "category": "Actions",
  *   "lastUpdated": "2024-11-01",
- *   "importStatement": "import { Button } from \"@serendie/ui/button\";",
+ *   "importStatement": "import { Button } from \"@serendie/ui\";",
  *   "props": [{
  *     "name": "variant",
  *     "type": "'solid' | 'outline' | 'ghost' | 'link'",
@@ -328,15 +340,13 @@ export function getComponentDetailTool(mcpServer: McpServer) {
         }
 
         // インポート文を生成（動的に生成）
-        const importPath = `@serendie/ui/${component.name
-          .replace(/([A-Z])/g, "-$1")
-          .toLowerCase()
-          .replace(/^-/, "")}`;
-        const importStatement = `import { ${component.name} } from "${importPath}";`;
+        const componentSlug = toComponentSlug(component.name);
+        const exportName = component.name.replace(/\s+/g, "");
+        const importStatement = `import { ${exportName} } from "@serendie/ui";`;
 
         // 使用例を生成
         const usage: { basic: string; withProps?: string } = {
-          basic: `<${component.name}>Content</${component.name}>`,
+          basic: `<${exportName}>Content</${exportName}>`,
         };
 
         // Propsがある場合の使用例
@@ -361,7 +371,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
             .join(" ");
 
           if (propsExample) {
-            usage.withProps = `<${component.name} ${propsExample}>Content</${component.name}>`;
+            usage.withProps = `<${exportName} ${propsExample}>Content</${exportName}>`;
           }
         }
 
@@ -375,10 +385,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
 
         // ドキュメントURLを生成（MDXファイルがある場合）
         const documentationUrl = component.hasDocumentation
-          ? `https://serendie.design/components/${component.name
-              .replace(/([A-Z])/g, "-$1")
-              .toLowerCase()
-              .replace(/^-/, "")}`
+          ? `https://serendie.design/components/${componentSlug}`
           : null;
 
         // 詳細情報を構築
@@ -387,6 +394,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
            * コンポーネント名
            */
           name: component.name,
+          /**
+           * コンポーネントスラッグ（ケバブケース）
+           */
+          slug: componentSlug,
           /**
            * コンポーネントが存在するかどうか
            */
