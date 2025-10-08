@@ -37,6 +37,9 @@ export default defineConfig({
     ssr: {
       noExternal: ["@ark-ui/react", "@serendie/ui"],
     },
+    server: {
+      cors: true,
+    },
   },
 
   trailingSlash: "never",
