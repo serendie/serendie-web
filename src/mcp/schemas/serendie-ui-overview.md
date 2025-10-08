@@ -206,13 +206,13 @@ htmlタグなどに、data-panda-theme属性を付与することで、CSS 環�
 
 ## デザイントークンガイドライン
 
-- デザイントークンは必須。`px`値やリファレンストークンの直接使用は禁止
+- デザイントークンは必須。`px`値の直接使用は禁止
 - トークン種別:
-  - リファレンス (`sd.reference.*`): 生の値。直接使用禁止
-  - システム (`sd.system.*`): リファレンスを参照。実装では必ずこちらを使用
+  - リファレンス (`sd.reference.*`): 生の値。UIデザインにおいて、もし適切なシステムトークンがなかった場合は使用可能。
+  - システム (`sd.system.*`): リファレンスを参照。実装ではできるだけこちらを使用
 - 優先事項:
   - システムトークン(`sd.system.`)を最優先で利用
-  - `sd.reference.`の直接使用は禁止
+  - 対象のコンポーネントとシステムトークンの役割が一致しているときのみ、システムトークンを適用
   - スペーシングは`sd.system.dimension.spacing.*`を利用
   - 色指定は`sd.system.color.*`を利用（HEX禁止）
   - `textStyle`でタイポグラフィトークンを適用
@@ -221,6 +221,7 @@ htmlタグなどに、data-panda-theme属性を付与することで、CSS 環�
   - `padding: '16px'` → `p: 'sd.system.dimension.spacing.*'`
   - `color: '#333'` → `color: 'sd.system.color.component.onSurface'`
   - `color: 'sd.reference.color.scale.gray.500'` → `color: 'sd.system.color.component.onSurface'`
+  - `color: 'sd.system.color.component.outline'`（テキスト色） → `color: 'sd.system.color.component.onSurface'`（テキスト色）
   - `margin: 8` → `m: 'sd.system.dimension.spacing.*'`
   - `font-size: 16px` → `textStyle: 'sd.system.typography.scale.expanded.large'`
 - 正しい例:
