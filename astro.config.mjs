@@ -4,13 +4,15 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import svgr from "vite-plugin-svgr";
 import partytown from "@astrojs/partytown";
-import { getSiteUrl, BASE_PATH } from "./src/utils";
+import { BASE_PATH } from "./src/utils";
 
 import cloudflare from "@astrojs/cloudflare";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-  site: getSiteUrl(),
+  site: "https://serendie.design/",
   base: BASE_PATH,
 
   output: "server",
@@ -23,6 +25,7 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    sitemap(),
   ],
 
   markdown: {
