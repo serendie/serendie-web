@@ -8,9 +8,13 @@ import { getSiteUrl, BASE_PATH } from "./src/utils";
 
 import cloudflare from "@astrojs/cloudflare";
 
+import sitemap from "@astrojs/sitemap";
+
+const siteUrl = getSiteUrl();
+
 // https://astro.build/config
 export default defineConfig({
-  site: getSiteUrl(),
+  site: "https://serendie.design/",
   base: BASE_PATH,
 
   output: "server",
@@ -23,6 +27,7 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    sitemap(),
   ],
 
   markdown: {
