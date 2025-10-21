@@ -55,5 +55,23 @@ export type App = typeof app;
 
 // Astro API route handler
 export const ALL: APIRoute = (context) => {
-  return app.fetch(context.request);
+  // Cloudflare Pages環境で環境変数を取得
+  // context.locals.runtime.env にCloudflare Workersの環境変数が入っている
+  const cfEnv = (context.locals as { runtime?: { env?: Record<string, string | undefined> } })?.runtime?.env;
+
+  if (cfEnv) {
+    // Honoのコンテキストに環境変数を渡すためにリクエストを作成
+    const request = new Request(context.request.url, {
+      method: context.request.method,
+      headers: context.request.headers,
+      body: context.request.body,
+    });
+
+    // 環境変数をglobalThisに設定(Honoアプリ内でアクセスできるように)
+    (globalThis as typeof globalThis & {
+      __SERENDIE_WORKER_ENV__?: Record<string, string | undefined>;
+    }).__SERENDIE_WORKER_ENV__ = cfEnv;
+  }
+
+  return app.fetch(context.request, cfEnv);
 };
