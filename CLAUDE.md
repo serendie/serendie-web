@@ -79,25 +79,21 @@ scripts/              # Build and utility scripts
 ### Development Workflow
 
 1. **Adding/Modifying Components Documentation**:
-
    - Edit MDX files in `src/content/components/`
    - Add code examples in `src/sampleCode/`
    - Component demos use the actual `@serendie/ui` components
 
 2. **Working with Styles**:
-
    - Use PandaCSS patterns (`css()`, `styled()`)
    - Tokens are available through the styled-system
    - Run `npm run build:panda` after config changes
 
 3. **Managing Design Tokens**:
-
    - Edit token files in `tokens/data/`
    - Run `npm run build:tokens` to regenerate
    - Tokens are transformed for both CSS and PandaCSS
 
 4. **Content Management**:
-
    - Content collections defined in `src/content/config.ts`
    - Frontmatter controls navigation and metadata
    - MDX allows React components in documentation

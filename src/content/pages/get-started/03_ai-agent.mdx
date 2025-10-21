@@ -1,0 +1,130 @@
+---
+title: AIエージェント
+slug: get-started/ai-agent
+illustType: "B"
+description: "AIエージェントとSerendieデザインシステムを連携して使うためのツール群を紹介します。"
+lastUpdated: "2024-11-01"
+subLinks:
+  - name: MCPサーバー
+    path: /get-started/ai-agent
+  - name: Docs.AI
+    path: /get-started/ai-agent#docs-ai
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+export const sampleCodeClaude = `claude mcp add --transport http serendie-mcp https://serendie.design/mcp`;
+
+export const sampleCodeVSCode = `{
+  "mcpServers": {
+    "serendie": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-http", "https://serendie.design/mcp"]
+    }
+  }
+}`;
+
+<PageSection>
+
+SerendieデザインシステムとMCPサーバー、デザインからコードへの変換ツールについて。
+
+C:MCPサーバーを使うことで、AIエージェントに対してSerendieデザインシステムを理解させることができます。これにより、デザイナーとデベロッパーが同じ言語で会話できるようになり、デザインとコードの乖離を防ぐことができます。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={0}>MCPとは</PageHeadLine>
+
+Model Context Protocolは、AIエージェントが外部データソースやサービスに安全に接続するためのオープンプロトコルです。MCPを使うことで、AIエージェントはSerendieデザインシステムの情報にアクセスし、デザイントークンやコンポーネント情報を取得できます。これにより、デザインとコードの一貫性を保ちながら、AIエージェントによる開発支援が可能になります。
+
+<PageARef href="https://modelcontextprotocol.io/introduction">
+  What is the Model Context Protocol? - Model Context Protocol
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>入手できる情報</PageHeadLine>
+
+SerendieデザインシステムとMCPサーバー、リモートMCP対応のAIエージェント（Windsurf、HTTP Transport対応など）によって以下の情報を取得できます。
+
+SerendieデザインシステムのMCPサーバーはウェブサイトのサブパスとして提供しており、コンテンツは随時更新されます。シンプルな仕組みのため、MCPサーバーを立ち上げる必要はありません。
+
+<PageARef href="https://github.com/serendie/serendie-web/tree/main/src/mcp">
+  serendie-web/src/mcp at main · serendie/serendie-web
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>ユースケース</PageHeadLine>
+
+## 自然言語で実装する
+
+自然言語でUIコンポーネントをリクエストすることで、serendieデザインシステムを使いながら自然言語から実装することができます。
+
+例えば、次のようなプロンプトでMCPサーバーを利用してコンポーネントを実装させることができます。
+SerendieデザインシステムのMCPサーバーを使って、ログインフォームを実装してください。
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-ai-agent-1.avif"
+    width="310"
+    alt="natural language implementation"
+  />
+</p>
+
+## デザインから実装する
+
+Figma Dev Mode MCPサーバーとSerendieデザインシステムのMCPサーバーを使うことで、FigmaにてSerendieデザインシステムのコンポーネントを使って作成した画面を、そのままコードに変換することができます。
+
+Figma Dev Mode MCPサーバーは、Figmaのデザインファイルを読み取り、そこに含まれるコンポーネント情報を取得します。
+
+デザインシステムとしては、デザイン要素が1対1でコードに変換できることが理想ですが、現実的には難しいことが多いです。
+
+<PageARef href="https://www.figma.com/community/plugin/1435945604700895851/guide-to-the-figma-mcp-server-figma-learn">
+  Guide to the Figma MCP server - Figma Learn
+</PageARef>
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-ai-agent-2.avif"
+    width="310"
+    alt="design to code"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>クイックスタート</PageHeadLine>
+
+## Claude Code
+
+1. 下記のコマンドをターミナルから入力してください。
+
+<CodeBox code={sampleCodeClaude} language={"shell"} />
+
+## VSCode / GitHub Copilot
+
+1. ショートカットをMCPから開きます。
+   a. MCPサーバーをローカルに立ち上げている場合は、MCPサーバーのURLをコピーして貼り付けます。
+   b. リモートMCPサーバーを使う場合は、下記のURLをコピーして貼り付けます。
+
+2. mcp.jsonファイルに下記のように記述してください。
+
+<CodeBox code={sampleCodeVSCode} language={"json"} />
+
+3. スタートをクリックします
+
+## Cursor
+
+ターミナルからMCPサーバーに接続するには、自動的にMCPサーバーが立ち上がります。
+
+<PageARef href="https://docs.cursor.com/context/context-mcp">
+  Cursor Users Link
+</PageARef>
+
+</PageSection>
