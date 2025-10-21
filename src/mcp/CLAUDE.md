@@ -114,12 +114,10 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
 ## Available MCP Tools
 
 1. **health-check**
-
    - No parameters required
    - Returns server status and timestamp
 
 2. **get-serendie-ui-overview** ⚠️ **MUST BE CALLED FIRST**
-
    - No parameters required
    - **CRITICAL**: AI assistants MUST call this tool FIRST before any Serendie-related work
    - Returns essential prerequisite knowledge about @serendie/ui design system
@@ -147,7 +145,6 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
        - Best practices for forms and layouts
 
 3. **get-symbols**
-
    - Parameters:
      - `search`: string (optional) - Filter symbols by name or related keywords (supports Japanese/English)
      - `limit`: number (optional) - Maximum number of results to return
@@ -160,7 +157,6 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Keywords are defined in `data/symbol-keywords.json`
 
 4. **get-symbol-detail**
-
    - Parameters:
      - `name`: string (required) - The name of the symbol to get details for
    - Returns detailed information about a specific symbol:
@@ -170,7 +166,6 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Usage examples (basic, outlined, filled)
 
 5. **get-design-tokens**
-
    - Parameters:
      - `type`: string (optional) - Filter by token type (color, dimension, fontFamily, fontWeight, number, shadow, typography)
      - `category`: string (optional) - Filter by category (reference, system)
@@ -183,7 +178,6 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Array of token objects with key, path, type, value, originalValue, category, and theme
 
 6. **get-design-token-detail**
-
    - Parameters:
      - `key`: string (required) - The key of the token to get details for (e.g., "sd.system.color.impression.primaryContainer")
    - Returns detailed information about a specific design token:
@@ -198,7 +192,6 @@ npm test src/mcp/__tests__/tools/design-tokens.integration.test.ts
      - Reference information (for system tokens)
 
 7. **get-components**
-
    - Parameters:
      - `search`: string (optional) - Filter components by name (partial match, case-insensitive)
      - `category`: string (optional) - Filter by category (Actions, Inputs, Layout, Display, Feedback)
@@ -245,7 +238,6 @@ Each tool returns a response in the following format:
 The `schemas/` directory contains Zod schema definitions for type safety and runtime validation:
 
 - **components.ts**: Defines schemas for component-related data structures including:
-
   - Props definitions
   - Component examples
   - Storybook URLs
@@ -372,7 +364,6 @@ Follow MCP best practices for tool naming:
    ```
 
 5. **Create tests** in `src/mcp/__tests__/tools/your-tool-name.test.ts`:
-
    - Test input validation
    - Test successful execution
    - Test error handling
