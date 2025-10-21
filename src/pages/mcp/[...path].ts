@@ -18,6 +18,13 @@ const mcpServer = createMcpServer();
 
 // MCP endpoint
 app.all("/", async (c) => {
+  const workerEnv = c.env as Record<string, string | undefined> | undefined;
+  if (workerEnv) {
+    (globalThis as typeof globalThis & {
+      __SERENDIE_WORKER_ENV__?: Record<string, string | undefined>;
+    }).__SERENDIE_WORKER_ENV__ = workerEnv;
+  }
+
   const transport = new StreamableHTTPTransport();
   await mcpServer.connect(transport);
   return transport.handleRequest(c);
