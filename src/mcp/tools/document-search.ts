@@ -29,6 +29,22 @@ interface CloudflareSearchResponse {
 const CLOUDFLARE_API_BASE =
   "https://api.cloudflare.com/client/v4/accounts" as const;
 
+type WorkerEnv = Record<string, string | undefined>;
+
+const getEnvValue = (key: string): string | undefined => {
+  if (typeof process !== "undefined" && process.env?.[key]) {
+    return process.env[key];
+  }
+
+  const globalEnv = (
+    globalThis as typeof globalThis & {
+      __SERENDIE_WORKER_ENV__?: WorkerEnv;
+    }
+  ).__SERENDIE_WORKER_ENV__;
+
+  return globalEnv?.[key];
+};
+
 /**
  * Cloudflare AI Search を利用してドキュメント検索を行い、ヒットした本文を連結して返却する MCP ツール。
  *
@@ -52,9 +68,9 @@ export function getDocumentSearchTool(mcpServer: McpServer) {
       },
     },
     async ({ query }) => {
-      const accountId = process.env.CF_ACCOUNT_ID;
-      const apiToken = process.env.CF_API_TOKEN;
-      const indexName = process.env.DOCUMENT_SEARCH_INDEX;
+      const accountId = getEnvValue("CF_ACCOUNT_ID");
+      const apiToken = getEnvValue("CF_API_TOKEN");
+      const indexName = getEnvValue("DOCUMENT_SEARCH_INDEX");
 
       if (!accountId || !apiToken || !indexName) {
         return {
