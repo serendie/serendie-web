@@ -169,8 +169,15 @@ declare global {
 }
 
 /**
- * Build a simpler HTML template that directly fetches the preview page
- * No structured content needed - just pass component name via URL
+ * Build HTML template for OpenAI Apps SDK component preview widget
+ * This is a placeholder that tells ChatGPT to load the actual preview page
+ *
+ * NOTE: In production, we should either:
+ * 1. Return the statically-built HTML from /preview/index.html
+ * 2. Or use this placeholder to load it via fetch/iframe
+ *
+ * For now, this returns a simple message explaining that the preview
+ * should be loaded from the /preview/ route
  */
 export function buildComponentPreviewTemplate(): string {
   return `<!DOCTYPE html>
@@ -179,119 +186,16 @@ export function buildComponentPreviewTemplate(): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Serendie Component Preview</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    .preview-container {
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    .loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      color: #666;
-      font-size: 14px;
-    }
-  </style>
+  <meta http-equiv="refresh" content="0;url=/preview/">
 </head>
 <body>
-  <iframe id="preview" class="preview-container" src="about:blank"></iframe>
-
-  <script type="module">
-    // OpenAI Apps SDK integration
-    // Documentation: https://developers.openai.com/apps-sdk/build/mcp-server/
-
-    function loadPreview() {
-      const iframe = document.getElementById('preview');
-
-      // Get base URL from the current environment
-      // In production: use the deployed URL from window.openai.widgetDomain or window.location
-      const baseUrl = window.openai?.widgetDomain ||
-                     window.location.origin ||
-                     'https://add-openai-apps-sdk.serendie-web.pages.dev';
-
-      console.log('[Component Preview] Base URL:', baseUrl);
-      console.log('[Component Preview] OpenAI context:', window.openai);
-
-      // Primary method: Get structured content from OpenAI Apps SDK
-      // ChatGPT injects structuredContent into window.openai.toolOutput
-      if (window.openai?.toolOutput?.componentName) {
-        const componentName = window.openai.toolOutput.componentName;
-        console.log('[Component Preview] Loading component from toolOutput:', componentName);
-        iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
-        return;
-      }
-
-      // Fallback 1: Listen for postMessage from parent (OpenAI Apps SDK)
-      window.addEventListener('message', (event) => {
-        // Validate event origin for security
-        if (event.origin === 'https://chatgpt.com' ||
-            event.origin.endsWith('.openai.com') ||
-            event.origin.endsWith('.oaiusercontent.com')) {
-
-          if (event.data?.structuredContent?.componentName) {
-            const componentName = event.data.structuredContent.componentName;
-            console.log('[Component Preview] Loading component from postMessage:', componentName);
-            iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
-          }
-        }
-      });
-
-      // Fallback 2: Check URL parameters (for debugging)
-      const urlParams = new URLSearchParams(window.location.search);
-      const componentName = urlParams.get('component');
-      if (componentName) {
-        console.log('[Component Preview] Loading component from URL param:', componentName);
-        iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
-      }
-
-      // If no component name found, show error
-      if (!window.openai?.toolOutput?.componentName && !componentName) {
-        console.warn('[Component Preview] No component name provided');
-        iframe.srcdoc = \`
-          <html>
-            <body style="font-family: sans-serif; padding: 20px; text-align: center;">
-              <h2>No component specified</h2>
-              <p>Please provide a component name to preview.</p>
-            </body>
-          </html>
-        \`;
-      }
+  <p>Redirecting to component preview...</p>
+  <script>
+    // Preserve OpenAI context during redirect
+    if (window.openai?.toolOutput) {
+      sessionStorage.setItem('openai-context', JSON.stringify(window.openai.toolOutput));
     }
-
-    // Load when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadPreview);
-    } else {
-      loadPreview();
-    }
-
-    // Expose API for debugging
-    window.serendiePreview = {
-      reload: loadPreview,
-      getContext: () => window.openai,
-    };
+    window.location.href = '/preview/';
   </script>
 </body>
 </html>`;
