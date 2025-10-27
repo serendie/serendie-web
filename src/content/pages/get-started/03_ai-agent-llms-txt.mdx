@@ -1,0 +1,29 @@
+---
+title: AIエージェント
+slug: get-started/ai-agent/llms-txt
+illustType: "B"
+description: "SerendieデザインシステムのドキュメントをAIツールが取得できるようにする、llms.txt"
+lastUpdated: "2025-10-27"
+parent: get-started/ai-agent/mcp-server
+subLinks:
+  [
+    { name: "MCPサーバー", path: "/get-started/ai-agent/mcp-server" },
+    { name: "LLMs.txt", path: "/get-started/ai-agent/llms-txt" },
+  ]
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>llms.txt</PageHeadLine>
+
+llms.txtは、Serendie UIの各種ドキュメントを、AIエージェントが効率よく利用できるようにサポートするファイルです。MCPサーバーを利用できないシーンなどで、このllms.txtをお使いのAIエージェントに指定することで、本サイトで提供しているガイドライン相当の情報を得ることができます。
+
+下記のリンクから、簡易版と詳細版の2つを提供しています。AIエージェントにはこのURLを指定してください。
+
+- [llms.txt](https://serendie.design/llms.txt) -- ドキュメントの簡易な説明とURLの一覧
+- [llms-full.txt](https://serendie.design/llms-full.txt) -- ドキュメントの全文
+
+</PageSection>
