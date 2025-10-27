@@ -6,7 +6,6 @@ import {
 } from "./tools/design-tokens";
 import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
-import { showComponentPreviewTool } from "./tools/show-component-preview";
 import { buildComponentPreviewTemplate } from "./utils/html-builder";
 
 export function createMcpServer() {
@@ -24,7 +23,6 @@ export function createMcpServer() {
   getDesignTokenDetailTool(mcpServer);
   getComponentsTool(mcpServer);
   getComponentDetailTool(mcpServer);
-  showComponentPreviewTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(
@@ -70,6 +68,19 @@ export function createMcpServer() {
                 "Interactive preview of Serendie UI components with live samples and code examples",
               "openai/widgetDomain":
                 "https://add-openai-apps-sdk.serendie-web.pages.dev",
+              // CSP configuration for widget security
+              "openai/widgetCSP": {
+                connect_domains: [
+                  "https://add-openai-apps-sdk.serendie-web.pages.dev",
+                  "https://dev.serendie-web.pages.dev",
+                  "https://serendie.design",
+                ],
+                resource_domains: [
+                  "https://add-openai-apps-sdk.serendie-web.pages.dev",
+                  "https://dev.serendie-web.pages.dev",
+                  "https://serendie.design",
+                ],
+              },
             },
           },
         ],

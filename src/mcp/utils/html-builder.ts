@@ -219,29 +219,64 @@ export function buildComponentPreviewTemplate(): string {
   <iframe id="preview" class="preview-container" src="about:blank"></iframe>
 
   <script type="module">
-    // OpenAI Apps SDK will send structuredContent via window.openai.toolOutput
+    // OpenAI Apps SDK integration
+    // Documentation: https://developers.openai.com/apps-sdk/build/mcp-server/
+
     function loadPreview() {
       const iframe = document.getElementById('preview');
-      const baseUrl = 'https://add-openai-apps-sdk.serendie-web.pages.dev';
 
-      // Primary: Get structured content from OpenAI Apps SDK
+      // Get base URL from the current environment
+      // In production: use the deployed URL from window.openai.widgetDomain or window.location
+      const baseUrl = window.openai?.widgetDomain ||
+                     window.location.origin ||
+                     'https://add-openai-apps-sdk.serendie-web.pages.dev';
+
+      console.log('[Component Preview] Base URL:', baseUrl);
+      console.log('[Component Preview] OpenAI context:', window.openai);
+
+      // Primary method: Get structured content from OpenAI Apps SDK
+      // ChatGPT injects structuredContent into window.openai.toolOutput
       if (window.openai?.toolOutput?.componentName) {
-        iframe.src = \`\${baseUrl}/preview/\${window.openai.toolOutput.componentName}\`;
+        const componentName = window.openai.toolOutput.componentName;
+        console.log('[Component Preview] Loading component from toolOutput:', componentName);
+        iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
         return;
       }
 
-      // Fallback 1: Listen for message from parent (OpenAI Apps SDK)
+      // Fallback 1: Listen for postMessage from parent (OpenAI Apps SDK)
       window.addEventListener('message', (event) => {
-        if (event.data?.structuredContent?.componentName) {
-          iframe.src = \`\${baseUrl}/preview/\${event.data.structuredContent.componentName}\`;
+        // Validate event origin for security
+        if (event.origin === 'https://chatgpt.com' ||
+            event.origin.endsWith('.openai.com') ||
+            event.origin.endsWith('.oaiusercontent.com')) {
+
+          if (event.data?.structuredContent?.componentName) {
+            const componentName = event.data.structuredContent.componentName;
+            console.log('[Component Preview] Loading component from postMessage:', componentName);
+            iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
+          }
         }
       });
 
-      // Fallback 2: Check URL parameters
+      // Fallback 2: Check URL parameters (for debugging)
       const urlParams = new URLSearchParams(window.location.search);
       const componentName = urlParams.get('component');
       if (componentName) {
+        console.log('[Component Preview] Loading component from URL param:', componentName);
         iframe.src = \`\${baseUrl}/preview/\${componentName}\`;
+      }
+
+      // If no component name found, show error
+      if (!window.openai?.toolOutput?.componentName && !componentName) {
+        console.warn('[Component Preview] No component name provided');
+        iframe.srcdoc = \`
+          <html>
+            <body style="font-family: sans-serif; padding: 20px; text-align: center;">
+              <h2>No component specified</h2>
+              <p>Please provide a component name to preview.</p>
+            </body>
+          </html>
+        \`;
       }
     }
 
@@ -251,6 +286,12 @@ export function buildComponentPreviewTemplate(): string {
     } else {
       loadPreview();
     }
+
+    // Expose API for debugging
+    window.serendiePreview = {
+      reload: loadPreview,
+      getContext: () => window.openai,
+    };
   </script>
 </body>
 </html>`;
