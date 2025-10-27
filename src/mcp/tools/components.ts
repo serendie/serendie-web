@@ -301,6 +301,13 @@ export function getComponentDetailTool(mcpServer: McpServer) {
       title: "Get Component Detail",
       description:
         "Get detailed information about a specific Serendie UI component including props and usage examples",
+      _meta: {
+        // Associate this tool with the HTML template
+        "openai/outputTemplate": "ui://serendie/component-preview.html",
+        // Labels to display in ChatGPT when the tool is called
+        "openai/toolInvocation/invoking": "Loading component preview...",
+        "openai/toolInvocation/invoked": "Component preview loaded",
+      },
       inputSchema: {
         /**
          * 詳細を取得したいコンポーネント名（必須）
@@ -310,7 +317,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
           .string()
           .describe("The name of the component to get details for"),
       },
-    },
+    }, // Type assertion needed for _meta field
     async ({ name }) => {
       try {
         const components = manifestData;
@@ -459,6 +466,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          // OpenAI Apps SDK: Pass component name via structuredContent
+          structuredContent: {
+            componentName: component.name,
+          },
         };
       } catch (error) {
         /**

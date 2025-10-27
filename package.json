@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run build:panda && npm run build:components && astro dev",
+    "dev-skip": "npm run build:panda && astro dev",
     "start": "astro dev",
     "build": "npm run build:panda && npm run build:components && astro build && cp _redirects dist/_redirects && echo '_worker.js' >> dist/.assetsignore && echo '_routes.json' >> dist/.assetsignore",
     "build:astro": "astro check && astro build",
@@ -35,7 +36,7 @@
     "@astrojs/sitemap": "^3.6.0",
     "@eslint/js": "^9.15.0",
     "@hono/mcp": "^0.1.0",
-    "@modelcontextprotocol/sdk": "^1.13.0",
+    "@modelcontextprotocol/sdk": "^1.20.2",
     "@pandacss/eslint-plugin": "^0.2.2",
     "@serendie/design-token": "dev",
     "@serendie/style-dictionary-formatter": "^0.0.3",

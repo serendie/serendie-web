@@ -6,6 +6,8 @@ import {
 } from "./tools/design-tokens";
 import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
+import { showComponentPreviewTool } from "./tools/show-component-preview";
+import { buildComponentPreviewTemplate } from "./utils/html-builder";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -22,6 +24,7 @@ export function createMcpServer() {
   getDesignTokenDetailTool(mcpServer);
   getComponentsTool(mcpServer);
   getComponentDetailTool(mcpServer);
+  showComponentPreviewTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(
@@ -41,6 +44,33 @@ export function createMcpServer() {
               server: "serendie-mcp-server",
               timestamp: new Date().toISOString(),
             }),
+          },
+        ],
+      };
+    }
+  );
+
+  // Register HTML template as MCP resource for OpenAI Apps SDK
+  mcpServer.registerResource(
+    "component-preview-widget",
+    "ui://serendie/component-preview.html",
+    {},
+    async () => {
+      const htmlContent = buildComponentPreviewTemplate();
+
+      return {
+        contents: [
+          {
+            uri: "ui://serendie/component-preview.html",
+            mimeType: "text/html+skybridge",
+            text: htmlContent,
+            _meta: {
+              "openai/widgetPrefersBorder": true,
+              "openai/widgetDescription":
+                "Interactive preview of Serendie UI components with live samples and code examples",
+              "openai/widgetDomain":
+                "https://add-openai-apps-sdk.serendie-web.pages.dev",
+            },
           },
         ],
       };
