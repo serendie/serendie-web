@@ -1,6 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { loadSerendieUIOverviewMarkdown } from "../schemas/serendie-ui-overview";
-import { getSerendieUiVersion } from "../utils/get-serendie-ui-version";
 
 /**
  * @serendie/uiデザインシステムの前提知識をMarkdownで提供するMCPツール。
@@ -28,14 +27,9 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
     async () => {
       try {
         const markdown = await loadSerendieUIOverviewMarkdown();
-        const version = getSerendieUiVersion();
 
         return {
           content: [
-            {
-              type: "text",
-              text: JSON.stringify({ version }, null, 2),
-            },
             {
               type: "text",
               text: markdown,
