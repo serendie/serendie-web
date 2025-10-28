@@ -1,0 +1,21 @@
+---
+import { ComponentPreview } from "../../components/Preview/ComponentPreview";
+import "../../index.css";
+
+// Disable prerendering for dynamic routes
+export const prerender = false;
+
+const { component = "" } = Astro.params;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{component} Preview - Serendie</title>
+  </head>
+  <body>
+    <ComponentPreview client:only="react" componentName={component} />
+  </body>
+</html>

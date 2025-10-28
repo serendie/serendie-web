@@ -1,0 +1,114 @@
+---
+import { ComponentPreview } from "../../components/Preview/ComponentPreview";
+import { availableComponents } from "../../components/Preview/sampleCodeRegistry";
+import "../../index.css";
+
+// Enable static rendering for this page
+export const prerender = true;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serendie Component Preview</title>
+    <style>
+      .component-container {
+        display: none;
+      }
+      .component-container.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {
+        availableComponents.map((componentName) => (
+          <div class="component-container" data-component={componentName}>
+            <ComponentPreview
+              client:only="react"
+              componentName={componentName}
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <script is:inline>
+      // OpenAI Apps SDK integration
+      // Read componentName from window.openai.toolOutput
+      function initializePreview() {
+        let componentName = "Button"; // default
+
+        // Try to get from OpenAI context first
+        if (window.openai?.toolOutput?.componentName) {
+          componentName = window.openai.toolOutput.componentName;
+        } else if (window.openai?.toolOutput?.name) {
+          componentName = window.openai.toolOutput.name;
+        } else {
+          // Fallback: try sessionStorage (for redirects)
+          const savedContext = sessionStorage.getItem("openai-context");
+          if (savedContext) {
+            try {
+              const context = JSON.parse(savedContext);
+              componentName = context.componentName || context.name || "Button";
+              sessionStorage.removeItem("openai-context"); // Clean up
+            } catch (e) {
+              console.warn("[Preview] Failed to parse saved context:", e);
+            }
+          }
+        }
+
+        console.log("[Preview] OpenAI context:", window.openai);
+        console.log("[Preview] Selected component:", componentName);
+
+        // Hide all components
+        document.querySelectorAll(".component-container").forEach((el) => {
+          el.classList.remove("active");
+        });
+
+        // Show only the selected component
+        const targetContainer = document.querySelector(
+          `[data-component="${componentName}"]`
+        );
+        if (targetContainer) {
+          targetContainer.classList.add("active");
+          console.log("[Preview] Showing component:", componentName);
+        } else {
+          console.warn("[Preview] Component not found:", componentName);
+          // Fallback: show first component
+          const firstContainer = document.querySelector(".component-container");
+          if (firstContainer) {
+            firstContainer.classList.add("active");
+          }
+        }
+      }
+
+      // Initialize when DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializePreview);
+      } else {
+        initializePreview();
+      }
+
+      // Also listen for postMessage updates (fallback)
+      window.addEventListener("message", (event) => {
+        if (
+          event.data?.componentName &&
+          (event.origin === "https://chatgpt.com" ||
+            event.origin.endsWith(".openai.com") ||
+            event.origin.endsWith(".oaiusercontent.com"))
+        ) {
+          console.log("[Preview] Received message:", event.data);
+          // Re-initialize with new component
+          if (window.openai) {
+            window.openai.toolOutput = event.data;
+          }
+          initializePreview();
+        }
+      });
+    </script>
+  </body>
+</html>
