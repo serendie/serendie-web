@@ -6,6 +6,7 @@ import {
 } from "./tools/design-tokens";
 import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
+import { getSearchSerendieGuidelineTool } from "./tools/search-serendie-guideline";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -22,6 +23,7 @@ export function createMcpServer() {
   getDesignTokenDetailTool(mcpServer);
   getComponentsTool(mcpServer);
   getComponentDetailTool(mcpServer);
+  getSearchSerendieGuidelineTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(

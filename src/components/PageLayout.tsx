@@ -251,6 +251,9 @@ export const PageARef = styled(Aref, {
         mt: "10px",
       },
     },
+    "& p": {
+      display: "inline",
+    },
     _after: {
       content: '""',
       display: "inline-block",
