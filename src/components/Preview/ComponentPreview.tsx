@@ -44,7 +44,7 @@ export function ComponentPreview({ componentName }: ComponentPreviewProps) {
 
           if (Component) {
             loadedSamples.push({
-              name: sampleInfo.name,
+              name: sampleInfo.name.replace(/Sample$/, ""), // Remove "Sample" suffix
               Component: Component as ComponentType,
             });
           }
@@ -125,14 +125,14 @@ export function ComponentPreview({ componentName }: ComponentPreviewProps) {
       >
         <h1
           className={css({
-            textStyle: "sd.system.typography.headline.small_expanded",
-            marginBottom: "sd.system.dimension.spacing.small",
+            textStyle: "sd.system.typography.title.medium_expanded",
+            fontWeight: "sd.system.typography.weight.bold",
             pt: "sd.system.dimension.spacing.medium",
             px: "sd.system.dimension.spacing.medium",
             color: "sd.system.color.component.onSurface",
           })}
         >
-          {componentName}
+          {componentName} Component
         </h1>
         <Tabs
           value={activeTab}
@@ -148,23 +148,32 @@ export function ComponentPreview({ componentName }: ComponentPreviewProps) {
       {activeSample && (
         <main
           className={css({
+            width: "100%",
             flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "sd.system.dimension.spacing.large",
+            minHeight: 0, // Allow flex item to shrink below content size
             overflow: "auto",
+            padding: "sd.system.dimension.spacing.large",
           })}
         >
           <div
             className={css({
-              width: "100%",
               maxWidth: "1200px",
+              minHeight: "100%",
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             })}
           >
-            <Suspense fallback={<div>Loading sample...</div>}>
-              <activeSample.Component />
-            </Suspense>
+            <div
+              className={css({
+                width: "100%",
+              })}
+            >
+              <Suspense fallback={<div>Loading sample...</div>}>
+                <activeSample.Component />
+              </Suspense>
+            </div>
           </div>
         </main>
       )}
