@@ -1,7 +1,4 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { readFile } from "fs/promises";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import { getSymbolsTool, getSymbolDetailTool } from "./tools/symbols";
 import {
   getDesignTokensTool,
@@ -9,9 +6,9 @@ import {
 } from "./tools/design-tokens";
 import { getComponentsTool, getComponentDetailTool } from "./tools/components";
 import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Import preview HTML as string using Vite's ?raw import
+// This avoids fs usage and works in Cloudflare Workers
+import previewHtml from "./ui/preview.html?raw";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -59,35 +56,14 @@ export function createMcpServer() {
     "ui://serendie/component-preview.html",
     {},
     async () => {
-      // Load the pre-built preview.html from dist/mcp/ui/
-      const previewHtmlPath = join(__dirname, "../../dist/mcp/ui/preview.html");
-      let htmlContent = "";
-
-      try {
-        htmlContent = await readFile(previewHtmlPath, "utf-8");
-      } catch (error) {
-        console.error(
-          "[MCP] Failed to load preview.html. Please run 'npm run build:preview' first.",
-          error
-        );
-        // Fallback: return an error message in HTML
-        htmlContent = `<!DOCTYPE html>
-<html>
-<head><title>Preview Not Built</title></head>
-<body>
-  <h1>Preview HTML Not Found</h1>
-  <p>Please run <code>npm run build:preview</code> to generate the preview HTML.</p>
-  <p>Path: ${previewHtmlPath}</p>
-</body>
-</html>`;
-      }
-
+      // Use Vite's ?raw import to load preview HTML
+      // This works in Cloudflare Workers without fs module
       return {
         contents: [
           {
             uri: "ui://serendie/component-preview.html",
             mimeType: "text/html+skybridge",
-            text: htmlContent,
+            text: previewHtml,
             _meta: {
               "openai/widgetPrefersBorder": true,
               "openai/widgetDescription":

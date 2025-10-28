@@ -18,7 +18,8 @@ async function buildPreviewHtml() {
   console.log("Vite build completed");
 
   // Rename index.html to preview.html
-  const outDir = resolve(__dirname, "../../dist/mcp/ui");
+  // Output to src/mcp/ui/ instead of dist/ to avoid conflicts with Astro build
+  const outDir = resolve(__dirname, "../../src/mcp/ui");
   const indexPath = resolve(outDir, "index.html");
   const previewPath = resolve(outDir, "preview.html");
 

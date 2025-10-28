@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [react(), viteSingleFile()],
   root: resolve(__dirname),
   build: {
-    outDir: resolve(__dirname, "../../dist/mcp/ui"),
+    // Output to src/mcp/ui/ instead of dist/ to avoid conflicts with Astro build
+    outDir: resolve(__dirname, "../../src/mcp/ui"),
     emptyOutDir: false,
     rollupOptions: {
       input: resolve(__dirname, "index.html"),
