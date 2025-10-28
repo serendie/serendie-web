@@ -50,13 +50,13 @@ const getEnvValue = (key: string): string | undefined => {
  *
  * @param mcpServer - MCP サーバーインスタンス
  */
-export function getDocumentSearchTool(mcpServer: McpServer) {
+export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
   mcpServer.registerTool(
-    "document-search",
+    "search-serendie-guideline",
     {
-      title: "Document Search",
+      title: "Search Serendie Guideline",
       description:
-        "Run a query against Cloudflare AI Search and return the merged document content.",
+        "Search Serendie design guidelines using Cloudflare AI Search and return the merged document content.",
       inputSchema: {
         /**
          * 検索したいクエリ文字列
