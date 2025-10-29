@@ -1,5 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { loadSerendieUIOverviewMarkdown } from "../schemas/serendie-ui-overview";
+import {
+  GetSerendieUIOverviewToolSchema,
+  loadSerendieUIOverviewMarkdown,
+} from "../schemas/serendie-ui-overview";
 
 /**
  * @serendie/uiデザインシステムの前提知識をMarkdownで提供するMCPツール。
@@ -23,6 +26,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
         "like adding reset CSS (already included) or using px values instead of design tokens. " +
         "The response is formatted as Markdown for direct consumption by LLMs.",
       inputSchema: {},
+      outputSchema: GetSerendieUIOverviewToolSchema.shape,
     },
     async () => {
       try {
@@ -35,6 +39,7 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
               text: markdown,
             },
           ],
+          structuredContent: { text: markdown },
         };
       } catch (error) {
         const message =
@@ -47,6 +52,11 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
               text: `Failed to load Serendie UI overview. ${message}`,
             },
           ],
+          structuredContent: {
+            error: "Failed to load Serendie UI overview",
+            message,
+          },
+          isError: true,
         };
       }
     }

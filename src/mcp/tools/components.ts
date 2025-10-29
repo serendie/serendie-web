@@ -131,6 +131,7 @@ export function getComponentsTool(mcpServer: McpServer) {
           .optional()
           .describe("Maximum number of results to return (default: all)"),
       },
+      outputSchema: GetComponentsResponseSchema.shape,
     },
     async ({ search, category, limit }) => {
       try {
@@ -211,6 +212,7 @@ export function getComponentsTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -227,6 +229,11 @@ export function getComponentsTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch components",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }
@@ -317,6 +324,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
           .string()
           .describe("The name of the component to get details for"),
       },
+      outputSchema: GetComponentDetailResponseSchema.shape,
     }, // Type assertion needed for _meta field
     async ({ name }) => {
       try {
@@ -343,6 +351,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
                 text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
+            structuredContent: {
+              componentName: name,
+            },
+            isError: true,
           };
         }
 
@@ -466,10 +478,7 @@ export function getComponentDetailTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
-          // OpenAI Apps SDK: Pass component name via structuredContent
-          structuredContent: {
-            componentName: component.name,
-          },
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -486,6 +495,11 @@ export function getComponentDetailTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch component detail",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }
