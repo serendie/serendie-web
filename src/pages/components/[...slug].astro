@@ -5,11 +5,21 @@ import ComponentLayout from "@/layouts/ComponentLayout.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const components = await getCollection("components");
-  return components.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const componentsJa = await getCollection("components/ja");
+  const componentsEn = await getCollection("components/en");
+
+  return [
+    // 日本語ルート（プレフィックスなし）
+    ...componentsJa.map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry, locale: 'ja' },
+    })),
+    // 英語ルート
+    ...componentsEn.map((entry) => ({
+      params: { slug: `en/${entry.id}` },
+      props: { entry, locale: 'en' },
+    })),
+  ];
 }
 
 const { entry } = Astro.props;

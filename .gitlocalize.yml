@@ -1,0 +1,42 @@
+# GitLocalize Configuration
+# https://docs.gitlocalize.com/
+
+# Branch to use (optional - GitLocalize may ignore this)
+# branch: nagayama/git-localize
+
+# Source language (翻訳元の言語)
+source_language: ja
+
+# Target languages (翻訳先の言語)
+target_languages:
+  - en
+
+# Translation targets (翻訳対象のディレクトリとファイル)
+targets:
+  # Components
+  - source: src/content/components/ja/**/*.mdx
+    translation: src/content/components/%lang%/**/*.mdx
+
+  # Pages
+  - source: src/content/pages/ja/**/*.mdx
+    translation: src/content/pages/%lang%/**/*.mdx
+
+# File types to include (翻訳対象のファイルタイプ)
+file_types:
+  - mdx
+  - md
+
+# Ignore patterns (翻訳対象外のパターン)
+ignore:
+  - node_modules/**
+  - dist/**
+  - .astro/**
+  - styled-system/**
+
+# Translation memory settings
+translation_memory:
+  enabled: true
+
+# Glossary settings
+glossary:
+  enabled: true

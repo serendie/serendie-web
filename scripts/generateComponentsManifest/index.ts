@@ -484,7 +484,7 @@ async function generateManifest() {
   const componentDirs = await readdir(componentsDir);
 
   // Create a map of MDX files for quick lookup
-  const mdxFiles = await glob("src/content/components/*.mdx", { cwd: rootDir });
+  const mdxFiles = await glob("src/content/components/ja/*.mdx", { cwd: rootDir });
   const mdxMap = new Map<string, string>();
 
   for (const mdxFile of mdxFiles) {

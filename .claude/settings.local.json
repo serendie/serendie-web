@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:keystatic.com)",
+      "Bash(for file in /Users/nagayama/src/github.com/serendie/serendie-web/src/content/components/*.mdx)",
+      "Bash(do wc -l \"$file\")",
+      "Bash(done)",
+      "Bash(awk:*)",
+      "Bash(for file in /Users/nagayama/src/github.com/serendie/serendie-web/src/content/pages/**/*.mdx)",
+      "Bash(find:*)",
+      "WebFetch(domain:gitlocalize.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

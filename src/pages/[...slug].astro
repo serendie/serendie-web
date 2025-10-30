@@ -14,19 +14,24 @@ import { PageAside, PageLinks, PageMain } from "@/components/PageLayout";
 import StickySideNav from "@/components/StickySideNav.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("pages");
+  const pagesJa = await getCollection("pages/ja");
+  const pagesEn = await getCollection("pages/en");
 
-  return pages.map((page) => {
-    return {
-      params: {
-        slug: page.slug,
-      },
-      props: { page },
-    };
-  });
+  return [
+    // 日本語ルート（プレフィックスなし）
+    ...pagesJa.map((page) => ({
+      params: { slug: page.slug },
+      props: { page, locale: 'ja' as const },
+    })),
+    // 英語ルート
+    ...pagesEn.map((page) => ({
+      params: { slug: `en/${page.slug}` },
+      props: { page, locale: 'en' as const },
+    })),
+  ];
 }
 
-const page = await getEntry("pages", Astro.params.slug);
+const { page, locale } = Astro.props;
 
 if (!page) {
   return {
@@ -36,13 +41,14 @@ if (!page) {
 }
 
 const currentDir = page.id.split("/").slice(0, -1).join("/");
+const collectionName = `pages/${locale}` as const;
 const siblings = await getCollection(
-  "pages",
-  (page) =>
+  collectionName,
+  (p) =>
     // Filter out pages that in the same directory
-    page.id.split("/").slice(0, -1).join("/") === currentDir &&
+    p.id.split("/").slice(0, -1).join("/") === currentDir &&
     // and filename does not have parent
-    !page.data.parent
+    !p.data.parent
 );
 
 // Sort siblings by filename with natural numeric sorting
@@ -63,7 +69,7 @@ const { Content } = await page.render();
   <MainGrid>
     <SideMenu
       links={siblings.map((link) => ({
-        href: `/${link.slug}`,
+        href: locale === 'en' ? `/en/${link.slug}` : `/${link.slug}`,
         title: link.data.title,
         isActive: link.slug === page.slug || link.slug === page.data.parent,
       }))}

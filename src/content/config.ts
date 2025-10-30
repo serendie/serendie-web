@@ -41,6 +41,10 @@ const pagesCollection = defineCollection({
 });
 
 export const collections = {
-  components: componentsCollection,
-  pages: pagesCollection,
+  // 日本語コンテンツ
+  "components/ja": componentsCollection,
+  "pages/ja": pagesCollection,
+  // 英語コンテンツ
+  "components/en": componentsCollection,
+  "pages/en": pagesCollection,
 };

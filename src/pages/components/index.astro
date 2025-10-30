@@ -4,7 +4,7 @@ export const prerender = true;
 import ComponentLayout from "@/layouts/ComponentLayout.astro";
 import { getCollection } from "astro:content";
 import { PageLinks } from "@/components/PageLayout";
-export const components = await getCollection("components");
+export const components = await getCollection("components/ja");
 ---
 
 <ComponentLayout
