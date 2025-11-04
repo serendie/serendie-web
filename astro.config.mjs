@@ -28,6 +28,18 @@ export default defineConfig({
     sitemap(),
   ],
 
+  i18n: {
+    locales: ["en", "ja"],
+    defaultLocale: "en",
+    fallback: {
+      en: "ja",
+    },
+    routing: {
+      prefixDefaultLocale: false,
+      fallbackType: "rewrite",
+    },
+  },
+
   markdown: {
     shikiConfig: {
       theme: "github-light",
