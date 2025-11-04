@@ -3,7 +3,7 @@ import { styled } from "styled-system/jsx";
 import { siteConfig } from "@/../siteConfig";
 import { ThemeSelector } from "./ThemeSelector";
 import { GlobalHeaderMenu } from "./GlobalHeaderMenu";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
 
 interface Props {
   className?: string;
@@ -13,6 +13,7 @@ interface Props {
 const { className, isToppage } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
 
 const Header = styled("header", {
   base: {
@@ -56,7 +57,7 @@ const H1 = styled("h1", {
     textStyle: "sd.system.typography.title.large_expanded",
     "& a:hover": {
       color: "web.system.color.impression.primary",
-    }
+    },
   },
 });
 
@@ -85,30 +86,30 @@ const Link = styled("a", {
   base: {
     transition: "color 0.3s",
     _hover: {
-      color: 'web.system.color.impression.primary',
+      color: "web.system.color.impression.primary",
     },
   },
   variants: {
     active: {
       true: {
-        color: 'web.system.color.impression.primary',
+        color: "web.system.color.impression.primary",
       },
     },
   },
 });
 
 const menuItems = [
-  { href: "/about", text: t("nav.about") },
-  { href: "/get-started", text: t("nav.getStarted") },
-  { href: "/foundations", text: t("nav.foundations") },
-  { href: "/components", text: t("nav.components") },
+  { href: localePath("about"), text: t("nav.about") },
+  { href: localePath("get-started"), text: t("nav.getStarted") },
+  { href: localePath("foundations"), text: t("nav.foundations") },
+  { href: localePath("components"), text: t("nav.components") },
 ];
 ---
 
 <Header className={className} isToppage={isToppage}>
   <HeaderContainer>
     <H1>
-      <a href="/">{siteConfig.siteName}</a>
+      <a href={localePath("")}>{siteConfig.siteName}</a>
     </H1>
     <Menu>
       {

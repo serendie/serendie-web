@@ -5,7 +5,7 @@ import { Shapes } from "./Shapes";
 import { AnimationFadeIn } from "./AnimationFadeIn";
 import { motion } from "framer-motion";
 import { SerendieSymbol } from "@serendie/symbols";
-import { useTranslations, type Language } from "@/i18n/utils";
+import { useTranslations, useLocalePath, type Language } from "@/i18n/utils";
 
 const HeaderOver = styled("header", {
   base: {
@@ -144,6 +144,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ lang }) => {
   const t = useTranslations(lang);
+  const localePath = useLocalePath(lang);
 
   return (
     <HeaderOver>
@@ -163,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({ lang }) => {
 
           <HeaderDescription>{t("hero.description")}</HeaderDescription>
 
-          <a href="/about">
+          <a href={localePath("about")}>
             <Button
               rightIcon={<ChevronRight />}
               className={css({
