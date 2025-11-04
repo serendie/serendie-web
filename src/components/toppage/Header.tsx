@@ -5,6 +5,7 @@ import { Shapes } from "./Shapes";
 import { AnimationFadeIn } from "./AnimationFadeIn";
 import { motion } from "framer-motion";
 import { SerendieSymbol } from "@serendie/symbols";
+import { useTranslations, type Language } from "@/i18n/utils";
 
 const HeaderOver = styled("header", {
   base: {
@@ -137,7 +138,13 @@ export const HeaderTitleContent = () => (
   </>
 );
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  lang: Language;
+}
+
+export const Header: React.FC<HeaderProps> = ({ lang }) => {
+  const t = useTranslations(lang);
+
   return (
     <HeaderOver>
       <HeaderWrapper>
@@ -154,10 +161,7 @@ export const Header: React.FC = () => {
             <HeaderTitleContent />
           </HeaderTitle>
 
-          <HeaderDescription>
-            Serendie Design
-            Systemは、多様な事業と人々をつなぎ、新たな価値を生み出すための三菱電機によるオープンなデザインシステムです。
-          </HeaderDescription>
+          <HeaderDescription>{t("hero.description")}</HeaderDescription>
 
           <a href="/about">
             <Button
@@ -173,7 +177,7 @@ export const Header: React.FC = () => {
                 backgroundColor: "web.system.color.impression.secondary",
               })}
             >
-              コンセプト
+              {t("hero.concept")}
             </Button>
           </a>
         </HeaderContainer>

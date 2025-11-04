@@ -1,5 +1,9 @@
 ---
 import { styled } from "styled-system/jsx";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const FooterWrapper = styled("footer", {
   base: {
@@ -110,101 +114,101 @@ const FooterCopyright = styled("div", {
 
 const footerLink = [
   {
-    title: "About",
+    title: t("footer.about"),
     url: "/about",
     links: [
       {
-        title: "Serendie Design Systemとは",
+        title: t("footer.aboutSerendie"),
         url: "/about",
       },
     ],
   },
   {
-    title: "Get Started",
+    title: t("footer.getStarted"),
     url: "/get-started",
     links: [
       {
-        title: "デザイン",
+        title: t("footer.design"),
         url: "/get-started/design",
       },
       {
-        title: "開発",
+        title: t("footer.development"),
         url: "/get-started/dev",
       },
     ],
   },
   {
-    title: "Foundation",
+    title: t("footer.foundation"),
     url: "/foundations",
     links: [
       {
-        title: "デザイントークン",
+        title: t("footer.designTokens"),
         url: "/foundations/design-tokens",
       },
       {
-        title: "カラー",
+        title: t("footer.color"),
         url: "/foundations/color",
       },
       {
-        title: "テーミング",
+        title: t("footer.theming"),
         url: "/foundations/theming",
       },
       {
-        title: "タイポグラフィ",
+        title: t("footer.typography"),
         url: "/foundations/typography",
       },
       {
-        title: "寸法",
+        title: t("footer.dimension"),
         url: "/foundations/dimension",
       },
       {
-        title: "階層",
+        title: t("footer.elevation"),
         url: "/foundations/elevation",
       },
       {
-        title: "アイコン",
+        title: t("footer.icon"),
         url: "/foundations/icon",
       },
       {
-        title: "イラストレーション",
+        title: t("footer.illustration"),
         url: "/foundations/illustration",
       },
     ],
   },
   {
-    title: "Components",
+    title: t("footer.components"),
     url: "/components",
     links: [
       {
-        title: "Accordion",
+        title: t("footer.accordion"),
         url: "/components/accordion",
       },
       {
-        title: "Button",
+        title: t("footer.button"),
         url: "/components/button",
       },
       {
-        title: "List",
+        title: t("footer.list"),
         url: "/components/list",
       },
       {
-        title: "Search",
+        title: t("footer.search"),
         url: "/components/search",
       },
       {
-        title: "Select",
+        title: t("footer.select"),
         url: "/components/select",
       },
       {
-        title: "Tabs",
+        title: t("footer.tabs"),
         url: "/components/tabs",
       },
       {
-        title: "Text Field",
+        title: t("footer.textField"),
         url: "/components/text-field",
       },
       {
-        title: "すべて見る",
+        title: t("footer.seeAll"),
         url: "/components",
       },
     ],
@@ -216,7 +220,7 @@ const footerLink = [
   <FooterContainer>
       <FooterTitle>
         <a href='/'>
-          Serendie Design System
+          {t("footer.title")}
         </a>
       </FooterTitle>
     <FooterLinks>
@@ -238,17 +242,17 @@ const footerLink = [
   </FooterContainer>
   <FooterCopyright>
     <span>
-      © Mitsubishi Electric Corporation
+      {t("footer.copyright")}
     </span>
     <ul>
       <li>
-        <a href='/terms'>利用規約</a>
+        <a href='/terms'>{t("footer.terms")}</a>
       </li>
       <li>
         |
       </li>
       <li>
-        <a href='https://x.com/SerendieDesign' target="_blank">ご意見・お問い合わせ</a>
+        <a href='https://x.com/SerendieDesign' target="_blank">{t("footer.contact")}</a>
       </li>
     </ul>
   </FooterCopyright>
