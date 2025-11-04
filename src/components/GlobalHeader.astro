@@ -3,6 +3,7 @@ import { styled } from "styled-system/jsx";
 import { siteConfig } from "@/../siteConfig";
 import { ThemeSelector } from "./ThemeSelector";
 import { GlobalHeaderMenu } from "./GlobalHeaderMenu";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 interface Props {
   className?: string;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const { className, isToppage } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const Header = styled("header", {
   base: {
@@ -95,10 +98,10 @@ const Link = styled("a", {
 });
 
 const menuItems = [
-  { href: "/about", text: "About" },
-  { href: "/get-started", text: "Get Started" },
-  { href: "/foundations", text: "Foundations" },
-  { href: "/components", text: "Components" },
+  { href: "/about", text: t("nav.about") },
+  { href: "/get-started", text: t("nav.getStarted") },
+  { href: "/foundations", text: t("nav.foundations") },
+  { href: "/components", text: t("nav.components") },
 ];
 ---
 

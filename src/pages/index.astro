@@ -9,6 +9,9 @@ import ReleaseNote from "@/components/toppage/ReleaseNote.astro";
 import Contact from "@/components/toppage/Contact.astro";
 import { BackgroundShape } from "@/components/toppage/BackgroundShape";
 import { Header } from "@/components/toppage/Header";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
 
 import IconAccordion from "@/assets/toppage/icons/accordion.svg?raw";
 import IconSearch from "@/assets/toppage/icons/search.svg?raw";
@@ -162,7 +165,7 @@ const content = [
 ---
 
 <TopLayout>
-  <Header client:load />
+  <Header client:load lang={lang} />
 
   <Container data-name="top-container">
     <LinkContent content={content} client:idle />

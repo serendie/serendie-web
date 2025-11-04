@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "about": "About",
+    "getStarted": "Get Started",
+    "foundations": "Foundations",
+    "components": "Components"
+  },
+  "hero": {
+    "description": "Serendie Design Systemは、多様な事業と人々をつなぎ、新たな価値を生み出すための三菱電機によるオープンなデザインシステムです。",
+    "concept": "コンセプト"
+  },
+  "footer": {
+    "title": "Serendie Design System",
+    "about": "About",
+    "aboutSerendie": "Serendie Design Systemとは",
+    "getStarted": "Get Started",
+    "design": "デザイン",
+    "development": "開発",
+    "foundation": "Foundation",
+    "designTokens": "デザイントークン",
+    "color": "カラー",
+    "theming": "テーミング",
+    "typography": "タイポグラフィ",
+    "dimension": "寸法",
+    "elevation": "階層",
+    "icon": "アイコン",
+    "illustration": "イラストレーション",
+    "components": "Components",
+    "accordion": "Accordion",
+    "button": "Button",
+    "list": "List",
+    "search": "Search",
+    "select": "Select",
+    "tabs": "Tabs",
+    "textField": "Text Field",
+    "seeAll": "すべて見る",
+    "terms": "利用規約",
+    "contact": "ご意見・お問い合わせ",
+    "copyright": "© Mitsubishi Electric Corporation"
+  }
+}
