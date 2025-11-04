@@ -1,6 +1,24 @@
 ---
-export { prerender, getStaticPaths } from "../[...slug].astro";
+import { getCollection } from "astro:content";
 import Page from "../[...slug].astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages", (page) => {
+    return page.id.startsWith("en/");
+  });
+
+  return pages.map((page) => {
+    const slug = page.slug.replace(/^en\//, "");
+    return {
+      params: {
+        slug: slug,
+      },
+      props: { page },
+    };
+  });
+}
 ---
 
 <Page {...Astro.props} />

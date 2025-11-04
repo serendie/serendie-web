@@ -14,9 +14,11 @@ import { PageAside, PageLinks, PageMain } from "@/components/PageLayout";
 import StickySideNav from "@/components/StickySideNav.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("pages");
+  const pages = await getCollection("pages", (page) => {
+    return !page.id.startsWith("en/");
+  });
 
-  return pages.map((page) => {
+  const paths = pages.map((page) => {
     return {
       params: {
         slug: page.slug,
@@ -24,8 +26,11 @@ export async function getStaticPaths() {
       props: { page },
     };
   });
+
+  return paths;
 }
-const page = await getEntry("pages", Astro.params.slug);
+
+const page = Astro.props.page;
 
 if (!page) {
   return {
