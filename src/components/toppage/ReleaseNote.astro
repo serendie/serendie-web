@@ -4,6 +4,11 @@ import { SerendieSymbol } from "@serendie/symbols";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { siteConfig } from "../../../siteConfig";
+import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
 
 const ReleasenoteContainer = styled("div", {
   base: {
@@ -132,7 +137,7 @@ const NoteIcon = styled("div", {
 
 <ReleasenoteContainer>
   <TitleContainer>
-    <Title>ニュース・イベントを見る</Title>
+    <Title>{t("footer.releaseTitle")}</Title>
     <!-- <Button
       styleType="ghost"
       className={css({
@@ -144,12 +149,11 @@ const NoteIcon = styled("div", {
   </TitleContainer>
 
   <ReleasenoteGrid>
-    <Note
-      href="https://www.g-mark.org/gallery/winners/27713"
-      target="_blank"
-    >
+    <Note href="https://www.g-mark.org/gallery/winners/27713" target="_blank">
       <NoteTime>2025/10/15</NoteTime>
-      <NoteTitle>Serendie Design Systemがグッドデザイン・ベスト100を受賞しました。</NoteTitle>
+      <NoteTitle
+        >Serendie Design Systemがグッドデザイン・ベスト100を受賞しました。</NoteTitle
+      >
       <NoteBadge>
         <Badge
           className={css({
@@ -163,29 +167,32 @@ const NoteIcon = styled("div", {
         <SerendieSymbol name="chevron-right" size={24} />
       </NoteIcon>
     </Note>
-    <Note
-      href="/foundations/data-visualization"
-    >
+    <Note href={localePath("foundations/data-visualization")}>
       <NoteTime>2025/07/31</NoteTime>
-      <NoteTitle>データビジュアライゼーションに対応するアップデートを行いました。</NoteTitle>
+      <NoteTitle
+        >データビジュアライゼーションに対応するアップデートを行いました。</NoteTitle
+      >
+      <NoteIcon>
+        <SerendieSymbol name="chevron-right" size={24} />
+      </NoteIcon>
+    </Note>
+    <Note href="https://github.com/serendie" target="_blank">
+      <NoteTime>2025/1/31</NoteTime>
+      <NoteTitle
+        >GitHubにてSerendie UIやSerendie SymbolsなどがOSSとして公開されました。</NoteTitle
+      >
       <NoteIcon>
         <SerendieSymbol name="chevron-right" size={24} />
       </NoteIcon>
     </Note>
     <Note
-      href="https://github.com/serendie"
+      href="https://www.mitsubishielectric.co.jp/serendie/stories/07/"
       target="_blank"
     >
-      <NoteTime>2025/1/31</NoteTime>
-      <NoteTitle>GitHubにてSerendie UIやSerendie SymbolsなどがOSSとして公開されました。</NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note href="https://www.mitsubishielectric.co.jp/serendie/stories/07/" target="_blank">
       <NoteTime>2024/12/20</NoteTime>
       <NoteTitle>
-        Serendie Design System立ち上げメンバーのインタビュー記事が公開されました。
+        Serendie Design
+        System立ち上げメンバーのインタビュー記事が公開されました。
       </NoteTitle>
       <NoteIcon>
         <SerendieSymbol name="chevron-right" size={24} />
