@@ -25,7 +25,6 @@ export async function getStaticPaths() {
     };
   });
 }
-
 const page = await getEntry("pages", Astro.params.slug);
 
 if (!page) {
@@ -49,7 +48,10 @@ const siblings = await getCollection(
 siblings.sort((a, b) => {
   const filenameA = a.id.split("/").pop() || "";
   const filenameB = b.id.split("/").pop() || "";
-  return filenameA.localeCompare(filenameB, undefined, { numeric: true, sensitivity: 'base' });
+  return filenameA.localeCompare(filenameB, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
 });
 
 const propsForMdx = {
