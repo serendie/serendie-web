@@ -1,0 +1,7 @@
+---
+// 日本語版のcomponents/[...slug].astroを再エクスポート（エイリアス方式）
+export { prerender, getStaticPaths } from "../../components/[...slug].astro";
+import ComponentPage from "../../components/[...slug].astro";
+---
+
+<ComponentPage {...Astro.props} />

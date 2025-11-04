@@ -1,9 +1,10 @@
 ---
 import { styled } from "styled-system/jsx";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
 
 const FooterWrapper = styled("footer", {
   base: {
@@ -90,126 +91,126 @@ const FooterCopyright = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
-    gap: '16px',
-    mt: '100px',
+    gap: "16px",
+    mt: "100px",
     expanded: {
       flexDirection: "row",
       alignItems: "center",
-      gap: '40px',
-      mt: '80px'
+      gap: "40px",
+      mt: "80px",
     },
     "& ul": {
       textStyle: "sd.system.typography.body.extraSmall_compact",
       fontSize: "14px",
-      display: "flex"
+      display: "flex",
     },
     "& ul li": {
-      mr: "16px"
+      mr: "16px",
     },
     "& a:hover": {
       opacity: 0.6,
-    }
+    },
   },
 });
 
 const footerLink = [
   {
     title: t("footer.about"),
-    url: "/about",
+    url: localePath("about"),
     links: [
       {
         title: t("footer.aboutSerendie"),
-        url: "/about",
+        url: localePath("about"),
       },
     ],
   },
   {
     title: t("footer.getStarted"),
-    url: "/get-started",
+    url: localePath("get-started"),
     links: [
       {
         title: t("footer.design"),
-        url: "/get-started/design",
+        url: localePath("get-started/design"),
       },
       {
         title: t("footer.development"),
-        url: "/get-started/dev",
+        url: localePath("get-started/dev"),
       },
     ],
   },
   {
     title: t("footer.foundation"),
-    url: "/foundations",
+    url: localePath("foundations"),
     links: [
       {
         title: t("footer.designTokens"),
-        url: "/foundations/design-tokens",
+        url: localePath("foundations/design-tokens"),
       },
       {
         title: t("footer.color"),
-        url: "/foundations/color",
+        url: localePath("foundations/color"),
       },
       {
         title: t("footer.theming"),
-        url: "/foundations/theming",
+        url: localePath("foundations/theming"),
       },
       {
         title: t("footer.typography"),
-        url: "/foundations/typography",
+        url: localePath("foundations/typography"),
       },
       {
         title: t("footer.dimension"),
-        url: "/foundations/dimension",
+        url: localePath("foundations/dimension"),
       },
       {
         title: t("footer.elevation"),
-        url: "/foundations/elevation",
+        url: localePath("foundations/elevation"),
       },
       {
         title: t("footer.icon"),
-        url: "/foundations/icon",
+        url: localePath("foundations/icon"),
       },
       {
         title: t("footer.illustration"),
-        url: "/foundations/illustration",
+        url: localePath("foundations/illustration"),
       },
     ],
   },
   {
     title: t("footer.components"),
-    url: "/components",
+    url: localePath("components"),
     links: [
       {
         title: t("footer.accordion"),
-        url: "/components/accordion",
+        url: localePath("components/accordion"),
       },
       {
         title: t("footer.button"),
-        url: "/components/button",
+        url: localePath("components/button"),
       },
       {
         title: t("footer.list"),
-        url: "/components/list",
+        url: localePath("components/list"),
       },
       {
         title: t("footer.search"),
-        url: "/components/search",
+        url: localePath("components/search"),
       },
       {
         title: t("footer.select"),
-        url: "/components/select",
+        url: localePath("components/select"),
       },
       {
         title: t("footer.tabs"),
-        url: "/components/tabs",
+        url: localePath("components/tabs"),
       },
       {
         title: t("footer.textField"),
-        url: "/components/text-field",
+        url: localePath("components/text-field"),
       },
       {
         title: t("footer.seeAll"),
-        url: "/components",
+        url: localePath("components"),
       },
     ],
   },
@@ -218,16 +219,18 @@ const footerLink = [
 
 <FooterWrapper>
   <FooterContainer>
-      <FooterTitle>
-        <a href='/'>
-          {t("footer.title")}
-        </a>
-      </FooterTitle>
+    <FooterTitle>
+      <a href={localePath("")}>
+        {t("footer.title")}
+      </a>
+    </FooterTitle>
     <FooterLinks>
       {
         footerLink.map((link) => (
           <div>
-            <h2><a href={link.url}>{link.title}</a></h2>
+            <h2>
+              <a href={link.url}>{link.title}</a>
+            </h2>
             <ul>
               {link.links.map((item, index) => (
                 <FooterLinksLi>
@@ -246,13 +249,13 @@ const footerLink = [
     </span>
     <ul>
       <li>
-        <a href='/terms'>{t("footer.terms")}</a>
+        <a href={localePath("terms")}>{t("footer.terms")}</a>
       </li>
+      <li>|</li>
       <li>
-        |
-      </li>
-      <li>
-        <a href='https://x.com/SerendieDesign' target="_blank">{t("footer.contact")}</a>
+        <a href="https://x.com/SerendieDesign" target="_blank"
+          >{t("footer.contact")}</a
+        >
       </li>
     </ul>
   </FooterCopyright>
