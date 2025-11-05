@@ -15,7 +15,7 @@ export default defineConfig({
   site: "https://serendie.design/",
   base: BASE_PATH,
 
-  output: "hybrid",
+  output: "static",
 
   integrations: [
     react(),
