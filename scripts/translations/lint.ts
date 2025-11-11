@@ -1,4 +1,5 @@
 import { loadUi } from "./uiStore";
+import { isEmptyTranslationValue } from "./translationHelpers";
 
 async function main() {
   const ui = await loadUi();
@@ -24,8 +25,8 @@ async function main() {
       const value = ui[lang][key];
       if (typeof value !== "string") {
         errors.push(`"${key}" in ${lang} must be a string.`);
-      } else if (!value.trim()) {
-        errors.push(`"${key}" in ${lang} is empty.`);
+      } else if (isEmptyTranslationValue(value)) {
+        errors.push(`"${key}" in ${lang} is empty or placeholder "#".`);
       }
     }
 
