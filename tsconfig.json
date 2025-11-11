@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["src", "styled-system"],
+  "include": ["src", "styled-system", "scripts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
