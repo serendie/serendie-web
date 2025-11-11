@@ -3,6 +3,7 @@ import { figmaNameToKey } from "./keyUtils";
 import { getLocalVariables, resolveFigmaEnv } from "./figma";
 import { cloneUi, loadUi, writeUi } from "./uiStore";
 import type { UiDictionary } from "./uiStore";
+import { normalizeFigmaValue } from "./translationHelpers";
 import type { VariableCollection } from "./figma";
 
 function pickCollection(
@@ -71,7 +72,7 @@ async function main() {
 
       const value = variable.valuesByMode[mode.modeId];
       if (typeof value === "string") {
-        updatedUi[lang][key] = value;
+        updatedUi[lang][key] = normalizeFigmaValue(value);
       } else if (!(key in updatedUi[lang])) {
         updatedUi[lang][key] = "";
       }

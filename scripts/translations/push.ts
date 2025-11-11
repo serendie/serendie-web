@@ -9,6 +9,11 @@ import {
   type PostVariablesRequestBody,
 } from "./figma";
 import { loadUi } from "./uiStore";
+import {
+  ensureFigmaSafeValue,
+  isEmptyTranslationValue,
+  normalizeFigmaValue,
+} from "./translationHelpers";
 
 function pickCollection(
   collections: Record<string, VariableCollection>,
@@ -105,15 +110,21 @@ async function main() {
       const mode = modeByName.get(lang);
       if (!mode) continue;
       const value = ui[lang]?.[key] ?? "";
+      const desiredNormalized = isEmptyTranslationValue(value) ? "" : value;
       const currentValue = existing?.valuesByMode?.[mode.modeId];
-      if (typeof currentValue === "string" && currentValue === value) {
+      const normalizedCurrent =
+        typeof currentValue === "string"
+          ? normalizeFigmaValue(currentValue)
+          : undefined;
+
+      if (normalizedCurrent === desiredNormalized) {
         continue;
       }
 
       payload.variableModeValues?.push({
         variableId,
         modeId: mode.modeId,
-        value,
+        value: ensureFigmaSafeValue(value),
       });
     }
   }
