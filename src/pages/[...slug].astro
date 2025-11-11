@@ -14,9 +14,11 @@ import { PageAside, PageLinks, PageMain } from "@/components/PageLayout";
 import StickySideNav from "@/components/StickySideNav.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("pages");
+  const pages = await getCollection("pages", (page) => {
+    return !page.id.startsWith("en/");
+  });
 
-  return pages.map((page) => {
+  const paths = pages.map((page) => {
     return {
       params: {
         slug: page.slug,
@@ -24,9 +26,11 @@ export async function getStaticPaths() {
       props: { page },
     };
   });
+
+  return paths;
 }
 
-const page = await getEntry("pages", Astro.params.slug);
+const page = Astro.props.page;
 
 if (!page) {
   return {
@@ -49,7 +53,10 @@ const siblings = await getCollection(
 siblings.sort((a, b) => {
   const filenameA = a.id.split("/").pop() || "";
   const filenameB = b.id.split("/").pop() || "";
-  return filenameA.localeCompare(filenameB, undefined, { numeric: true, sensitivity: 'base' });
+  return filenameA.localeCompare(filenameB, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
 });
 
 const propsForMdx = {

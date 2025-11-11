@@ -1,0 +1,108 @@
+---
+title: About
+slug: en/about
+illustType: "C"
+illustSize: "large"
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection } from "@/components/PageLayout.tsx";
+import { css } from "styled-system/css";
+
+import ImageAdaptive from "@/assets/content/about/dynamic_adaptive.svg?react";
+import ImageBorderless from "@/assets/content/about/dynamic_borderless.svg?react";
+import ImageCirculative from "@/assets/content/about/dynamic_circulative.svg?react";
+import ImagePrimitives from "@/assets/content/about/dynamic_primitives.svg?react";
+
+export const conceptGrid = css({
+  display: "grid",
+  gridTemplateColumns: "1fr",
+  mt: "sd.system.dimension.spacing.twoExtraLarge",
+  sm: {
+    gridTemplateColumns: "auto minmax(150px, max-content)",
+    columnGap: "sd.system.dimension.spacing.extraLarge",
+  },
+});
+
+export const conceptGridTitle = css({
+  fontSize: "24px", // TODO: テーマに追加
+  my: 0,
+});
+
+export const conceptText = css({
+  my: "sd.system.dimension.spacing.medium !important",
+  mdDown: {
+    my: "sd.system.dimension.spacing.small !important",
+  },
+});
+
+export const conceptGridImage = css({
+  mb: "sd.system.dimension.spacing.twoExtraLarge",
+  sm: {
+    mb: "sd.system.dimension.spacing.threeExtraLarge",
+  },
+});
+
+<PageSection>
+	<PageHeadLine number={1}>What is the Serendie Design System</PageHeadLine>
+
+        	The Serendie Design System is provided by Mitsubishi Electric Corporation’s DX Innovation Center.
+
+        	A design system aims to streamline design and development, ensure accessible and consistent product quality, accumulate knowledge and spread best practices, and facilitate communication. To achieve this, it provides definitions of brand and visual identity; design tokens that define visual elements such as color and typography; reusable UI components; and visual assets like icons and illustrations. These are representative examples—the exact components of a design system vary by organization and context.
+
+        	While honoring Mitsubishi Electric’s monozukuri culture, the Serendie Design System aims to be a foundation for rapidly creating experimental, new services. Therefore, the assets we provide focus on items with immediate impact for digital product development. Rather than pursuing only perfection and robustness, it is a design system for enabling **lightweight and flexible product development**.
+
+        	<img src="/assets/pages/about/sds.avif" alt="SDS image" />
+
+</PageSection>
+
+<PageSection>
+	<PageHeadLine number={2}>Principles</PageHeadLine>
+
+        Design systems take various forms depending on the organization, but they share core principles. One of these is striving for a Single Source of Truth (SSOT) to avoid situations like “we don’t know where the latest design files are” or “we didn’t know there was a reusable icon set.”
+
+        The same holds true for the Serendie Design System. In light of Mitsubishi Electric’s culture and aspirations, we place emphasis on the following three principles.
+
+        <div class={conceptGrid}>
+        	<div>
+        		<h4 class={conceptGridTitle}>Adaptive</h4>
+        		<p class={conceptText}>We aim to adapt to Mitsubishi Electric’s diverse business domains—from home to space—and to every business phase from value validation to productization. The Serendie Design System provides basic assets that value versatility and universality, and uses them as a foundation to flexibly express each product’s uniqueness and identity by domain.</p>
+        	</div>
+        		<div class={conceptGridImage}>
+        			<ImageAdaptive width='100%'/>
+        		</div>
+        	<div>
+        		<h4 class={conceptGridTitle}>Borderless</h4>
+        		<p class={conceptText}>The Serendie Design System is a shared asset for everyone involved with Mitsubishi Electric. We aim to create an environment where anyone can freely use it without permission or approval, whether inside or outside the company. Serendie connects digital product creators and acts as a catalyst for collaboration that transcends organizational boundaries.</p>
+        	</div>
+        		<div class={conceptGridImage}>
+        		<ImageBorderless width='100%' />
+        		</div>
+        	<div>
+        		<h4 class={conceptGridTitle}>Circulative</h4>
+        		<p class={conceptText}>The Serendie Design System is never “finished.” By continuously analyzing usage and iterating improvements, we respond flexibly to required changes. This activity is not confined to a single team; it is nurtured collaboratively across the organization. We expand the Serendie-centered ecosystem to create positive synergies across the organization.</p>
+        	</div>
+        	<div class={`conceptGridImage ${css({
+        		"& svg": {
+        			mb: 0
+        		}
+        	})}`}>
+        		<ImageCirculative width='100%'/>
+        	</div>
+        </div>
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={3}>Adapting to diverse business domains</PageHeadLine>
+	One of our core concepts is to adapt the Serendie Design System to Mitsubishi Electric’s many brands and products. In such an environment, each domain defines its own visual identity, often needs domain-specific UI components, and may require different accessibility standards and quality bars. If each domain builds a completely independent design system, silos will form and the principles of Borderless and Circulative will be undermined.
+
+        This is why a themable, “skin-change” architecture is important. The design tokens and Serendie UI provided by the Serendie Design System include mechanisms to change the surface appearance—what we call theming. By default, we provide <a href='/foundations/theming/'>five themes</a> that follow the Serendie brand, and you can add domain-specific custom themes to override Serendie UI.
+
+        <ImagePrimitives width='100%'/>
+
+        In this way, the Serendie Design System serves as the backbone for each domain design system. Domain-specific UI components are intentionally kept within their respective domain design systems rather than incorporated into Serendie UI, reducing cross-departmental coordination overhead and making governance easier.
+
+        In addition to theming, other mechanisms provided by the Serendie Design System—such as <a href='/foundations/design-tokens/#section-6'>synchronizing design tokens between code and Figma</a>—can be leveraged by each domain design system. While this workflow is for internal use at Mitsubishi Electric, we publish concrete workflows on [GitHub](https://github.com/serendie/subbrands-template).
+
+</PageSection>
