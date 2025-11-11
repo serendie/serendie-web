@@ -52,7 +52,7 @@ function collectVariables(
 
 async function main() {
   const collectionName =
-    process.env.FIGMA_TRANSLATION_COLLECTION ?? "Serendie-Translations";
+    process.env.FIGMA_TRANSLATION_COLLECTION ?? "locales";
 
   const ui = await loadUi();
   const languages = Object.keys(ui);
