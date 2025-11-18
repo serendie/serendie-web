@@ -4,7 +4,12 @@ import { SerendieSymbol } from "@serendie/symbols";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { siteConfig } from "../../../siteConfig";
-import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useLocalePath,
+  formatDateByLang,
+} from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -61,9 +66,6 @@ const releaseNotes = [
     href: "https://www.mitsubishielectric.co.jp/news/2024/1107.html",
   },
 ];
-
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString(lang === "en" ? "en-US" : "ja-JP");
 
 const ReleasenoteContainer = styled("div", {
   base: {
@@ -206,7 +208,7 @@ const NoteIcon = styled("div", {
   <ReleasenoteGrid>
     {releaseNotes.map((note) => (
       <Note href={note.href} target={note.href.startsWith("http") ? "_blank" : undefined}>
-        <NoteTime>{formatDate(note.date)}</NoteTime>
+        <NoteTime>{formatDateByLang(note.date, lang)}</NoteTime>
         <NoteTitle>{note.title[lang]}</NoteTitle>
         {note.badge && (
           <NoteBadge>

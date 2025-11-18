@@ -26,6 +26,15 @@ export function useLocalePath(lang: Language) {
 }
 
 /**
+ * 言語に合わせて日付文字列をフォーマットする
+ * @param date ISO形式などDateが解釈できる文字列
+ * @param lang 言語
+ */
+export function formatDateByLang(date: string, lang: Language) {
+  return new Date(date).toLocaleDateString(lang === "en" ? "en-US" : "ja-JP");
+}
+
+/**
  * 現在の言語を維持したURLを生成
  * @param lang 言語
  * @param path パス（先頭のスラッシュなし）例: "about", "components/button"
