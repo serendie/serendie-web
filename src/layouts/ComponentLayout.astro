@@ -8,7 +8,7 @@ import PageHeader from "@/components/PageHeader.astro";
 import { IndexPageHeader } from "@/components/IndexPageHeader";
 import { css } from "styled-system/css";
 import { PageMain } from "@/components/PageLayout";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useLocalePath } from "@/i18n/utils";
 
 interface Props {
   data: CollectionEntry<"components">["data"];
@@ -17,22 +17,30 @@ interface Props {
 const { data } = Astro.props;
 const components = await getCollection("components");
 const lang = getLangFromUrl(Astro.url);
+const localePath = useLocalePath(lang);
 const description =
   lang === "en" && data.descriptionEn ? data.descriptionEn : data.description;
 const componentName = lang === "ja" ? data.componentName : undefined;
 
 const componentLinks = components
-  .map((component) => ({
-    href: `/components/${component.slug}`,
-    title: component.data.title,
-    isActive: component.data.title === data.title,
-  }))
+  .map((component) => {
+    const href = localePath(`components/${component.slug}`);
+    return {
+      href,
+      title: component.data.title,
+      isActive:
+        component.data.title === data.title &&
+        Astro.url.pathname.replace(/\/$/, "") === href.replace(/\/$/, ""),
+    };
+  })
   .sort((a, b) => a.title.localeCompare(b.title));
 
 componentLinks.unshift({
-  href: "/components",
+  href: localePath("components"),
   title: "Components",
-  isActive: Astro.url.pathname === "/components",
+  isActive:
+    Astro.url.pathname.replace(/\/$/, "") ===
+    localePath("components").replace(/\/$/, ""),
 });
 ---
 
