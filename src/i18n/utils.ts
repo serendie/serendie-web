@@ -1,17 +1,23 @@
 import { ui } from "./ui";
+import { uiComponents } from "./ui-components";
 
-export type Language = keyof typeof ui;
-export type TranslationKey = keyof (typeof ui)[Language];
+const uiMerged = {
+  ja: { ...ui.ja, ...uiComponents.ja },
+  en: { ...ui.en, ...uiComponents.en },
+} as const;
+
+export type Language = keyof typeof uiMerged;
+export type TranslationKey = keyof (typeof uiMerged)[Language];
 
 export function getLangFromUrl(url: URL): Language {
   const [, lang] = url.pathname.split("/");
-  if (lang in ui) return lang as Language;
+  if (lang in uiMerged) return lang as Language;
   return "ja";
 }
 
 export function useTranslations(lang: Language) {
   return function t(key: TranslationKey): string {
-    return ui[lang][key] || ui["ja"][key];
+    return uiMerged[lang][key] || uiMerged["ja"][key];
   };
 }
 
