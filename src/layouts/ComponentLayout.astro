@@ -8,6 +8,7 @@ import PageHeader from "@/components/PageHeader.astro";
 import { IndexPageHeader } from "@/components/IndexPageHeader";
 import { css } from "styled-system/css";
 import { PageMain } from "@/components/PageLayout";
+import { getLangFromUrl } from "@/i18n/utils";
 
 interface Props {
   data: CollectionEntry<"components">["data"];
@@ -15,6 +16,7 @@ interface Props {
 
 const { data } = Astro.props;
 const components = await getCollection("components");
+const lang = getLangFromUrl(Astro.url);
 
 const componentLinks = components
   .map((component) => ({
@@ -53,6 +55,7 @@ componentLinks.unshift({
           illustSize={data.illustSize}
           lastUpdated={data.lastUpdated}
           description={data.description}
+          lang={lang}
         />
       </PageHeader>
       <PageMain>

@@ -12,6 +12,7 @@ import { IndexPageHeader } from "@/components/IndexPageHeader";
 import PageHeader from "@/components/PageHeader.astro";
 import { PageAside, PageLinks, PageMain } from "@/components/PageLayout";
 import StickySideNav from "@/components/StickySideNav.astro";
+import { getLangFromUrl } from "@/i18n/utils";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages", (page) => {
@@ -38,6 +39,8 @@ if (!page) {
     error: new Error("Page not found"),
   };
 }
+
+const lang = getLangFromUrl(Astro.url);
 
 const currentDir = page.id.split("/").slice(0, -1).join("/");
 const siblings = await getCollection(
@@ -97,6 +100,7 @@ const { Content } = await page.render();
           illustSize={page.data.illustSize}
           lastUpdated={page.data.lastUpdated}
           description={page.data.description}
+          lang={lang}
         />
       </PageHeader>
 

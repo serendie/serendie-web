@@ -43,6 +43,7 @@ export const ui = {
     "footer.theming": "テーマ",
     "footer.title": "Serendie Design System",
     "footer.typography": "タイポグラフィ",
+    "page.lastUpdated": "更新",
     "hero.concept": "コンセプト",
     "hero.description":
       "人とテクノロジーの協働を通じてアイデアの実現を促すオープンデザインシステム",
@@ -95,6 +96,7 @@ export const ui = {
     "footer.theming": "Theming",
     "footer.title": "Serendie Design System",
     "footer.typography": "Typography",
+    "page.lastUpdated": "Last updated",
     "hero.concept": "Concept",
     "hero.description":
       "An open design system that facilitates the realization of ideas through collaboration between people and technology.",

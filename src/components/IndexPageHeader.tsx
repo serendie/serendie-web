@@ -1,5 +1,6 @@
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
+import { useTranslations, type Language } from "@/i18n/utils";
 
 import Comp_A from "../assets/illustrations/composition-a/large.svg?react";
 import Comp_B from "../assets/illustrations/composition-b/large.svg?react";
@@ -22,6 +23,7 @@ type IndexPageHeaderProps = {
   lastUpdated?: string;
   illustType?: type;
   illustSize?: "large" | "small";
+  lang?: Language;
 };
 
 const IndexPageHeader_ = ({
@@ -31,9 +33,12 @@ const IndexPageHeader_ = ({
   description,
   lastUpdated,
   illustSize = "small",
+  lang = "ja",
 }: IndexPageHeaderProps) => {
   const Illust = illustType ? illustMap[illustType] : null;
   const lastUpdateDate = lastUpdated ? new Date(lastUpdated) : undefined;
+  const t = useTranslations(lang);
+  const dateLocale = lang === "en" ? "en-US" : "ja-JP";
 
   return (
     <div
@@ -99,7 +104,7 @@ const IndexPageHeader_ = ({
               color: "sd.reference.color.scale.gray.600",
             })}
           >
-            更新 {lastUpdateDate?.toLocaleDateString("ja-JP")}
+            {t("page.lastUpdated")} {lastUpdateDate?.toLocaleDateString(dateLocale)}
           </p>
         )}
       </div>
