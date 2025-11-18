@@ -1,0 +1,51 @@
+---
+title: Color
+slug: en/foundations/color
+description: "The base color palette that visually expresses Serendie. Using this palette strengthens consistency across products. The palette is defined as reference tokens."
+illustType: A
+lastUpdated: "2025-07-28"
+subLinks:
+  [
+    { name: "Color palette", path: "/en/foundations/color" },
+    { name: "Color role", path: "/en/foundations/color/role" },
+  ]
+---
+
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+import ColorMatrix from "@/components/ColorMatrix.astro";
+import { css } from "styled-system/css";
+import PageHeadline from "@/components/PageHeadLine.astro";
+
+<PageSection>
+  <PageHeadline number={1}>Color palette</PageHeadline>
+
+[The Serendie brand](https://www.mitsubishielectric.co.jp/serendie/) uses a wide variety of colors based on traditional Japanese hues across touchpoints such as office spaces and communication tools. Serendie Design System defines that diversity as [five color themes](/en/foundations/theming) and also provides a [data visualization color palette](/en/foundations/data-visualization/) that inherits them. This palette is the foundation for both.
+
+We mainly design a 10-step lightness scale for each hue, with exceptions for White, Black, and Transparency, which are needed in UI. For how to use Transparency, see [Color role](/en/foundations/color/role#section-4).
+
+  <div
+    class={css({
+      mt: "sd.system.dimension.spacing.twoExtraLarge",
+      maxWidth: "calc(100vw - 48px)",
+      overflowX: "auto",
+    })}
+  >
+    <ColorMatrix />
+  </div>
+</PageSection>
+
+<PageSection>
+  <PageHeadline number={2}>Accessibility</PageHeadline>
+
+Considering the Serendie brand’s characteristics and its role as the base for theming, data visualization, and diverse use cases, we adopt APCA (Advanced Perceptual Contrast Algorithm) as the contrast standard for the color palette. APCA is under consideration for WCAG 3.0 and is expected to be closer to human perception.
+
+Based on APCA’s contrast standard (Lc value), we adjust lightness to align across hues while accounting for perceptual differences per hue. We also intentionally bias the lightness jumps to make the tokens easier to use. For text where readability matters, use color tokens 600 or higher (Lc value 75 or more).
+
+The [five color themes](/en/foundations/theming) we currently provide are designed so foreground (text) colors and background colors meet APCA contrast standards. When designing additional UI components, use [color roles](/en/foundations/color/role) appropriately. For example, pair primary with onPrimary; avoid combining primary with onPrimaryContainer.
+
+### References
+
+<PageARef href="https://www.digital.go.jp/resources/introduction-to-web-accessibility-guidebook">Web Accessibility Guidebook - Digital Agency</PageARef>
+<PageARef href="https://git.apcacontrast.com/documentation/">APCA Documentation Index - APCA</PageARef>
+
+</PageSection>

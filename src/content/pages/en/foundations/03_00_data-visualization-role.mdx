@@ -1,0 +1,180 @@
+---
+title: Data Visualization - Color Roles
+slug: en/foundations/data-visualization-role
+lastUpdated: "2025-07-17"
+illustType: A
+description: The data visualization palette requires choosing design tokens based on the nature of the data. Accessibility considerations are also critical.
+parent: en/foundations/data-visualization
+subLinks:
+  [
+    { name: "Color palette", path: "/en/foundations/data-visualization" },
+    { name: "Color role", path: "/en/foundations/data-visualization-role" },
+  ]
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection } from "@/components/PageLayout.tsx";
+import { css } from "styled-system/css";
+import { CalloutSection } from "@/components/CalloutSection.tsx";
+import Image1 from "@/assets/content/foundations/data-visualization/1.tokenized.svg?react";
+import Image2 from "@/assets/content/foundations/data-visualization/2.tokenized.svg?react";
+import Image3 from "@/assets/content/foundations/data-visualization/3.tokenized.svg?react";
+import Image4 from "@/assets/content/foundations/data-visualization/4.tokenized.svg?react";
+import Image6 from "@/assets/content/foundations/data-visualization/6.tokenized.svg?react";
+import Image7 from "@/assets/content/foundations/data-visualization/7.tokenized.svg?react";
+import Image8 from "@/assets/content/foundations/data-visualization/8.svg?react";
+import Image9 from "@/assets/content/foundations/data-visualization/9.tokenized.svg?react";
+import Image10 from "@/assets/content/foundations/data-visualization/10.tokenized.svg?react";
+import Image11 from "@/assets/content/foundations/data-visualization/11.tokenized.svg?react";
+import Image12 from "@/assets/content/foundations/data-visualization/12.tokenized.svg?react";
+import Image13 from "@/assets/content/foundations/data-visualization/13.tokenized.svg?react";
+
+<PageSection>
+  <PageHeadLine number={1}>Color roles</PageHeadLine>
+
+When designing digital product UIs, chart elements and UI elements can coexist in the same area. Use the color tokens dedicated to data visualization for chart elements, and use the [standard color tokens](/en/foundations/color/role#section-3) for UI elements.
+
+<Image1
+  className={css({
+    borderRadius: "0 !important",
+    width: "100%",
+  })}
+/>
+
+<CalloutSection
+  number="1"
+  title="UI elements"
+  description="Use Dashboard Widget or UI colors (sd.system.color.component)"
+>
+  <Image2
+    className={css({
+      borderRadius: "0 !important",
+      width: "100%",
+    })}
+  />
+</CalloutSection>
+
+<CalloutSection
+  number="2"
+  title="Chart elements"
+  description="Use chart-specific color tokens"
+>
+  <Image3
+    className={css({
+      borderRadius: "0 !important",
+      width: "100%",
+    })}
+  />
+</CalloutSection>
+
+<CalloutSection
+  number="3"
+  title="Chart background elements"
+  description="Elements used for chart backgrounds"
+>
+  <Image4
+    className={css({
+      borderRadius: "0 !important",
+      width: "100%",
+    })}
+  />
+</CalloutSection>
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Using single vs. multi-hue colors</PageHeadLine>
+
+The [data visualization color palette](/en/foundations/data-visualization) provides single-hue and multi-hue options. Choose according to your goal and the data you are working with. To coexist with Serendie Design System’s color themes and keep product screens simple, **we generally recommend single-hue colors unless multi-hue is necessary to convey meaning.**
+
+## When using single-hue colors
+
+Use the same color when representing the same category, dimension, metric, or sequential numbers. For lightness, use consecutive numbers starting from 01 or 06 in the palette.
+
+Whenever possible, represent items with a single lightness in the single-hue set—ideally chart.mark.primary.05 (see example 1).
+
+<Image6
+  className={css({
+    borderRadius: "0 !important",
+    width: "100%",
+  })}
+/>
+
+## When using multi-hue colors
+
+Use different hues when representing different categories, dimensions, or metrics.
+
+When combining multiple chart types that represent different values, use combinations across the color wheel. (See example 2 for combining multiple chart types.)
+
+<Image7
+  className={css({
+    borderRadius: "0 !important",
+    width: "100%",
+  })}
+/>
+
+<CalloutSection
+  title="When combining multiple chart types"
+  description={`Use diagonal combinations from the color wheel below.\n\nExample: In the stacked chart above, the marks use a blue hue near 01 from the Konjo palette. When combining temperature values, use the Multi color at 03, which sits opposite 01.`}
+>
+  <Image8
+    className={css({
+      borderRadius: "0 !important",
+      width: "100%",
+    })}
+  />
+</CalloutSection>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>Accessibility</PageHeadLine>
+
+## Margins between marks
+
+For both multi- and single-hue colors, consecutive mark color tokens (e.g., mark.primary.01 and mark.primary.02) do not have sufficient contrast. Add white outlines or margins between marks to distinguish them.
+
+<Image9
+  className={css({
+    borderRadius: "0 !important",
+    width: "100%",
+  })}
+/>
+
+## Text on marks
+
+Use the combinations below when placing text on marks. If the marks are too small for text, use a Tooltip to show the text on hover.
+
+<Image10
+  className={css({
+    borderRadius: "0 !important",
+    width: "100%",
+  })}
+/>
+
+<CalloutSection
+  title="Text color combinations"
+  description="For data visualization, we design contrast using WCAG 3.0 APCA as the standard. Follow the combinations below for marks and text."
+>
+<Image11 
+  className={css({
+    borderRadius: "0 !important",
+    mb: "40px",
+  })}/>
+
+<Image12 
+  className={css({
+    borderRadius: "0 !important",
+  })}/>
+</CalloutSection>
+
+## Avoid relying solely on color
+
+When differentiating chart types, avoid relying on color alone. Use supporting elements such as shapes, lines, patterns, and text.
+
+<Image13
+  className={css({
+    borderRadius: "0 !important",
+  })}
+/>
+
+</PageSection>

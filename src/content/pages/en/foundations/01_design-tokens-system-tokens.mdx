@@ -1,0 +1,33 @@
+---
+title: System Tokens
+slug: en/foundations/design-tokens/system-tokens
+parent: en/foundations/design-tokens
+illustType: "A"
+description: "System tokens reference the underlying reference tokens. When the surrounding context changes, you switch their references to respond."
+lastUpdated: "2024-11-1"
+fullWidth: true
+subLinks:
+  [
+    { name: "Design", path: "/en/foundations/design-tokens" },
+    {
+      name: "Reference tokens",
+      path: "/en/foundations/design-tokens/reference-tokens",
+    },
+    {
+      name: "System tokens",
+      path: "/en/foundations/design-tokens/system-tokens",
+    },
+  ]
+---
+
+import { TokenList } from "@/components/TokenList";
+import tokens from "@serendie/design-token/token-list";
+import { PageSection } from "@/components/PageLayout.tsx";
+
+export const systemTokens = tokens.filter(
+  (token) => !token.key.includes("themes") && token.key.includes("sd.system")
+);
+
+<PageSection>
+  <TokenList tokens={systemTokens} client:load />
+</PageSection>
