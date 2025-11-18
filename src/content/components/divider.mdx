@@ -5,25 +5,25 @@ description: 視覚的に区切るためのコンポーネントです。コン�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { ColorSample } from "@/sampleCode/Divider/ColorSample";
 import colorSampleRaw from "@/sampleCode/Divider/ColorSample.tsx?raw";
 import { TypeSample } from "@/sampleCode/Divider/TypeSample";
 import typeSampleRaw from "@/sampleCode/Divider/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="カラー"
   description="視覚的な強弱に応じて使い分けてください。"
   code={colorSampleRaw}
   storyPath="/story/components-divider--horizontal"
 >
   <ColorSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="水平と垂直の2種類があります。"
   storyPath="/story/components-divider--vertical"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

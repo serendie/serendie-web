@@ -5,7 +5,7 @@ description: 構造化されたデータを表形式で表示・操作するコ�
 lastUpdated: "2025-07-10"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { ColumnHelperSample } from "@/sampleCode/DataTable/ColumnHelperSample";
 import columnHelperSampleRaw from "@/sampleCode/DataTable/ColumnHelperSample.tsx?raw";
 import { BasicSample } from "@/sampleCode/DataTable/BasicSample";
@@ -21,56 +21,56 @@ import callbacksSampleRaw from "@/sampleCode/DataTable/CallbacksSample.tsx?raw";
 import { DataTypeSample } from "@/sampleCode/DataTable/DataTypeSample";
 import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="基本的な使用方法"
   description="DataTableの基本的な使用方法です。データと列定義を渡すことで基本的なテーブルが実装できます。"
   code={basicSampleRaw}
   storyPath="/story/components-datatable--default"
 >
   <BasicSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="カラム形式の指定"
   description="DataTableを使用する際の最初のステップは、テーブルのカラム形式を指定するためのColumnHelperの作成を行うことです。ColumnHelperはTypeScriptの型安全性を保ちながら、列の定義を簡単に行うためのヘルパー関数です。"
   code={columnHelperSampleRaw}
   storyPath="/story/components-datatable--default"
 >
   <ColumnHelperSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="ソート機能"
   description="列ヘッダーをクリックすることで昇順・降順のソートが可能です。onSortingChangeを使用することでソート状態の変更を監視することが可能です。"
   code={sortingSampleRaw}
   storyPath="/story/components-datatable--with-custom-sorting"
 >
   <SortingSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="選択機能"
   description="enableRowSelectionプロパティで行選択機能の有効・無効を切り替えできます。選択状態の変更はonRowSelectionChangeコールバックで監視できます。"
   code={selectionSampleRaw}
   storyPath="/story/components-datatable--without-row-selection"
 >
   <SelectionSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="イベントハンドリング"
   description="onRowSelectionChangeやonSortingChangeなどのコールバック関数を使用して、ユーザーのインタラクションに応答できます。この例では、選択された行に基づいてボタンを有効化し、モーダルダイアログで詳細を表示します。"
   code={callbacksSampleRaw}
   storyPath="/story/components-datatable--with-callbacks"
 >
   <CallbacksSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="異なるデータ型への対応"
   description="ColumnHelperは型パラメータを受け取るため、異なるデータ型でも型安全にテーブルを作成できます。meta.getTypeで動的なスタイリングも可能です。"
   code={dataTypeSampleRaw}
   storyPath="/story/components-datatable--different-data-type"
 >
   <DataTypeSample client:load />
-</Code>
+</CodeI18n>

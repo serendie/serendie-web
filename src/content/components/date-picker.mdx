@@ -5,7 +5,7 @@ description: 日付を選択するためのコンポーネントです。カレ�
 lastUpdated: "2025-09-03"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { BasicSample } from "@/sampleCode/DatePicker/BasicSample";
 import basicSampleRaw from "@/sampleCode/DatePicker/BasicSample.tsx?raw";
 import { CalendarSample } from "@/sampleCode/DatePicker/CalendarSample";
@@ -15,38 +15,38 @@ import rangeSampleRaw from "@/sampleCode/DatePicker/RangeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/DatePicker/StateSample";
 import stateSampleRaw from "@/sampleCode/DatePicker/StateSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="基本"
   description="単一の日付を選択する基本的なデートピッカーです。"
   code={basicSampleRaw}
   storyPath="/story/components-datepicker--basic"
 >
   <BasicSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="日付範囲"
   description="開始日と終了日を選択できる範囲選択型のデートピッカーです。"
   code={rangeSampleRaw}
   storyPath="/story/components-datepicker--range"
 >
   <RangeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="状態"
   description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
   code={stateSampleRaw}
   storyPath="/story/components-datepicker--states"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="カレンダーのみ"
   description="入力フィールドを表示せず、カレンダーだけを表示するモードです。"
   code={calendarSampleRaw}
   storyPath="/story/components-datepicker--calendar-only"
 >
   <CalendarSample client:load />
-</Code>
+</CodeI18n>

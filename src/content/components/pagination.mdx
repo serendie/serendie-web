@@ -5,27 +5,27 @@ description: 複数ページにまたがるデータやコンテンツのペー�
 lastUpdated: "2025-05-23"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 
 import { BasicSample } from "@/sampleCode/Pagination/BasicSample";
 import basicSampleRaw from "@/sampleCode/Pagination/BasicSample.tsx?raw";
 import { WithMoreSiblingsSample } from "@/sampleCode/Pagination/WithMoreSiblingsSample";
 import withMoreSiblingsSampleRaw from "@/sampleCode/Pagination/WithMoreSiblingsSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サンプル"
   description="countプロパティでページ数を指定します。現在ページの前後2ページまで表示され、それ以上は省略記号（…）で表示されます。"
   code={basicSampleRaw}
   storyPath="/story/components-pagination--basic"
 >
   <BasicSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="表示数の調整"
   description="siblingCountプロパティを調整することで、現在ページの前後に表示するページ数を変更できます。この例では4に設定しているため、より多くのページ番号が表示されます。"
   code={withMoreSiblingsSampleRaw}
   storyPath="/story/components-pagination--with-more-siblings"
 >
   <WithMoreSiblingsSample client:load />
-</Code>
+</CodeI18n>

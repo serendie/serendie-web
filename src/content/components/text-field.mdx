@@ -5,26 +5,26 @@ description: 1行のテキストを入力するためのコンポーネントで
 lastUpdated: "2025-03-21"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { StateSample } from "@/sampleCode/TextField/StateSample";
 import stateSampleRaw from "@/sampleCode/TextField/StateSample.tsx?raw";
 import { PasswordFieldSample } from "@/sampleCode/TextField/PasswordFieldSample";
 import passwordFieldSampleRaw from "@/sampleCode/TextField/PasswordFieldSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="状態"
   description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
   code={stateSampleRaw}
   storyPath="/story/components-textfield--basic"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="Password Field"
   description="パスワード入力用のテキストフィールドです。パスワードの表示・非表示を切り替えることができます。"
   code={passwordFieldSampleRaw}
   storyPath="/story/components-passwordfield--basic"
 >
   <PasswordFieldSample client:load />
-</Code>
+</CodeI18n>

@@ -5,7 +5,7 @@ description: データビジュアライゼーションのためのチャート�
 lastUpdated: "2025-07-28"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { PieChartSample } from "@/sampleCode/Chart/PieChartSample";
 import pieChartSampleRaw from "@/sampleCode/Chart/PieChartSample.tsx?raw";
 import { LineChartSample } from "@/sampleCode/Chart/LineChartSample";
@@ -15,38 +15,38 @@ import barChartSampleRaw from "@/sampleCode/Chart/BarChartSample.tsx?raw";
 import { StackedBarChartSample } from "@/sampleCode/Chart/StackedBarChartSample";
 import stackedBarChartSampleRaw from "@/sampleCode/Chart/StackedBarChartSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="Pie Chart"
   description="usePieChartPropsフックを使用することで、円グラフを作成できます。データの割合や構成比を視覚的に表現する際に使用します。"
   code={pieChartSampleRaw}
   storyPath="/story/components-charts--pie-chart"
 >
   <PieChartSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="Line Chart"
   description="useLineChartPropsフックを使用することで、時系列データなどを表現する線グラフを作成できます。複数のデータ系列を同時に表示することも可能です。"
   code={lineChartSampleRaw}
   storyPath="/story/components-charts--line-chart"
 >
   <LineChartSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="Bar Chart"
   description="useBarChartPropsフックを使用することで、棒グラフを作成できます。縦棒グラフと横棒グラフの両方に対応しています。"
   code={barChartSampleRaw}
   storyPath="/story/components-charts--vertical-bar-chart"
 >
   <BarChartSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="Piled Bar Chart"
   description="複数のセグメントを積み上げて構成比を表現する、積み上げ棒グラフを作成できます。カテゴリー内の内訳を視覚化する際に使用します。"
   code={stackedBarChartSampleRaw}
   storyPath="/story/components-charts--piled-bar-chart"
 >
   <StackedBarChartSample client:load />
-</Code>
+</CodeI18n>

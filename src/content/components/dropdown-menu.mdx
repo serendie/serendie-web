@@ -5,15 +5,15 @@ description: 複数のアクションを格納するためのコンポーネン�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/DropdownMenu/TypeSample";
 import typeSampleRaw from "@/sampleCode/DropdownMenu/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="メニューを総称するタイトルまたはアイコンを設定できます。"
   code={typeSampleRaw}
   storyPath="/story/components-dropdownmenu--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

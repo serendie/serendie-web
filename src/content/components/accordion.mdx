@@ -5,15 +5,15 @@ description: 関連するコンテンツを列挙し、ユーザーが展開・�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/Accordion/TypeSample";
 import typeSampleRaw from "@/sampleCode/Accordion/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="アコーディオンの展開状態を示すアイコンの位置 (行末または行頭) を選ぶことができます。実装時にはAccordionGroupを併用してください。"
   code={typeSampleRaw}
   storyPath="/story/components-accordion--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

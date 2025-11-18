@@ -5,15 +5,15 @@ description: アプリケーションを覆うレイヤー上にダイアログ�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { Sample } from "@/sampleCode/ModalDialog/Sample";
 import sampleRaw from "@/sampleCode/ModalDialog/Sample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サンプル"
   description="Modal Dialogを閉じるボタンは必ず必要です。また背景レイヤー (scrim) をクリックすることで閉じることができます。"
   code={sampleRaw}
   storyPath="/story/components-modaldialog--basic"
 >
   <Sample client:load />
-</Code>
+</CodeI18n>

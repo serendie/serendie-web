@@ -5,26 +5,26 @@ description: オン/オフの2つの状態を切り替えるためのコンポ�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/Switch/TypeSample";
 import typeSampleRaw from "@/sampleCode/Switch/TypeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/Switch/StateSample";
 import stateSampleRaw from "@/sampleCode/Switch/StateSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サンプル"
   description="スイッチのオン/オフはイベントのトリガーとなります。onCheckedChangeハンドラで、イベント処理を実装してください。"
   code={typeSampleRaw}
   storyPath="/story/components-switch--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="状態"
   description="5種類の状態があります。非活性とする際はdisabled propsを使用してください。"
   code={stateSampleRaw}
   storyPath="/docs/components-switch--docs"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

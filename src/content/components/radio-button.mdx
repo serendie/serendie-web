@@ -5,26 +5,26 @@ description: ChoiceBoxにラベルを付けたコンポーネントです。複�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/RadioButton/TypeSample";
 import typeSampleRaw from "@/sampleCode/RadioButton/TypeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/RadioButton/StateSample";
 import stateSampleRaw from "@/sampleCode/RadioButton/StateSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="選択肢を表すクリック可能なラベルが必ず必要です。補足テキストも追加できます。"
   code={typeSampleRaw}
   storyPath="/story/components-radiobutton--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="状態"
   description="EnabledとSelectedを基本とし、Disabledにより変更不可とします。"
   code={stateSampleRaw}
   storyPath="/docs/components-radiobutton--docs"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

@@ -5,7 +5,7 @@ description: アクションをトリガーするためのクリック可能な�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/IconButton/SizeSample";
 import sizeSampleRaw from "@/sampleCode/IconButton/SizeSample.tsx?raw";
 import { TypeSample } from "@/sampleCode/IconButton/TypeSample";
@@ -14,37 +14,37 @@ import { ShapeSample } from "@/sampleCode/IconButton/ShapeSample";
 import shapeSampleRaw from "@/sampleCode/IconButton/ShapeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/IconButton/StateSample";
 
-<Code
+<CodeI18n
   title="サイズ"
   description="Small、Medium、Largeの3種類があります。SmallはPCなどの大きな画面でマウス操作をする前提で使用することを推奨しており、モバイルなどタッチデバイスでは非推奨です。"
   code={sizeSampleRaw}
   storyPath="/story/components-iconbutton--small"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="3種類のバリエーションがあり、アクションの重要度に応じて使い分けてください。重要度が高いアクションにはFilledを使用し、その他のアクションにはGhostやOutlinedを使用してください。同一画面内に複数のFilledを並べることは非推奨です。"
   code={typeSampleRaw}
   storyPath="/story/components-iconbutton--outlined"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="シェイプ"
   description="CircleとRectangleの2種類があります。"
   code={shapeSampleRaw}
   storyPath="/story/components-iconbutton--rectangle"
 >
   <ShapeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="状態"
   description="バリエーションごとに4種類の状態があります。DisabledはTextFieldなど他のコンポーネントの状態と連動して使用してください。"
   storyPath="/docs/components-button--docs"
 >
   <StateSample />
-</Code>
+</CodeI18n>

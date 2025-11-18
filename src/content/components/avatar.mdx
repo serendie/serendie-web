@@ -5,26 +5,26 @@ description: ユーザーについて視覚的に表現するコンポーネン�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/Avatar/SizeSample";
 import sizeSampleRaw from "@/sampleCode/Avatar/SizeSample.tsx?raw";
 import { TypeSample } from "@/sampleCode/Avatar/TypeSample";
 import typeSampleRaw from "@/sampleCode/Avatar/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サイズ"
   description="3種類のサイズから選択できます。"
   code={sizeSampleRaw}
   storyPath="/story/components-avatar--text&args=size:small"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="任意の画像やテキストをアバターとして使用できます。特に画像をアバターとする場合は、初期値としてプレースホルダーを適切に設定してください。"
   code={typeSampleRaw}
   storyPath="/docs/components-avatar--docs"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

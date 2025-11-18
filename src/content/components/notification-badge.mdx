@@ -5,7 +5,7 @@ description: 未読の通知や新着情報をユーザーに知らせるため�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/NotificationBadge/SizeSample";
 import sizeSampleRaw from "@/sampleCode/NotificationBadge/SizeSample.tsx?raw";
 import { VariantSample } from "@/sampleCode/NotificationBadge/VariantSample";
@@ -13,16 +13,16 @@ import variantSampleRaw from "@/sampleCode/NotificationBadge/VariantSample.tsx?r
 import { NoNumberSample } from "@/sampleCode/NotificationBadge/NoNumberSample";
 import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サイズ"
   description="SmallとMediumの2種類のサイズがあります。"
   code={sizeSampleRaw}
   storyPath="/story/components-notificationbadge--default&args=size:small"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="カラー"
   description={
     "PrimaryとSecondaryの2種類のカラーがあります。Secondaryはテーマカラーに準じます。"
@@ -31,13 +31,13 @@ import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx
   storyPath="/story/components-notificationbadge--default&args=variant:secondary;size:medium"
 >
   <VariantSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="通知数が99以上の場合は省略表示されます。数字を表示せず、通知が存在することだけを示すことも可能です。重要度や表示領域に応じて使い分けてください。"
   code={noNumberSampleRaw}
   storyPath="/story/components-notificationbadge--no-number"
 >
   <NoNumberSample client:load />
-</Code>
+</CodeI18n>

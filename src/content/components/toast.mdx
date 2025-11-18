@@ -5,15 +5,15 @@ description: 画面上に一時的に表示される短い通知メッセージ�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { ToastSample } from "@/sampleCode/Toast/ToastSample";
 import ToastSampleRaw from "@/sampleCode/Toast/ToastSample?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="メッセージの意味や重要度に応じて3種類を使い分けてください。Toastが消えるまでの秒数は任意に設定できます。詳しくはサンプルコードを参照してください。"
   code={ToastSampleRaw}
   storyPath="/story/components-toast--default"
 >
   <ToastSample client:load />
-</Code>
+</CodeI18n>

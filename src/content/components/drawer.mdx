@@ -5,15 +5,15 @@ description: メニューやナビゲーションを格納するコンポーネ�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/Drawer/TypeSample";
 import typeSampleRaw from "@/sampleCode/Drawer/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="左寄せと右寄せのほか、画面全体にDrawerを表示する (Full) こともできます。デスクトップなど表示領域が広い場合は、Fullの使用は推奨されません。"
   code={typeSampleRaw}
   storyPath="/story/components-drawer--left"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

@@ -5,26 +5,26 @@ description: 画面下部に配置するモバイルやタブレット向けの�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { Sample } from "@/sampleCode/BottomNavigation/Sample";
 import sampleRaw from "@/sampleCode/BottomNavigation/Sample.tsx?raw";
 import { ItemSample } from "@/sampleCode/BottomNavigation/ItemSample";
 import itemSampleRaw from "@/sampleCode/BottomNavigation/ItemSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="サンプル"
   description="BottomNavigation内で、BottomNavigationItemを連ねて使用します。最大5タブ程度が目安です。それ以上になる場合は、Drawerなど別のナビゲーションを検討してください。"
   code={sampleRaw}
   storyPath="/story/components-bottomnavigation--default"
 >
   <Sample client:load />
-</Code>
+</CodeI18n>
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="BottomNavigationItemにはEnable状態とActive状態があります。またNotificationBadgeを組み合わせて使用できます。"
   code={itemSampleRaw}
   storyPath="/docs/components-bottomnavigation--docs"
 >
   <ItemSample client:load />
-</Code>
+</CodeI18n>

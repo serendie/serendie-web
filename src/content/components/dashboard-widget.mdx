@@ -5,15 +5,15 @@ description: ダッシュボード画面で使うことを想定したコンポ�
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/DashboardWidget/TypeSample";
 import typeSampleRaw from "@/sampleCode/DashboardWidget/TypeSample.tsx?raw";
 
-<Code
+<CodeI18n
   title="バリエーション"
   description="3パターンのレイアウトを用意しています。Placeholderにはグラフを表示することを想定しています。"
   code={typeSampleRaw}
   storyPath="/story/components-dashboardwidget--no-value"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>
