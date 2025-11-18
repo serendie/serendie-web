@@ -60,3 +60,25 @@ function getLocalePath(lang: Language, path: string): string {
   // 空文字列の場合は /en などの言語トップページ
   return cleanPath === "" ? `/${lang}` : `/${lang}/${cleanPath}`;
 }
+
+/**
+ * 現在のURLから言語を切り替えたURLを生成
+ * @param url 現在のURL
+ * @param targetLang 切り替え先の言語
+ * @returns 言語を切り替えたパス
+ */
+export function switchLanguagePath(url: URL, targetLang: Language): string {
+  const currentLang = getLangFromUrl(url);
+  let pathname = url.pathname;
+
+  // 現在の言語プレフィックスを削除
+  if (currentLang !== "ja") {
+    pathname = pathname.replace(new RegExp(`^/${currentLang}`), "");
+  }
+
+  // パスの先頭のスラッシュを削除
+  const cleanPath = pathname.replace(/^\//, "");
+
+  // ターゲット言語のパスを生成
+  return getLocalePath(targetLang, cleanPath);
+}

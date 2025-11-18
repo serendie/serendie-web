@@ -1,10 +1,12 @@
 ---
 import { styled } from "styled-system/jsx";
-import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations, useLocalePath, switchLanguagePath } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const localePath = useLocalePath(lang);
+const jaPath = switchLanguagePath(Astro.url, "ja");
+const enPath = switchLanguagePath(Astro.url, "en");
 
 const FooterWrapper = styled("footer", {
   base: {
@@ -109,6 +111,10 @@ const FooterCopyright = styled("div", {
     },
     "& a:hover": {
       opacity: 0.6,
+    },
+    "& a[aria-current='page']": {
+      opacity: 0.4,
+      pointerEvents: "none",
     },
   },
 });
@@ -256,6 +262,18 @@ const footerLink = [
         <a href="https://x.com/SerendieDesign" target="_blank"
           >{t("footer.contact")}</a
         >
+      </li>
+      <li>|</li>
+      <li>
+        <a href={jaPath} aria-current={lang === "ja" ? "page" : undefined}>
+          {t("language.japanese")}
+        </a>
+      </li>
+      <li>/</li>
+      <li>
+        <a href={enPath} aria-current={lang === "en" ? "page" : undefined}>
+          {t("language.english")}
+        </a>
       </li>
     </ul>
   </FooterCopyright>

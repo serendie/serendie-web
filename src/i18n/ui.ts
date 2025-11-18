@@ -51,6 +51,8 @@ export const ui = {
     "nav.components": "Components",
     "nav.foundations": "Foundations",
     "nav.getStarted": "Get Started",
+    "language.japanese": "日本語",
+    "language.english": "English",
   },
   en: {
     "contact.figmaCommunity": "Figma Community",
@@ -104,5 +106,7 @@ export const ui = {
     "nav.components": "Components",
     "nav.foundations": "Foundations",
     "nav.getStarted": "Get Started",
+    "language.japanese": "日本語",
+    "language.english": "English",
   },
 } as const;
