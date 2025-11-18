@@ -22,8 +22,8 @@ import { DataTypeSample } from "@/sampleCode/DataTable/DataTypeSample";
 import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 
 <CodeI18n
-  title="基本的な使用方法"
-  description="DataTableの基本的な使用方法です。データと列定義を渡すことで基本的なテーブルが実装できます。"
+  titleKey="components.dataTable.basicUsage.title"
+  descriptionKey="components.dataTable.basicUsage.desc"
   code={basicSampleRaw}
   storyPath="/story/components-datatable--default"
 >
@@ -31,8 +31,8 @@ import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 </CodeI18n>
 
 <CodeI18n
-  title="カラム形式の指定"
-  description="DataTableを使用する際の最初のステップは、テーブルのカラム形式を指定するためのColumnHelperの作成を行うことです。ColumnHelperはTypeScriptの型安全性を保ちながら、列の定義を簡単に行うためのヘルパー関数です。"
+  titleKey="components.dataTable.columnHelper.title"
+  descriptionKey="components.dataTable.columnHelper.desc"
   code={columnHelperSampleRaw}
   storyPath="/story/components-datatable--default"
 >
@@ -40,8 +40,8 @@ import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 </CodeI18n>
 
 <CodeI18n
-  title="ソート機能"
-  description="列ヘッダーをクリックすることで昇順・降順のソートが可能です。onSortingChangeを使用することでソート状態の変更を監視することが可能です。"
+  titleKey="components.dataTable.sorting.title"
+  descriptionKey="components.dataTable.sorting.desc"
   code={sortingSampleRaw}
   storyPath="/story/components-datatable--with-custom-sorting"
 >
@@ -49,8 +49,8 @@ import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 </CodeI18n>
 
 <CodeI18n
-  title="選択機能"
-  description="enableRowSelectionプロパティで行選択機能の有効・無効を切り替えできます。選択状態の変更はonRowSelectionChangeコールバックで監視できます。"
+  titleKey="components.dataTable.selection.title"
+  descriptionKey="components.dataTable.selection.desc"
   code={selectionSampleRaw}
   storyPath="/story/components-datatable--without-row-selection"
 >
@@ -58,8 +58,8 @@ import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 </CodeI18n>
 
 <CodeI18n
-  title="イベントハンドリング"
-  description="onRowSelectionChangeやonSortingChangeなどのコールバック関数を使用して、ユーザーのインタラクションに応答できます。この例では、選択された行に基づいてボタンを有効化し、モーダルダイアログで詳細を表示します。"
+  titleKey="components.dataTable.callbacks.title"
+  descriptionKey="components.dataTable.callbacks.desc"
   code={callbacksSampleRaw}
   storyPath="/story/components-datatable--with-callbacks"
 >
@@ -67,8 +67,8 @@ import dataTypeSampleRaw from "@/sampleCode/DataTable/DataTypeSample.tsx?raw";
 </CodeI18n>
 
 <CodeI18n
-  title="異なるデータ型への対応"
-  description="ColumnHelperは型パラメータを受け取るため、異なるデータ型でも型安全にテーブルを作成できます。meta.getTypeで動的なスタイリングも可能です。"
+  titleKey="components.dataTable.dataTypes.title"
+  descriptionKey="components.dataTable.dataTypes.desc"
   code={dataTypeSampleRaw}
   storyPath="/story/components-datatable--different-data-type"
 >

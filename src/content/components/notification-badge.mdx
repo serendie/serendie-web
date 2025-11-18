@@ -14,8 +14,8 @@ import { NoNumberSample } from "@/sampleCode/NotificationBadge/NoNumberSample";
 import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx?raw";
 
 <CodeI18n
-  title="サイズ"
-  description="SmallとMediumの2種類のサイズがあります。"
+  titleKey="components.notificationBadge.size.title"
+  descriptionKey="components.notificationBadge.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-notificationbadge--default&args=size:small"
 >
@@ -23,10 +23,8 @@ import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx
 </CodeI18n>
 
 <CodeI18n
-  title="カラー"
-  description={
-    "PrimaryとSecondaryの2種類のカラーがあります。Secondaryはテーマカラーに準じます。"
-  }
+  titleKey="components.notificationBadge.color.title"
+  descriptionKey="components.notificationBadge.color.desc"
   code={variantSampleRaw}
   storyPath="/story/components-notificationbadge--default&args=variant:secondary;size:medium"
 >
@@ -34,8 +32,8 @@ import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx
 </CodeI18n>
 
 <CodeI18n
-  title="バリエーション"
-  description="通知数が99以上の場合は省略表示されます。数字を表示せず、通知が存在することだけを示すことも可能です。重要度や表示領域に応じて使い分けてください。"
+  titleKey="components.notificationBadge.variant.title"
+  descriptionKey="components.notificationBadge.variant.desc"
   code={noNumberSampleRaw}
   storyPath="/story/components-notificationbadge--no-number"
 >

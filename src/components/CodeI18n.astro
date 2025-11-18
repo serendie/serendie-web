@@ -4,8 +4,6 @@ import { useTranslations, type Language, getLangFromUrl } from "@/i18n/utils";
 import type { BundledLanguage } from "shiki";
 
 interface Props {
-  title?: string;
-  description?: string;
   titleKey?: string;
   descriptionKey?: string;
   code?: string;
@@ -14,8 +12,6 @@ interface Props {
 }
 
 const {
-  title,
-  description,
   titleKey,
   descriptionKey,
   code,
@@ -28,16 +24,16 @@ const lang =
   (getLangFromUrl(Astro.url) as Language);
 const t = useTranslations(lang);
 
-const translate = (key: string | undefined, fallback?: string) => {
-  if (!key) return fallback ?? "";
+const translate = (key: string | undefined) => {
+  if (!key) return "";
   const translated = t(key as any);
-  return translated ?? fallback ?? key;
+  return translated ?? key;
 };
 ---
 
 <Code
-  title={translate(titleKey, title)}
-  description={translate(descriptionKey, description)}
+  title={translate(titleKey)}
+  description={translate(descriptionKey)}
   code={code}
   storyPath={storyPath}
   language={language}
