@@ -5,7 +5,9 @@ const componentsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     componentName: z.string(),
+    componentNameEn: z.string().optional(),
     description: z.string(),
+    descriptionEn: z.string().optional(),
     lastUpdated: z.string().optional(),
     illustSize: z.enum(["large", "small"]).optional(),
   }),

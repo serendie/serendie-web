@@ -1,0 +1,26 @@
+---
+import Code from "@/components/Code.astro";
+import { useTranslations, type Language, getLangFromUrl } from "@/i18n/utils";
+import type { BundledLanguage } from "shiki";
+
+const {
+  titleKey,
+  descriptionKey,
+  code,
+  storyPath,
+  language,
+} = Astro.props;
+
+const lang = (Astro.props?.lang ?? getLangFromUrl(Astro.url)) as Language;
+const t = useTranslations(lang);
+---
+
+<Code
+  title={t(titleKey)}
+  description={t(descriptionKey)}
+  code={code}
+  storyPath={storyPath}
+  language={language}
+>
+  <slot />
+</Code>

@@ -17,6 +17,9 @@ interface Props {
 const { data } = Astro.props;
 const components = await getCollection("components");
 const lang = getLangFromUrl(Astro.url);
+const description =
+  lang === "en" && data.descriptionEn ? data.descriptionEn : data.description;
+const componentName = lang === "ja" ? data.componentName : undefined;
 
 const componentLinks = components
   .map((component) => ({
@@ -50,11 +53,11 @@ componentLinks.unshift({
       <PageHeader hideBorder={Astro.url.pathname === "/components"} links={[]}>
         <IndexPageHeader
           title={data.title}
-          subTitle={data.componentName}
+          subTitle={componentName}
           illustType="D"
           illustSize={data.illustSize}
           lastUpdated={data.lastUpdated}
-          description={data.description}
+          description={description}
           lang={lang}
         />
       </PageHeader>
