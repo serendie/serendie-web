@@ -37,16 +37,16 @@ export const uiComponents = {
     "components.button.state.title": "状態",
     "components.button.state.desc":
       "バリエーションごとに5種類の状態があります。DisabledはTextFieldなど他のコンポーネントの状態と連動して使用してください。ボタン押下後にアクションを即座に処理できない場合は、Loadingを使いユーザーに待ち状態を伝えてください。",
-    "components.chart.pie.title": "円グラフ",
+    "components.chart.pie.title": "Pie Chart",
     "components.chart.pie.desc":
       "usePieChartPropsフックを使用することで、円グラフを作成できます。データの割合や構成比を視覚的に表現する際に使用します。",
-    "components.chart.line.title": "折れ線グラフ",
+    "components.chart.line.title": "Line Chart",
     "components.chart.line.desc":
       "useLineChartPropsフックを使用することで、時系列データなどを表現する線グラフを作成できます。複数のデータ系列を同時に表示することも可能です。",
-    "components.chart.bar.title": "棒グラフ",
+    "components.chart.bar.title": "Bar Chart",
     "components.chart.bar.desc":
       "useBarChartPropsフックを使用することで、棒グラフを作成できます。縦棒グラフと横棒グラフの両方に対応しています。",
-    "components.chart.stackedBar.title": "積み上げ棒グラフ",
+    "components.chart.stackedBar.title": "Piled Bar Chart",
     "components.chart.stackedBar.desc":
       "複数のセグメントを積み上げて構成比を表現する、積み上げ棒グラフを作成できます。カテゴリー内の内訳を視覚化する際に使用します。",
     "components.checkBox.variant.title": "バリエーション",
