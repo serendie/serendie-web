@@ -1,6 +1,11 @@
 ---
 import { styled } from "styled-system/jsx";
-import { getLangFromUrl, useTranslations, useLocalePath, switchLanguagePath } from "@/i18n/utils";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useLocalePath,
+  switchLanguagePath,
+} from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -115,6 +120,20 @@ const FooterCopyright = styled("div", {
     "& a[aria-current='page']": {
       opacity: 0.4,
       pointerEvents: "none",
+    },
+  },
+});
+
+const LanguageSwitcher = styled("ul", {
+  base: {
+    textStyle: "sd.system.typography.body.extraSmall_compact",
+    fontSize: "14px",
+    display: "flex",
+    "& li": {
+      mr: "16px",
+    },
+    expanded: {
+      marginLeft: "auto",
     },
   },
 });
@@ -263,18 +282,19 @@ const footerLink = [
           >{t("footer.contact")}</a
         >
       </li>
-      <li>|</li>
+    </ul>
+    <LanguageSwitcher>
       <li>
         <a href={jaPath} aria-current={lang === "ja" ? "page" : undefined}>
           {t("language.japanese")}
         </a>
       </li>
-      <li>/</li>
+      <li>|</li>
       <li>
         <a href={enPath} aria-current={lang === "en" ? "page" : undefined}>
           {t("language.english")}
         </a>
       </li>
-    </ul>
+    </LanguageSwitcher>
   </FooterCopyright>
 </FooterWrapper>
