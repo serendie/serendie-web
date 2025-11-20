@@ -34,7 +34,7 @@ export const ui = {
     "footer.list": "List",
     "footer.releaseTitle": "ニュース・イベントを見る",
     "footer.search": "Search",
-    "footer.seeAll": "全て見る",
+    "footer.seeAll": "すべて見る",
     "footer.select": "Select",
     "footer.showcaseTitle": "Serendie UIの活用事例",
     "footer.tabs": "Tabs",
