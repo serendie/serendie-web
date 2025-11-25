@@ -1,0 +1,64 @@
+---
+title: Dimension
+slug: en/foundations/dimension
+illustType: A
+lastUpdated: "2024-11-1"
+description: "Design tokens for dimensions: spacing, border width, corner radius, and breakpoints for responsive design."
+---
+
+import FigureElevationShadow from "@/assets/content/foundations/dimension/figure-dimension-spacing.svg?raw";
+import FigureElevationRadius from "@/assets/content/foundations/dimension/figure-dimension-radius.svg?raw";
+import FigureElevationBreakpoint from "@/assets/content/foundations/dimension/figure-dimension-breakpoint.svg?raw";
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import {
+  PageSection,
+  PageA,
+  PageARef,
+} from "@/components/PageLayout.tsx";
+
+    <PageSection>
+      <PageHeadLine number={1}>Spacing</PageHeadLine>
+
+      We define a sequence based on a harmonic series as reference tokens and provide 13 system-token sizes from twoExtraSmall to sixExtraLarge.
+
+      Frequently used small-to-medium sizes are defined in fine steps using multiples of four, while medium-to-large sizes are designed with larger jumps. When laying out in Figma, avoid absolute positioning and use <PageA href="https://help.figma.com/hc/ja/articles/5731482952599-%E3%82%AA%E3%83%BC%E3%83%88%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88%E3%81%AE%E4%BD%BF%E7%94%A8">Auto Layout</PageA> as much as possible to leverage spacing tokens.
+
+      <Fragment set:html={FigureElevationShadow} />
+
+      ### References
+
+      <PageARef href="https://ekrits.jp/2020/02/3309/">Music, mathematics, typography - ÉKRITS</PageARef>
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={2}>Border width</PageHeadLine>
+
+        We define three system tokens for border width: medium/thick/extraThick. medium (1px) is the most common. In Figma, you can apply tokens by right-clicking the border width field in the Stroke pane.
+
+        <p>
+          <img src="/assets/pages/dimension/border-width.avif" width="310" alt="border width settings" />
+        </p>
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={3}>Corner radius</PageHeadLine>
+
+        When rounding corners, we define five levels from extraSmall to extraLarge. We define full as 9999 as an exception for capsule shapes.
+
+        <Fragment set:html={FigureElevationRadius} />
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={4}>Breakpoint</PageHeadLine>
+
+        Tokens that represent breakpoints when changing styles by viewport width (responsive design). You do not need to consider them when using Serendie UI components in implementation.
+
+        Serendie Design System assumes mobile-first implementation, so breakpoints are defined as the lower bound of viewport width (min-width). We define four commonly used reference tokens from small to extraLarge.
+
+        For now, since we provide components for compact and expanded widths, we define 768px as the system token for switching to expanded designs. If we later add system tokens for tablets or wide desktops, adjust the references accordingly.
+
+        <Fragment set:html={FigureElevationBreakpoint} />
+
+    </PageSection>

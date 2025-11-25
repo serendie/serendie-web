@@ -9,6 +9,11 @@ import ReleaseNote from "@/components/toppage/ReleaseNote.astro";
 import Contact from "@/components/toppage/Contact.astro";
 import { BackgroundShape } from "@/components/toppage/BackgroundShape";
 import { Header } from "@/components/toppage/Header";
+import { getLangFromUrl, useTranslations, useLocalePath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
 
 import IconAccordion from "@/assets/toppage/icons/accordion.svg?raw";
 import IconSearch from "@/assets/toppage/icons/search.svg?raw";
@@ -46,114 +51,114 @@ const Container = styled("div", {
 
 const content = [
   {
-    titleEn: "Get Started",
+    titleEn: t("nav.getStarted"),
     description: "",
     links: [
       {
-        title: "デザイン",
-        href: "/get-started/design",
+        title: t("footer.design"),
+        href: localePath("get-started/design"),
         illustration: IconDesign,
       },
       {
-        title: "開発",
-        href: "/get-started/dev",
+        title: t("footer.development"),
+        href: localePath("get-started/dev"),
         illustration: IconDev,
       },
     ],
   },
   {
-    titleEn: "Foundations",
+    titleEn: t("nav.foundations"),
     description: "",
     links: [
       {
-        title: "デザイントークン",
-        href: "/foundations/design-tokens",
+        title: t("footer.designTokens"),
+        href: localePath("foundations/design-tokens"),
         illustration: IconDesignTokens,
       },
       {
-        title: "カラー",
-        href: "/foundations/color",
+        title: t("footer.color"),
+        href: localePath("foundations/color"),
         illustration: IconColor,
       },
       {
-        title: "データビジュアライゼーション",
-        href: "/foundations/data-visualization",
+        title: t("footer.dataVisualization"),
+        href: localePath("foundations/data-visualization"),
         illustration: IconDimension,
       },
       {
-        title: "テーミング",
-        href: "/foundations/theming",
+        title: t("footer.theming"),
+        href: localePath("foundations/theming"),
         illustration: IconTheming,
       },
       {
-        title: "タイポグラフィ",
-        href: "/foundations/typography",
+        title: t("footer.typography"),
+        href: localePath("foundations/typography"),
         illustration: IconTypography,
       },
       {
-        title: "寸法",
-        href: "/foundations/dimension",
+        title: t("footer.dimension"),
+        href: localePath("foundations/dimension"),
         illustration: IconDimension,
       },
       {
-        title: "階層",
-        href: "/foundations/elevation",
+        title: t("footer.elevation"),
+        href: localePath("foundations/elevation"),
         illustration: IconElevation,
       },
       {
-        title: "アイコン",
-        href: "/foundations/icon",
+        title: t("footer.icon"),
+        href: localePath("foundations/icon"),
         illustration: IconIcon,
       },
       {
-        title: "イラストレーション",
-        href: "/foundations/illustration",
+        title: t("footer.illustration"),
+        href: localePath("foundations/illustration"),
         illustration: IconIllustration,
       },
     ],
   },
   {
-    titleEn: "Components",
+    titleEn: t("nav.components"),
     description: "",
     links: [
       {
         title: "Accordion",
-        href: "/components/accordion",
+        href: localePath("components/accordion"),
         illustration: IconAccordion,
       },
       {
         title: "Button",
-        href: "/components/button",
+        href: localePath("components/button"),
         illustration: IconButton,
       },
       {
         title: "List",
-        href: "/components/list",
+        href: localePath("components/list"),
         illustration: IconList,
       },
       {
         title: "Search",
-        href: "/components/search",
+        href: localePath("components/search"),
         illustration: IconSearch,
       },
       {
         title: "Select",
-        href: "/components/select",
+        href: localePath("components/select"),
         illustration: IconSelect,
       },
       {
         title: "Tabs",
-        href: "/components/tabs",
+        href: localePath("components/tabs"),
         illustration: IconTabs,
       },
       {
         title: "TextField",
-        href: "/components/text-field",
+        href: localePath("components/text-field"),
         illustration: IconTextField,
       },
       {
-        title: "全て見る",
-        href: "/components",
+        title: t("footer.seeAll"),
+        href: localePath("components"),
         illustration: IconSeeAll,
       },
     ],
@@ -162,7 +167,7 @@ const content = [
 ---
 
 <TopLayout>
-  <Header client:load />
+  <Header client:load lang={lang} />
 
   <Container data-name="top-container">
     <LinkContent content={content} client:idle />

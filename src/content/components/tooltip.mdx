@@ -2,10 +2,11 @@
 title: Tooltip
 componentName: ツールチップ
 description: ホバーやフォーカス時に追加情報を表示する小さなポップアップです。要素の説明や補足情報を提供するために使用します。
+descriptionEn: "Small popup shown on hover or focus to provide additional info or guidance."
 lastUpdated: "2025-07-28"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { BasicSample } from "@/sampleCode/Tooltip/BasicSample";
 import basicSampleRaw from "@/sampleCode/Tooltip/BasicSample.tsx?raw";
 import { PlacementSample } from "@/sampleCode/Tooltip/PlacementSample";
@@ -13,29 +14,29 @@ import placementSampleRaw from "@/sampleCode/Tooltip/PlacementSample.tsx?raw";
 import { StateSample } from "@/sampleCode/Tooltip/StateSample";
 import stateSampleRaw from "@/sampleCode/Tooltip/StateSample.tsx?raw";
 
-<Code
-  title="基本的な使い方"
-  description="要素にホバーするとツールチップが表示されます。アイコンボタンやリンクなど、追加の説明が必要な要素に使用してください。"
+<CodeI18n
+  titleKey="components.tooltip.basicUsage.title"
+  descriptionKey="components.tooltip.basicUsage.desc"
   code={basicSampleRaw}
   storyPath="/story/components-tooltip--default"
 >
   <BasicSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="配置"
-  description="ツールチップは8方向に配置できます。要素の位置や画面の端を考慮して、適切な配置を選択してください。"
+<CodeI18n
+  titleKey="components.tooltip.placement.title"
+  descriptionKey="components.tooltip.placement.desc"
   code={placementSampleRaw}
   storyPath="/story/components-tooltip--positions"
 >
   <PlacementSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="状態"
-  description="disabledプロパティでツールチップを無効化できます。フォームの状態や権限に応じて動的に制御してください。"
+<CodeI18n
+  titleKey="components.tooltip.state.title"
+  descriptionKey="components.tooltip.state.desc"
   code={stateSampleRaw}
   storyPath="/story/components-tooltip--disabled"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

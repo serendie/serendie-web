@@ -4,6 +4,68 @@ import { SerendieSymbol } from "@serendie/symbols";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { siteConfig } from "../../../siteConfig";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useLocalePath,
+  formatDateByLang,
+} from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
+
+const releaseNotes = [
+  {
+    date: "2025-10-15",
+    title: {
+      ja: "Serendie Design Systemがグッドデザイン・ベスト100を受賞しました。",
+      en: "Serendie Design System won Good Design Best 100.",
+    },
+    href: "https://www.g-mark.org/gallery/winners/27713",
+    badge: "NEW",
+  },
+  {
+    date: "2025-07-31",
+    title: {
+      ja: "データビジュアライゼーションに対応するアップデートを行いました。",
+      en: "Released updates for data visualization.",
+    },
+    href: localePath("foundations/data-visualization"),
+  },
+  {
+    date: "2025-01-31",
+    title: {
+      ja: "GitHubにてSerendie UIやSerendie SymbolsなどがOSSとして公開されました。",
+      en: "Serendie UI, Serendie Symbols, and more were released as OSS on GitHub.",
+    },
+    href: "https://github.com/serendie",
+  },
+  {
+    date: "2024-12-20",
+    title: {
+      ja: "Serendie Design System立ち上げメンバーのインタビュー記事が公開されました。",
+      en: "Interview with the founding members of the Serendie Design System was published.",
+    },
+    href: "https://www.mitsubishielectric.co.jp/serendie/stories/07/",
+  },
+  {
+    date: "2024-11-07",
+    title: {
+      ja: "Figma CommunityにてSerendie UI Kitを公開しました。",
+      en: "Released Serendie UI Kit on Figma Community.",
+    },
+    href: siteConfig.serendieUIKitFigmaFileURL,
+  },
+  {
+    date: "2024-11-07",
+    title: {
+      ja: "Serendie Design Systemを公開しました。",
+      en: "Launched the Serendie Design System.",
+    },
+    href: "https://www.mitsubishielectric.co.jp/news/2024/1107.html",
+  },
+];
 
 const ReleasenoteContainer = styled("div", {
   base: {
@@ -132,7 +194,7 @@ const NoteIcon = styled("div", {
 
 <ReleasenoteContainer>
   <TitleContainer>
-    <Title>ニュース・イベントを見る</Title>
+    <Title>{t("footer.releaseTitle")}</Title>
     <!-- <Button
       styleType="ghost"
       className={css({
@@ -144,71 +206,25 @@ const NoteIcon = styled("div", {
   </TitleContainer>
 
   <ReleasenoteGrid>
-    <Note
-      href="https://www.g-mark.org/gallery/winners/27713"
-      target="_blank"
-    >
-      <NoteTime>2025/10/15</NoteTime>
-      <NoteTitle>Serendie Design Systemがグッドデザイン・ベスト100を受賞しました。</NoteTitle>
-      <NoteBadge>
-        <Badge
-          className={css({
-            background: "web.system.color.impression.secondary",
-          })}
-        >
-          NEW
-        </Badge>
-      </NoteBadge>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note
-      href="/foundations/data-visualization"
-    >
-      <NoteTime>2025/07/31</NoteTime>
-      <NoteTitle>データビジュアライゼーションに対応するアップデートを行いました。</NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note
-      href="https://github.com/serendie"
-      target="_blank"
-    >
-      <NoteTime>2025/1/31</NoteTime>
-      <NoteTitle>GitHubにてSerendie UIやSerendie SymbolsなどがOSSとして公開されました。</NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note href="https://www.mitsubishielectric.co.jp/serendie/stories/07/" target="_blank">
-      <NoteTime>2024/12/20</NoteTime>
-      <NoteTitle>
-        Serendie Design System立ち上げメンバーのインタビュー記事が公開されました。
-      </NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note href={siteConfig.serendieUIKitFigmaFileURL} target="_blank">
-      <NoteTime>2024/11/7</NoteTime>
-      <NoteTitle>
-        Figma CommunityにてSerendie UI Kitを公開しました。
-      </NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
-    <Note
-      href="https://www.mitsubishielectric.co.jp/news/2024/1107.html"
-      target="_blank"
-    >
-      <NoteTime>2024/11/7</NoteTime>
-      <NoteTitle> Serendie Design Systemを公開しました。 </NoteTitle>
-      <NoteIcon>
-        <SerendieSymbol name="chevron-right" size={24} />
-      </NoteIcon>
-    </Note>
+    {releaseNotes.map((note) => (
+      <Note href={note.href} target={note.href.startsWith("http") ? "_blank" : undefined}>
+        <NoteTime>{formatDateByLang(note.date, lang)}</NoteTime>
+        <NoteTitle>{note.title[lang]}</NoteTitle>
+        {note.badge && (
+          <NoteBadge>
+            <Badge
+              className={css({
+                background: "web.system.color.impression.secondary",
+              })}
+            >
+              {note.badge}
+            </Badge>
+          </NoteBadge>
+        )}
+        <NoteIcon>
+          <SerendieSymbol name="chevron-right" size={24} />
+        </NoteIcon>
+      </Note>
+    ))}
   </ReleasenoteGrid>
 </ReleasenoteContainer>

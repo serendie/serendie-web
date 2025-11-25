@@ -2,29 +2,30 @@
 title: Select
 componentName: セレクト
 description: 複数の選択肢を格納し、ユーザーは1つの選択肢を選ぶコンポーネントです。選択肢ではなくアクションを表示する場合は、DropdownMenuを使用してください。
+descriptionEn: "Stores multiple options and lets the user pick one. Use DropdownMenu for actions instead."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/Select/SizeSample";
 import sizeSampleRaw from "@/sampleCode/Select/SizeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/Select/StateSample";
 import stateSampleRaw from "@/sampleCode/Select/StateSample.tsx?raw";
 
-<Code
-  title="サイズ"
-  description="Small、Mediumの2種類があります。"
+<CodeI18n
+  titleKey="components.select.size.title"
+  descriptionKey="components.select.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-select--basic"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="状態"
-  description="3種類の状態があります。エラー状態においては、エラーの詳細をメッセージ表示してください。"
+<CodeI18n
+  titleKey="components.select.state.title"
+  descriptionKey="components.select.state.desc"
   code={stateSampleRaw}
   storyPath="/docs/components-select--docs"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

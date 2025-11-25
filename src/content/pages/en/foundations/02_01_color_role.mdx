@@ -1,0 +1,135 @@
+---
+slug: en/foundations/color/role
+title: Color role
+description: Color roles give meaning and function to colors chosen from the palette inside digital products. Color roles are defined as system tokens.
+parent: en/foundations/color
+illustType: A
+lastUpdated: "2025-10-30"
+subLinks:
+  [
+    { name: "Color palette", path: "/en/foundations/color" },
+    { name: "Color role", path: "/en/foundations/color/role" },
+  ]
+---
+
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+import { styled } from "styled-system/jsx";
+import ImageHovered from "@/assets/content/foundations/color/dynamic_hovered.svg?react";
+import ImageImpression from "@/assets/content/foundations/color/dynamic_impression.svg?react";
+import ImageRoles from "@/assets/content/foundations/color/dynamic_roles.svg?react";
+import PageHeadLine from "@/components/PageHeadLine.astro";
+
+export const ImageWrapper = styled("p", {
+  base: {
+    "& > img": {
+      width: "100%",
+      maxWidth: "310px",
+    },
+  },
+});
+
+<PageSection>
+
+    <PageHeadLine number={1}>Role categories</PageHeadLine>
+
+Color roles are organized into three categories: Impression, Component, and Interaction. The category is part of the system token key.
+
+<ImageRoles />
+
+The color roles we currently provide are the minimum set needed to compose Serendie UI. When you add original UI components, consider adding new color roles as needed.
+
+Serendie Design System’s color roles are a subset of the Material Design 3 design, lightly adjusted for simplicity. Terminology such as role names follows Material Design 3. Refer to the Material Design 3 documentation for deeper understanding.
+
+### References
+
+<PageARef href="https://m3.material.io/styles/color/roles">Color – Material Design 3</PageARef>
+
+</PageSection>
+
+<PageSection>
+
+<PageHeadLine number={2}>Impression</PageHeadLine>
+
+## Brand colors and UI colors
+
+**Impression covers the roles related to the “impression” users receive when they see the product.** This category includes roles for brand colors and for UI colors.
+
+There are three brand color roles by priority: Primary, Secondary, and Tertiary. Primary shapes the product and brand impression and signals UI importance. Secondary and Tertiary are supportive and may not appear in every product.
+
+UI color roles communicate the function of the UI and the result of interactions—such as “success,” “failure,” or “warning.” From the perspective of the impression they give users, we group them into Positive, Negative, and Notice. While there are six subcategories within Impression, Primary and Positive often point to the same color, and you do not need to assign a different color to each.
+
+Even when they ultimately point to the same color, **separating the roles makes design tokens more resilient to change.**
+
+<ImageWrapper>
+  <ImageImpression />
+</ImageWrapper>
+
+## Foreground and background colors
+
+Impression tokens are used across many UI components, starting with Buttons. A key concept is **separating tokens by foreground/background and by color area**. For example, the design tokens fulfilling the Primary role are these four (partial token names shown):
+
+1. primary — text color and small-area backgrounds
+2. onPrimary — foreground color that sits on primary
+3. primaryContainer — large-area background color
+4. onPrimaryContainer — foreground color that sits on primaryContainer
+
+<ImageWrapper>
+  <img src="/assets/pages/color/button-colors.avif" alt="primary token" />
+</ImageWrapper>
+
+Foreground colors use the prefix “on,” and large-area background colors use the suffix “Container.” All six Impression color roles follow this rule.
+
+When designing accessible UIs, **ensuring contrast between foreground and background is critical**, and to adapt to context changes such as dark mode, you need separate tokens for foreground and background. Even for the same role, you often adjust lightness depending on color area. Negative, which is conventionally red, is a typical example. For these reasons, it is important to distinguish between tokens with “on” and “Container.”
+
+<ImageWrapper>
+  <img src="/assets/pages/color/negative-color.avif" alt="container token" />
+</ImageWrapper>
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={3}>Component</PageHeadLine>
+
+Roles in Component **shape the UI itself**. Representative roles are Surface and Outline. Surface refers to default backgrounds and text colors—often using neutral colors. Key tokens for the Surface role are (partial names):
+
+1. surface — the base color, such as the site background or card backgrounds
+2. onSurface — the default text color on surface
+3. onSurfaceVariant — secondary text color on surface
+
+Outline represents UI border colors and provides variations with different visual emphasis.
+
+1. outline — default border color
+2. outlineBright — brighter border color
+3. outlineDim — darker border color
+
+<ImageWrapper>
+  <img src="/assets/pages/color/component-colors.avif" alt="component colors" />
+</ImageWrapper>
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={4}>Interaction</PageHeadLine>
+
+Roles in Interaction represent UI component state changes. There are three roles: Hovered, Selected, and Disabled.
+
+Selected, which indicates a chosen state, and Disabled, which indicates inactivity, often use fixed colors (e.g., gray for Disabled), and Serendie Design System follows that pattern.
+
+Hovered, on the other hand, cannot be defined as a single color because the hover color changes depending on the pre-hover color. In Serendie Design System, Hovered tokens point to semi-transparent colors (Transparency). Use these as state layers and overlay them on the component being hovered to express the hovered state.
+
+<ImageWrapper>
+  <ImageHovered />
+</ImageWrapper>
+
+### References
+
+<PageARef href="https://m3.material.io/foundations/interaction/states/state-layers">States – Material Design 3</PageARef>
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={5}>Color themes</PageHeadLine>
+
+Serendie Design System provides presets of the color roles introduced on this page as color themes. For details, see [Theming](/en/foundations/theming).
+
+</PageSection>

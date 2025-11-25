@@ -1,6 +1,10 @@
 ---
 import { styled } from "styled-system/jsx";
 import { ShowcaseCarouselWrapper } from "./ShowcaseCarouselWrapper";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const ShowcaseContainer = styled("div", {
   base: {
@@ -23,7 +27,7 @@ const Title = styled("h2", {
 ---
 
 <ShowcaseContainer>
-  <Title>Serendie UIの活用事例</Title>
+  <Title>{t("footer.showcaseTitle")}</Title>
 
   <ShowcaseCarouselWrapper client:load />
 </ShowcaseContainer>

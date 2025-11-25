@@ -1,0 +1,84 @@
+import { ui } from "./ui";
+import { uiComponents } from "./ui-components";
+
+const uiMerged = {
+  ja: { ...ui.ja, ...uiComponents.ja },
+  en: { ...ui.en, ...uiComponents.en },
+} as const;
+
+export type Language = keyof typeof uiMerged;
+export type TranslationKey = keyof (typeof uiMerged)[Language];
+
+export function getLangFromUrl(url: URL): Language {
+  const [, lang] = url.pathname.split("/");
+  if (lang in uiMerged) return lang as Language;
+  return "ja";
+}
+
+export function useTranslations(lang: Language) {
+  return function t(key: TranslationKey): string {
+    return uiMerged[lang][key] || uiMerged["ja"][key];
+  };
+}
+
+/**
+ * 言語を束縛したロケール付きパス生成関数を返す
+ * 例: const localePath = useLocalePath(lang); localePath("about") -> "/en/about"
+ */
+export function useLocalePath(lang: Language) {
+  return function localePath(path: string): string {
+    return getLocalePath(lang, path);
+  };
+}
+
+/**
+ * 言語に合わせて日付文字列をフォーマットする
+ * @param date ISO形式などDateが解釈できる文字列
+ * @param lang 言語
+ */
+export function formatDateByLang(date: string, lang: Language) {
+  return new Date(date).toLocaleDateString(lang === "en" ? "en-US" : "ja-JP");
+}
+
+/**
+ * 現在の言語を維持したURLを生成
+ * @param lang 言語
+ * @param path パス（先頭のスラッシュなし）例: "about", "components/button"
+ * @returns ロケールを含むパス 例: "/about", "/en/about"
+ */
+function getLocalePath(lang: Language, path: string): string {
+  // パスの先頭のスラッシュを削除
+  const cleanPath = path.replace(/^\//, "");
+
+  if (lang === "ja") {
+    // 日本語はプレフィックスなし
+    // 空文字列の場合はトップページ
+    return cleanPath === "" ? "/" : `/${cleanPath}`;
+  }
+
+  // その他の言語はプレフィックスあり
+  // 空文字列の場合は /en などの言語トップページ
+  return cleanPath === "" ? `/${lang}` : `/${lang}/${cleanPath}`;
+}
+
+/**
+ * 現在のURLから言語を切り替えたURLを生成
+ * @param url 現在のURL
+ * @param targetLang 切り替え先の言語
+ * @returns 言語を切り替えたパス
+ */
+export function switchLanguagePath(url: URL, targetLang: Language): string {
+  const currentLang = getLangFromUrl(url);
+  let pathname = url.pathname;
+
+  // 現在の言語プレフィックスを削除
+  if (currentLang !== "ja") {
+    pathname = pathname.replace(new RegExp(`^/${currentLang}`), "");
+  }
+
+  // パスの先頭のスラッシュを削除
+  const cleanPath = pathname.replace(/^\//, "");
+
+  // ターゲット言語のパスを生成
+  return getLocalePath(targetLang, cleanPath);
+}

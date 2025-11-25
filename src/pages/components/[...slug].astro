@@ -3,6 +3,7 @@ export const prerender = true;
 
 import ComponentLayout from "@/layouts/ComponentLayout.astro";
 import { getCollection } from "astro:content";
+import { getLangFromUrl } from "@/i18n/utils";
 
 export async function getStaticPaths() {
   const components = await getCollection("components");
@@ -14,8 +15,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <ComponentLayout data={entry.data}>
-  <Content />
+  <Content lang={lang} />
 </ComponentLayout>

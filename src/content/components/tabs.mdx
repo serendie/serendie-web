@@ -2,38 +2,39 @@
 title: Tabs
 componentName: タブ
 description: 複数のビューを切り替えるためのコンポーネントです。TopAppBarやBottomNavigationはグローバルなナビゲーションとして使用しますが、Tabsはローカルなナビゲーションであることに注意してください。
+descriptionEn: "Switches between multiple views as local navigation (distinct from global nav like TopAppBar or BottomNavigation)."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TabsSample } from "@/sampleCode/Tabs/TabsSample";
 import tabsSampleRaw from "@/sampleCode/Tabs/TabsSample.tsx?raw";
 import { TabsNotificationSample } from "@/sampleCode/Tabs/TabsNotificationSample";
 import tabsNotificationSampleRaw from "@/sampleCode/Tabs/TabsNotificationSample.tsx?raw";
 import { StateSample } from "@/sampleCode/Tabs/StateSample";
 
-<Code
-  title="サンプル"
-  description="Tabs内で、TabItemを連ねて使用します。"
+<CodeI18n
+  titleKey="components.tabs.basicUsage.title"
+  descriptionKey="components.tabs.basicUsage.desc"
   code={tabsSampleRaw}
   storyPath="/story/components-tabs--default"
 >
   <TabsSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="バリエーション"
-  description="TabItemには通知バッジ付きのバリエーションがあります。"
+<CodeI18n
+  titleKey="components.tabs.notificationBadge.title"
+  descriptionKey="components.tabs.notificationBadge.desc"
   storyPath="/docs/components-tabs--docs"
   code={tabsNotificationSampleRaw}
 >
   <TabsNotificationSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="状態"
-  description="TabItemは計6種類の状態があります。非活性とする際はdisabled propsを使用してください。"
+<CodeI18n
+  titleKey="components.tabs.state.title"
+  descriptionKey="components.tabs.state.desc"
   storyPath="/docs/components-tabs--docs"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

@@ -2,18 +2,19 @@
 title: Modal Dialog
 componentName: モーダルダイアログ
 description: アプリケーションを覆うレイヤー上にダイアログを表示するコンポーネントです。Modal Dialogが表示されている間は、ユーザーはその他の操作ができなくなることに注意が必要です。
+descriptionEn: "Displays a dialog over the app layer; users cannot interact with the rest of the app while shown."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { Sample } from "@/sampleCode/ModalDialog/Sample";
 import sampleRaw from "@/sampleCode/ModalDialog/Sample.tsx?raw";
 
-<Code
-  title="サンプル"
-  description="Modal Dialogを閉じるボタンは必ず必要です。また背景レイヤー (scrim) をクリックすることで閉じることができます。"
+<CodeI18n
+  titleKey="components.modalDialog.basicUsage.title"
+  descriptionKey="components.modalDialog.basicUsage.desc"
   code={sampleRaw}
   storyPath="/story/components-modaldialog--basic"
 >
   <Sample client:load />
-</Code>
+</CodeI18n>

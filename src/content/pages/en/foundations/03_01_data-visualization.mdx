@@ -1,0 +1,117 @@
+---
+title: Data Visualization
+slug: en/foundations/data-visualization
+lastUpdated: "2025-07-17"
+illustType: A
+description: "We extend the base color palette and provide a data visualization palette as system tokens. We also define system tokens related to charts, such as legends and ticks."
+subLinks:
+  [
+    { name: "Color palette", path: "/en/foundations/data-visualization" },
+    { name: "Color role", path: "/en/foundations/data-visualization-role" },
+  ]
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection } from "@/components/PageLayout.tsx";
+import { css } from "styled-system/css";
+import { ChartColorMatrix } from "@/components/ChartColorMatrix.tsx";
+import { chartColors } from "@/data/chartColors.ts";
+
+<PageSection>
+  <PageHeadLine number={1}>Mark</PageHeadLine>
+
+## Single (monochromatic)
+
+This is the monochromatic palette used for chart marks. When the number of data series is three or fewer, use even-numbered colors.
+
+<div
+  className={css({
+    fontFamily: "sd.reference.typography.fontFamily.monospace",
+    fontSize: "12px",
+    color: "sd.reference.color.scale.gray.1000",
+    marginBottom: "16px",
+    marginTop: "8px",
+    letterSpacing: "0.6px",
+    "& p": {
+      mt: 0,
+    },
+  })}
+>
+  sd.system.color.chart.mark.primary
+</div>
+
+<ChartColorMatrix data={chartColors.single} matrixId="single" client:idle />
+
+## Semantic
+
+Use the Semantic palette when the data conveys specific meanings or intents, such as success, error, or warning. If the data is nested, use colors according to hierarchy.
+
+<div
+  className={css({
+    fontFamily: "sd.reference.typography.fontFamily.monospace",
+    fontSize: "12px",
+    color: "sd.reference.color.scale.gray.1000",
+    marginBottom: "16px",
+    marginTop: "8px",
+    letterSpacing: "0.6px",
+    "& p": {
+      mt: 0,
+    },
+  })}
+>
+  sd.system.color.chart.mark
+</div>
+
+<ChartColorMatrix data={chartColors.semantic} matrixId="semantic" client:idle />
+## Multi (multi-hue)
+
+This is the multi-hue palette used for chart marks. **Use the colors in palette order so each color can be individually distinguished.**
+
+<div
+  className={css({
+    fontFamily: "sd.reference.typography.fontFamily.monospace",
+    fontSize: "12px",
+    color: "sd.reference.color.scale.gray.1000",
+    marginBottom: "16px",
+    marginTop: "8px",
+    letterSpacing: "0.6px",
+    "& p": {
+      mt: 0,
+    },
+  })}
+>
+  sd.system.color.chart.mark.multi
+</div>
+
+<ChartColorMatrix data={chartColors.multi} matrixId="multi" client:idle />
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Component</PageHeadLine>
+
+Use this palette for non-mark elements within charts, such as ticks and labels.
+
+<div
+  className={css({
+    fontFamily: "sd.reference.typography.fontFamily.monospace",
+    fontSize: "12px",
+    color: "sd.reference.color.scale.gray.1000",
+    marginBottom: "16px",
+    marginTop: "8px",
+    letterSpacing: "0.6px",
+    "& p": {
+      mt: 0,
+    },
+  })}
+>
+  sd.system.color.chart.component
+</div>
+
+<ChartColorMatrix
+  data={chartColors.component}
+  matrixId="component"
+  client:idle
+/>
+
+</PageSection>

@@ -1,0 +1,105 @@
+---
+title: Icons
+slug: en/foundations/icon
+description: Serendie Symbols is a Serendie-style icon set that is highly reusable across digital products.
+illustType: A
+lastUpdated: "2025-01-31"
+subLinks:
+  [
+    { name: "Design", path: "/en/foundations/icon" },
+    { name: "List", path: "/en/foundations/icon-list" },
+  ]
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection } from "@/components/PageLayout.tsx";
+import { siteConfig } from "../../../../../siteConfig.js";
+
+<PageSection>
+  <PageHeadLine number={1}>Serendie Symbols</PageHeadLine>
+
+    Serendie Symbols currently offers two styles—Outlined (stroke) and Filled (solid)—with around 300 icons in each.
+
+    ## Use in Figma
+
+    In the <a href={siteConfig.serendieUIKitFigmaFileURL}>Serendie UI Kit (Figma)</a>, the icons are componentized as “SerendieSymbols,” and you can select icons through variant properties just like UI components.
+
+    <img src="/assets/pages/icon/iconcomponent.avif" width="310px" alt="serendie symbols" />
+
+    ## Use in React
+
+    We provide a library that exposes Serendie Symbols as SVG components for React. Icon names are shared with Figma. See [GitHub](https://github.com/serendie/serendie-symbols) for details.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Principles</PageHeadLine>
+
+    These are the design principles and tips for Serendie Symbols. Keep them in mind when updating or adding icons.
+
+    ## Embrace the arc
+
+    Use the Arc (semicircle), the symbol of the Serendie brand, in your expression. However, avoid overusing arcs in ways that obscure meaning and hurt usability.
+
+    - Even if an element would not naturally include an arc, cutting a line to create an arc can emphasize Serendie’s identity.
+    - Generally, cut the line on the “outermost circle” to suggest an arc. Conversely, do not create arcs on inner circles.
+    - Arcs are especially effective on elongated shapes.
+
+    ## Bold silhouettes
+
+    Aim for clear shapes by emphasizing contrast between lines and corners. Focus on geometric forms while using organic shapes where appropriate.
+
+    - Combine bold shapes to create silhouettes with punch.
+    - Keep shapes flat and symmetrical without depth.
+    - Add small rounding to corners, keep stroke ends squared, and add subtle contrast to the shape.
+
+    ## Avoid surprising users
+
+    If using arcs risks changing the icon’s meaning, prioritize clarity over personality. Also round corners slightly to feel natural on screen.
+
+    - Add a bit of rounding to soften sharp impressions and make shapes approachable.
+    - Use negative space for an overall cheerful impression.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>Production guidelines</PageHeadLine>
+
+    ## Anatomy
+    Icons are drawn with a 1.2px stroke width and a corner radius of 0.25. When adding gaps between paths, leave 1.6px between endpoints. Do not add caps or tips to open path ends.
+    <img src="/assets/pages/icon/guideline1.avif" width="310px" alt="anatomy" />
+
+    ## Grid and keyline
+    To maintain consistent proportions across the icon system, use geometric keyline shapes placed on a 24dp x 24dp grid as guidelines.
+    <img src="/assets/pages/icon/guideline2.avif" width="310px" alt="grid" />
+
+    ## Layout
+    The overall canvas is 24dp x 24dp with 2dp padding and a 20dp x 20dp live area. Keep the icon itself within the live area in principle. Portions may extend into the padding, but never beyond the trim area.
+    <img src="/assets/pages/icon/guideline3.avif" width="310px" alt="layout" />
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>Figma settings</PageHeadLine>
+
+    ## Stroke width
+    Use a 1.2px stroke width and do not add caps or tips to stroke ends. Set stroke position to “Center” to style shapes and lines consistently. The default is “Inside,” so be mindful of this setting.
+    <img src="/assets/pages/icon/settings1.avif" width="310px" alt="stroke" />
+
+    ## Corner radius
+    Set corner radius to 0.25px to add slight softness to shapes.
+    <img src="/assets/pages/icon/settings2.avif" width="310px" alt="radius" />
+
+    ## Constraints
+    Apply “Scale” constraints on both axes so resizing the icon preserves proportions. Apply this constraint to the icon itself, not the surrounding frame (keep “Left” horizontally and “Top” vertically on the frame).
+    <img src="/assets/pages/icon/settings3.avif" width="310px" alt="constraints" />
+
+    ## Unite
+    When finalizing an icon, select all elements and choose “Unite” from the context menu to flatten layers into a single vector path. This makes the finished icon easier to handle and to outline strokes depending on complexity.
+    <img src="/assets/pages/icon/settings4.avif" width="310px" alt="integrate" />
+
+    ## Outline
+    Once the icon style is set, outline strokes to convert them into vector objects and prevent ratio changes when resizing.
+    <img src="/assets/pages/icon/settings5.avif" width="310px" alt="outline" />
+
+</PageSection>

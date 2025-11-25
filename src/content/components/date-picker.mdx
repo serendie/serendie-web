@@ -2,10 +2,11 @@
 title: Date Picker
 componentName: デートピッカー
 description: 日付を選択するためのコンポーネントです。カレンダー形式で日付を選択できます。
+descriptionEn: "Date selection component with calendar UI."
 lastUpdated: "2025-09-03"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { BasicSample } from "@/sampleCode/DatePicker/BasicSample";
 import basicSampleRaw from "@/sampleCode/DatePicker/BasicSample.tsx?raw";
 import { CalendarSample } from "@/sampleCode/DatePicker/CalendarSample";
@@ -15,38 +16,38 @@ import rangeSampleRaw from "@/sampleCode/DatePicker/RangeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/DatePicker/StateSample";
 import stateSampleRaw from "@/sampleCode/DatePicker/StateSample.tsx?raw";
 
-<Code
-  title="基本"
-  description="単一の日付を選択する基本的なデートピッカーです。"
+<CodeI18n
+  titleKey="components.datePicker.basic.title"
+  descriptionKey="components.datePicker.basic.desc"
   code={basicSampleRaw}
   storyPath="/story/components-datepicker--basic"
 >
   <BasicSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="日付範囲"
-  description="開始日と終了日を選択できる範囲選択型のデートピッカーです。"
+<CodeI18n
+  titleKey="components.datePicker.range.title"
+  descriptionKey="components.datePicker.range.desc"
   code={rangeSampleRaw}
   storyPath="/story/components-datepicker--range"
 >
   <RangeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="状態"
-  description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
+<CodeI18n
+  titleKey="components.datePicker.states.title"
+  descriptionKey="components.datePicker.states.desc"
   code={stateSampleRaw}
   storyPath="/story/components-datepicker--states"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="カレンダーのみ"
-  description="入力フィールドを表示せず、カレンダーだけを表示するモードです。"
+<CodeI18n
+  titleKey="components.datePicker.calendarOnly.title"
+  descriptionKey="components.datePicker.calendarOnly.desc"
   code={calendarSampleRaw}
   storyPath="/story/components-datepicker--calendar-only"
 >
   <CalendarSample client:load />
-</Code>
+</CodeI18n>

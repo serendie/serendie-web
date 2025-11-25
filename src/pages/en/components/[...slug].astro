@@ -1,0 +1,6 @@
+---
+export { prerender, getStaticPaths } from "../../components/[...slug].astro";
+import ComponentPage from "../../components/[...slug].astro";
+---
+
+<ComponentPage {...Astro.props} />
