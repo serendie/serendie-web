@@ -2,29 +2,30 @@
 title: Search
 componentName: サーチ
 description: 検索用途に特化した入力コンポーネントです。検索キーワードを入力した際に候補をサジェストする機能も持ちます。
+descriptionEn: "Search-focused input that can suggest candidates as you type."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/Search/SizeSample";
 import sizeSampleRaw from "@/sampleCode/Search/SizeSample.tsx?raw";
 import { StateSample } from "@/sampleCode/Search/StateSample";
 import stateSampleRaw from "@/sampleCode/Search/StateSample.tsx?raw";
 
-<Code
-  title="サイズ"
-  description="SmallとMediumの2種類があります。"
+<CodeI18n
+  titleKey="components.search.size.title"
+  descriptionKey="components.search.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-search--basic"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="状態"
-  description="3種類の状態があります。非活性とする際はdisabled propsを使用してください。"
+<CodeI18n
+  titleKey="components.search.state.title"
+  descriptionKey="components.search.state.desc"
   code={stateSampleRaw}
   storyPath="/docs/components-search--docs"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>

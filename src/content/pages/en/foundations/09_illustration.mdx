@@ -1,0 +1,65 @@
+---
+title: Illustration
+slug: en/foundations/illustration
+lastUpdated: "2024-11-1"
+illustType: A
+description: "For the Serendie Design System operations team, we provide a lightweight illustration system in Figma. You can create illustrations for document hero images or placeholders inside components by switching variant properties."
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection } from "@/components/PageLayout.tsx";
+import { siteConfig } from "../../../../../siteConfig.js";
+
+<PageSection>
+  <PageHeadLine number={1}>Illustration system</PageHeadLine>
+
+For the Serendie Design System operations team, we provide an easy way to create Serendie-style illustrations when making new documents. Access it from the Illustration page in the <a href={siteConfig.serendieUIKitFigmaFileURL}>Serendie UI Kit (Figma)</a>.
+
+Currently, this is offered internally to the operations team. It is included in the Figma file but not published as a library (it is not available from the Assets panel inside Figma).
+
+  <img src="/assets/pages/illustration/capture1.avif" width="310px" alt="illusts" />
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>How to use</PageHeadLine>
+
+## 1. Copy a template
+
+The “IllustrationTemplates Component” serves as the template. It has four composition types (layout patterns) and, for each, variations for hero/eyecatch and icon use cases. Each purpose also has landscape, portrait, square, and circular variants.
+
+Copy the template that suits your goal.
+
+<img
+  src="/assets/pages/illustration/capture2.avif"
+  width="310px"
+  alt="illust template"
+/>
+
+## 2. Swap the parts in the copied template
+
+Templates contain componentized shape parts. Switch the variant properties on these shape components to create new illustrations. Each shape part has the following variant properties:
+
+1. 🔒️Size — three sizes: Small, Medium, Large
+2. 🔒️Color — five colors: Primary, Secondary, Tertiary1/2, Accent
+3. Shape — three types: Rectangle, Arc, Unique
+4. Variation — variations within each shape type
+
+Do not change the properties marked with 🔒️ (Size and Color); change Shape and Variation instead. This keeps a consistent palette and layout while allowing illustration variety.
+
+<img
+  src="/assets/pages/illustration/capture3.avif"
+  width="310px"
+  alt="illust constraints"
+/>
+
+## 3. Confirm theme support
+
+Colors in the illustrations are managed by Figma Variables. Similar to [UI theming](/en/foundations/theming#section-3), setting the variable mode automatically applies colors for each theme. Set the variable mode and verify colors per theme.
+
+<img
+  src="/assets/pages/illustration/capture4.avif"
+  width="310px"
+  alt="theming"
+/>
+
+</PageSection>

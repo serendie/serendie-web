@@ -2,18 +2,19 @@
 title: Dropdown Menu
 componentName: ドロップダウンメニュー
 description: 複数のアクションを格納するためのコンポーネントです。メニュー内のアクションは、クリック時にイベントをトリガーします。アクションではなく、選択肢を表示する場合は、Selectを使用してください。
+descriptionEn: "Holds multiple actions that fire on click. Use Select instead when showing choices."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/DropdownMenu/TypeSample";
 import typeSampleRaw from "@/sampleCode/DropdownMenu/TypeSample.tsx?raw";
 
-<Code
-  title="バリエーション"
-  description="メニューを総称するタイトルまたはアイコンを設定できます。"
+<CodeI18n
+  titleKey="components.dropdownMenu.variant.title"
+  descriptionKey="components.dropdownMenu.variant.desc"
   code={typeSampleRaw}
   storyPath="/story/components-dropdownmenu--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

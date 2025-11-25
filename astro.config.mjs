@@ -15,7 +15,7 @@ export default defineConfig({
   site: "https://serendie.design/",
   base: BASE_PATH,
 
-  output: "server",
+  output: "static",
 
   integrations: [
     react(),
@@ -27,6 +27,14 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+
+  i18n: {
+    defaultLocale: "ja",
+    locales: ["ja", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 
   markdown: {
     shikiConfig: {

@@ -2,18 +2,19 @@
 title: Top App Bar
 componentName: トップアップバー
 description: 画面上部に配置するモバイルやタブレット向けのグローバルなナビゲーションです。
+descriptionEn: "Global navigation for mobile/tablet placed at the top of the screen."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/TopAppBar/TypeSample";
 import typeSampleRaw from "@/sampleCode/TopAppBar/TypeSample.tsx?raw";
 
-<Code
-  title="バリエーション"
-  description="ナビゲーション用のNavBarと、ページタイトル用のTitleBarの2種類で構成されます。TopAppBarを連ねて使用することで、多様なレイアウトに対応します。"
+<CodeI18n
+  titleKey="components.topAppBar.variant.title"
+  descriptionKey="components.topAppBar.variant.desc"
   code={typeSampleRaw}
   storyPath="/story/components-topappbar--all"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

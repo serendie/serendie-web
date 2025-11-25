@@ -2,29 +2,30 @@
 title: Avatar
 componentName: アバター
 description: ユーザーについて視覚的に表現するコンポーネントです。
+descriptionEn: "Visually represents a user."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/Avatar/SizeSample";
 import sizeSampleRaw from "@/sampleCode/Avatar/SizeSample.tsx?raw";
 import { TypeSample } from "@/sampleCode/Avatar/TypeSample";
 import typeSampleRaw from "@/sampleCode/Avatar/TypeSample.tsx?raw";
 
-<Code
-  title="サイズ"
-  description="3種類のサイズから選択できます。"
+<CodeI18n
+  titleKey="components.avatar.size.title"
+  descriptionKey="components.avatar.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-avatar--text&args=size:small"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="バリエーション"
-  description="任意の画像やテキストをアバターとして使用できます。特に画像をアバターとする場合は、初期値としてプレースホルダーを適切に設定してください。"
+<CodeI18n
+  titleKey="components.avatar.variant.title"
+  descriptionKey="components.avatar.variant.desc"
   code={typeSampleRaw}
   storyPath="/docs/components-avatar--docs"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

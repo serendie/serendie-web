@@ -2,29 +2,30 @@
 title: Text Area
 componentName: テキストエリア
 description: 複数行のテキストを入力するためのコンポーネントです。Buttonなどと合わせてフォームを構成します。
+descriptionEn: "Multi-line text input used in forms alongside components like Button."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { StateSample } from "@/sampleCode/TextArea/StateSample";
 import stateSampleRaw from "@/sampleCode/TextArea/StateSample.tsx?raw";
 import { AutoAdjustHeightSample } from "@/sampleCode/TextArea/AutoAdjustHeightSample";
 import AutoAdjustHeightSampleRaw from "@/sampleCode/TextArea/AutoAdjustHeightSample.tsx?raw";
 
-<Code
-  title="状態"
-  description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
+<CodeI18n
+  titleKey="components.textArea.state.title"
+  descriptionKey="components.textArea.state.desc"
   code={stateSampleRaw}
   storyPath="/story/components-textarea--basic"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="高さの自動調整"
-  description="入力された内容に応じて高さを変更したい場合には、autoAdjustHeight propsを使用してください。"
+<CodeI18n
+  titleKey="components.textArea.autoAdjustHeight.title"
+  descriptionKey="components.textArea.autoAdjustHeight.desc"
   code={AutoAdjustHeightSampleRaw}
   storyPath="/story/components-textarea--auto-adjust-height"
 >
   <AutoAdjustHeightSample client:load />
-</Code>
+</CodeI18n>

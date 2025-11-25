@@ -1,5 +1,17 @@
 ---
 import { styled } from "styled-system/jsx";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useLocalePath,
+  switchLanguagePath,
+} from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localePath = useLocalePath(lang);
+const jaPath = switchLanguagePath(Astro.url, "ja");
+const enPath = switchLanguagePath(Astro.url, "en");
 
 const FooterWrapper = styled("footer", {
   base: {
@@ -86,126 +98,144 @@ const FooterCopyright = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
-    gap: '16px',
-    mt: '100px',
+    gap: "16px",
+    mt: "100px",
     expanded: {
       flexDirection: "row",
       alignItems: "center",
-      gap: '40px',
-      mt: '80px'
+      gap: "40px",
+      mt: "80px",
     },
     "& ul": {
       textStyle: "sd.system.typography.body.extraSmall_compact",
       fontSize: "14px",
-      display: "flex"
+      display: "flex",
     },
     "& ul li": {
-      mr: "16px"
+      mr: "16px",
     },
     "& a:hover": {
       opacity: 0.6,
-    }
+    },
+    "& a[aria-current='page']": {
+      opacity: 0.4,
+      pointerEvents: "none",
+    },
+  },
+});
+
+const LanguageSwitcher = styled("ul", {
+  base: {
+    textStyle: "sd.system.typography.body.extraSmall_compact",
+    fontSize: "14px",
+    display: "flex",
+    "& li": {
+      mr: "16px",
+    },
+    expanded: {
+      marginLeft: "auto",
+    },
   },
 });
 
 const footerLink = [
   {
-    title: "About",
-    url: "/about",
+    title: t("footer.about"),
+    url: localePath("about"),
     links: [
       {
-        title: "Serendie Design Systemとは",
-        url: "/about",
+        title: t("footer.aboutSerendie"),
+        url: localePath("about"),
       },
     ],
   },
   {
-    title: "Get Started",
-    url: "/get-started",
+    title: t("footer.getStarted"),
+    url: localePath("get-started"),
     links: [
       {
-        title: "デザイン",
-        url: "/get-started/design",
+        title: t("footer.design"),
+        url: localePath("get-started/design"),
       },
       {
-        title: "開発",
-        url: "/get-started/dev",
+        title: t("footer.development"),
+        url: localePath("get-started/dev"),
       },
     ],
   },
   {
-    title: "Foundation",
-    url: "/foundations",
+    title: t("footer.foundation"),
+    url: localePath("foundations"),
     links: [
       {
-        title: "デザイントークン",
-        url: "/foundations/design-tokens",
+        title: t("footer.designTokens"),
+        url: localePath("foundations/design-tokens"),
       },
       {
-        title: "カラー",
-        url: "/foundations/color",
+        title: t("footer.color"),
+        url: localePath("foundations/color"),
       },
       {
-        title: "テーミング",
-        url: "/foundations/theming",
+        title: t("footer.theming"),
+        url: localePath("foundations/theming"),
       },
       {
-        title: "タイポグラフィ",
-        url: "/foundations/typography",
+        title: t("footer.typography"),
+        url: localePath("foundations/typography"),
       },
       {
-        title: "寸法",
-        url: "/foundations/dimension",
+        title: t("footer.dimension"),
+        url: localePath("foundations/dimension"),
       },
       {
-        title: "階層",
-        url: "/foundations/elevation",
+        title: t("footer.elevation"),
+        url: localePath("foundations/elevation"),
       },
       {
-        title: "アイコン",
-        url: "/foundations/icon",
+        title: t("footer.icon"),
+        url: localePath("foundations/icon"),
       },
       {
-        title: "イラストレーション",
-        url: "/foundations/illustration",
+        title: t("footer.illustration"),
+        url: localePath("foundations/illustration"),
       },
     ],
   },
   {
-    title: "Components",
-    url: "/components",
+    title: t("footer.components"),
+    url: localePath("components"),
     links: [
       {
-        title: "Accordion",
-        url: "/components/accordion",
+        title: t("footer.accordion"),
+        url: localePath("components/accordion"),
       },
       {
-        title: "Button",
-        url: "/components/button",
+        title: t("footer.button"),
+        url: localePath("components/button"),
       },
       {
-        title: "List",
-        url: "/components/list",
+        title: t("footer.list"),
+        url: localePath("components/list"),
       },
       {
-        title: "Search",
-        url: "/components/search",
+        title: t("footer.search"),
+        url: localePath("components/search"),
       },
       {
-        title: "Select",
-        url: "/components/select",
+        title: t("footer.select"),
+        url: localePath("components/select"),
       },
       {
-        title: "Tabs",
-        url: "/components/tabs",
+        title: t("footer.tabs"),
+        url: localePath("components/tabs"),
       },
       {
-        title: "Text Field",
-        url: "/components/text-field",
+        title: t("footer.textField"),
+        url: localePath("components/text-field"),
       },
       {
-        title: "すべて見る",
-        url: "/components",
+        title: t("footer.seeAll"),
+        url: localePath("components"),
       },
     ],
   },
@@ -214,16 +244,18 @@ const footerLink = [
 
 <FooterWrapper>
   <FooterContainer>
-      <FooterTitle>
-        <a href='/'>
-          Serendie Design System
-        </a>
-      </FooterTitle>
+    <FooterTitle>
+      <a href={localePath("")}>
+        {t("footer.title")}
+      </a>
+    </FooterTitle>
     <FooterLinks>
       {
         footerLink.map((link) => (
           <div>
-            <h2><a href={link.url}>{link.title}</a></h2>
+            <h2>
+              <a href={link.url}>{link.title}</a>
+            </h2>
             <ul>
               {link.links.map((item, index) => (
                 <FooterLinksLi>
@@ -238,18 +270,31 @@ const footerLink = [
   </FooterContainer>
   <FooterCopyright>
     <span>
-      © Mitsubishi Electric Corporation
+      {t("footer.copyright")}
     </span>
     <ul>
       <li>
-        <a href='/terms'>利用規約</a>
+        <a href={localePath("terms")}>{t("footer.terms")}</a>
       </li>
+      <li>|</li>
       <li>
-        |
-      </li>
-      <li>
-        <a href='https://x.com/SerendieDesign' target="_blank">ご意見・お問い合わせ</a>
+        <a href="https://x.com/SerendieDesign" target="_blank"
+          >{t("footer.contact")}</a
+        >
       </li>
     </ul>
+    <LanguageSwitcher>
+      <li>
+        <a href={jaPath} aria-current={lang === "ja" ? "page" : undefined}>
+          {t("language.japanese")}
+        </a>
+      </li>
+      <li>|</li>
+      <li>
+        <a href={enPath} aria-current={lang === "en" ? "page" : undefined}>
+          {t("language.english")}
+        </a>
+      </li>
+    </LanguageSwitcher>
   </FooterCopyright>
 </FooterWrapper>

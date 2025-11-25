@@ -1,0 +1,33 @@
+---
+title: Reference Tokens
+slug: en/foundations/design-tokens/reference-tokens
+parent: en/foundations/design-tokens
+illustType: "A"
+description: "Reference tokens store raw values such as color codes. Using these tokens directly inside product UIs is an exception rather than the rule."
+lastUpdated: "2024-11-1"
+fullWidth: true
+subLinks:
+  [
+    { name: "Design", path: "/en/foundations/design-tokens" },
+    {
+      name: "Reference tokens",
+      path: "/en/foundations/design-tokens/reference-tokens",
+    },
+    {
+      name: "System tokens",
+      path: "/en/foundations/design-tokens/system-tokens",
+    },
+  ]
+---
+
+import { TokenList } from "@/components/TokenList";
+import tokens from "@serendie/design-token/token-list";
+import { PageSection } from "@/components/PageLayout.tsx";
+
+export const referenceTokens = tokens.filter((token) =>
+  token.key.includes("sd.reference")
+);
+
+<PageSection>
+  <TokenList tokens={referenceTokens} client:load />
+</PageSection>

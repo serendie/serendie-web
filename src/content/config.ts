@@ -6,6 +6,7 @@ const componentsCollection = defineCollection({
     title: z.string(),
     componentName: z.string(),
     description: z.string(),
+    descriptionEn: z.string().optional(),
     lastUpdated: z.string().optional(),
     illustSize: z.enum(["large", "small"]).optional(),
   }),

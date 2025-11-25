@@ -2,10 +2,11 @@
 title: Notification Badge
 componentName: バッジ
 description: 未読の通知や新着情報をユーザーに知らせるためのコンポーネントです。
+descriptionEn: "Notifies users of unread updates or new information."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { SizeSample } from "@/sampleCode/NotificationBadge/SizeSample";
 import sizeSampleRaw from "@/sampleCode/NotificationBadge/SizeSample.tsx?raw";
 import { VariantSample } from "@/sampleCode/NotificationBadge/VariantSample";
@@ -13,31 +14,29 @@ import variantSampleRaw from "@/sampleCode/NotificationBadge/VariantSample.tsx?r
 import { NoNumberSample } from "@/sampleCode/NotificationBadge/NoNumberSample";
 import noNumberSampleRaw from "@/sampleCode/NotificationBadge/NoNumberSample.tsx?raw";
 
-<Code
-  title="サイズ"
-  description="SmallとMediumの2種類のサイズがあります。"
+<CodeI18n
+  titleKey="components.notificationBadge.size.title"
+  descriptionKey="components.notificationBadge.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-notificationbadge--default&args=size:small"
 >
   <SizeSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="カラー"
-  description={
-    "PrimaryとSecondaryの2種類のカラーがあります。Secondaryはテーマカラーに準じます。"
-  }
+<CodeI18n
+  titleKey="components.notificationBadge.color.title"
+  descriptionKey="components.notificationBadge.color.desc"
   code={variantSampleRaw}
   storyPath="/story/components-notificationbadge--default&args=variant:secondary;size:medium"
 >
   <VariantSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="バリエーション"
-  description="通知数が99以上の場合は省略表示されます。数字を表示せず、通知が存在することだけを示すことも可能です。重要度や表示領域に応じて使い分けてください。"
+<CodeI18n
+  titleKey="components.notificationBadge.variant.title"
+  descriptionKey="components.notificationBadge.variant.desc"
   code={noNumberSampleRaw}
   storyPath="/story/components-notificationbadge--no-number"
 >
   <NoNumberSample client:load />
-</Code>
+</CodeI18n>

@@ -2,18 +2,19 @@
 title: Dashboard Widget
 componentName: ダッシュボードウィジェット
 description: ダッシュボード画面で使うことを想定したコンポーネントです。データをサマライズして表示する際に使用します。
+descriptionEn: "Dashboard cards for summarizing and displaying key data."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/DashboardWidget/TypeSample";
 import typeSampleRaw from "@/sampleCode/DashboardWidget/TypeSample.tsx?raw";
 
-<Code
-  title="バリエーション"
-  description="3パターンのレイアウトを用意しています。Placeholderにはグラフを表示することを想定しています。"
+<CodeI18n
+  titleKey="components.dashboardWidget.layoutOptions.title"
+  descriptionKey="components.dashboardWidget.layoutOptions.desc"
   code={typeSampleRaw}
   storyPath="/story/components-dashboardwidget--no-value"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

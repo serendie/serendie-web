@@ -1,0 +1,104 @@
+---
+title: Development
+slug: en/get-started/dev
+illustType: "B"
+description: "How to implement screen designs based on the Serendie UI Kit in React for web front-end development."
+lastUpdated: "2025-04-02"
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import CodeBox from "@/components/CodeBox.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+export const sampleCodeCss = `@layer reset, base, tokens, recipes, utilities;
+@import "@serendie/ui/styles.css";`;
+
+  <PageSection>
+    <PageHeadLine number={0}>Serendie UI</PageHeadLine>
+
+    We provide an implementation of the design tokens and UI components from the Serendie UI Kit so they can also be used in web front-end development. The set of UI components you mainly use during development is called Serendie UI.
+
+    Serendie UI currently targets React environments. It is published as OSS and is available to anyone—inside or outside Mitsubishi Electric.
+
+    This page covers the basics for getting started with Serendie UI. We also host bootcamps for Mitsubishi Electric members; check the schedule on the [internal portal](https://mitsubishielectricgroup.sharepoint.com/sites/014758/serendie_designsystem).
+
+    <PageARef href="https://github.com/serendie/serendie">Serendie UI - GitHub</PageARef>
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={1}>Review the designs</PageHeadLine>
+
+    ## Figma - Dev Mode
+
+    Within Mitsubishi Electric’s Figma organization, we provide Dev Mode accounts for developers. Dev Mode is a developer-focused Figma view that offers inspectors and annotations useful during implementation. See the Figma help page for details.
+
+    <PageARef href="https://help.figma.com/hc/ja/articles/15023124644247-%E9%96%8B%E7%99%BA%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AE%E3%82%AC%E3%82%A4%E3%83%89">Dev Mode guide - Figma Learn</PageARef>
+
+    ## Figma - Code Connect
+
+    Serendie UI components support <a href="https://www.figma.com/blog/introducing-code-connect/" target="_blank">Code Connect</a>. Code Connect shows code snippets corresponding to components in the design file directly in Figma Dev Mode. By using Code Connect, you can review the design while simultaneously viewing implementation examples with Serendie UI.
+
+    <img src="/assets/pages/getstarted/dev-code-connect.avif" width="310" alt="code connect" />
+
+    ## Storybook
+
+    We also provide the same content as [Storybook](https://storybook.serendie.design/). Use it when you want to dig deeper into state changes for each component or see how they map to React component props.
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={2}>Preparation</PageHeadLine>
+
+    ## Join the GitHub team
+
+    Serendie UI is OSS and open to all, but for Mitsubishi Electric members we provide a place to ask questions and make requests via [GitHub Discussions](https://github.com/orgs/serendie/discussions). If you are a Mitsubishi Electric member, contact the Serendie Design System team to request an invitation to the GitHub team.
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={3}>Use Serendie UI</PageHeadLine>
+
+    Serendie UI supports React environments. To use the React components, install as follows:
+
+    <CodeBox code={`npm install @serendie/ui`} language={'shell'} />
+
+    Then apply the Serendie UI CSS in your project’s root CSS file:
+
+    <CodeBox code={sampleCodeCss} language={'css'} />
+
+    From there, import the UI components you need and implement your product. For details and sample code for each UI component, see [Components](/components).
+
+    <CodeBox code={`import { Button } from "@serendie/ui";`} language={'jsx'} />
+
+    ## Learn the APIs
+
+    Serendie UI internally uses [Ark UI](https://ark-ui.com/) as its headless UI library, and each component’s API follows Ark UI. For components with complex interactions—such as Select—consult the Ark UI API reference as well.
+
+    <PageARef href="https://ark-ui.com/react/docs/components/select#api-reference">API Reference - Ark UI</PageARef>
+
+
+    ## Extend functionality and override styles
+
+    Serendie UI uses [Panda CSS](https://panda-css.com/) as its styling library. You can use Panda CSS utilities to extend components, change themes, or override styles. For details, see Serendie UI’s [README](https://github.com/serendie/serendie).
+
+    Introducing Panda CSS to your project is optional. If you do not need to extend functionality or override styles, or if you prefer another styling library, you can skip it.
+
+    <PageARef href="https://panda-css.com/docs/overview/getting-started">Get started with Panda - Panda CSS</PageARef>
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={4}>Use design tokens</PageHeadLine>
+
+    Serendie UI and the design tokens are distributed as separate packages, and it is possible to use only the design tokens.
+
+    The design tokens are distributed in a form that is broadly usable in CSS/JavaScript environments. They are helpful in scenarios where “Serendie UI isn’t an option, but we want to use the color and typography definitions,” such as when the project is not based on React.
+
+    Install via a package manager such as npm:
+
+    <CodeBox code={`npm install @serendie/design-token`} language={'shell'} />
+
+    You can view the list of design tokens [here](/en/foundations/design-tokens/reference-tokens).
+
+  </PageSection>

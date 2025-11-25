@@ -1,0 +1,60 @@
+---
+title: Theming
+slug: en/foundations/theming
+description: "We provide five color themes that meet accessibility standards. Both Figma and React components support switching themes."
+illustType: A
+lastUpdated: "2025-07-28"
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+  <PageSection>
+    <PageHeadLine number={1}>Color themes</PageHeadLine>
+
+    To match tones and manners across business domains, we currently provide five color themes. Each theme is designed based on the traditional Japanese colors used by the [Serendie brand](https://www.mitsubishielectric.co.jp/serendie/). We plan to add and update themes according to future needs.
+
+    ## KONJO
+
+    A theme based on indigo blue. Indigo is also the base color of [Mitsubishi Electric Serendie St. Yokohama](https://www.mitsubishielectric.co.jp/serendie/), so this is the default theme.
+
+    <img src="/assets/pages/theming/konjo.avif" style={{ borderRadius: 0 }} alt="konjo theme" />
+
+    ## ASAGI
+
+    A theme based on pale blue-green.
+
+    <img src="/assets/pages/theming/asagi.avif" style={{ borderRadius: 0 }} alt="asagi theme" />
+
+    ## SUMIRE
+
+    A theme based on violet.
+
+    <img src="/assets/pages/theming/sumire.avif" style={{ borderRadius: 0 }} alt="sumire theme" />
+
+    ## KURIKAWA
+
+    A theme based on chestnut brown.
+
+    <img src="/assets/pages/theming/kurikawa.avif" style={{ borderRadius: 0 }} alt="kurikawa theme" />
+
+    ## TSUTSUJI
+
+    A theme based on azalea pink.
+
+    <img src="/assets/pages/theming/tsutsuji.avif" style={{ borderRadius: 0 }} alt="tsutsuji theme" />
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={3}>Switching themes in Figma</PageHeadLine>
+
+    Each theme is treated as a [Variable mode](https://help.figma.com/hc/ja/articles/15343816063383-%E3%83%90%E3%83%AA%E3%82%A2%E3%83%96%E3%83%AB%E3%83%A2%E3%83%BC%E3%83%89) in Figma. Variable modes let you assign modes (themes) defined in Figma Variables to pages, sections, frames, and more.
+
+    <img src="/assets/pages/theming/theme-selector.avif" width="310" alt="theme selector" />
+
+    For example, assigning “ASAGI” to a page switches all Serendie UI within that page to the ASAGI theme.
+
+    <img src="/assets/pages/getstarted/getstarted-design-5.gif" width="310" alt="theme switcher" />
+
+  </PageSection>

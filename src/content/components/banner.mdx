@@ -2,18 +2,19 @@
 title: Banner
 componentName: バナー
 description: エラーや警告など重要なメッセージを目立つように表示し、ユーザーの注意を喚起するコンポーネントです。
+descriptionEn: "Highlights important messages such as errors or warnings to grab attention."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/Banner/TypeSample";
 import typeSampleRaw from "@/sampleCode/Banner/TypeSample.tsx?raw";
 
-<Code
-  title="バリエーション"
-  description="注意喚起のレベルに応じて使い分けてください。同じ画面内に同レベルのBannerを複数並べることは避けてください。"
+<CodeI18n
+  titleKey="components.banner.variant.title"
+  descriptionKey="components.banner.variant.desc"
   code={typeSampleRaw}
   storyPath="/story/components-banner--information"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

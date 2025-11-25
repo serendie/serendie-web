@@ -2,6 +2,10 @@
 import { styled } from "styled-system/jsx";
 import ContactCard from "./ContactCard.astro";
 import { siteConfig } from "../../../siteConfig";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const ContactContainer = styled("div", {
   base: {
@@ -72,45 +76,45 @@ const ContactSection = styled("div", {
 ---
 
 <ContactContainer>
-  <Title> コミュニティに参加する </Title>
+  <Title> {t("contact.joinCommunity")} </Title>
 
   <ContactSection>
-    <Subtitle> メディア・コミュニティ </Subtitle>
+    <Subtitle> {t("contact.mediaCommunity")} </Subtitle>
     <ContactCardGrid>
       <ContactCard
         icon="/assets/logo/x.svg"
-        title="最新情報"
+        title={t("contact.latestInfo")}
         link="https://x.com/SerendieDesign"
       />
       <ContactCard
         icon="/assets/logo/figma.svg"
-        title="Figma Community"
+        title={t("contact.figmaCommunity")}
         link={siteConfig.serendieFigmaCommunityURL}
       />
       <ContactCard
         icon="/assets/logo/github.svg"
-        title={`GitHub`}
+        title={t("contact.github")}
         link="https://github.com/serendie"
       />
       <ContactCard
         icon="/assets/logo/note.svg"
-        title={`note`}
+        title={t("contact.note")}
         link="https://note.com/serendie_design"
       />
     </ContactCardGrid>
   </ContactSection>
 
   <ContactSection>
-    <Subtitle> 三菱電機メンバー向け </Subtitle>
+    <Subtitle> {t("contact.forMembers")} </Subtitle>
     <ContactCardGrid>
       <ContactCard
         icon="/assets/logo/teams.svg"
-        title="社内コミュニティ"
+        title={t("contact.internalCommunity")}
         link="https://teams.microsoft.com/l/team/19%3ACZhxe0gHUo7G0d2KHtfTzPxauxH3lK_4WruQVWRWLFA1%40thread.tacv2/conversations?groupId=64fe7805-7354-4722-8e08-ae2b4ae60f20&tenantId=c5a75b62-4bff-4c96-a720-6621ce9978e5"
       />
       <ContactCard
         icon="/assets/logo/sharepoint.svg"
-        title="社内ポータル"
+        title={t("contact.internalPortal")}
         link="https://mitsubishielectricgroup.sharepoint.com/sites/014758/serendie_designsystem"
       />
     </ContactCardGrid>

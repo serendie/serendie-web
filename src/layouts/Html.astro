@@ -2,22 +2,31 @@
 import "@/index.css";
 import { siteConfig } from "@/../siteConfig";
 import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
+import { getLangFromUrl, switchLanguagePath } from "@/i18n/utils";
 
 interface Props {
   title?: string;
 }
 
 const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 
 const ogImage = new URL("/ogp.png", Astro.url).toString();
 
 const pageTitle = title
   ? `${title} | ${siteConfig.siteName}`
   : siteConfig.siteName;
+
+// hreflang用のURL生成
+const baseUrl = Astro.site?.origin || "https://serendie.design";
+const jaPath = switchLanguagePath(Astro.url, "ja");
+const enPath = switchLanguagePath(Astro.url, "en");
+const jaUrl = `${baseUrl}${jaPath}`;
+const enUrl = `${baseUrl}${enPath}`;
 ---
 
 <!doctype html>
-<html lang="ja" style="height: 100%">
+<html lang={lang} style="height: 100%">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={siteConfig.siteDescription} />
@@ -34,6 +43,9 @@ const pageTitle = title
     <meta name="theme-color" content="" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang="ja" href={jaUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={jaUrl} />
     <title>{pageTitle}</title>
 
     <script is:inline>

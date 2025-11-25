@@ -2,18 +2,19 @@
 title: Accordion
 componentName: アコーディオン
 description: 関連するコンテンツを列挙し、ユーザーが展開・折りたたむことができるコンポーネントです。表示スペースを節約しながら、ユーザーが詳細な情報を得る手段を提供します。
+descriptionEn: "Lists related content with expandable sections so users can toggle details while saving space."
 lastUpdated: "2024-11-1"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { TypeSample } from "@/sampleCode/Accordion/TypeSample";
 import typeSampleRaw from "@/sampleCode/Accordion/TypeSample.tsx?raw";
 
-<Code
-  title="バリエーション"
-  description="アコーディオンの展開状態を示すアイコンの位置 (行末または行頭) を選ぶことができます。実装時にはAccordionGroupを併用してください。"
+<CodeI18n
+  titleKey="components.accordion.iconPlacement.title"
+  descriptionKey="components.accordion.iconPlacement.desc"
   code={typeSampleRaw}
   storyPath="/story/components-accordion--default"
 >
   <TypeSample client:load />
-</Code>
+</CodeI18n>

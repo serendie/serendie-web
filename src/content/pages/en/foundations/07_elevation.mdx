@@ -1,0 +1,35 @@
+---
+title: Elevation
+slug: en/foundations/elevation
+lastUpdated: "2024-11-1"
+illustType: A
+description: "Shadows express depth differences between objects and create elevation in the UI. We also cover z-index for specifying stacking order in CSS."
+---
+
+import FigureElevationShadow from "@/assets/content/foundations/elevation/figure-elevation-shadow.svg?raw";
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection, PageA } from "@/components/PageLayout.tsx";
+
+  <PageSection>
+    <PageHeadLine number={1}>Shadow</PageHeadLine>
+
+    Drop shadows cast a shadow behind objects, and their strength expresses depth. We define five elevation levels from Level1 to Level5.
+
+    Level0 is the body (surface), and most UI components sit at Level0. Align levels with common UI behavior—for example, the open menu of a <PageA href="/components/dropdown-menu">DropdownMenu</PageA> is Level1, <PageA href="/components/toast">Toast</PageA> is Level3, and <PageA href="/components/modal-dialog">Modal Dialog</PageA> and <PageA href="/components/drawer">Drawer</PageA> are Level5.
+
+    <Fragment set:html={FigureElevationShadow} />
+
+    ## Notes for use in Figma
+
+    Drop shadows are composed of several values, such as shadow color, position, and blur. Figma Variables do not yet support grouped tokens (called <PageA href="https://tr.designtokens.org/format/#composite-design-token">Composite Tokens</PageA>). Therefore, shadows are defined as **Effect Styles rather than Variables**, so the application method differs from other tokens.
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={2}>z-index</PageHeadLine>
+
+      z-index is the CSS property that controls stacking order; higher values mean higher layers. We define z-index values as system tokens, but because they are implementation tokens, you do not need to consider them in Figma.
+
+      **Shadows represent visual elevation, while z-index represents implementation elevation.** Carefully controlling z-index values is important for robust UI, so token names carry strong semantic meaning. See the <PageA href="/en/foundations/design-tokens/system-tokens">System Token</PageA> list for details.
+
+  </PageSection>

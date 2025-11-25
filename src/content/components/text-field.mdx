@@ -2,29 +2,30 @@
 title: Text Field
 componentName: テキストフィールド
 description: 1行のテキストを入力するためのコンポーネントです。Buttonなどと合わせてフォームを構成します。複数行にはTextAreaを使用してください。
+descriptionEn: "Single-line text input for forms; use with components like Button. For multiple lines, use TextArea."
 lastUpdated: "2025-03-21"
 ---
 
-import Code from "@/components/Code.astro";
+import CodeI18n from "@/components/CodeI18n.astro";
 import { StateSample } from "@/sampleCode/TextField/StateSample";
 import stateSampleRaw from "@/sampleCode/TextField/StateSample.tsx?raw";
 import { PasswordFieldSample } from "@/sampleCode/TextField/PasswordFieldSample";
 import passwordFieldSampleRaw from "@/sampleCode/TextField/PasswordFieldSample.tsx?raw";
 
-<Code
-  title="状態"
-  description="4種類の状態があります。入力必須とする際はrequired propsを使用し、非活性とする際はdisabled propsを使用してください。"
+<CodeI18n
+  titleKey="components.textField.state.title"
+  descriptionKey="components.textField.state.desc"
   code={stateSampleRaw}
   storyPath="/story/components-textfield--basic"
 >
   <StateSample client:load />
-</Code>
+</CodeI18n>
 
-<Code
-  title="Password Field"
-  description="パスワード入力用のテキストフィールドです。パスワードの表示・非表示を切り替えることができます。"
+<CodeI18n
+  titleKey="components.textField.passwordField.title"
+  descriptionKey="components.textField.passwordField.desc"
   code={passwordFieldSampleRaw}
   storyPath="/story/components-passwordfield--basic"
 >
   <PasswordFieldSample client:load />
-</Code>
+</CodeI18n>

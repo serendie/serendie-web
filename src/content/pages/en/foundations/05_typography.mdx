@@ -1,0 +1,202 @@
+---
+title: Typography
+slug: en/foundations/typography
+lastUpdated: "2024-11-1"
+illustType: A
+description: "Digital products are built around text, so handling typography properly is crucial. We define fonts and sizes as reference tokens and system tokens grouped by their roles in the UI."
+---
+
+import { styled } from "styled-system/jsx";
+import FigureTypographyFontsize from "@/assets/content/foundations/typography/figure-typography-fontsize.svg?raw";
+import FigureTypographyRolesDisplay from "@/assets/content/foundations/typography/figure-typography-roles-display.svg?raw";
+import FigureTypographyRolesHeadline from "@/assets/content/foundations/typography/figure-typography-roles-headline.svg?raw";
+import FigureTypographyRolesTitle from "@/assets/content/foundations/typography/figure-typography-roles-title.svg?raw";
+import FigureTypographyRolesBody from "@/assets/content/foundations/typography/figure-typography-roles-body.svg?raw";
+import FigureTypographyRolesLabel from "@/assets/content/foundations/typography/figure-typography-roles-label.svg?raw";
+import FigureTypographyLineHeight from "@/assets/content/foundations/typography/figure-typography-line-height.svg?raw";
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import CodeBox from "@/components/CodeBox.astro";
+import {
+  PageSection,
+  PageA,
+  PageARef,
+} from "@/components/PageLayout.tsx";
+
+export const FontFigureWrapper = styled("figure", {
+  base: {
+    px: "24px",
+    pt: "20px",
+    pb: "0px",
+    bg: "web.system.color.articleFigure.background",
+    overflow: "hidden",
+  },
+});
+
+export const FontFigureTitle = styled("div", {
+  base: {
+    fontSize: "13px",
+    fontFamily: "var(--global-font-mono)",
+    color: "sd.system.color.impression.primary",
+    mt: "sd.system.dimension.spacing.extraSmall",
+    lineHeight: "1",
+  },
+});
+
+export const FontFigureDescription = styled("div", {
+  base: {
+    color: "web.system.color.impression.onSurface",
+    mt: "sd.system.dimension.spacing.extraSmall",
+    textWrap: "nowrap",
+    mb: "20px",
+  },
+  variants: {
+    isDefault: {
+      true: {
+        fontSize: "26px",
+      },
+    },
+    isMono: {
+      true: {
+        fontFamily: "var(--global-font-mono)",
+      },
+    },
+    isBold: {
+      true: {
+        fontWeight: "bold",
+      },
+    },
+  },
+});
+
+export const sampleCode = `body {
+  font-family: Roboto, "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+}`;
+
+    <PageSection>
+    	<PageHeadLine number={1}>Fonts</PageHeadLine>
+
+      The [Serendie brand](https://www.mitsubishielectric.co.jp/serendie/) uses Roboto for Latin script and Noto Sans JP for Japanese. Serendie Design System follows suit and additionally provides the monospaced Noto Sans Mono. All of these fonts are open source and free for commercial use.
+
+      <FontFigureWrapper>
+        <FontFigureTitle>Noto Sans JP</FontFigureTitle>
+        <FontFigureDescription isDefault>A design system streamlines design and development, ensures accessible and consistent product quality, accumulates knowledge and spreads best practices, and smooths communication. It provides definitions of brand and visual identity, design tokens that define visual elements such as color and typography, reusable UI components, and visual assets such as icons and illustrations. These are representative examples—the components of a design system vary by organization and context.</FontFigureDescription>
+        <FontFigureTitle>Roboto</FontFigureTitle>
+        <FontFigureDescription isDefault>A design system aims to improve the efficiency of design and development</FontFigureDescription>
+        <FontFigureTitle>Noto Sans Mono</FontFigureTitle>
+        <FontFigureDescription isMono isDefault>A design system aims to improve the efficiency of design and development</FontFigureDescription>
+      </FontFigureWrapper>
+
+      ## Use in CSS
+
+      In web applications, use these fonts as web fonts via providers such as <PageA href="https://fonts.google.com/specimen/Roboto">Google Fonts</PageA>. Serendie UI bundles them, so no additional setup is required.
+
+      If you configure them yourself, write the CSS font-family as shown below and set appropriate fallbacks to system fonts.
+
+      <CodeBox code={sampleCode} language={'css'} />
+
+      ## Use in Figma
+
+      All fonts are available in Figma by default. Note that Figma does not support automatic mixed typography for Japanese and Latin. For now, Serendie Design System **recommends always setting Roboto in Figma.**
+
+      Roboto is a Latin font and does not support Japanese, but <PageA href="https://help.figma.com/hc/ja/articles/360040449673-%E4%B8%AD%E5%9B%BD%E8%AA%9E-%E6%97%A5%E6%9C%AC%E8%AA%9E-%E9%9F%93%E5%9B%BD%E8%AA%9E%E3%81%A7%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%82%92%E8%BF%BD%E5%8A%A0#font-fallback">Figma font fallback</PageA> automatically applies Noto Sans where Roboto lacks glyphs. This enables mixed Roboto/Noto Sans without special plugins. While it lacks fine-grained control, we prioritize operational simplicity.
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={2}>Font size</PageHeadLine>
+
+        Font size (font-size) greatly affects readability and legibility. It is also important to keep sizes consistent by role, such as headings and body text, and to create rhythm by varying sizes.
+
+        Serendie Design System designs its type scale based on a harmonic series and defines it as reference tokens. To make the scale practical, we set 16px (medium) as the base, keep smaller intervals for frequently used sizes below medium (10px–14px), and use larger intervals above medium (18px–64px), where stronger jumps are needed.
+
+      <Fragment set:html={FigureTypographyFontsize} />
+
+        ### References
+
+        <PageARef href="https://ekrits.jp/2020/02/3309/">Music, mathematics, typography - ÉKRITS</PageARef>
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={3}>Weight</PageHeadLine>
+
+        Change font weight when you need visual or semantic emphasis, such as for headings or highlights within text. We define two reference tokens: regular and bold. The numeric values are 400 for regular and 700 for bold.
+
+
+        <FontFigureWrapper>
+          <FontFigureTitle>regular</FontFigureTitle>
+          <FontFigureDescription isDefault>A design system streamlines design and development, ensures accessible and consistent product quality, accumulates knowledge and spreads best practices, and smooths communication. It provides definitions of brand and visual identity, design tokens that define visual elements such as color and typography, reusable UI components, and visual assets such as icons and illustrations. These are representative examples—the components of a design system vary by organization and context.</FontFigureDescription>
+          <FontFigureTitle>bold</FontFigureTitle>
+          <FontFigureDescription isBold isDefault>A design system streamlines design and development, ensures accessible and consistent product quality, accumulates knowledge and spreads best practices, and smooths communication. It provides definitions of brand and visual identity, design tokens that define visual elements such as color and typography, reusable UI components, and visual assets such as icons and illustrations. These are representative examples—the components of a design system vary by organization and context.</FontFigureDescription>
+        </FontFigureWrapper>
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={4}>Line height</PageHeadLine>
+
+        Line height affects readability and overall feel. We define four reference tokens: normal (160%) as the base, relaxed (180%) for a more airy feel, tight (140%) for denser information, and none (100%) intended for labels such as buttons.
+        <Fragment set:html={FigureTypographyLineHeight} />
+
+        ## Notes for use in Figma
+
+        Like other tokens, these are defined as Variables, but as of November 2024, Figma does not allow setting Variables containing relative values for line height. Expecting future support, we **currently operate with literal values instead of Variables**.
+
+    </PageSection>
+
+    <PageSection>
+    	<PageHeadLine number={4}>Roles</PageHeadLine>
+
+        Typography groups font, weight, size, and line height so each group serves a role in the UI, such as headline, title, body, or label. These are defined as system tokens.
+
+        ## Display
+
+        Uses the largest font sizes and creates a strong visual impression. It is used on large viewports such as PC screens when expression matters. The Display role has two sizes: small and medium.
+
+        <Fragment set:html={FigureTypographyRolesDisplay} />
+
+        ## Headline
+
+        Used as large headlines that concisely express the page or text. This role is frequently used regardless of viewport width. The Headline role has three sizes: small/medium/large.
+
+        <Fragment set:html={FigureTypographyRolesHeadline} />
+
+        ## Title
+
+        Used as subheadings smaller than Headline. Titles are often paired with Headline or Body, so we default them to a heavier weight to create contrast. There are four sizes: extraSmall/small/medium/large.
+
+        <Fragment set:html={FigureTypographyRolesTitle} />
+
+
+        ## Body
+
+        Used for multi-line body text. There are four sizes: extraSmall/small/medium/large, with medium serving as the base text size across the site. Only the extraSmall size assumes multi-line supplemental text and uses a tighter line height.
+
+        <Fragment set:html={FigureTypographyRolesBody} />
+
+
+        ## Label
+
+        Used for text inside components like Buttons or for form labels. Label has four sizes: small/medium/large/extraLarge. All have a 100% (none) line height and assume a single line. If text wraps or contains line breaks, use Body instead.
+
+        <Fragment set:html={FigureTypographyRolesLabel} />
+
+        ## Notes for use in Figma
+
+        Figma Variables do not currently support grouped tokens (called <PageA href="https://tr.designtokens.org/format/#composite-design-token">Composite Tokens</PageA>). Therefore, typography system tokens are **defined as Text Styles, not Variables**, so be aware the application method differs from other tokens.
+
+    </PageSection>
+
+    <PageSection>
+      <PageHeadLine number={5}>Changing the base size by browser width</PageHeadLine>
+
+      The medium size of the Body role is intended for page copy and serves as the base font size.
+
+      However, it is common for this base size to change with browser width. In Serendie Design System, the base is 16px for Compact (mobile) widths and 14px for Expanded (PC) widths. The sizes of all roles change relative to this base.
+
+      Serendie Design System treats this as a [Variable mode](https://help.figma.com/hc/ja/articles/15343816063383-%E3%83%90%E3%83%AA%E3%82%A2%E3%83%96%E3%83%AB%E3%83%A2%E3%83%BC%E3%83%89). Similar to theming, assign a mode (Expanded/Compact) to pages, sections, or frames to change the base size.
+
+      **The default is Compact mode (mobile).** When designing for Expanded (PC), switch the whole page to Expanded mode.
+
+      <img src="/assets/pages/typography/figure-typography-system.avif" alt="variable mode" width="310px"/>
+    </PageSection>
