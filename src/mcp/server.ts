@@ -9,6 +9,7 @@ import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
 // Import preview HTML as string using Vite's ?raw import
 // This avoids fs usage and works in Cloudflare Workers
 import previewHtml from "./ui/preview.html?raw";
+import { getSearchSerendieGuidelineTool } from "./tools/search-serendie-guideline";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -25,6 +26,7 @@ export function createMcpServer() {
   getDesignTokenDetailTool(mcpServer);
   getComponentsTool(mcpServer);
   getComponentDetailTool(mcpServer);
+  getSearchSerendieGuidelineTool(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(
