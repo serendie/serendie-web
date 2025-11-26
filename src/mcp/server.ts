@@ -70,17 +70,14 @@ export function createMcpServer() {
               "openai/widgetPrefersBorder": true,
               "openai/widgetDescription":
                 "Interactive preview of Serendie UI components with live samples and code examples",
-              "openai/widgetDomain":
-                "https://add-openai-apps-sdk.serendie-web.pages.dev",
+              "openai/widgetDomain": "https://serendie.design",
               // CSP configuration for widget security
               "openai/widgetCSP": {
                 connect_domains: [
-                  "https://add-openai-apps-sdk.serendie-web.pages.dev",
                   "https://dev.serendie-web.pages.dev",
                   "https://serendie.design",
                 ],
                 resource_domains: [
-                  "https://add-openai-apps-sdk.serendie-web.pages.dev",
                   "https://dev.serendie-web.pages.dev",
                   "https://serendie.design",
                 ],
