@@ -5,7 +5,6 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run build:panda && npm run build:components && astro dev",
-    "dev-skip": "npm run build:panda && astro dev",
     "start": "astro dev",
     "build": "npm run build:panda && npm run build:components && npm run build:preview && astro build && cp _redirects dist/_redirects && echo '_worker.js' >> dist/.assetsignore && echo '_routes.json' >> dist/.assetsignore",
     "build:astro": "astro check && astro build",
