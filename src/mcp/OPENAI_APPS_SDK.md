@@ -12,9 +12,12 @@
 
 **ファイル**: `src/mcp/server.ts`
 
-HTMLテンプレートをMCPリソースとして登録:
+Viteの`?raw`インポートを使用して、ビルド済みのHTMLをMCPリソースとして登録:
 
 ```typescript
+// Viteの?rawインポートでHTMLを文字列として読み込み
+import previewHtml from "./ui/preview.html?raw";
+
 mcpServer.registerResource(
   "component-preview-widget",
   "ui://serendie/component-preview.html",
@@ -23,47 +26,92 @@ mcpServer.registerResource(
     contents: [{
       uri: "ui://serendie/component-preview.html",
       mimeType: "text/html+skybridge",
-      text: buildComponentPreviewTemplate(),
+      text: previewHtml,
       _meta: {
         "openai/widgetPrefersBorder": true,
-        "openai/widgetDescription": "Interactive preview of Serendie UI components...",
-        "openai/widgetDomain": "https://serendie.design"
+        "openai/widgetDescription": "Interactive preview of Serendie UI components with live samples and code examples",
+        "openai/widgetDomain": "https://serendie.design",
+        // CSP設定（外部リソース読み込み制御）
+        "openai/widgetCSP": {
+          connect_domains: [
+            "https://dev.serendie-web.pages.dev",
+            "https://serendie.design",
+          ],
+          resource_domains: [
+            "https://dev.serendie-web.pages.dev",
+            "https://serendie.design",
+          ],
+        },
       }
     }]
   })
 );
 ```
 
-### 2. HTMLテンプレート
+### 2. プレビューUIコンポーネント
 
-**ファイル**: `src/mcp/utils/html-builder.ts`
+**ソースファイル**: `src/mcp/ui/pages/preview.tsx`
+**ビルド出力**: `src/mcp/ui/preview.html`
 
-既存の `/preview/[component]` ページを読み込むHTML（`structuredContent`でコンポーネント名を受け取る）:
+React SPAとしてビルドされたプレビューコンポーネント。OpenAI Apps SDKの`toolOutput`を`useToolOutput`フックで受け取り、対応するコンポーネントプレビューを表示します。
 
-```html
-<!DOCTYPE html>
-<html>
-<body>
-  <iframe id="preview" src="about:blank"></iframe>
-  <script>
-    // OpenAI Apps SDKからstructuredContentを受け取る
-    if (window.structuredContent && window.structuredContent.componentName) {
-      iframe.src = `/preview/${window.structuredContent.componentName}`;
-    }
+```tsx
+import { useToolOutput } from "../hooks/useOpenAiGlobal";
+import { ComponentPreview } from "../../../components/Preview/ComponentPreview";
+import { availableComponents } from "../../../components/Preview/sampleCodeRegistry";
+import { ProgressIndicatorIndeterminate } from "@serendie/ui";
 
-    // またはpostMessageで受け取る
-    window.addEventListener('message', (event) => {
-      if (event.data && event.data.structuredContent) {
-        const { componentName } = event.data.structuredContent;
-        iframe.src = `/preview/${componentName}`;
+interface ToolOutput {
+  componentName?: string;
+  name?: string;
+}
+
+export const PreviewPage = () => {
+  const toolOutput = useToolOutput<ToolOutput>();
+  const [selectedComponent, setSelectedComponent] = useState<string>("Button");
+
+  // toolOutputがnull/undefinedの間はローディング表示
+  const isLoading = !toolOutput;
+
+  useEffect(() => {
+    if (toolOutput) {
+      // toolOutputからコンポーネント名を取得
+      const componentName =
+        toolOutput?.componentName || toolOutput?.name || "Button";
+
+      // コンポーネントの存在確認
+      if (availableComponents.includes(componentName)) {
+        setSelectedComponent(componentName);
+      } else {
+        setSelectedComponent("Button"); // フォールバック
       }
-    });
-  </script>
-</body>
-</html>
+    }
+  }, [toolOutput]);
+
+  return (
+    <div style={{ width: "100%", height: "100vh", position: "relative" }}>
+      {/* ローディングオーバーレイ */}
+      {isLoading && (
+        <div style={{ /* ローディングスタイル */ }}>
+          <ProgressIndicatorIndeterminate type="circular" size="large" />
+          <div>Loading component...</div>
+        </div>
+      )}
+
+      {/* コンポーネントプレビュー */}
+      {!isLoading && (
+        <ComponentPreview componentName={selectedComponent} />
+      )}
+    </div>
+  );
+};
 ```
 
-**重要**: `structuredContent`は最小限（コンポーネント名のみ）。詳細データは既存の`/preview`ページで管理。
+**特徴**:
+- ✅ `useToolOutput`フックでOpenAI Apps SDKからデータを受信
+- ✅ ローディング状態の表示（`ProgressIndicatorIndeterminate`使用）
+- ✅ コンポーネントの存在確認とフォールバック処理
+- ✅ Cloudflare Workers互換（fsモジュール不使用）
 
 ### 3. ツール定義とレスポンス
 
@@ -96,23 +144,35 @@ return {
       text: JSON.stringify(validatedResponse, null, 2)
     }
   ],
-  // 最小限のstructuredContent（コンポーネント名のみ）
-  structuredContent: {
-    componentName: component.name,
-    previewUrl: `/preview/${componentSlug}`
-  },
-  _meta: {
-    componentSlug,
-    documentationUrl,
-    storybookUrls
-  }
+  // 完全なコンポーネント詳細データをstructuredContentとして返す
+  structuredContent: validatedResponse,
 };
 ```
 
+**structuredContent の内容**（GetComponentDetailResponseSchema準拠）:
+```typescript
+{
+  name: "Button",
+  slug: "button",
+  exists: true,
+  displayName: "ボタン",
+  description: "アクションをトリガーするためのクリック可能なコンポーネント",
+  category: "Actions",
+  lastUpdated: "2024-11-01",
+  documentationUrl: "https://serendie.design/components/button",
+  importStatement: "import { Button } from \"@serendie/ui\";",
+  props: [...],
+  examples: [...],
+  storybookUrls: [...],
+  usage: { basic: "...", withProps: "..." },
+  relatedComponents: [...]
+}
+```
+
 **設計のポイント**:
-- ✅ `structuredContent`は最小限（コンポーネント名のみ）
-- ✅ 詳細データは既存の `/preview/[component]` で管理
-- ✅ データの2重管理を回避
+- ✅ `structuredContent`は完全なコンポーネント詳細データを含む
+- ✅ プレビューUIでは`name`または`componentName`を使用してコンポーネントを特定
+- ✅ Zodスキーマによる型安全性の確保
 
 ## データフロー
 
@@ -123,19 +183,20 @@ ChatGPT calls get-component-detail("Button")
     ↓
 MCP Server responds:
   - content: JSON data (for model)
-  - structuredContent: { componentName: "Button" }
-  - _meta: { ... }
+  - structuredContent: 完全なコンポーネント詳細データ
     ↓
 ChatGPT renders HTML widget (ui://serendie/component-preview.html)
     ↓
-Widget receives structuredContent.componentName = "Button"
+React SPA receives toolOutput via useToolOutput hook
     ↓
-Widget loads /preview/Button in iframe
+Shows loading state (ProgressIndicatorIndeterminate)
+    ↓
+Validates component exists in availableComponents
+    ↓
+Renders ComponentPreview with selected component
     ↓
 User sees interactive component preview!
 ```
-
-**最適**: `structuredContent`は最小限。詳細データは既存の`/preview/[component]`で管理！
 
 ## OpenAI Apps SDK特有のフィールド
 
@@ -151,46 +212,60 @@ _meta: {
 }
 ```
 
-### _meta (ツールレスポンス)
-
-レスポンスに含める`_meta`（UIコンポーネント専用メタデータ）:
-
-```typescript
-_meta: {
-  componentSlug: "button",      // URLスラッグ
-  documentationUrl: "...",      // ドキュメントURL
-  storybookUrls: [...]          // Storybook URL配列
-}
-```
-
 ### structuredContent (ツールレスポンス)
 
-UIコンポーネントにデータを渡すフィールド（最小限に保つ）:
+UIコンポーネントにデータを渡すフィールド（完全なコンポーネント詳細データ）:
 
 ```typescript
-structuredContent: {
-  componentName: "Button",      // コンポーネント名
-  previewUrl: "/preview/button" // プレビューURL
-}
+structuredContent: validatedResponse  // GetComponentDetailResponseSchema準拠
 ```
+
+プレビューUIでは以下のフィールドを使用:
+- `name` または `componentName`: コンポーネントの特定に使用
 
 ### リソースの _meta
 
 HTMLリソース自体のメタデータ:
 
-- `openai/widgetPrefersBorder`: ウィジェットに境界線を表示
-- `openai/widgetDescription`: ウィジェットの説明（モデル用）
-- `openai/widgetDomain`: ウィジェットのドメイン
+```typescript
+_meta: {
+  // ウィジェットに境界線を表示
+  "openai/widgetPrefersBorder": true,
+  // ウィジェットの説明（モデル用）
+  "openai/widgetDescription": "Interactive preview of Serendie UI components with live samples and code examples",
+  // ウィジェットのドメイン
+  "openai/widgetDomain": "https://serendie.design",
+  // CSP設定（外部リソース読み込み制御）
+  "openai/widgetCSP": {
+    connect_domains: [
+      "https://dev.serendie-web.pages.dev",
+      "https://serendie.design",
+    ],
+    resource_domains: [
+      "https://dev.serendie-web.pages.dev",
+      "https://serendie.design",
+    ],
+  },
+}
+```
 
 ## 開発環境でのテスト
 
-### 1. ローカル開発サーバー起動
+### 1. プレビューUIのビルド
+
+```bash
+npm run build:preview
+```
+
+`src/mcp/ui/preview.html`が生成されます。
+
+### 2. ローカル開発サーバー起動
 
 ```bash
 npm run dev
 ```
 
-### 2. MCP Inspectorでテスト
+### 3. MCP Inspectorでテスト
 
 ```bash
 npm run test:mcp
@@ -201,7 +276,7 @@ npm run test:mcp
 - `get-component-detail` レスポンスに `structuredContent` が含まれているか
 - HTMLテンプレートが正しく生成されているか
 
-### 3. ngrokでトンネリング（OpenAI接続用）
+### 4. ngrokでトンネリング（OpenAI接続用）
 
 ```bash
 ngrok http 4321
@@ -257,7 +332,7 @@ ChatGPTの応答:
 
 - 開発サーバーが起動しているか確認
 - ブラウザコンソールでエラーを確認
-- `/preview/[component]` に直接アクセスして動作確認
+- `src/mcp/ui/preview.html` が存在するか確認（`npm run build:preview` で生成）
 
 ### structuredContentが渡されない
 
@@ -270,10 +345,15 @@ ChatGPTの応答:
 - MIME Typeが正しいか確認: `text/html+skybridge`
 - リソースが登録されているか `npm run test:mcp` で確認
 
+### ローディングが終わらない
+
+- `toolOutput` がUIに渡されているか確認
+- ブラウザコンソールで `[Preview] toolOutput:` ログを確認
+
 ## 今後の拡張
 
-- [ ] CSP設定の追加（外部リソース読み込み制御）
-- [ ] ローディング状態の改善
+- [x] CSP設定の追加（外部リソース読み込み制御）
+- [x] ローディング状態の改善
 - [ ] エラーハンドリングの強化
 - [ ] コンポーネント内からのツール呼び出し（widgetAccessible）
 - [ ] 複数サンプルのタブ切り替えUI改善
