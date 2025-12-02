@@ -65,6 +65,7 @@ export function getSymbolsTool(mcpServer: McpServer) {
           .optional()
           .describe("Maximum number of results to return (default: all)"),
       },
+      outputSchema: GetSymbolsResponseSchema.shape,
     },
     async ({ search, limit }) => {
       try {
@@ -130,6 +131,7 @@ export function getSymbolsTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -147,6 +149,11 @@ export function getSymbolsTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch symbols",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }
@@ -200,6 +207,7 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
          */
         name: z.string().describe("The name of the symbol to get details for"),
       },
+      outputSchema: GetSymbolDetailResponseSchema.shape,
     },
     async ({ name }) => {
       try {
@@ -224,6 +232,7 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
                 text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
+            structuredContent: validatedResponse,
           };
         }
 
@@ -267,6 +276,7 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -283,6 +293,11 @@ export function getSymbolDetailTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch symbol detail",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }
