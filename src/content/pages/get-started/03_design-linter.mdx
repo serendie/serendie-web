@@ -123,32 +123,29 @@ AIアシスタントは、以下の情報を参照しながら回答します。
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={3}>データの取り扱いについて</PageHeadLine>
+  <PageHeadLine number={3}>よくある質問</PageHeadLine>
 
-AIに相談する機能を使うと、選択した要素のスクリーンショット、検証結果のテキスト情報、チャットでの会話内容がOpenAI APIに送信されます。
-
-OpenAIのAPIポリシーでは、API経由で送信されたデータはAIモデルの学習には使用されません。最新の情報は[OpenAIの利用規約](https://openai.com/policies/terms-of-use)からご確認ください。
-
-</PageSection>
-
-<PageSection>
-  <PageHeadLine number={4}>よくある質問</PageHeadLine>
-
-### Q. 「バリアブル以外」という警告が出ます
+### 「バリアブル以外」という警告が出ます
 
 Serendie Design Systemのバリアブルではなく、手動で色を指定している状態です。
 
 Serendie UI Kitライブラリのカラーバリアブルを適用してください。バリアブルパネルから「sd/system/color/...」で始まるバリアブルを選ぶと、この警告は解消されます。
 
-### Q. カラーペアリングのエラーが出ます
+### カラーペアリングのエラーが出ます
 
 テキストの色と背景の色の組み合わせが、推奨されるルールに合っていない状態です。
 
 エラーメッセージに表示される「提案」を参考に、色の組み合わせを修正してください。たとえば、背景が`primary`ならテキストは`onPrimary`にする、といった対応が必要です。
 
-### Q. 「AIに相談する」ボタンが出てきません
+### 「AIに相談する」ボタンが出てきません
 
 OpenAI APIキーが設定されていない可能性があります。プラグイン右上の設定アイコンからAPIキーを入力してください。
+
+### データの取り扱いについて
+
+AIに相談する機能を使うと、選択した要素のスクリーンショット、検証結果のテキスト情報、チャットでの会話内容がOpenAI APIに送信されます。
+
+OpenAIのAPIポリシーでは、API経由で送信されたデータはAIモデルの学習には使用されません。最新の情報は[OpenAIの利用規約](https://openai.com/policies/terms-of-use)からご確認ください。
 
 </PageSection>
 
