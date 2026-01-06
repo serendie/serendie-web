@@ -1,0 +1,193 @@
+---
+title: Design Linter
+slug: en/get-started/design-linter
+illustType: "B"
+description: "Serendie Design Linter is a Figma plugin that automatically checks whether your Figma designs comply with Serendie Design System guidelines."
+lastUpdated: "2025-01-06"
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>Overview</PageHeadLine>
+
+Serendie Design Linter is a Figma plugin that automatically validates whether your Figma designs comply with Serendie Design System guidelines. You can also consult with an AI assistant when you need help.
+
+<PageARef href="https://www.figma.com/community/plugin/xxxx">
+  Install from Figma Community
+</PageARef>
+
+<p>
+  <img src="/assets/pages/getstarted/getstarted-design-1.avif" width="310" alt="Design Linter main screen" />
+</p>
+
+### Validation feature
+
+Serendie Design System defines styles such as colors as design tokens. This plugin validates whether design tokens are being used correctly in Figma.
+
+Just select an element in Figma and click the "Validate" button—the plugin performs validation from three perspectives:
+
+- **Color combination validation**: Validates if the combination of system tokens assigned to text and background colors is appropriate.
+- **Text style validation**: Validates if typography system tokens defined in Serendie Design System are correctly applied to text.
+- **Frame variable validation**: Validates if appropriate system tokens are set for backgrounds on frames, rectangles, and similar elements.
+
+### Consultation feature
+
+Consult with AI about UI design directly in Figma.
+
+This is useful when you see validation results and think "I don't know how to fix this" or "I want to know if there's a better approach." Click the "Consult AI" button to open a chat interface. Screenshots of the selected element and validation results are automatically shared with the AI, so you can ask questions immediately without explaining the situation.
+
+The AI assistant provides advice on specific improvements and best practices while referencing Serendie Design System specifications and Material Design 3 design principles.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>How to use</PageHeadLine>
+
+### 1. Validate your design
+
+Let's start by validating your design.
+
+1. Select the element you want to validate in Figma
+2. Click the "Validate" button in the plugin
+3. Validation results are displayed as a list
+
+<p>
+  <img src="/assets/pages/getstarted/getstarted-design-2.avif" width="310" alt="Validation results example" />
+</p>
+
+Validation results are shown with three types of icons:
+
+- **Error**: Parts that don't follow the rules and require correction
+- **Warning**: Parts that need confirmation, such as missing variable settings
+- **Normal**: No issues
+
+Click on a validation result item to select the corresponding element in Figma. This makes it easy to see where the problem is.
+
+### 2. Consult AI
+
+When you don't understand how to fix something after seeing the validation results, try consulting the AI.
+
+1. Click the "Consult AI" button on the validation results screen
+2. A chat interface opens
+3. Choose from suggested questions or enter your own question freely
+
+<p>
+  <img src="/assets/pages/getstarted/getstarted-design-3.avif" width="310" alt="AI chat screen example" />
+</p>
+
+In the chat interface, screenshots of the selected element and validation results are automatically shared with the AI. Feel free to ask questions like "What token should I specify for this color?" or "Is there an alternative approach?"
+
+The AI assistant answers while referencing:
+
+- Serendie Design System information
+  - Component specifications
+  - Design token definitions and usage
+- Public information from other design systems
+  - Google Material Design 3 design principles
+  - Reference implementation patterns such as Ark UI
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Setup</PageHeadLine>
+
+### 1. Installing the plugin
+
+Install the plugin from [Figma Community](https://www.figma.com/community/plugin/xxxx).
+
+### 2. Setting up your OpenAI API key
+
+To use the AI consultation feature, you need an OpenAI API key.
+
+If you don't have an API key, follow these steps to get one:
+
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Create an account or log in
+3. Create a new key on the "API keys" page
+
+Once you have your API key, configure it in the plugin:
+
+1. Click the settings icon (gear mark) in the top right of the plugin
+2. Enter your OpenAI API key and save
+
+<p>
+  <img src="/assets/pages/getstarted/getstarted-design-4.avif" width="310" alt="Settings screen" />
+</p>
+
+### 3. About API key storage
+
+Your API key is stored only on your device (in Figma's client storage). It is not sent to external servers or shared with other users, so you can use it with peace of mind.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>About data handling</PageHeadLine>
+
+### 1. Data sent to the OpenAI API
+
+When you use the AI consultation feature, screenshots of the selected element, text information from validation results, and chat conversation content are sent to the OpenAI API.
+
+### 2. About data usage for AI training
+
+Under OpenAI's API policy, data sent via API is not used for AI model training. However, policies may change, so please check [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use) for the latest information.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>About validation rules</PageHeadLine>
+
+### 1. Color combination rules
+
+There are recommended combinations of text colors and background colors to ensure readability.
+
+For example, when using `primary` as a background color, use `onPrimary` for the text color. Names starting with "on" mean "color to place on top of," and using them together with their background color maintains appropriate contrast.
+
+Common combination examples:
+
+- `primary` → `onPrimary`
+- `primaryContainer` → `onPrimaryContainer`
+- `surface` → `onSurface`
+- `surfaceContainer` → `onSurface`
+
+### 2. Text color rules
+
+For text colors, generally choose system tokens with names starting with "on" (e.g., onPrimary, onSurface). This ensures readable text on any background.
+
+### 3. Background color rules
+
+For background colors, choose system tokens with names that don't start with "on" (e.g., primary, surface, surfaceContainer).
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={5}>FAQ</PageHeadLine>
+
+### Q. I see a "Non-variable" warning
+
+You're specifying colors manually instead of using Serendie Design System variables.
+
+Apply color variables from the Serendie UI Kit library. Select a variable starting with "sd/system/color/..." from the variables panel to resolve this warning.
+
+### Q. I see a color pairing error
+
+The combination of text color and background color doesn't match the recommended rules.
+
+Refer to the "Suggestion" shown in the error message to fix the color combination. For example, if the background is `primary`, the text should be `onPrimary`.
+
+### Q. The "Consult AI" button doesn't appear
+
+The OpenAI API key may not be configured. Enter the API key from the settings icon in the top right of the plugin.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={6}>References</PageHeadLine>
+
+- [Foundations - Color](/en/foundations/color)
+- [Foundations - Color Role](/en/foundations/color/role)
+- [Foundations - Design Tokens](/en/foundations/design-tokens)
+- [Get Started - Design](/en/get-started/design)
+
+</PageSection>
