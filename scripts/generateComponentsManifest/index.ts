@@ -1,5 +1,5 @@
 import glob from "glob-promise";
-import { readFile, writeFile, mkdir, readdir } from "fs/promises";
+import { readFile, writeFile, mkdir, readdir, access } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as ts from "typescript";
@@ -9,6 +9,69 @@ import { getCategoryForComponent } from "../../src/mcp/data/component-categories
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, "..", "..");
+
+const MANIFEST_FILE_PATH = join(
+  rootDir,
+  "src",
+  "mcp",
+  "data",
+  "components-manifest.json"
+);
+
+// Get current @serendie/ui version
+async function getSerendieUiVersion(): Promise<string> {
+  const packageJsonPath = join(
+    rootDir,
+    "node_modules",
+    "@serendie/ui",
+    "package.json"
+  );
+  const packageJson = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+  return packageJson.version;
+}
+
+// Check if manifest exists and version matches
+async function shouldRegenerateManifest(): Promise<boolean> {
+  try {
+    const currentVersion = await getSerendieUiVersion();
+
+    // Check if manifest file exists
+    try {
+      await access(MANIFEST_FILE_PATH);
+    } catch {
+      console.log("📦 Manifest file not found. Generating...");
+      return true;
+    }
+
+    // Read manifest and compare versions
+    const manifestContent = await readFile(MANIFEST_FILE_PATH, "utf-8");
+    const manifest = JSON.parse(manifestContent);
+
+    const cachedVersion = manifest.metadata?.serendieUiVersion;
+
+    if (!cachedVersion) {
+      console.log("📦 Version info not found in manifest. Generating...");
+      return true;
+    }
+
+    if (cachedVersion !== currentVersion) {
+      console.log(
+        `📦 @serendie/ui version changed: ${cachedVersion} → ${currentVersion}`
+      );
+      return true;
+    }
+
+    console.log(
+      `✅ Manifest is up to date (version: ${currentVersion}). Skipping generation.`
+    );
+    return false;
+  } catch (error) {
+    console.log(
+      `⚠️  Error checking manifest: ${error instanceof Error ? error.message : error}`
+    );
+    return true;
+  }
+}
 
 interface ComponentManifest {
   name: string;
@@ -594,15 +657,24 @@ async function generateManifest() {
     }
   }
 
-  // マニフェストファイルを保存
+  // Sort components by name for consistency
+  components.sort((a, b) => a.name.localeCompare(b.name));
+
+  // マニフェストファイルを保存（メタデータ付き）
   const outputDir = join(rootDir, "src", "mcp", "data");
   await mkdir(outputDir, { recursive: true });
 
-  const outputPath = join(outputDir, "components-manifest.json");
-  await writeFile(outputPath, JSON.stringify(components, null, 2));
+  const serendieUiVersion = await getSerendieUiVersion();
+  const manifestWithMetadata = {
+    metadata: {
+      serendieUiVersion,
+      generatedAt: new Date().toISOString(),
+    },
+    components,
+  };
 
-  // Sort components by name for consistency
-  components.sort((a, b) => a.name.localeCompare(b.name));
+  const outputPath = join(outputDir, "components-manifest.json");
+  await writeFile(outputPath, JSON.stringify(manifestWithMetadata, null, 2));
 
   // Summary statistics
   const documented = components.filter((c) => c.hasDocumentation).length;
@@ -614,8 +686,17 @@ async function generateManifest() {
   console.log(`📁 Output: ${outputPath}`);
 }
 
+// Main execution with cache check
+async function main() {
+  const shouldRegenerate = await shouldRegenerateManifest();
+
+  if (shouldRegenerate) {
+    await generateManifest();
+  }
+}
+
 // スクリプトを実行
-generateManifest().catch((error) => {
+main().catch((error) => {
   console.error("❌ Error generating manifest:", error);
   process.exit(1);
 });
