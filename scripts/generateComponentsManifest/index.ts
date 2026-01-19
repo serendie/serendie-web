@@ -18,6 +18,32 @@ const MANIFEST_FILE_PATH = join(
   "components-manifest.json"
 );
 
+// Helper function to get component .d.ts file paths
+function getComponentDtsPaths(
+  normalizedComponentName: string,
+  includeIndex = false
+): string[] {
+  const basePath = join(
+    rootDir,
+    "node_modules",
+    "@serendie/ui",
+    "dist",
+    "components",
+    normalizedComponentName
+  );
+
+  const paths = [
+    join(basePath, `${normalizedComponentName}.d.ts`),
+    join(basePath, `${normalizedComponentName}Component.d.ts`),
+  ];
+
+  if (includeIndex) {
+    paths.push(join(basePath, "index.d.ts"));
+  }
+
+  return paths;
+}
+
 // Get current @serendie/ui version
 async function getSerendieUiVersion(): Promise<string> {
   const packageJsonPath = join(
@@ -136,22 +162,25 @@ async function parseMdxFrontmatter(filePath: string) {
 function extractStorybookPaths(content: string): StorybookUrl[] {
   const storybookUrls: StorybookUrl[] = [];
   const storyPathRegex = /storyPath="([^"]+)"/g;
-  const titleRegex = /title="([^"]+)"/g;
 
-  const storyPaths = [...content.matchAll(storyPathRegex)];
-  const titles = [...content.matchAll(titleRegex)];
-
-  storyPaths.forEach((match, index) => {
+  let match;
+  while ((match = storyPathRegex.exec(content)) !== null) {
     const path = match[1];
-    const title = titles[index]?.[1] || "Story";
-    const variantMatch = path.match(/--(\w+)$/);
+    // Extract variant from path (e.g., "--medium" from "/story/components-button--medium")
+    const variantMatch = path.match(/--([^&]+)/);
+    const variant = variantMatch?.[1];
+
+    // Generate title from variant (capitalize first letter)
+    const title = variant
+      ? variant.charAt(0).toUpperCase() + variant.slice(1).replace(/-/g, " ")
+      : "Story";
 
     storybookUrls.push({
       title,
       path,
-      variant: variantMatch?.[1],
+      variant,
     });
-  });
+  }
 
   return storybookUrls;
 }
@@ -249,9 +278,10 @@ function extractPropsFromAST(
             // 型のプロパティを抽出
             const properties = propsType.getProperties();
             properties.forEach((prop) => {
+              if (!prop.valueDeclaration) return;
               const propType = typeChecker.getTypeOfSymbolAtLocation(
                 prop,
-                prop.valueDeclaration!
+                prop.valueDeclaration
               );
               const propTypeString = typeChecker.typeToString(propType);
 
@@ -290,35 +320,7 @@ async function extractPropsFromTypeDefinition(
     }
 
     // まず react-docgen-typescript を試す
-    const componentPaths = [
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}Component.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        "index.d.ts"
-      ),
-    ];
+    const componentPaths = getComponentDtsPaths(normalizedComponentName, true);
 
     for (const componentPath of componentPaths) {
       try {
@@ -336,7 +338,10 @@ async function extractPropsFromTypeDefinition(
             parser.find((doc) => doc.displayName === componentName) ||
             parser[0];
           if (componentDoc && componentDoc.props) {
-            console.log(`    ✅ Extracted props using react-docgen-typescript`);
+            const propsCount = Object.keys(componentDoc.props).length;
+            console.log(
+              `    ✅ Extracted ${propsCount} props using react-docgen-typescript`
+            );
             return Object.entries(componentDoc.props).map(
               ([propName, propInfo]) => ({
                 name: propName,
@@ -357,26 +362,7 @@ async function extractPropsFromTypeDefinition(
     }
 
     // react-docgen-typescript が失敗した場合、TypeScript AST を直接解析
-    const dtsPaths = [
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}Component.d.ts`
-      ),
-    ];
+    const dtsPaths = getComponentDtsPaths(normalizedComponentName);
 
     let content: string | null = null;
     let dtsPath: string | null = null;
@@ -437,7 +423,9 @@ async function extractPropsFromTypeDefinition(
     });
 
     if (basicProps.length > 0) {
-      console.log(`    ℹ️  Using basic props inference`);
+      console.log(
+        `    ℹ️  Using basic props inference (${basicProps.length} props)`
+      );
     } else {
       console.log(`    ⚠️  No props found`);
     }
@@ -627,12 +615,6 @@ async function generateManifest() {
         componentName,
         normalizedName
       );
-
-      if (props.length > 0) {
-        console.log(`    ✅ Found ${props.length} props`);
-      } else {
-        console.log(`    ⚠️  No props found`);
-      }
 
       // Get related components (other components in the same directory)
       const relatedComponents = subComponents
