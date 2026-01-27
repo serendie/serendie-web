@@ -34,11 +34,15 @@ export const GetSymbolDetailNotFoundSchema = z.object({
   message: z.string(),
 });
 
-// Combined response schema
-export const GetSymbolDetailResponseSchema = z.union([
-  GetSymbolDetailSuccessSchema,
-  GetSymbolDetailNotFoundSchema,
-]);
+// Combined response schema - using z.object with optional fields to support .shape
+export const GetSymbolDetailResponseSchema = z.object({
+  name: z.string(),
+  exists: z.boolean(),
+  variants: z.array(SymbolVariantSchema).optional(),
+  importStatement: z.string().optional(),
+  usage: SymbolUsageSchema.optional(),
+  message: z.string().optional(),
+});
 
 // Type exports
 export type SymbolVariant = z.infer<typeof SymbolVariantSchema>;

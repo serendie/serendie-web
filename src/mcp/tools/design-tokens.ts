@@ -85,6 +85,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
          */
         theme: ThemeSchema.optional().describe("Filter tokens by theme"),
       },
+      outputSchema: GetDesignTokensResponseSchema.shape,
     },
     async ({ type, category, theme, limit }) => {
       try {
@@ -191,6 +192,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -208,6 +210,11 @@ export function getDesignTokensTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch design tokens",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }
@@ -265,6 +272,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
          */
         key: z.string().describe("The key of the token to get details for"),
       },
+      outputSchema: GetDesignTokenDetailResponseSchema.shape,
     },
     async ({ key }) => {
       try {
@@ -289,6 +297,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
                 text: JSON.stringify(validatedResponse, null, 2),
               },
             ],
+            structuredContent: validatedResponse,
           };
         }
 
@@ -414,6 +423,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
               text: JSON.stringify(validatedResponse, null, 2),
             },
           ],
+          structuredContent: validatedResponse,
         };
       } catch (error) {
         /**
@@ -430,6 +440,11 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
               }),
             },
           ],
+          structuredContent: {
+            error: "Failed to fetch token detail",
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+          isError: true,
         };
       }
     }

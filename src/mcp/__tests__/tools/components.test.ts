@@ -532,9 +532,7 @@ describe("Components Tools", () => {
           ""
         )} } from "@serendie/ui";`;
 
-        expect(importStatement).toBe(
-          'import { Button } from "@serendie/ui";'
-        );
+        expect(importStatement).toBe('import { Button } from "@serendie/ui";');
       });
 
       it("should include props with correct structure", () => {
