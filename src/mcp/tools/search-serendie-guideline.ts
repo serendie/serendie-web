@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import { z } from "zod/v3";
 
 interface CloudflareSearchContent {
   id?: string;
@@ -7,11 +7,25 @@ interface CloudflareSearchContent {
   text?: string;
 }
 
+interface CloudflareFileAttributes {
+  description?: string;
+  image?: string;
+  title?: string;
+}
+
+interface CloudflareSearchAttributes {
+  timestamp?: number;
+  folder?: string;
+  filename?: string;
+  file?: CloudflareFileAttributes;
+}
+
 interface CloudflareSearchResult {
   file_id?: string;
+  /** 検索結果のURL（例: https://serendie.design/components/text-field） */
   filename?: string;
   score?: number;
-  attributes?: Record<string, unknown>;
+  attributes?: CloudflareSearchAttributes;
   content?: CloudflareSearchContent[];
 }
 
@@ -21,6 +35,8 @@ interface CloudflareSearchResponse {
     object?: string;
     search_query?: string;
     data?: CloudflareSearchResult[];
+    has_more?: boolean;
+    next_page?: string | null;
   };
   errors?: unknown;
   messages?: unknown;
@@ -66,6 +82,28 @@ export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
           .min(1, "Query must not be empty.")
           .describe("Plain text query used to search the document index."),
       },
+      outputSchema: {
+        searchQuery: z
+          .string()
+          .describe("The search query (may be optimized by Cloudflare)"),
+        totalResults: z.number().describe("Total number of search results"),
+        results: z
+          .array(
+            z.object({
+              url: z.string().nullable().describe("URL of the source document"),
+              title: z
+                .string()
+                .nullable()
+                .describe("Title of the source document"),
+              score: z.number().describe("Relevance score (0-1)"),
+              content: z.string().describe("Text content of the search result"),
+            })
+          )
+          .describe("Array of search results with URL and content"),
+        mergedContent: z
+          .string()
+          .describe("All content merged into a single string"),
+      },
     },
     async ({ query }) => {
       const accountId = getEnvValue("CF_ACCOUNT_ID");
@@ -88,6 +126,7 @@ export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
               ),
             },
           ],
+          isError: true,
         };
       }
 
@@ -125,6 +164,7 @@ export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
                 ),
               },
             ],
+            isError: true,
           };
         }
 
@@ -146,38 +186,59 @@ export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
                 ),
               },
             ],
+            isError: true,
           };
         }
 
-        const results = Array.isArray(json.result?.data)
+        const rawResults = Array.isArray(json.result?.data)
           ? json.result?.data
           : [];
 
-        const mergedText = results
-          .flatMap((result) =>
-            Array.isArray(result.content) ? result.content : []
-          )
-          .filter(
-            (
-              item
-            ): item is CloudflareSearchContent &
-              Required<Pick<CloudflareSearchContent, "text">> =>
-              item?.type === "text" && typeof item.text === "string"
-          )
-          .map((item) => item.text.trim())
+        // 各検索結果をURL情報付きで構造化
+        const structuredResults = rawResults.map((result) => {
+          const texts = (result.content ?? [])
+            .filter(
+              (item): item is CloudflareSearchContent & { text: string } =>
+                item?.type === "text" && typeof item.text === "string"
+            )
+            .map((item) => item.text.trim())
+            .filter((text) => text.length > 0);
+
+          return {
+            url: result.filename ?? null,
+            title: result.attributes?.file?.title ?? null,
+            score: result.score ?? 0,
+            content: texts.join("\n\n"),
+          };
+        });
+
+        // 全テキストを連結したものも用意（後方互換性のため）
+        const mergedText = structuredResults
+          .map((r) => r.content)
           .filter((text) => text.length > 0)
           .join("\n\n");
 
         console.log(
           `Cloudflare AI Search request completed in ${Date.now() - startTime}ms`
         );
+
+        // 構造化されたレスポンスを返す
+        const responseData = {
+          searchQuery: json.result?.search_query ?? query,
+          totalResults: structuredResults.length,
+          results: structuredResults,
+          mergedContent: mergedText,
+        };
+
         return {
           content: [
             {
               type: "text",
-              text: mergedText,
+              text: JSON.stringify(responseData, null, 2),
             },
           ],
+          structuredContent: responseData,
+          isError: false,
         };
       } catch (error) {
         return {
@@ -195,6 +256,7 @@ export function getSearchSerendieGuidelineTool(mcpServer: McpServer) {
               ),
             },
           ],
+          isError: true,
         };
       }
     }
