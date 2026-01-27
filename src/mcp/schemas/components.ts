@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Props定義のスキーマ
 export const PropDefinitionSchema = z.object({

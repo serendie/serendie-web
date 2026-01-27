@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { symbolNames } from "@serendie/symbols";
 import {
   GetSymbolsResponseSchema,

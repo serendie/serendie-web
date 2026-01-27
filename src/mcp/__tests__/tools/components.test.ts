@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { readFile } from "fs/promises";
 import {
   GetComponentsResponseSchema,
