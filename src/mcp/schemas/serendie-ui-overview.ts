@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod/v3";
 import markdownContent from "./serendie-ui-overview.md?raw";
 
 export const GetSerendieUIOverviewToolSchema = z.object({
