@@ -82,7 +82,7 @@ export function useMcpAppWithToolResult<T = unknown>() {
  * Convenience hook to get component name from tool result
  */
 export function useComponentFromToolResult() {
-  const { toolResult, isLoading, callServerTool, error } =
+  const { app, toolResult, isLoading, callServerTool, error } =
     useMcpAppWithToolResult<{
       name?: string;
       componentName?: string;
@@ -91,6 +91,7 @@ export function useComponentFromToolResult() {
   const componentName = toolResult?.name || toolResult?.componentName || null;
 
   return {
+    app,
     componentName,
     isLoading,
     error,
