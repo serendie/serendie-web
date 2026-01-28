@@ -1,44 +1,32 @@
 import { useEffect, useState } from "react";
 import { ComponentPreview } from "../../../components/Preview/ComponentPreview";
 import { availableComponents } from "../../../components/Preview/sampleCodeRegistry";
-import { useToolOutput } from "../hooks/useOpenAiGlobal";
+import { useComponentFromToolResult } from "../hooks/useMcpApp";
 import { ProgressIndicatorIndeterminate } from "@serendie/ui";
 import "../../../index.css";
 
-interface ToolOutput {
-  componentName?: string;
-  name?: string;
-}
-
 export const PreviewPage = () => {
-  const toolOutput = useToolOutput<ToolOutput>();
+  const { componentName: toolComponentName, isLoading } =
+    useComponentFromToolResult();
   const [selectedComponent, setSelectedComponent] = useState<string>("Button");
 
-  // Show loading when toolOutput is null or undefined
-  const isLoading = !toolOutput;
-
   useEffect(() => {
-    // Wait until toolOutput has actual data
-    if (toolOutput) {
-      // Get component name from toolOutput
-      const componentName =
-        toolOutput?.componentName || toolOutput?.name || "Button"; // default fallback
-
-      console.log("[Preview] toolOutput:", toolOutput);
-      console.log("[Preview] Selected component:", componentName);
+    // Wait until we have a component name from the tool result
+    if (toolComponentName) {
+      console.log("[Preview] Component from MCP Apps:", toolComponentName);
 
       // Validate component exists
-      if (availableComponents.includes(componentName)) {
-        setSelectedComponent(componentName);
+      if (availableComponents.includes(toolComponentName)) {
+        setSelectedComponent(toolComponentName);
       } else {
         console.warn(
-          `[Preview] Component "${componentName}" not found. Available:`,
+          `[Preview] Component "${toolComponentName}" not found. Available:`,
           availableComponents
         );
         setSelectedComponent("Button"); // Fallback to Button
       }
     }
-  }, [toolOutput]);
+  }, [toolComponentName]);
 
   return (
     <div style={{ width: "100%", height: "100vh", position: "relative" }}>

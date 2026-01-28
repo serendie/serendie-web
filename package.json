@@ -39,6 +39,7 @@
     "@astrojs/sitemap": "^3.6.0",
     "@eslint/js": "^9.15.0",
     "@hono/mcp": "^0.1.0",
+    "@modelcontextprotocol/ext-apps": "^1.0.1",
     "@modelcontextprotocol/sdk": "^1.20.2",
     "@pandacss/eslint-plugin": "^0.2.2",
     "@serendie/design-token": "dev",
