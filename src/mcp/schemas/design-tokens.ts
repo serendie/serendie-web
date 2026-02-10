@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Design token type enum
 // Based on actual types found in @serendie/design-token package

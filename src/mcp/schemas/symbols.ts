@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Symbol variant enum
 export const SymbolVariantSchema = z.enum(["outlined", "filled"]);
