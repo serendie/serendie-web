@@ -37,31 +37,31 @@ export const prerender = true;
     </div>
 
     <script is:inline>
-      // OpenAI Apps SDK integration
-      // Read componentName from window.openai.toolOutput
+      // Component Preview initialization
+      // This page is a static fallback for development/testing
+      // For MCP Apps integration, use the React-based preview at /mcp/ui/preview.html
       function initializePreview() {
         let componentName = "Button"; // default
 
-        // Try to get from OpenAI context first
-        if (window.openai?.toolOutput?.componentName) {
-          componentName = window.openai.toolOutput.componentName;
-        } else if (window.openai?.toolOutput?.name) {
-          componentName = window.openai.toolOutput.name;
+        // Try to get from URL params (for testing)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlComponent = urlParams.get("component");
+        if (urlComponent) {
+          componentName = urlComponent;
         } else {
-          // Fallback: try sessionStorage (for redirects)
-          const savedContext = sessionStorage.getItem("openai-context");
+          // Fallback: try sessionStorage
+          const savedContext = sessionStorage.getItem("preview-context");
           if (savedContext) {
             try {
               const context = JSON.parse(savedContext);
               componentName = context.componentName || context.name || "Button";
-              sessionStorage.removeItem("openai-context"); // Clean up
+              sessionStorage.removeItem("preview-context");
             } catch (e) {
               console.warn("[Preview] Failed to parse saved context:", e);
             }
           }
         }
 
-        console.log("[Preview] OpenAI context:", window.openai);
         console.log("[Preview] Selected component:", componentName);
 
         // Hide all components
@@ -92,23 +92,6 @@ export const prerender = true;
       } else {
         initializePreview();
       }
-
-      // Also listen for postMessage updates (fallback)
-      window.addEventListener("message", (event) => {
-        if (
-          event.data?.componentName &&
-          (event.origin === "https://chatgpt.com" ||
-            event.origin.endsWith(".openai.com") ||
-            event.origin.endsWith(".oaiusercontent.com"))
-        ) {
-          console.log("[Preview] Received message:", event.data);
-          // Re-initialize with new component
-          if (window.openai) {
-            window.openai.toolOutput = event.data;
-          }
-          initializePreview();
-        }
-      });
     </script>
   </body>
 </html>

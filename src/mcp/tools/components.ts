@@ -309,11 +309,10 @@ export function getComponentDetailTool(mcpServer: McpServer) {
       description:
         "Get detailed information about a specific Serendie UI component including props and usage examples",
       _meta: {
-        // Associate this tool with the HTML template
-        "openai/outputTemplate": "ui://serendie/component-preview.html",
-        // Labels to display in ChatGPT when the tool is called
-        "openai/toolInvocation/invoking": "Loading component preview...",
-        "openai/toolInvocation/invoked": "Component preview loaded",
+        // MCP Apps: Associate this tool with the UI resource
+        ui: {
+          resourceUri: "ui://serendie/component-preview.html",
+        },
       },
       inputSchema: {
         /**
