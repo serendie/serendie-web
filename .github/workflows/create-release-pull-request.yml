@@ -1,6 +1,6 @@
 name: Create Release Pull Request
 on:
-  pull_request:
+  push:
     branches: [dev]
 jobs:
   release-pull-request:
@@ -16,7 +16,7 @@ jobs:
       - run: gem install --no-document git-pr-release
       - run: git-pr-release
         env:
-          GIT_PR_RELEASE_TOKEN: ${{ github.token }}
+          GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: main
           GIT_PR_RELEASE_BRANCH_STAGING: dev
           TZ: Asia/Tokyo
