@@ -2,8 +2,8 @@
 
 ## 概要
 
-@serendie/uiは三菱電機のSerendieデザインシステムをベースにしたReactコンポーネントライブラリです。
-ユーザーは@serendie/uiをインストールし、いくつかの設定をすることで、Serendieデザインシステムに準拠したUIコンポーネントを利用できます。
+@serendie/uiは三菱電機のSerendie Design SystemをベースにしたReactコンポーネントライブラリです。
+ユーザーは@serendie/uiをインストールし、いくつかの設定をすることで、Serendie Design Systemに準拠したUIコンポーネントを利用できます。
 また、PandaCSSのスタイルシステムが同梱されているため、プロジェクトにPandaCSSを導入することで独自のUIコンポーネントやスタイルを作成することもできます。
 
 ## 関連パッケージ
