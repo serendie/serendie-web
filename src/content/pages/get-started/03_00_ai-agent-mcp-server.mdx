@@ -3,7 +3,7 @@ title: AIエージェント (beta)
 slug: get-started/ai-agent/mcp-server
 illustType: "A"
 description: "Serendie Design Systemが提供する各種リソースやガイドラインを、AIエージェントから活用するための仕組みを紹介します。"
-lastUpdated: "2025-10-28"
+lastUpdated: "2026-02-18"
 subLinks:
   [
     { name: "MCPサーバー", path: "/get-started/ai-agent/mcp-server" },
@@ -62,7 +62,7 @@ MCPサーバーでは「ツール」という単位で、AIエージェントに
 ## 自然言語によるプロトタイピング
 
 [Cursor](https://cursor.com/ja)や[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)
-など各種AgenticCodingツールを用いることで、自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
+など各種Agentic Codingツールを用いることで、自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
 
 特にSerendie MCPのOverviewツールにより、Serendie UIのイントロダクションが提供されるため、Serendie UIを使うためのセットアップをAIエージェントが自律的行うことができます。また、各種リソース取得ツールを用いることで、AIエージェントはコンテキスト消費量を抑えながら、Serendie UIの活用に必要な知識を得ることができます。これはAgentic Codingにおいて質の高いプロトタイピングの実現に繋がります。
 
@@ -94,7 +94,7 @@ Figma Dev Mode MCPサーバーを用いることで、AIエージェントは、
 下記のコマンドをターミナルから入力してください
 
 <CodeBox
-  code={`claude mcp add --transport http serendie-design-mcp https://serendie.design/mcp`}
+  code={`claude mcp add --transport http serendie-mcp https://serendie.design/mcp`}
   language={"shell"}
 />
 
@@ -110,7 +110,7 @@ Figma Dev Mode MCPサーバーを用いることで、AIエージェントは、
   code={`{
     "inputs": [],
     "servers": {
-      "serendie-design-mcp": {
+      "serendie-mcp": {
         "url": "https://serendie.design/mcp",
         "type": "http"
       }
@@ -123,7 +123,7 @@ Figma Dev Mode MCPサーバーを用いることで、AIエージェントは、
 
 こちらのリンクをクリックすることで、自動的にMCPサーバーが追加されます。
 
-<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-design-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
+<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
   Cursor Deep Link
 </PageARef>
 
