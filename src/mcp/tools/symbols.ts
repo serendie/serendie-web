@@ -10,7 +10,7 @@ import {
 import symbolKeywords from "../data/symbol-keywords.json";
 
 /**
- * Serendieデザインシステムのシンボル（アイコン）一覧を取得するMCPツール
+ * Serendie Design Systemのシンボル（アイコン）一覧を取得するMCPツール
  *
  * @param mcpServer - MCPサーバーインスタンス
  *
