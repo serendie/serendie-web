@@ -1,0 +1,29 @@
+---
+title: LLMs.txt
+slug: en/get-started/ai-agent/llms-txt
+illustType: "B"
+description: "Learn about LLMs.txt, which makes it easy for AI agents to retrieve Serendie UI documentation."
+lastUpdated: "2026-02-18"
+parent: en/get-started/ai-agent/mcp-server
+subLinks:
+  [
+    { name: "MCP Server", path: "/en/get-started/ai-agent/mcp-server" },
+    { name: "LLMs.txt", path: "/en/get-started/ai-agent/llms-txt" },
+  ]
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import CodeBox from "@/components/CodeBox.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>LLMs.txt</PageHeadLine>
+
+LLMs.txt is a file that helps AI agents efficiently use the various Serendie UI documentation. In scenarios where an MCP server is not available, you can point your AI agent to this LLMs.txt to provide it with information equivalent to the guidelines on this site.
+
+We provide two versions via the links below. Specify these URLs to your AI agent:
+
+- [LLMs.txt](https://serendie.design/llms.txt) -- A concise list of document descriptions and URLs
+- [llms-full.txt](https://serendie.design/llms-full.txt) -- Full text of all documentation
+
+</PageSection>
