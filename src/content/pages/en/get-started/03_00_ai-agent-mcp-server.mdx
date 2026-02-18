@@ -1,0 +1,129 @@
+---
+title: AI Agents
+slug: en/get-started/ai-agent/mcp-server
+illustType: "A"
+description: "Learn how AI agents can leverage the resources and guidelines provided by the Serendie Design System."
+lastUpdated: "2026-02-18"
+subLinks:
+  [
+    { name: "MCP Server", path: "/en/get-started/ai-agent/mcp-server" },
+    { name: "LLMs.txt", path: "/en/get-started/ai-agent/llms-txt" },
+  ]
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import CodeBox from "@/components/CodeBox.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>Serendie MCP Server</PageHeadLine>
+
+The Serendie MCP Server is a <a href="https://modelcontextprotocol.io/introduction" target="_blank">Model Context Protocol</a> server that enables users of the design system to comfortably design and develop applications with AI agents.
+
+By connecting this MCP server to various AI agents, the AI can autonomously obtain guidelines, best practices, and resource lists—including components and icons—provided by the Serendie Design System.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>What is Model Context Protocol (MCP)?</PageHeadLine>
+
+Model Context Protocol is an open protocol for AI agents to connect to external data sources and services. The Serendie MCP Server provides guidelines published on this site, type information from Serendie UI, and more. By using the Serendie MCP Server, you can achieve an application development workflow that follows the Serendie Design System.
+
+The Serendie MCP Server is published as a remote MCP server (Streamable HTTP Transport) and can be used immediately without any local setup.
+
+<PageARef href="https://modelcontextprotocol.io/docs/getting-started/intro">
+  What is the Model Context Protocol (MCP)? - Model Context Protocol
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Toolset</PageHeadLine>
+
+The MCP server provides capabilities to AI agents in units called "tools." The AI agent decides which tool to use based on the prompt and context. The tools currently offered by the Serendie MCP Server are:
+
+- Overview tool for Serendie UI setup instructions and general information
+- Tools for listing and retrieving details of Serendie UI components and their properties
+- Tools for listing and retrieving design token details
+- Tools for listing and retrieving Serendie Symbols details
+- Tool for retrieving various guidelines published on this site
+
+The implementation of each tool is available on the GitHub repository (serendie/serendie-web).
+
+<PageARef href="https://github.com/serendie/serendie-web/tree/main/src/mcp">
+  serendie-web/src/mcp at main · serendie/serendie-web
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>Use Cases</PageHeadLine>
+
+## Prototyping with Natural Language
+
+Agentic coding tools such as [Cursor](https://cursor.com/) and [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) enable prototyping with natural language. By adding the Serendie MCP Server, you can quickly build implementations using Serendie UI.
+
+In particular, the Serendie MCP Overview tool provides an introduction to Serendie UI, allowing AI agents to autonomously set up the environment for using Serendie UI. Additionally, by using the various resource retrieval tools, AI agents can acquire the knowledge needed to use Serendie UI while keeping context consumption low. This leads to higher-quality prototyping in agentic coding.
+
+## Implementing from Designs
+
+One of Serendie UI's strengths is that Figma components (design) and React components (implementation) are provided as a pair. By combining the <a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma Dev Mode MCP Server</a> with the Serendie MCP Server, you can implement designs created with the <a href="https://serendie.design/en/get-started/design/" target="_blank">Serendie UI Kit</a> quickly and with high quality.
+
+Using the Figma Dev Mode MCP Server, AI agents can read design data (layer information). This means you can simply say **"Implement the currently selected Figma design using Serendie UI"** and the AI agent will autonomously set up Serendie UI, learn how to use the various components, and generate high-quality code suited to your project environment.
+
+<PageARef href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server">
+  Guide to the Figma MCP server – Figma Learn - Help Center
+</PageARef>
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-aiagent-mcpserver-1.avif"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>Setup</PageHeadLine>
+
+## Claude Code
+
+Enter the following command in your terminal:
+
+<CodeBox
+  code={`claude mcp add --transport http serendie-mcp https://serendie.design/mcp`}
+  language={"shell"}
+/>
+
+## VSCode / GitHub Copilot
+
+1. **Press the shortcut ⌘ Shift P**
+   1. To use the MCP server globally: select **MCP: Open User Settings**.
+   2. To use it only in the current workspace: select **MCP: Open Workspace Folder MCP Settings**.
+
+2. Add the server configuration to the **mcp.json** file as shown below, then click Start:
+
+<CodeBox
+  code={`{
+    "inputs": [],
+    "servers": {
+      "serendie-mcp": {
+        "url": "https://serendie.design/mcp",
+        "type": "http"
+      }
+    }
+}`}
+  language={"json"}
+/>
+
+## Cursor
+
+Click the link below to automatically add the MCP server:
+
+<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
+  Cursor Deep Link
+</PageARef>
+
+</PageSection>

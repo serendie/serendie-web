@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { readFile } from "fs/promises";
 import {
   GetComponentsResponseSchema,
@@ -532,9 +532,7 @@ describe("Components Tools", () => {
           ""
         )} } from "@serendie/ui";`;
 
-        expect(importStatement).toBe(
-          'import { Button } from "@serendie/ui";'
-        );
+        expect(importStatement).toBe('import { Button } from "@serendie/ui";');
       });
 
       it("should include props with correct structure", () => {

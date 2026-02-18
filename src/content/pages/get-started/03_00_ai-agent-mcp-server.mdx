@@ -1,0 +1,130 @@
+---
+title: AIエージェント
+slug: get-started/ai-agent/mcp-server
+illustType: "A"
+description: "Serendie Design Systemが提供する各種リソースやガイドラインを、AIエージェントから活用するための仕組みを紹介します。"
+lastUpdated: "2026-02-18"
+subLinks:
+  [
+    { name: "MCPサーバー", path: "/get-started/ai-agent/mcp-server" },
+    { name: "LLMs.txt", path: "/get-started/ai-agent/llms-txt" },
+  ]
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>Serendie MCPサーバー</PageHeadLine>
+
+Serendie MCPサーバーは、デザインシステムを利用するユーザーが、AIエージェントを用いて快適にアプリケーションをデザイン・開発するための<a href="https://modelcontextprotocol.io/introduction" target="_blank">Model Context Protocol</a>サーバーです。
+
+このMCPサーバーを、各種AIエージェントに接続することで、Serendie Design Systemが提供するガイドラインやベストプラクティス、コンポーネントやアイコンをはじめとするリソース一覧などをAIが自律的に入手できるようになります。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>Model Context Protocol (MCP)とは</PageHeadLine>
+
+Model Context Protocolは、AIエージェントが外部のデータソースやサービスに接続するためのオープンなプロトコルです。Serendie MCPサーバーでは、本サイトで公開しているガイドラインや、Serendie UIの型情報などを提供しています。Serendie MCPサーバーを使うことで、Serendie Design Systemに則ったアプリケーション開発ワークフローを実現できます。
+
+Serendie MCP サーバーは、リモートMCPサーバー(Streamable HTTP Transport形式)として公開しており、ローカルでのセットアップなしにすぐに利用を始められます。
+
+<PageARef href="https://modelcontextprotocol.io/docs/getting-started/intro">
+  What is the Model Context Protocol (MCP)? - Model Context Protocol
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>ツールセット</PageHeadLine>
+
+MCPサーバーでは「ツール」という単位で、AIエージェントに道具の提供を行います。どのツールを使うのかは、AIエージェントが、プロンプトやコンテキストに基づいて決定します。現在Serendie MCPサーバーが提供しているツールは以下の通りです。
+
+- Serendie UIのセットアップ方法など概要情報 (Overview) の取得ツール
+- Serendie UIコンポーネントの一覧とプロパティなどの詳細取得ツール
+- デザイントークンの一覧・詳細取得ツール
+- Serendie Symbolsの一覧・詳細取得ツール
+- 本サイトで提供している各種ガイドラインの取得ツール
+
+各種ツールの実装は、GitHubリポジトリ (serendie/serendie-web) にて確認できます。
+
+<PageARef href="https://github.com/serendie/serendie-web/tree/main/src/mcp">
+  serendie-web/src/mcp at main · serendie/serendie-web
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>ユースケース</PageHeadLine>
+
+## 自然言語によるプロトタイピング
+
+[Cursor](https://cursor.com/ja)や[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)
+など各種Agentic Codingツールを用いることで、自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
+
+特にSerendie MCPのOverviewツールにより、Serendie UIのイントロダクションが提供されるため、Serendie UIを使うためのセットアップをAIエージェントが自律的行うことができます。また、各種リソース取得ツールを用いることで、AIエージェントはコンテキスト消費量を抑えながら、Serendie UIの活用に必要な知識を得ることができます。これはAgentic Codingにおいて質の高いプロトタイピングの実現に繋がります。
+
+## デザインから実装する
+
+Serendie UIは、Figmaコンポーネント(デザイン)とReactコンポーネント(実装) がセットで提供されていることが特徴の一つです。FigmaのMCPサーバーである<a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma Dev Mode MCP サーバー</a>と、Serendie MCPサーバーを併用することで、<a href="https://serendie.design/get-started/design/" target="_blank">Serendie UI Kit</a>によるデザインを、高速かつ高品質に実装することが可能です。
+
+Figma Dev Mode MCPサーバーを用いることで、AIエージェントは、デザインデータ (レイヤー情報) の読み取りが可能になります。これにより、 **「現在選択しているFigma上のデザインを、Serendie UIで実装して」** のように伝えることで、AIエージェントは自律的にSerendie UIのセットアップ、各種コンポーネントの使い方などの知識を得ながら、プロジェクト環境に応じた高品質なコードを生成できます。
+
+<PageARef href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server">
+  Guide to the Figma MCP server – Figma Learn - Help Center
+</PageARef>
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-aiagent-mcpserver-1.avif"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>セットアップ</PageHeadLine>
+
+## Claude Code
+
+下記のコマンドをターミナルから入力してください
+
+<CodeBox
+  code={`claude mcp add --transport http serendie-mcp https://serendie.design/mcp`}
+  language={"shell"}
+/>
+
+## VSCode / GitHub Copilot
+
+1. **ショートカット ⌘ Shift P を押下**
+   1. MCP サーバーをグローバルに使いたい場合： **MCP: ユーザー設定を開く** を選択します。
+   2. 現在のワークスペース内でのみ使いたい場合： **MCP: ワークスペースフォルダー MCP 設定を開く** を選択します。
+
+2. **mcp.json**ファイルの中に、下記のようにサーバーの設定を記入後、スタートを押下
+
+<CodeBox
+  code={`{
+    "inputs": [],
+    "servers": {
+      "serendie-mcp": {
+        "url": "https://serendie.design/mcp",
+        "type": "http"
+      }
+    }
+}`}
+  language={"json"}
+/>
+
+## Cursor
+
+こちらのリンクをクリックすることで、自動的にMCPサーバーが追加されます。
+
+<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
+  Cursor Deep Link
+</PageARef>
+
+</PageSection>

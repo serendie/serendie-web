@@ -1,17 +1,21 @@
 async function convertSvg(node) {
   const colors = getColorsByNode(node);
   const svg = await node.exportAsync({ format: "SVG" });
-  const svgString = String.fromCharCode.apply(null, new Uint8Array(svg));
+  // 大きなSVGでも処理できるようにチャンク分割で変換
+  const uint8Array = new Uint8Array(svg);
+  let svgString = "";
+  const chunkSize = 32768;
+  for (let i = 0; i < uint8Array.length; i += chunkSize) {
+    const chunk = uint8Array.slice(i, i + chunkSize);
+    svgString += String.fromCharCode.apply(null, chunk);
+  }
   const regex = /[stroke|fill]="(#[0-9A-F]{6})"/g;
   const replacedSvgString = svgString.replace(regex, (match, color) => {
     const colorObj = colors.find((c) => c.color === color);
     return colorObj
       ? match.replace(
           color,
-          `var(--${colorObj.collectionName}-${colorObj.name.replaceAll(
-            "/",
-            "-"
-          )}, ${color})`
+          `var(--${colorObj.name.replaceAll("/", "-")}, ${color})`
         )
       : match;
   });

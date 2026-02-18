@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Design token type enum
 // Based on actual types found in @serendie/design-token package
@@ -72,11 +72,24 @@ export const GetDesignTokenDetailNotFoundSchema = z.object({
   message: z.string(),
 });
 
-// Combined response schema
-export const GetDesignTokenDetailResponseSchema = z.union([
-  GetDesignTokenDetailSuccessSchema,
-  GetDesignTokenDetailNotFoundSchema,
-]);
+// Combined response schema as a single object
+// This allows .shape to be used for MCP outputSchema
+export const GetDesignTokenDetailResponseSchema = z.object({
+  key: z.string(),
+  exists: z.boolean(),
+  // Success case fields (present when exists is true)
+  path: z.array(z.string()).optional(),
+  type: TokenTypeSchema.optional(),
+  value: z.any().optional(),
+  originalValue: z.any().optional(),
+  category: TokenCategorySchema.optional(),
+  theme: z.string().nullable().optional(),
+  cssVariable: z.string().optional(),
+  usage: TokenUsageSchema.optional(),
+  references: z.string().nullable().optional(),
+  // Not found case field (present when exists is false)
+  message: z.string().optional(),
+});
 
 // Type exports
 export type TokenType = z.infer<typeof TokenTypeSchema>;

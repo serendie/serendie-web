@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Props定義のスキーマ
 export const PropDefinitionSchema = z.object({
@@ -86,10 +86,38 @@ export const ComponentNotFoundSchema = z.object({
 });
 
 // get-component-detailレスポンススキーマ
-export const GetComponentDetailResponseSchema = z.union([
-  ComponentDetailSchema,
-  ComponentNotFoundSchema,
-]);
+// Combined response schema as a single object
+// This allows .shape to be used for MCP outputSchema
+export const GetComponentDetailResponseSchema = z.object({
+  name: z.string(),
+  exists: z.boolean(),
+  // Success case fields (present when exists is true)
+  slug: z.string().optional(),
+  displayName: z.string().optional(),
+  description: z.string().optional(),
+  category: z.string().optional(),
+  lastUpdated: z.string().optional(),
+  documentationUrl: z.string().nullable().optional(),
+  importStatement: z.string().optional(),
+  props: z.array(PropDefinitionSchema).optional(),
+  examples: z.array(ComponentExampleSchema).optional(),
+  storybookUrls: z
+    .array(
+      StorybookUrlSchema.extend({
+        fullPath: z.string(), // get-component-detailでは必須
+      })
+    )
+    .optional(),
+  usage: z
+    .object({
+      basic: z.string(),
+      withProps: z.string().optional(),
+    })
+    .optional(),
+  relatedComponents: z.array(z.string()).optional(),
+  // Not found case field (present when exists is false)
+  message: z.string().optional(),
+});
 
 // 型定義のエクスポート
 export type PropDefinition = z.infer<typeof PropDefinitionSchema>;
