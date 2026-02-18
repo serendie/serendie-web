@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: git remote set-url origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
