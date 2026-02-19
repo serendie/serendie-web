@@ -48,8 +48,10 @@ interface StorybookUrl {
 }
 
 // 静的にインポートしたマニフェストを使用
-const manifestData: ComponentManifest[] =
-  componentsManifest as ComponentManifest[];
+// マニフェストは { metadata: {...}, components: [...] } の構造
+const manifestData: ComponentManifest[] = (
+  componentsManifest as { metadata: unknown; components: ComponentManifest[] }
+).components;
 
 const toComponentSlug = (name: string) =>
   name

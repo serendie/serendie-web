@@ -1,5 +1,5 @@
 import glob from "glob-promise";
-import { readFile, writeFile, mkdir, readdir } from "fs/promises";
+import { readFile, writeFile, mkdir, readdir, access } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as ts from "typescript";
@@ -9,6 +9,95 @@ import { getCategoryForComponent } from "../../src/mcp/data/component-categories
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, "..", "..");
+
+const MANIFEST_FILE_PATH = join(
+  rootDir,
+  "src",
+  "mcp",
+  "data",
+  "components-manifest.json"
+);
+
+// Helper function to get component .d.ts file paths
+function getComponentDtsPaths(
+  normalizedComponentName: string,
+  includeIndex = false
+): string[] {
+  const basePath = join(
+    rootDir,
+    "node_modules",
+    "@serendie/ui",
+    "dist",
+    "components",
+    normalizedComponentName
+  );
+
+  const paths = [
+    join(basePath, `${normalizedComponentName}.d.ts`),
+    join(basePath, `${normalizedComponentName}Component.d.ts`),
+  ];
+
+  if (includeIndex) {
+    paths.push(join(basePath, "index.d.ts"));
+  }
+
+  return paths;
+}
+
+// Get current @serendie/ui version
+async function getSerendieUiVersion(): Promise<string> {
+  const packageJsonPath = join(
+    rootDir,
+    "node_modules",
+    "@serendie/ui",
+    "package.json"
+  );
+  const packageJson = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+  return packageJson.version;
+}
+
+// Check if manifest exists and version matches
+async function shouldRegenerateManifest(): Promise<boolean> {
+  try {
+    const currentVersion = await getSerendieUiVersion();
+
+    // Check if manifest file exists
+    try {
+      await access(MANIFEST_FILE_PATH);
+    } catch {
+      console.log("📦 Manifest file not found. Generating...");
+      return true;
+    }
+
+    // Read manifest and compare versions
+    const manifestContent = await readFile(MANIFEST_FILE_PATH, "utf-8");
+    const manifest = JSON.parse(manifestContent);
+
+    const cachedVersion = manifest.metadata?.serendieUiVersion;
+
+    if (!cachedVersion) {
+      console.log("📦 Version info not found in manifest. Generating...");
+      return true;
+    }
+
+    if (cachedVersion !== currentVersion) {
+      console.log(
+        `📦 @serendie/ui version changed: ${cachedVersion} → ${currentVersion}`
+      );
+      return true;
+    }
+
+    console.log(
+      `✅ Manifest is up to date (version: ${currentVersion}). Skipping generation.`
+    );
+    return false;
+  } catch (error) {
+    console.log(
+      `⚠️  Error checking manifest: ${error instanceof Error ? error.message : error}`
+    );
+    return true;
+  }
+}
 
 interface ComponentManifest {
   name: string;
@@ -73,22 +162,25 @@ async function parseMdxFrontmatter(filePath: string) {
 function extractStorybookPaths(content: string): StorybookUrl[] {
   const storybookUrls: StorybookUrl[] = [];
   const storyPathRegex = /storyPath="([^"]+)"/g;
-  const titleRegex = /title="([^"]+)"/g;
 
-  const storyPaths = [...content.matchAll(storyPathRegex)];
-  const titles = [...content.matchAll(titleRegex)];
-
-  storyPaths.forEach((match, index) => {
+  let match;
+  while ((match = storyPathRegex.exec(content)) !== null) {
     const path = match[1];
-    const title = titles[index]?.[1] || "Story";
-    const variantMatch = path.match(/--(\w+)$/);
+    // Extract variant from path (e.g., "--medium" from "/story/components-button--medium")
+    const variantMatch = path.match(/--([^&]+)/);
+    const variant = variantMatch?.[1];
+
+    // Generate title from variant (capitalize first letter)
+    const title = variant
+      ? variant.charAt(0).toUpperCase() + variant.slice(1).replace(/-/g, " ")
+      : "Story";
 
     storybookUrls.push({
       title,
       path,
-      variant: variantMatch?.[1],
+      variant,
     });
-  });
+  }
 
   return storybookUrls;
 }
@@ -186,9 +278,10 @@ function extractPropsFromAST(
             // 型のプロパティを抽出
             const properties = propsType.getProperties();
             properties.forEach((prop) => {
+              if (!prop.valueDeclaration) return;
               const propType = typeChecker.getTypeOfSymbolAtLocation(
                 prop,
-                prop.valueDeclaration!
+                prop.valueDeclaration
               );
               const propTypeString = typeChecker.typeToString(propType);
 
@@ -227,35 +320,7 @@ async function extractPropsFromTypeDefinition(
     }
 
     // まず react-docgen-typescript を試す
-    const componentPaths = [
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}Component.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        "index.d.ts"
-      ),
-    ];
+    const componentPaths = getComponentDtsPaths(normalizedComponentName, true);
 
     for (const componentPath of componentPaths) {
       try {
@@ -273,7 +338,10 @@ async function extractPropsFromTypeDefinition(
             parser.find((doc) => doc.displayName === componentName) ||
             parser[0];
           if (componentDoc && componentDoc.props) {
-            console.log(`    ✅ Extracted props using react-docgen-typescript`);
+            const propsCount = Object.keys(componentDoc.props).length;
+            console.log(
+              `    ✅ Extracted ${propsCount} props using react-docgen-typescript`
+            );
             return Object.entries(componentDoc.props).map(
               ([propName, propInfo]) => ({
                 name: propName,
@@ -294,26 +362,7 @@ async function extractPropsFromTypeDefinition(
     }
 
     // react-docgen-typescript が失敗した場合、TypeScript AST を直接解析
-    const dtsPaths = [
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}.d.ts`
-      ),
-      join(
-        rootDir,
-        "node_modules",
-        "@serendie/ui",
-        "dist",
-        "components",
-        normalizedComponentName,
-        `${normalizedComponentName}Component.d.ts`
-      ),
-    ];
+    const dtsPaths = getComponentDtsPaths(normalizedComponentName);
 
     let content: string | null = null;
     let dtsPath: string | null = null;
@@ -374,7 +423,9 @@ async function extractPropsFromTypeDefinition(
     });
 
     if (basicProps.length > 0) {
-      console.log(`    ℹ️  Using basic props inference`);
+      console.log(
+        `    ℹ️  Using basic props inference (${basicProps.length} props)`
+      );
     } else {
       console.log(`    ⚠️  No props found`);
     }
@@ -565,12 +616,6 @@ async function generateManifest() {
         normalizedName
       );
 
-      if (props.length > 0) {
-        console.log(`    ✅ Found ${props.length} props`);
-      } else {
-        console.log(`    ⚠️  No props found`);
-      }
-
       // Get related components (other components in the same directory)
       const relatedComponents = subComponents
         .filter((name) => name !== componentName)
@@ -594,15 +639,24 @@ async function generateManifest() {
     }
   }
 
-  // マニフェストファイルを保存
+  // Sort components by name for consistency
+  components.sort((a, b) => a.name.localeCompare(b.name));
+
+  // マニフェストファイルを保存（メタデータ付き）
   const outputDir = join(rootDir, "src", "mcp", "data");
   await mkdir(outputDir, { recursive: true });
 
-  const outputPath = join(outputDir, "components-manifest.json");
-  await writeFile(outputPath, JSON.stringify(components, null, 2));
+  const serendieUiVersion = await getSerendieUiVersion();
+  const manifestWithMetadata = {
+    metadata: {
+      serendieUiVersion,
+      generatedAt: new Date().toISOString(),
+    },
+    components,
+  };
 
-  // Sort components by name for consistency
-  components.sort((a, b) => a.name.localeCompare(b.name));
+  const outputPath = join(outputDir, "components-manifest.json");
+  await writeFile(outputPath, JSON.stringify(manifestWithMetadata, null, 2));
 
   // Summary statistics
   const documented = components.filter((c) => c.hasDocumentation).length;
@@ -614,8 +668,17 @@ async function generateManifest() {
   console.log(`📁 Output: ${outputPath}`);
 }
 
+// Main execution with cache check
+async function main() {
+  const shouldRegenerate = await shouldRegenerateManifest();
+
+  if (shouldRegenerate) {
+    await generateManifest();
+  }
+}
+
 // スクリプトを実行
-generateManifest().catch((error) => {
+main().catch((error) => {
   console.error("❌ Error generating manifest:", error);
   process.exit(1);
 });
