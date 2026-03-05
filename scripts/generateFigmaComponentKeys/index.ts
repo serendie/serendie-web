@@ -76,13 +76,13 @@ async function main() {
   const componentSetNodeIds = componentSets.map(
     (componentSet) => componentSet.node_id
   );
+  const componentNodeIds = components.map((component) => component.node_id);
 
   console.log("Resolving component property definitions from Figma nodes...");
-  const nodeDocumentsById = await collectNodeDocumentsById(
-    token,
-    fileKey,
-    componentSetNodeIds
-  );
+  const nodeDocumentsById = await collectNodeDocumentsById(token, fileKey, [
+    ...componentSetNodeIds,
+    ...componentNodeIds,
+  ]);
 
   const componentKeysMap = buildComponentKeysMap({
     componentSets,

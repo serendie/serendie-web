@@ -44,6 +44,7 @@ export interface FigmaComponent {
   name: string;
   description: string;
   node_id: string;
+  component_set_id?: string | null;
 }
 
 export interface FigmaComponentsResponse {
@@ -73,6 +74,7 @@ export interface FigmaNodeDocument {
     string,
     FigmaComponentPropertyDefinition
   >;
+  componentSetId?: string;
 }
 
 export interface FigmaNodesResponse {

@@ -18,7 +18,7 @@
     "translations:pull": "node --import tsx ./scripts/translations/pull.ts",
     "translations:push": "node --import tsx ./scripts/translations/push.ts",
     "format": "prettier --write .",
-    "component-keys:generate": "node --import tsx ./scripts/generateComponentKeys/index.ts",
+    "figma-component-keys:generate": "node --import tsx ./scripts/generateFigmaComponentKeys/index.ts",
     "preview": "astro preview",
     "preview:workers": "npm run build:panda && npm run build:components && npm run build:preview && astro build && cp _redirects dist/_redirects && echo '_worker.js' >> dist/.assetsignore && echo '_routes.json' >> dist/.assetsignore && npx wrangler dev",
     "astro": "astro",

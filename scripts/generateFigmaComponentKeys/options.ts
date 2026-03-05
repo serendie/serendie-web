@@ -7,9 +7,9 @@ const DEFAULT_OUTPUT_PATH = path.resolve(
 const OUT_FLAG = "--out";
 
 /**
- * generateComponentKeysスクリプトのCLIオプション。
+ * generateFigmaComponentKeysスクリプトのCLIオプション。
  */
-export interface GenerateComponentKeysCliOptions {
+export interface GenerateFigmaComponentKeysCliOptions {
   outputPath: string;
 }
 
@@ -31,7 +31,7 @@ function resolveOutValue(argv: string[]): string | undefined {
  */
 export function parseCliOptions(
   argv: string[]
-): GenerateComponentKeysCliOptions {
+): GenerateFigmaComponentKeysCliOptions {
   const hasOutFlag = argv.includes(OUT_FLAG);
 
   const outValue = resolveOutValue(argv);

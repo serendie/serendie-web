@@ -33,6 +33,25 @@ describe("buildComponentKeysMap", () => {
         node_id: "2:2",
       },
       {
+        key: "cmp_button_variant_by_set_id",
+        name: "ButtonVariantShouldBeSkipped",
+        description: "variant child with component_set_id",
+        node_id: "2:4",
+        component_set_id: "set_button",
+      },
+      {
+        key: "cmp_button_variant_by_name",
+        name: "Shape=Rectangle, Size=Medium, Type=Ghost, State=Focused",
+        description: "variant child by naming",
+        node_id: "2:5",
+      },
+      {
+        key: "cmp_button_variant_by_node",
+        name: "ButtonVariantByNodeDocument",
+        description: "variant child with componentSetId",
+        node_id: "2:6",
+      },
+      {
         key: "cmp_button_duplicate",
         name: "Button",
         description: "duplicate",
@@ -58,6 +77,9 @@ describe("buildComponentKeysMap", () => {
               ],
             },
           },
+        },
+        "2:6": {
+          componentSetId: "set_button",
         },
       },
     });
@@ -97,6 +119,11 @@ describe("buildComponentKeysMap", () => {
       ],
     });
     expect(map.Badge?.type).toBe("COMPONENT");
+    expect(map.ButtonVariantShouldBeSkipped).toBeUndefined();
+    expect(
+      map["Shape=Rectangle, Size=Medium, Type=Ghost, State=Focused"]
+    ).toBeUndefined();
+    expect(map.ButtonVariantByNodeDocument).toBeUndefined();
   });
 
   it("参照解決できないINSTANCE_SWAPは除外する", () => {

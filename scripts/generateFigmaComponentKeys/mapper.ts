@@ -179,11 +179,43 @@ function mergeComponentSetProperties(
  */
 function mergeStandaloneComponents(
   componentKeys: ComponentKeysMap,
-  components: FigmaComponent[]
+  components: FigmaComponent[],
+  nodeDocumentsById: Record<string, FigmaNodeDocument | undefined>
 ) {
+  const variantNamePattern = /(?:^|,\s*)[^=,\s][^=,]*=[^=,]+/;
+
+  const isNonEmptyString = (
+    value: string | null | undefined
+  ): value is string => typeof value === "string" && value.trim().length > 0;
+
+  const isComponentSetChild = (component: FigmaComponent): boolean => {
+    if (isNonEmptyString(component.component_set_id)) {
+      return true;
+    }
+
+    const nodeDocument = nodeDocumentsById[component.node_id];
+    if (isNonEmptyString(nodeDocument?.componentSetId)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isVariantLikeName = (name: string): boolean =>
+    name.includes("/") || variantNamePattern.test(name);
+
   for (const component of components) {
     const name = component.name.trim();
-    if (name.includes("/") || componentKeys[name]) {
+    if (componentKeys[name]) {
+      continue;
+    }
+
+    if (isComponentSetChild(component)) {
+      continue;
+    }
+
+    // component_set判定が取れないケースへの保険として、variant子に見える命名を除外する。
+    if (isVariantLikeName(name)) {
       continue;
     }
 
@@ -207,7 +239,11 @@ export function buildComponentKeysMap(
     input.componentSets
   );
   mergeComponentSetProperties(componentKeys, input.nodeDocumentsById, indexes);
-  mergeStandaloneComponents(componentKeys, input.components);
+  mergeStandaloneComponents(
+    componentKeys,
+    input.components,
+    input.nodeDocumentsById
+  );
 
   return componentKeys;
 }
