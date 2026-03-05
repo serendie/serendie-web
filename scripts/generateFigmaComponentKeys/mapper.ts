@@ -13,6 +13,8 @@ interface BuildComponentKeysMapInput {
   nodeDocumentsById: Record<string, FigmaNodeDocument | undefined>;
 }
 
+const VARIANT_NAME_PATTERN = /(?:^|,\s*)[^=,\s][^=,]*=[^=,]+/;
+
 interface ComponentSetIndexes {
   nameByNodeId: Map<string, string>;
   nameByKey: Map<string, string>;
@@ -26,7 +28,7 @@ function toComponentSetInfo(componentSet: FigmaComponent): ComponentKeyInfo {
   return {
     key: componentSet.key,
     name,
-    description: componentSet.description || "",
+    description: componentSet.description,
     nodeId: componentSet.node_id,
     type: "COMPONENT_SET",
   };
@@ -182,8 +184,6 @@ function mergeStandaloneComponents(
   components: FigmaComponent[],
   nodeDocumentsById: Record<string, FigmaNodeDocument | undefined>
 ) {
-  const variantNamePattern = /(?:^|,\s*)[^=,\s][^=,]*=[^=,]+/;
-
   const isNonEmptyString = (
     value: string | null | undefined
   ): value is string => typeof value === "string" && value.trim().length > 0;
@@ -202,7 +202,7 @@ function mergeStandaloneComponents(
   };
 
   const isVariantLikeName = (name: string): boolean =>
-    name.includes("/") || variantNamePattern.test(name);
+    name.includes("/") || VARIANT_NAME_PATTERN.test(name);
 
   for (const component of components) {
     const name = component.name.trim();
@@ -222,7 +222,7 @@ function mergeStandaloneComponents(
     componentKeys[name] = {
       key: component.key,
       name,
-      description: component.description || "",
+      description: component.description,
       nodeId: component.node_id,
       type: "COMPONENT",
     };
