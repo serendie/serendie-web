@@ -12,18 +12,6 @@ import { parseCliOptions } from "./options";
 const NODE_FETCH_BATCH_SIZE = 50;
 
 /**
- * ノードID配列から重複を除去し、Figma API呼び出し回数を最小化する。
- */
-function uniqueNodeIds(nodeIds: string[]): string[] {
-  const unique = new Set<string>();
-  for (const nodeId of nodeIds) {
-    unique.add(nodeId);
-  }
-
-  return [...unique];
-}
-
-/**
  * ノードID配列を指定サイズで分割する。
  * Figma Nodes APIのURL長制限対策として利用する。
  */
@@ -43,12 +31,13 @@ async function collectNodeDocumentsById(
   fileKey: string,
   nodeIds: string[]
 ) {
+  const batches = chunkNodeIds([...new Set(nodeIds)], NODE_FETCH_BATCH_SIZE);
+  const responses = await Promise.all(
+    batches.map((batchIds) => getFileNodes(token, fileKey, batchIds))
+  );
+
   const nodeDocumentsById: Record<string, FigmaNodeDocument | undefined> = {};
-  const batches = chunkNodeIds(uniqueNodeIds(nodeIds), NODE_FETCH_BATCH_SIZE);
-
-  for (const batchIds of batches) {
-    const response = await getFileNodes(token, fileKey, batchIds);
-
+  for (const response of responses) {
     for (const [nodeId, nodeData] of Object.entries(response.nodes)) {
       nodeDocumentsById[nodeId] = nodeData.document;
     }
