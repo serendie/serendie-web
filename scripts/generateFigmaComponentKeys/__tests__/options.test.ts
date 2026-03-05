@@ -6,7 +6,7 @@ describe("parseCliOptions", () => {
   it("デフォルト出力先を返す", () => {
     const options = parseCliOptions([]);
     expect(options.outputPath).toBe(
-      path.resolve(process.cwd(), "src/mcp/data/component-keys.json")
+      path.resolve(process.cwd(), "public/assets/component-keys.json")
     );
   });
 

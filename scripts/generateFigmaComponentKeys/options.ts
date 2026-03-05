@@ -2,7 +2,7 @@ import path from "node:path";
 
 const DEFAULT_OUTPUT_PATH = path.resolve(
   process.cwd(),
-  "src/mcp/data/component-keys.json"
+  "public/assets/component-keys.json"
 );
 const OUT_FLAG = "--out";
 

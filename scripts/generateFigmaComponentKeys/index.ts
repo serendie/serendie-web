@@ -32,9 +32,10 @@ async function collectNodeDocumentsById(
   nodeIds: string[]
 ) {
   const batches = chunkNodeIds([...new Set(nodeIds)], NODE_FETCH_BATCH_SIZE);
-  const responses = await Promise.all(
-    batches.map((batchIds) => getFileNodes(token, fileKey, batchIds))
-  );
+  const responses = [];
+  for (const batchIds of batches) {
+    responses.push(await getFileNodes(token, fileKey, batchIds));
+  }
 
   const nodeDocumentsById: Record<string, FigmaNodeDocument | undefined> = {};
   for (const response of responses) {
