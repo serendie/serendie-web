@@ -29,7 +29,7 @@ src/mcp/
 │   ├── components.ts      # Component-related schemas for type safety
 │   └── serendie-ui-overview.ts  # Schema for overview tool response
 ├── data/                  # Generated data files
-│   └── components-manifest.json  # Auto-generated component manifest (run: npm run build:components)
+│   └── components-manifest.json  # Auto-generated component manifest (run: npm run build:componentsManifest)
 ├── __tests__/            # Test files
 │   ├── server.test.ts    # Main server tests
 │   ├── integration/      # Integration tests (placeholder for future tests)
@@ -521,7 +521,7 @@ Each component entry includes:
 Run this command to regenerate the manifest:
 
 ```bash
-npm run build:components
+npm run build:componentsManifest
 ```
 
 This command should be run:

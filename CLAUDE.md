@@ -22,7 +22,7 @@ npm run dev              # Start dev server (builds Panda CSS first)
 npm run build            # Full production build
 npm run build:panda      # Regenerate Panda CSS styles and types
 npm run build:tokens     # Rebuild design tokens from Style Dictionary
-npm run build:components # Regenerate component manifest for MCP server
+npm run build:componentsManifest # Regenerate component manifest for MCP server
 
 # Code Quality
 npm run lint             # Run ESLint

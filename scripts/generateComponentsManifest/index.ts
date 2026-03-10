@@ -595,7 +595,7 @@ async function generateManifest() {
   }
 
   // マニフェストファイルを保存
-  const outputDir = join(rootDir, "src", "mcp", "data");
+  const outputDir = join(rootDir, "public", "assets");
   await mkdir(outputDir, { recursive: true });
 
   const outputPath = join(outputDir, "components-manifest.json");
