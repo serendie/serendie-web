@@ -7,7 +7,7 @@ import {
   type GetComponentDetailResponse,
 } from "../schemas/components.js";
 // ビルド時に生成されるマニフェストを静的インポート
-import componentsManifest from "../data/components-manifest.json";
+import componentsManifest from "../../../public/assets/components-manifest.json";
 import { getCategoryKeys } from "../data/component-categories.js";
 
 // コンポーネントマニフェストのインターフェース

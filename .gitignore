@@ -33,5 +33,7 @@ src/mcp/__tests__/outputs/
 
 .wrangler
 
+public/assets/components-manifest.json
+public/assets/component-keys.json
 src/mcp/data/components-manifest.json
 src/mcp/ui/preview.html

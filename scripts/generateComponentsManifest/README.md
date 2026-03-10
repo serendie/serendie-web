@@ -14,7 +14,7 @@ The script extracts component information from:
 ## Usage
 
 ```bash
-npm run build:components
+npm run build:componentsManifest
 ```
 
 ## Output
