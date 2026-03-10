@@ -37,34 +37,30 @@ describe("resolveFigmaEnv", () => {
     expect(result).toEqual({ token: "fpat-789", fileKey: "file-ghi" });
   });
 
-  it("トークンが未設定の場合はエラー", () => {
+  it("トークンが未設定の場合はnullを返す", () => {
     delete process.env.FIGMA_ACCESS_TOKEN;
     delete process.env.PERSONAL_ACCESS_TOKEN;
     delete process.env.FIGMA_PERSONAL_ACCESS_TOKEN;
     process.env.FIGMA_FILE_KEY = "file-abc";
 
-    expect(() => resolveFigmaEnv()).toThrow(
-      "FIGMA_ACCESS_TOKEN (or PERSONAL_ACCESS_TOKEN) and FIGMA_FILE_KEY (or FILE_KEY) are required."
-    );
+    expect(resolveFigmaEnv()).toBeNull();
   });
 
-  it("ファイルキーが未設定の場合はエラー", () => {
+  it("ファイルキーが未設定の場合はnullを返す", () => {
     process.env.FIGMA_ACCESS_TOKEN = "token-123";
     delete process.env.FIGMA_FILE_KEY;
     delete process.env.FILE_KEY;
 
-    expect(() => resolveFigmaEnv()).toThrow(
-      "FIGMA_ACCESS_TOKEN (or PERSONAL_ACCESS_TOKEN) and FIGMA_FILE_KEY (or FILE_KEY) are required."
-    );
+    expect(resolveFigmaEnv()).toBeNull();
   });
 
-  it("両方とも未設定の場合はエラー", () => {
+  it("両方とも未設定の場合はnullを返す", () => {
     delete process.env.FIGMA_ACCESS_TOKEN;
     delete process.env.PERSONAL_ACCESS_TOKEN;
     delete process.env.FIGMA_PERSONAL_ACCESS_TOKEN;
     delete process.env.FIGMA_FILE_KEY;
     delete process.env.FILE_KEY;
 
-    expect(() => resolveFigmaEnv()).toThrow();
+    expect(resolveFigmaEnv()).toBeNull();
   });
 });

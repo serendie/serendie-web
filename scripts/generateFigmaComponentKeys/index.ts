@@ -53,7 +53,14 @@ async function collectNodeDocumentsById(
  */
 async function main() {
   const options = parseCliOptions(process.argv.slice(2));
-  const { token, fileKey } = resolveFigmaEnv();
+  const env = resolveFigmaEnv();
+  if (!env) {
+    console.warn(
+      "⚠️  Skipping component keys generation: FIGMA_ACCESS_TOKEN and FIGMA_FILE_KEY are not set."
+    );
+    return;
+  }
+  const { token, fileKey } = env;
 
   console.log("Generating component keys from Figma data...");
   const [componentsResponse, componentSetsResponse] = await Promise.all([

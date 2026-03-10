@@ -39,7 +39,10 @@ async function figmaRequest<T>(
  * - token: `FIGMA_ACCESS_TOKEN` 系
  * - fileKey: `FIGMA_FILE_KEY` 系
  */
-export function resolveFigmaEnv() {
+export function resolveFigmaEnv(): {
+  token: string;
+  fileKey: string;
+} | null {
   const token =
     process.env.FIGMA_ACCESS_TOKEN ||
     process.env.PERSONAL_ACCESS_TOKEN ||
@@ -47,9 +50,7 @@ export function resolveFigmaEnv() {
   const fileKey = process.env.FIGMA_FILE_KEY || process.env.FILE_KEY;
 
   if (!token || !fileKey) {
-    throw new Error(
-      "FIGMA_ACCESS_TOKEN (or PERSONAL_ACCESS_TOKEN) and FIGMA_FILE_KEY (or FILE_KEY) are required."
-    );
+    return null;
   }
 
   return { token, fileKey };
