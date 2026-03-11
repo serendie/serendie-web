@@ -1,0 +1,169 @@
+---
+title: Serendie Figma Plugin
+slug: get-started/sds-for-ai/serendie-figma-plugin
+parent: get-started/sds-for-ai
+illustType: "B"
+description: "Serendie Design Linterは、あなたのFigmaデザインがSerendie Design Systemのガイドラインに沿っているかを自動でチェックできるFigmaプラグインです。"
+lastUpdated: "2025-01-06"
+subLinks:
+  [
+    { name: "SDS for AI", path: "/get-started/sds-for-ai" },
+    { name: "MCPサーバー", path: "/get-started/sds-for-ai/mcp-server" },
+    { name: "LLMs.txt", path: "/get-started/sds-for-ai/llms-txt" },
+    {
+      name: "Serendie Figma Plugin",
+      path: "/get-started/sds-for-ai/serendie-figma-plugin",
+    },
+  ]
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+
+Serendie Design Linterは、あなたのFigmaデザインがSerendie Design Systemのガイドラインに沿っているかを自動で検証できるFigmaプラグインです。困ったときにはAIアシスタントに相談することもできます。
+
+<PageARef href="https://www.figma.com/community/plugin/xxxx">
+  Figma Communityからインストール
+</PageARef>
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-design-1.avif"
+    width="310"
+    alt="Design Linterのメイン画面"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+
+<PageHeadLine number={0}>機能</PageHeadLine>
+
+### 相談機能
+
+Serendie Design Systemを使う上でわからないことがあれば、Figma上でAIに相談できます。
+
+「この色はどのカラーロールを使えばいい？」「このテキストにはどのタイポグラフィトークンが適切？」といった疑問を、チャット形式で気軽に質問できます。「AIに相談する」ボタンを押すと、チャット画面が開きます。選択した要素のスクリーンショットが自動的にAIに共有されるので、状況を説明する手間なく、すぐに質問できます。
+
+AIアシスタントはSerendie Design Systemの仕様やMaterial Design 3などの関連するデザインシステムの設計思想を参照しながら、具体的な改善方法やベストプラクティスについてアドバイスを提供します。
+
+### 検証機能
+
+コンポーネントを制作する際に、デザイントークンが正しく使われているかを自動で検証できます。
+
+Figmaで要素を選択して「検証する」ボタンを押すだけで、以下の観点から検証が行われます。
+
+- **ロールの検証**: テキストと背景に適切な[カラーロール](/foundations/color/role/)が設定されているか、テキストに適切な[タイポグラフィロール](/foundations/typography/#section-4)が設定されているかを検証します。
+- **Dimensionトークンの検証**: AutoLayoutなどに[Dimensionトークン](/foundations/dimension/)が設定されているかを検証します。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>セットアップ</PageHeadLine>
+
+### 1. プラグインのインストール
+
+[Figma Community](https://www.figma.com/community/plugin/xxxx)からプラグインをインストールしてください。
+
+### 2. OpenAI APIキーの設定
+
+AIに相談する機能を使うには、OpenAIのAPIキーが必要です。APIキーをお持ちでない場合は、[OpenAI Platform](https://platform.openai.com/)にアクセスして取得してください。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>使い方</PageHeadLine>
+
+### 1. AIに相談する
+
+Serendie Design Systemについてわからないことがあれば、AIに相談してみましょう。
+
+1. Figmaで相談したい要素を選択します
+2. プラグインの「AIに相談する」ボタンをクリックします
+3. チャット画面が開きます
+4. 質問候補から選ぶか、自由に質問を入力してください
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-design-3.avif"
+    width="310"
+    alt="AIチャット画面の例"
+  />
+</p>
+
+チャット画面では、選択した要素のスクリーンショットが自動的にAIに共有されます。「ここの色はどのカラーロールを指定したらいい？」「別のアプローチはある？」など、気軽に質問できます。
+
+AIアシスタントは、以下の情報を参照しながら回答します。
+
+- Serendie Design Systemの情報
+  - コンポーネント仕様
+  - デザイントークンの定義と使い方
+- 他のデザインシステムの公開情報
+  - Google Material Design 3の設計思想
+  - Ark UIなどの参考実装パターン
+
+### 2. デザインを検証する
+
+コンポーネントを制作する際は、デザインを検証してみましょう。
+
+1. Figmaで検証したい要素を選択します
+2. プラグインの「検証する」ボタンをクリックします
+3. 検証結果が一覧で表示されます
+
+<p>
+  <img
+    src="/assets/pages/getstarted/getstarted-design-2.avif"
+    width="310"
+    alt="検証結果の表示例"
+  />
+</p>
+
+検証結果は3種類のアイコンで表示されます。
+
+- **エラー**: ルールに沿っていない箇所があり、修正が必要です
+- **警告**: ロールが設定されていないなど、確認をおすすめする箇所です
+- **正常**: 問題ありません
+
+検証結果の項目をクリックすると、Figma上で該当する要素が選択されます。どこに問題があるのかすぐに確認できます。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>よくある質問</PageHeadLine>
+
+### 「ロール以外」という警告が出ます
+
+Serendie Design Systemのロールではなく、手動で色を指定している状態です。
+
+Serendie UI Kitライブラリのカラーロールを適用してください。バリアブルパネルから「sd/system/color/...」で始まるバリアブルを選ぶと、この警告は解消されます。
+
+### カラーペアリングのエラーが出ます
+
+テキストの色と背景の色の組み合わせが、推奨されるルールに合っていない状態です。
+
+エラーメッセージに表示される「提案」を参考に、色の組み合わせを修正してください。たとえば、背景が`primary`ならテキストは`onPrimary`にする、といった対応が必要です。
+
+### 「AIに相談する」ボタンが出てきません
+
+OpenAI APIキーが設定されていない可能性があります。プラグイン右上の設定アイコンからAPIキーを入力してください。
+
+### データの取り扱いについて
+
+AIに相談する機能を使うと、選択した要素のスクリーンショット、検証結果のテキスト情報、チャットでの会話内容がOpenAI APIに送信されます。
+
+OpenAIのAPIポリシーでは、API経由で送信されたデータはAIモデルの学習には使用されません。最新の情報は[OpenAIの利用規約](https://openai.com/policies/terms-of-use)からご確認ください。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={6}>参考リンク</PageHeadLine>
+
+- [Foundations - Color](/foundations/color)
+- [Foundations - Color Role](/foundations/color/role)
+- [Foundations - Design Tokens](/foundations/design-tokens)
+- [Get Started - Design](/get-started/design)
+
+</PageSection>
