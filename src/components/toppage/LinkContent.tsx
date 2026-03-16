@@ -56,7 +56,7 @@ const linkContentExpandedStyle = sva({
       },
     },
     scrollContainer: {
-      height: "300vh",
+      height: "400vh",
       position: "sticky",
     },
     container: {
