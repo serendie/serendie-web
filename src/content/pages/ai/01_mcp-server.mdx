@@ -14,27 +14,18 @@ import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
 <PageSection>
   <PageHeadLine number={0}>Serendie MCPサーバーとは</PageHeadLine>
 
-Serendie MCPサーバーは、デザインシステムを利用するユーザーが、AIエージェントを用いて快適にアプリケーションをデザイン・開発するための<a href="https://modelcontextprotocol.io/introduction" target="_blank">Model Context Protocol</a>サーバーです。
+Serendie MCPサーバーは、Serendie Design SystemをAIエージェントから効率的に活用するための<a href="https://modelcontextprotocol.io/introduction" target="_blank">Model Context Protocol</a>サーバーです。
 
-このMCPサーバーを、各種AIエージェントに接続することで、Serendie Design Systemが提供するガイドラインやベストプラクティス、コンポーネントやアイコンをはじめとするリソース一覧などをAIが自律的に入手できるようになります。
+このMCPサーバーを、各種AIエージェントに接続することで、Serendie Design Systemが提供するガイドラインやベストプラクティス、コンポーネントやアイコンをはじめとするリソース一覧などをAIが自律的に入手できるようになります。これにより、Serendie Design Systemに則ったアプリケーション開発ワークフローを実現できます。
 
-</PageSection>
+Serendie MCP サーバーは、リモートMCPサーバー(Streamable HTTP Transport形式)として公開しており、下記のエンドポイントを指定することで、ローカルでのセットアップなしにすぐに利用を始められます。
 
-<PageSection>
-  <PageHeadLine number={1}>Model Context Protocol (MCP)とは</PageHeadLine>
-
-Model Context Protocolは、AIエージェントが外部のデータソースやサービスに接続するためのオープンなプロトコルです。Serendie MCPサーバーでは、本サイトで公開しているガイドラインや、Serendie UIの型情報などを提供しています。Serendie MCPサーバーを使うことで、Serendie Design Systemに則ったアプリケーション開発ワークフローを実現できます。
-
-Serendie MCP サーバーは、リモートMCPサーバー(Streamable HTTP Transport形式)として公開しており、ローカルでのセットアップなしにすぐに利用を始められます。
-
-<PageARef href="https://modelcontextprotocol.io/docs/getting-started/intro">
-  What is the Model Context Protocol (MCP)? - Model Context Protocol
-</PageARef>
+<CodeBox code={`https://serendie.design/mcp`} language={"shell"} />
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={2}>ツールセット</PageHeadLine>
+  <PageHeadLine number={1}>ツールセット</PageHeadLine>
 
 MCPサーバーでは「ツール」という単位で、AIエージェントに道具の提供を行います。どのツールを使うのかは、AIエージェントが、プロンプトやコンテキストに基づいて決定します。現在Serendie MCPサーバーが提供しているツールは以下の通りです。
 
@@ -53,20 +44,19 @@ MCPサーバーでは「ツール」という単位で、AIエージェントに
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={3}>ユースケース</PageHeadLine>
+  <PageHeadLine number={2}>ユースケース</PageHeadLine>
 
 ## 自然言語によるプロトタイピング
 
-[Cursor](https://cursor.com/ja)や[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)
-など各種Agentic Codingツールを用いることで、自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
+[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)や[Figma Make](https://www.figma.com/ja-jp/make/)など、各種Agentic Codingツールを用いることで自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
 
-特にSerendie MCPのOverviewツールにより、Serendie UIのイントロダクションが提供されるため、Serendie UIを使うためのセットアップをAIエージェントが自律的行うことができます。また、各種リソース取得ツールを用いることで、AIエージェントはコンテキスト消費量を抑えながら、Serendie UIの活用に必要な知識を得ることができます。これはAgentic Codingにおいて質の高いプロトタイピングの実現に繋がります。
+Serendie MCPのOverviewツールにより、Serendie UIのイントロダクションが提供されるため、Serendie UIを使うためのセットアップをAIエージェントが自律的行うことができます。また、各種リソース取得ツールを用いることで、AIエージェントはSerendie UIの活用に必要な知識を効率的に得ることができます。これはAgentic Codingにおいて質の高いプロトタイピングの実現に繋がります。
 
 ## デザインから実装する
 
-Serendie UIは、Figmaコンポーネント(デザイン)とReactコンポーネント(実装) がセットで提供されていることが特徴の一つです。FigmaのMCPサーバーである<a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP サーバー</a>と、Serendie MCPサーバーを併用することで、<a href="https://serendie.design/get-started/design/" target="_blank">Serendie UI Kit</a>によるデザインを、高速かつ高品質に実装することが可能です。
+Serendie UIは、Figmaコンポーネント（デザイン）とReactコンポーネント（実装） がセットで提供され、<a href="https://help.figma.com/hc/ja/articles/23920389749655-Code-Connect" target="_blank">Figma Code Connect</a>による対応付けがされています。これにより、Serendie MCPサーバーと<a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP サーバー</a>を併用することで、<a href="https://serendie.design/get-started/design/" target="_blank">Serendie UI Kit</a>によるデザインを、高速かつ高品質に実装することが可能です。
 
-Figma MCPサーバーを用いることで、AIエージェントは、デザインデータ (レイヤー情報) の読み取りが可能になります。これにより、 **「現在選択しているFigma上のデザインを、Serendie UIで実装して」** のように伝えることで、AIエージェントは自律的にSerendie UIのセットアップ、各種コンポーネントの使い方などの知識を得ながら、プロジェクト環境に応じた高品質なコードを生成できます。
+Figma MCPサーバーを用いることで、AIエージェントは、デザインデータの読み取りが可能になります。MCPサーバーを設定のうえ、**「現在選択しているFigma上のデザインを、Serendie UIで実装して」** のようにお使いのAIエージェントに伝えることで、Serendie UIのセットアップ、各種コンポーネントの使い方などの知識を自律的に得ながら、プロジェクト環境に応じた高品質なコードを生成できます。
 
 <PageARef href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server">
   Guide to the Figma MCP server – Figma Learn - Help Center
@@ -83,7 +73,7 @@ Figma MCPサーバーを用いることで、AIエージェントは、デザイ
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={4}>セットアップ</PageHeadLine>
+  <PageHeadLine number={3}>セットアップ</PageHeadLine>
 
 ## Claude Code
 
@@ -94,13 +84,17 @@ Figma MCPサーバーを用いることで、AIエージェントは、デザイ
   language={"shell"}
 />
 
-## VSCode / GitHub Copilot
+## Cursor
 
-1. **ショートカット ⌘ Shift P を押下**
-   1. MCP サーバーをグローバルに使いたい場合： **MCP: ユーザー設定を開く** を選択します。
-   2. 現在のワークスペース内でのみ使いたい場合： **MCP: ワークスペースフォルダー MCP 設定を開く** を選択します。
+下記のリンクをクリックすることで、自動的にMCPサーバーが追加されます。
 
-2. **mcp.json**ファイルの中に、下記のようにサーバーの設定を記入後、スタートを押下
+<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
+  Cursor Deep Link
+</PageARef>
+
+## Visual Studio Code / GitHub Copilot
+
+Visual Studio Code内の<a href="https://docs.github.com/ja/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp" target="\_blank">コマンドパレットからMCPの設定</a>を開き、mcp.json内に下記を追記してください。
 
 <CodeBox
   code={`{
@@ -115,18 +109,21 @@ Figma MCPサーバーを用いることで、AIエージェントは、デザイ
   language={"json"}
 />
 
-## Cursor
+## Figma Make
 
-こちらのリンクをクリックすることで、自動的にMCPサーバーが追加されます。
+Figma Makeでは、Figmaワークスペースの管理者がカスタムコネクターを設定することで、Serendie MCPサーバーを利用できます。カスタムコネクター内では、エンドポイント **https://serendie.design/mcp** を指定してください。
 
-<PageARef href="https://cursor.com/ja/install-mcp?name=serendie-mcp&config=eyJ1cmwiOiJodHRwczovL3NlcmVuZGllLmRlc2lnbi9tY3AifQ%3D%3D">
-  Cursor Deep Link
+<PageARef href="https://help.figma.com/hc/en-us/articles/36343926263703-Manage-connectors-in-Figma-Make">
+  Manage connectors in Figma Make
+</PageARef>
+<PageARef href="https://help.figma.com/hc/en-us/articles/38147204302743-Create-and-use-custom-MCP-connectors-in-Figma-Make">
+  Create and use custom MCP connectors in Figma Make
 </PageARef>
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={5}>LLMs.txt</PageHeadLine>
+  <PageHeadLine number={4}>LLMs.txt</PageHeadLine>
 
 LLMs.txtは、Serendie UIの各種ドキュメントを、AIエージェントが効率よく利用できるようにサポートするファイルです。MCPサーバーを利用できないシーンなどで、このLLMs.txtをお使いのAIエージェントに指定することで、本サイトで提供しているガイドライン相当の情報を得ることができます。
 
