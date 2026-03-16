@@ -20,7 +20,7 @@ const pagesCollection = defineCollection({
     // ページの更新日
     lastUpdated: z.string().optional(),
     // ヘッダの画像のタイプ
-    illustType: z.enum(["A", "B", "C", "D"]).optional(),
+    illustType: z.enum(["A", "B", "C", "D", "E"]).optional(),
     // ヘッダの画像のサイズ（これを指定するとヘッダー下部のボーダーが表示されなくなる
     illustSize: z.enum(["large", "small"]).optional(),
     // 右サイドバーを使わずに幅ギリギリまでつかう
