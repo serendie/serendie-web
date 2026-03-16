@@ -1,1 +1,10 @@
 /storybook/* https://storybook.serendie.design/:splat 301
+/get-started/sds-for-ai /ai 301
+/get-started/sds-for-ai/mcp-server /ai/mcp-server 301
+/get-started/sds-for-ai/llms-txt /ai/llms-txt 301
+/get-started/sds-for-ai/serendie-figma-plugin /ai/serendie-ui-copilot-plugin 301
+/get-started/ai-agent/mcp-server /ai/mcp-server 301
+/get-started/ai-agent/llms-txt /ai/llms-txt 301
+/en/get-started/ai-agent/mcp-server /en/ai/mcp-server 301
+/en/get-started/ai-agent/llms-txt /en/ai/llms-txt 301
+/en/get-started/design-linter /en/ai/serendie-ui-copilot-plugin 301

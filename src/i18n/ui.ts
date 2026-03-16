@@ -48,6 +48,7 @@ export const ui = {
     "hero.description":
       "Serendie Design Systemは、多様な事業と人々をつなぎ、新たな価値を生み出すための三菱電機によるオープンなデザインシステムです。",
     "nav.about": "About",
+    "nav.ai": "AI",
     "nav.components": "Components",
     "nav.foundations": "Foundations",
     "nav.getStarted": "Get Started",
@@ -103,6 +104,7 @@ export const ui = {
     "hero.description":
       "An open design system that facilitates the realization of ideas through collaboration between people and technology.",
     "nav.about": "About",
+    "nav.ai": "AI",
     "nav.components": "Components",
     "nav.foundations": "Foundations",
     "nav.getStarted": "Get Started",
