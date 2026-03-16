@@ -1,2 +1,4 @@
 /storybook/* https://storybook.serendie.design/:splat 301
+/ai/llms-txt /ai/mcp-server 301
+/en/ai/llms-txt /en/ai/mcp-server 301
 
