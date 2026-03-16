@@ -1,4 +1,4 @@
-# Serendie Design System Website
+# Serendie Design System Web
 
 ## Staging
 

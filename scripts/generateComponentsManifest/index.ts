@@ -1,4 +1,4 @@
-import glob from "glob-promise";
+import { glob } from "glob";
 import { readFile, writeFile, mkdir, readdir } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
