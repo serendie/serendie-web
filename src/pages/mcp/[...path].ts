@@ -13,9 +13,6 @@ const app = new Hono().basePath("/mcp");
 // Add CORS middleware (you can configure this as needed)
 app.use("*", cors());
 
-// Create MCP server instance outside the route handler
-const mcpServer = createMcpServer();
-
 // MCP endpoint
 app.all("/", async (c) => {
   const workerEnv = c.env as Record<string, string | undefined> | undefined;
@@ -25,6 +22,7 @@ app.all("/", async (c) => {
     }).__SERENDIE_WORKER_ENV__ = workerEnv;
   }
 
+  const mcpServer = createMcpServer();
   const transport = new StreamableHTTPTransport();
   await mcpServer.connect(transport);
   return transport.handleRequest(c);
