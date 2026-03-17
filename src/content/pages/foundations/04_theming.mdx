@@ -3,7 +3,7 @@ title: テーミング
 slug: foundations/theming
 description: アクセシビリティ基準を満たしたカラーテーマを5つ提供しています。FigmaとReactコンポーネントそれぞれテーマ切り替えに対応しています。
 illustType: A
-lastUpdated: "2025-07-28"
+lastUpdated: "2026-03-18"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -56,5 +56,17 @@ import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
     例えば、ページに「ASAGI」を割り当てることで、そのページ内の全てのSerendie UIをASAGIテーマに切り替えることができます。
 
     <img src="/assets/pages/getstarted/getstarted-design-5.gif" width="310" alt="theme switcher" />
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={4}>カスタムテーマ (三菱電機向け)</PageHeadLine>
+    事業ブランド(サブブランド)ごとにVisual Identity (VI) が定義されているなど、Serendieブランドのカラーやタイポグラフィが適さない場合があります。その場合はカスタムテーマを定義し、そのテーマによってSerendie UIを上書きする仕組みを用意しています。これを使うことで、Serendie UIの導入メリットはそのままに、各事業のVIを採用することができます。
+
+    詳しくは[GitHubリポジトリ](https://github.com/serendie/subbrands-template)を参照してください。この内容は三菱電機社内での利用を想定しており、利用時にはSerendie Design System運用チームのサポートを受けてください。
+
+    <PageARef href="https://github.com/serendie/subbrands-template">
+      serendie/subbrands-template - GitHub
+    </PageARef>
 
   </PageSection>

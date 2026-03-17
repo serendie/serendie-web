@@ -3,7 +3,7 @@ title: Theming
 slug: en/foundations/theming
 description: "We provide five color themes that meet accessibility standards. Both Figma and React components support switching themes."
 illustType: A
-lastUpdated: "2025-07-28"
+lastUpdated: "2026-03-18"
 ---
 
 import PageHeadLine from "@/components/PageHeadLine.astro";
@@ -56,5 +56,17 @@ import { PageSection, PageARef } from "@/components/PageLayout.tsx";
     For example, assigning “ASAGI” to a page switches all Serendie UI within that page to the ASAGI theme.
 
     <img src="/assets/pages/getstarted/getstarted-design-5.gif" width="310" alt="theme switcher" />
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={4}>Custom themes (for Mitsubishi Electric)</PageHeadLine>
+    In some cases, such as when a Visual Identity (VI) is defined for each business brand (sub-brand), the Serendie brand colors and typography may not be suitable. For such cases, we provide a mechanism to define a custom theme and override Serendie UI with it. This allows you to adopt each business's VI while retaining the benefits of Serendie UI.
+
+    For details, see the [GitHub repository](https://github.com/serendie/subbrands-template). This is intended for internal use within Mitsubishi Electric, and please contact the Serendie Design System operations team for support.
+
+    <PageARef href="https://github.com/serendie/subbrands-template">
+      serendie/subbrands-template - GitHub
+    </PageARef>
 
   </PageSection>
