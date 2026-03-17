@@ -39,5 +39,5 @@ Each component in the manifest includes:
 ## Dependencies
 
 - `react-docgen-typescript`: For extracting TypeScript component props
-- `glob-promise`: For file pattern matching
+- `glob`: For file pattern matching
 - `typescript`: For TypeScript AST parsing (fallback)

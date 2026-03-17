@@ -83,7 +83,7 @@
     "@types/babel__traverse": "^7.20.7",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
-    "glob-promise": "^6.0.7",
+    "glob": "^13.0.6",
     "happy-dom": "^20.8.4",
     "npm-run-all2": "^8.0.4",
     "react-docgen-typescript": "^2.4.0",
