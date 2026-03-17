@@ -3,7 +3,7 @@ title: Figma Plugin
 displayTitle: Serendie UI Copilot
 slug: en/ai/serendie-ui-copilot-plugin
 illustType: "E"
-description: "Serendie UI Copilot Plugin is a Figma plugin that automatically checks whether your Figma designs comply with Serendie Design System guidelines."
+description: "A Figma plugin for designers that lets you ask AI about UI component design and validate whether your designs follow Serendie Design System guidelines."
 lastUpdated: "2026-03-20"
 ---
 
@@ -11,83 +11,53 @@ import PageHeadLine from "@/components/PageHeadLine.astro";
 import { PageSection, PageARef } from "@/components/PageLayout.tsx";
 
 <PageSection>
-  <PageHeadLine number={0}>Overview</PageHeadLine>
+<PageHeadLine number={0}>What is Serendie UI Copilot</PageHeadLine>
 
-Serendie UI Copilot Plugin is a Figma plugin that automatically validates whether your Figma designs comply with Serendie Design System guidelines. You can also consult with an AI assistant when you need help.
+To achieve high-quality AI-powered application development (Agentic Coding), **well-structured designs** are essential. This requires correctly using design tokens and UI components, which in turn demands familiarity with the Serendie Design System (SDS).
 
-<PageARef href="https://www.figma.com/community/plugin/xxxx">
-  Install from Figma Community
-</PageARef>
+Serendie UI Copilot is a **Figma plugin that supports UI design using the Serendie UI Kit**. Its AI-powered consultation and validation/fix features help you create UI designs that follow SDS guidelines.
 
-<p>
-  <img src="/assets/pages/getstarted/getstarted-design-1.avif" width="310" alt="Serendie UI Copilot Plugin main screen" />
-</p>
+It is designed for two main scenarios:
 
-### Validation feature
+- When you need precise designs intended for handoff to engineers (for UI designers)
+- When adding new components to the Serendie UI Kit (for SDS maintainers)
 
-Serendie Design System defines styles such as colors as design tokens. This plugin validates whether design tokens are being used correctly in Figma.
-
-Just select an element in Figma and click the "Validate" button—the plugin performs validation from three perspectives:
-
-- **Color combination validation**: Validates if the combination of system tokens assigned to text and background colors is appropriate.
-- **Text style validation**: Validates if typography system tokens defined in Serendie Design System are correctly applied to text.
-- **Frame variable validation**: Validates if appropriate system tokens are set for backgrounds on frames, rectangles, and similar elements.
-
-### Consultation feature
-
-Consult with AI about UI design directly in Figma.
-
-This is useful when you see validation results and think "I don't know how to fix this" or "I want to know if there's a better approach." Click the "Consult AI" button to open a chat interface. Screenshots of the selected element and validation results are automatically shared with the AI, so you can ask questions immediately without explaining the situation.
-
-The AI assistant provides advice on specific improvements and best practices while referencing Serendie Design System specifications and Material Design 3 design principles.
+Internally, the plugin uses the [Serendie MCP Server](/en/ai/mcp-server) and functions as an AI agent specialized for these scenarios.
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={1}>How to use</PageHeadLine>
+<PageHeadLine number={1}>Features</PageHeadLine>
 
-### 1. Validate your design
+### Ask AI
 
-Let's start by validating your design.
+You can ask about UI component design using the Serendie UI Kit through a chat interface.
 
-1. Select the element you want to validate in Figma
-2. Click the "Validate" button in the plugin
-3. Validation results are displayed as a list
+- "Which design token should I use for the text on this screen?"
+- "How should I use the different properties of the Button component?"
+- "Can you review the component I'm working on?"
+- "I'd like help with naming this component."
+- "What properties does a Slider component need? Please research other design systems."
 
-<p>
-  <img src="/assets/pages/getstarted/getstarted-design-2.avif" width="310" alt="Validation results example" />
-</p>
+These are typical questions. The AI answers while referencing Serendie Design System guidelines and assets. Since Figma context such as the currently selected frame is shared with the AI, you can ask questions immediately without explaining the situation in detail.
 
-Validation results are shown with three types of icons:
+For component design, it's also important to follow UI Kit standards beyond just Serendie UI. Serendie UI Copilot provides advice on specific improvements and best practices while referencing related design systems such as [Material Design 3](https://m3.material.io/) and [Ark UI](https://ark-ui.com/).
 
-- **Error**: Parts that don't follow the rules and require correction
-- **Warning**: Parts that need confirmation, such as missing variable settings
-- **Normal**: No issues
+_＜＜＜Insert image (animated gif of consultation)＞＞＞_
 
-Click on a validation result item to select the corresponding element in Figma. This makes it easy to see where the problem is.
+### Validation & Fix
 
-### 2. Consult AI
+Serendie UI is built on design token rules such as [color roles](/en/foundations/color/role/) and [typography roles](/en/foundations/typography/#section-4). Following these rules ensures accessibility, including proper contrast ratios. The validation feature checks whether selected elements in Figma follow the design token rules.
 
-When you don't understand how to fix something after seeing the validation results, try consulting the AI.
+_＜＜＜Insert image (close-up of design token section in validation)＞＞＞_
 
-1. Click the "Consult AI" button on the validation results screen
-2. A chat interface opens
-3. Choose from suggested questions or enter your own question freely
+It also analyzes the selected screen design and detects areas where Serendie UI components could be used.
 
-<p>
-  <img src="/assets/pages/getstarted/getstarted-design-3.avif" width="310" alt="AI chat screen example" />
-</p>
+_＜＜＜Insert image (close-up of component section in validation)＞＞＞_
 
-In the chat interface, screenshots of the selected element and validation results are automatically shared with the AI. Feel free to ask questions like "What token should I specify for this color?" or "Is there an alternative approach?"
+Detected items can be auto-fixed in bulk. Since the accuracy of fixes varies depending on the complexity of the target screen, use them as a reference.
 
-The AI assistant answers while referencing:
-
-- Serendie Design System information
-  - Component specifications
-  - Design token definitions and usage
-- Public information from other design systems
-  - Google Material Design 3 design principles
-  - Reference implementation patterns such as Ark UI
+_＜＜＜Insert image (animated gif of fix in action)＞＞＞_
 
 </PageSection>
 
@@ -96,99 +66,58 @@ The AI assistant answers while referencing:
 
 ### 1. Installing the plugin
 
-Install the plugin from [Figma Community](https://www.figma.com/community/plugin/xxxx).
+Install the plugin from [Figma Community](https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-copilot).
+
+<PageARef href="https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-copilot">
+  Serendie UI Copilot - Figma Community
+</PageARef>
+
+_＜＜＜Insert image (screenshot)＞＞＞_
 
 ### 2. Setting up your OpenAI API key
 
-To use the AI consultation feature, you need an OpenAI API key.
-
-If you don't have an API key, follow these steps to get one:
-
-1. Visit [OpenAI Platform](https://platform.openai.com/)
-2. Create an account or log in
-3. Create a new key on the "API keys" page
-
-Once you have your API key, configure it in the plugin:
-
-1. Click the settings icon (gear mark) in the top right of the plugin
-2. Enter your OpenAI API key and save
-
-<p>
-  <img src="/assets/pages/getstarted/getstarted-design-4.avif" width="310" alt="Settings screen" />
-</p>
-
-### 3. About API key storage
-
-Your API key is stored only on your device (in Figma's client storage). It is not sent to external servers or shared with other users, so you can use it with peace of mind.
+To use the Ask AI feature, you need an OpenAI API key. If you don't have one, visit [OpenAI Platform](https://platform.openai.com/) to obtain it.
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={3}>About data handling</PageHeadLine>
+  <PageHeadLine number={3}>How to Use</PageHeadLine>
 
-### 1. Data sent to the OpenAI API
+### Ask AI
 
-When you use the AI consultation feature, screenshots of the selected element, text information from validation results, and chat conversation content are sent to the OpenAI API.
+1. Select the target element in Figma (this is shared with the AI as context)
+2. Choose from suggested questions or enter your own question
 
-### 2. About data usage for AI training
+_＜＜＜Insert image (screenshot)＞＞＞_
 
-Under OpenAI's API policy, data sent via API is not used for AI model training. However, policies may change, so please check [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use) for the latest information.
+### Validating & Fixing Designs
 
-</PageSection>
+1. Select the element you want to validate in Figma
+2. Click the "Validate" button to display design token validation results
+3. Detect areas where components can be used (AI analysis may take time depending on screen complexity)
+4. Click "Apply Components" or "Fix Design Tokens" to auto-fix
 
-<PageSection>
-  <PageHeadLine number={4}>About validation rules</PageHeadLine>
+_＜＜＜Insert image (screenshot)＞＞＞_
 
-### 1. Color combination rules
+Validation results are displayed with three types of icons:
 
-There are recommended combinations of text colors and background colors to ensure readability.
+- Error: Parts that don't follow design token rules and require correction
+- Warning: Parts that need confirmation, such as missing design token settings
+- Normal: No issues
 
-For example, when using `primary` as a background color, use `onPrimary` for the text color. Names starting with "on" mean "color to place on top of," and using them together with their background color maintains appropriate contrast.
-
-Common combination examples:
-
-- `primary` → `onPrimary`
-- `primaryContainer` → `onPrimaryContainer`
-- `surface` → `onSurface`
-- `surfaceContainer` → `onSurface`
-
-### 2. Text color rules
-
-For text colors, generally choose system tokens with names starting with "on" (e.g., onPrimary, onSurface). This ensures readable text on any background.
-
-### 3. Background color rules
-
-For background colors, choose system tokens with names that don't start with "on" (e.g., primary, surface, surfaceContainer).
+Click on a validation result item to select the corresponding element in Figma, making it easy to see where the issue is.
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={5}>FAQ</PageHeadLine>
+  <PageHeadLine number={4}>FAQ</PageHeadLine>
 
-### Q. I see a "Non-variable" warning
-
-You're specifying colors manually instead of using Serendie Design System variables.
-
-Apply color variables from the Serendie UI Kit library. Select a variable starting with "sd/system/color/..." from the variables panel to resolve this warning.
-
-### Q. I see a color pairing error
-
-The combination of text color and background color doesn't match the recommended rules.
-
-Refer to the "Suggestion" shown in the error message to fix the color combination. For example, if the background is `primary`, the text should be `onPrimary`.
-
-### Q. The "Consult AI" button doesn't appear
+### The "Ask AI" button doesn't appear
 
 The OpenAI API key may not be configured. Enter the API key from the settings icon in the top right of the plugin.
 
-</PageSection>
+### About data handling
 
-<PageSection>
-  <PageHeadLine number={6}>References</PageHeadLine>
-
-- [Foundations - Color](/en/foundations/color)
-- [Foundations - Color Role](/en/foundations/color/role)
-- [Foundations - Design Tokens](/en/foundations/design-tokens)
-- [Get Started - Design](/en/get-started/design)
+When you use the Ask AI feature, layer information of the selected element, text information from validation results, and chat conversation content are sent to the OpenAI API. Under OpenAI's API policy, **data sent via the API is not used for AI model training.** For the latest information, please check [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use).
 
 </PageSection>
