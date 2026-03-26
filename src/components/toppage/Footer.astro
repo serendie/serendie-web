@@ -78,7 +78,7 @@ const FooterLinks = styled("div", {
     },
     expanded: {
       gap: 48,
-      gridTemplateColumns: "repeat(4, auto)",
+      gridTemplateColumns: "repeat(5, auto)",
     },
   },
 });
@@ -160,6 +160,24 @@ const footerLink = [
       {
         title: t("footer.development"),
         url: localePath("get-started/dev"),
+      },
+    ],
+  },
+  {
+    title: t("nav.ai"),
+    url: localePath("ai"),
+    links: [
+      {
+        title: "Serendie MCP",
+        url: localePath("ai/mcp-server"),
+      },
+      {
+        title: "Agent Skills",
+        url: localePath("ai/agent-skills"),
+      },
+      {
+        title: "Figma Plugin",
+        url: localePath("ai/serendie-ui-plugin"),
       },
     ],
   },

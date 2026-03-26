@@ -1,0 +1,157 @@
+---
+title: Figma Plugin
+displayTitle: Serendie UI Plugin
+slug: ai/serendie-ui-plugin
+illustType: "E"
+description: "UIコンポーネントの設計を相談したり、デザインがSerendie Design Systemのガイドラインに沿っているかを検証・修正できる、デザイナー向けのFigmaプラグインです。"
+lastUpdated: "2026-03-31"
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+<PageHeadLine number={0}>Serendie UI Pluginとは</PageHeadLine>
+
+AIを活用したアプリケーション開発 (Agentic Coding) を精度高く行うためには**構造化されたデザイン**が重要です。そのためには、デザイントークンやUIコンポーネントを正しく使うことが必要ですが、同時にSerendie Design System (SDS) への習熟が求められます。
+
+Serendie UI Pluginは、**Serendie UI Kitを使ったUIデザインをサポートするFigmaプラグイン**です。AIを活用した相談機能や検証・修正機能が、SDSのガイドラインに沿ったUIデザインの一助となります。
+
+主に次の2つのシーンを想定しています。
+
+- エンジニアにハンドオフすることを想定した精緻なデザインが必要なとき (UIデザイナー向け)
+- Serendie UI Kitに新しいコンポーネントを追加するとき (SDS運用者向け)
+
+プラグイン内部では[Serendie MCPサーバー](/ai/mcp-server)を利用し、上記のシーンに特化したAIエージェントとして機能します。
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={1}>機能</PageHeadLine>
+
+### AI相談機能
+
+Serendie UI Kitを使ったUIコンポーネントの設計を、チャット形式で相談することができます。
+
+- 「この画面のテキストにはどのデザイントークンを使えばいい？」
+- 「Buttonコンポーネントのプロパティはどう使い分けたらいい？」
+- 「いま作っているコンポーネントをレビューしてほしい」
+- 「このコンポーネントの命名の相談に乗ってほしい」
+- 「Sliderコンポーネントに必要なプロパティを、他のデザインシステムを調査した上で教えて」
+
+上記のような質問が典型例です。このような質問に、Serendie Design Systemのガイドラインやアセットを参照しながら回答します。選択中のフレームなどFigma上のコンテキストがAIに共有されるので、状況を細かく説明する手間なく、すぐに質問できます。
+
+また、コンポーネント設計においては、Serendie UIに限らずUI Kitのスタンダードに習うことも大切です。Serendie UI Pluginは、[Material Design 3](https://m3.material.io/)や[Ark UI](https://ark-ui.com/)など、関連するデザインシステムのドキュメントも参照しながら、具体的な改善方法やベストプラクティスについてアドバイスを提供します。
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-animated-talk-with-ai.gif"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+### 検証・修正機能
+
+Serendie UIは[カラーロール](/foundations/color/role/)や[タイポグラフィロール](/foundations/typography/#section-4)などデザイントークンのルールが基礎となっています。これらのルールを守ることでコントラスト比など、アクセシビリティが確保されます。検証機能は、Figma上で指定した要素が、デザイントークンのルールに沿っているかをチェックします。
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-check-design-token.png"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+また、選択した画面デザインを分析し、Serendie UIのコンポーネントが利用可能な箇所を検出します。
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-check-component.png"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+検出された項目は、一括で自動修正することも可能です。修正の精度は、対象となる画面の複雑さによって変わるため、参考として利用してください。
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-animated-fix-with-ai.gif"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>セットアップ</PageHeadLine>
+
+### 1. プラグインのインストール
+
+[Figma Community](https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-plugin)からプラグインをインストールしてください。
+
+<PageARef href="https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-plugin">
+  Serendie UI Plugin - Figma Community
+</PageARef>
+
+### 2. OpenAI APIキーの設定
+
+AI相談機能を使うには、OpenAIのAPIキーが必要です。APIキーをお持ちでない場合は、[OpenAI Platform](https://platform.openai.com/)から取得してください。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>使い方</PageHeadLine>
+
+### AIに相談する
+
+1. 相談の対象となる要素をFigma上で選択 (AIにコンテキストとして伝わります)
+2. 質問候補から選ぶか、相談内容を自由に入力
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-usecase-talk-with-ai.png"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+### デザインを検証・修正する
+
+1. 検証したい要素をFigma上で選択
+2. 「検証する」ボタンをクリックすると、デザイントークンの検証結果を表示
+3. コンポーネントが利用可能な箇所を検出 (AIで分析を行うため対象画面の複雑さによって時間がかかります)
+4. 「コンポーネントの適用」「デザイントークンの修正」ボタンを押すと自動修正
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-usecase-fix-with-ai.png"
+    width="310"
+    alt="install library"
+  />
+</p>
+
+検証結果は3種類のアイコンで表示されます。
+
+- エラー: デザイントークンのルールに沿っていない箇所があり、修正が必要です
+- 警告: デザイントークンが設定されていないなど、確認をおすすめする箇所です
+- 正常: 問題ありません
+
+検証結果の項目をクリックすると、Figma上で該当する要素が選択され、どこに問題があるのか確認できます。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>よくある質問</PageHeadLine>
+
+### 「AIに相談する」ボタンが出てきません
+
+OpenAI APIキーが設定されていない可能性があります。プラグイン右上の設定アイコンからAPIキーを入力してください。
+
+### データの取り扱いについて
+
+AI相談機能を使うと、選択した要素のレイヤー情報、検証結果のテキスト情報、チャットでの会話内容がOpenAI APIに送信されます。OpenAIのAPIポリシーでは、**API経由で送信されたデータはAIモデルの学習には使用されません。** 最新の情報は[OpenAIの利用規約](https://openai.com/policies/terms-of-use)からご確認ください。
+
+</PageSection>

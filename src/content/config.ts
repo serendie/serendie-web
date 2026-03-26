@@ -16,11 +16,13 @@ const pagesCollection = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
+    // H1に表示するタイトル（サイドバーにはtitleが使われる）
+    displayTitle: z.string().optional(),
     description: z.string().optional(),
     // ページの更新日
     lastUpdated: z.string().optional(),
     // ヘッダの画像のタイプ
-    illustType: z.enum(["A", "B", "C", "D"]).optional(),
+    illustType: z.enum(["A", "B", "C", "D", "E"]).optional(),
     // ヘッダの画像のサイズ（これを指定するとヘッダー下部のボーダーが表示されなくなる
     illustSize: z.enum(["large", "small"]).optional(),
     // 右サイドバーを使わずに幅ギリギリまでつかう

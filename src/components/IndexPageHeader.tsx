@@ -6,14 +6,16 @@ import Comp_A from "../assets/illustrations/composition-a/large.svg?react";
 import Comp_B from "../assets/illustrations/composition-b/large.svg?react";
 import Comp_C from "../assets/illustrations/composition-c/large.svg?react";
 import Comp_D from "../assets/illustrations/composition-d/large.svg?react";
+import Comp_E from "../assets/illustrations/composition-e/large.svg?react";
 
-type type = "A" | "B" | "C" | "D";
+type type = "A" | "B" | "C" | "D" | "E";
 
 const illustMap = {
   A: Comp_A,
   B: Comp_B,
   C: Comp_C,
   D: Comp_D,
+  E: Comp_E,
 };
 
 type IndexPageHeaderProps = {

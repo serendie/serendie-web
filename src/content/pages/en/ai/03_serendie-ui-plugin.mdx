@@ -1,0 +1,157 @@
+---
+title: Figma Plugin
+displayTitle: Serendie UI Plugin
+slug: en/ai/serendie-ui-plugin
+illustType: "E"
+description: "A Figma plugin for designers that lets you consult AI about UI component design and validate and fix designs to follow Serendie Design System guidelines."
+lastUpdated: "2026-03-31"
+---
+
+import PageHeadLine from "@/components/PageHeadLine.astro";
+import { PageSection, PageARef } from "@/components/PageLayout.tsx";
+
+<PageSection>
+<PageHeadLine number={0}>What is Serendie UI Plugin</PageHeadLine>
+
+For high-quality AI-powered application development (Agentic Coding), **well-structured designs** are essential. This requires correctly using design tokens and UI components, which in turn demands familiarity with the Serendie Design System (SDS).
+
+Serendie UI Plugin is a **Figma plugin that supports UI design using the Serendie UI Kit**. Its AI-powered consultation and validation/fix features help you create UI designs that follow SDS guidelines.
+
+It is designed for two main scenarios:
+
+- When you need precise designs intended for handoff to engineers (for UI designers)
+- When adding new components to the Serendie UI Kit (for SDS maintainers)
+
+Internally, the plugin uses the [Serendie MCP Server](/en/ai/mcp-server) and functions as an AI agent specialized for these scenarios.
+
+</PageSection>
+
+<PageSection>
+<PageHeadLine number={1}>Features</PageHeadLine>
+
+### AI Consultation
+
+You can consult about UI component design using the Serendie UI Kit through a chat interface.
+
+- "Which design token should I use for the text on this screen?"
+- "How should I use the different properties of the Button component?"
+- "Can you review the component I'm working on?"
+- "I'd like help with naming this component."
+- "What properties does a Slider component need? Please research other design systems."
+
+These are typical questions. The AI answers by referencing Serendie Design System guidelines and assets. Since Figma context such as the currently selected frame is shared with the AI, you can ask questions right away without explaining the situation in detail.
+
+For component design, it's also important to follow UI Kit standards beyond Serendie UI. Serendie UI Plugin provides advice on specific improvements and best practices by referencing related design systems such as [Material Design 3](https://m3.material.io/) and [Ark UI](https://ark-ui.com/).
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-animated-talk-with-ai.gif"
+    width="310"
+    alt="AI consultation feature"
+  />
+</p>
+
+### Validation & Fix
+
+Serendie UI is built on design token rules such as [color roles](/en/foundations/color/role/) and [typography roles](/en/foundations/typography/#section-4). Following these rules ensures accessibility, including proper contrast ratios. The validation feature checks whether selected elements in Figma follow design token rules.
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-check-design-token.png"
+    width="310"
+    alt="Design token validation"
+  />
+</p>
+
+It also analyzes the selected screen design and detects areas where Serendie UI components could be used.
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-check-component.png"
+    width="310"
+    alt="Component detection"
+  />
+</p>
+
+Detected items can be auto-fixed in bulk. Since the accuracy of fixes varies depending on the complexity of the target screen, use them as a reference.
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-animated-fix-with-ai.gif"
+    width="310"
+    alt="Auto-fix feature"
+  />
+</p>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>Setup</PageHeadLine>
+
+### 1. Install the plugin
+
+Install the plugin from [Figma Community](https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-plugin).
+
+<PageARef href="https://www.figma.com/community/plugin/1552496414081647274/serendie-ui-plugin">
+  Serendie UI Plugin - Figma Community
+</PageARef>
+
+### 2. Set up your OpenAI API key
+
+To use the AI consultation feature, you need an OpenAI API key. If you don't have one, obtain it from [OpenAI Platform](https://platform.openai.com/).
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>How to Use</PageHeadLine>
+
+### Consult the AI
+
+1. Select the target element in Figma (it is shared with the AI as context)
+2. Choose from suggested questions or enter your own
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-usecase-talk-with-ai.png"
+    width="310"
+    alt="AI consultation usage"
+  />
+</p>
+
+### Validate & Fix Designs
+
+1. Select the element you want to validate in Figma
+2. Click the "Validate" button to display design token validation results
+3. Detect areas where components can be used (AI analysis may take time depending on screen complexity)
+4. Click "Apply Components" or "Fix Design Tokens" to auto-fix
+
+<p>
+  <img
+    src="/assets/pages/ai/plugin-usecase-fix-with-ai.png"
+    width="310"
+    alt="Validation and fix usage"
+  />
+</p>
+
+Validation results are displayed with three types of icons:
+
+- Error: Parts that don't follow design token rules and need correction
+- Warning: Parts that need review, such as missing design token settings
+- Normal: No issues found
+
+Click on a validation result item to select the corresponding element in Figma, making it easy to locate the issue.
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>FAQ</PageHeadLine>
+
+### The "Ask AI" button doesn't appear
+
+The OpenAI API key may not be configured. Enter your API key from the settings icon in the top right of the plugin.
+
+### About data handling
+
+When you use the AI consultation feature, layer information of the selected element, text information from validation results, and chat conversation content are sent to the OpenAI API. Under OpenAI's API policy, **data sent via the API is not used for AI model training.** For the latest information, please check [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use).
+
+</PageSection>

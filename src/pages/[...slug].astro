@@ -95,7 +95,7 @@ const { Content } = await page.render();
         links={page.data.subLinks}
       >
         <IndexPageHeader
-          title={page.data.title}
+          title={page.data.displayTitle ?? page.data.title}
           illustType={page.data.illustType}
           illustSize={page.data.illustSize}
           lastUpdated={page.data.lastUpdated}
