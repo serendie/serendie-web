@@ -4,7 +4,7 @@ displayTitle: Serendie MCPサーバー
 slug: ai/mcp-server
 illustType: "E"
 description: "Serendie Design Systemが提供する各種リソースやガイドラインを、AIエージェントから活用するための仕組みを紹介します。"
-lastUpdated: "2026-03-31"
+lastUpdated: "2026-04-01"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -18,9 +18,11 @@ Serendie MCPサーバーは、Serendie Design SystemをAIエージェントか�
 
 このMCPサーバーを、各種AIエージェントに接続することで、Serendie Design Systemが提供するガイドラインやベストプラクティス、コンポーネントやアイコンをはじめとするリソース一覧などをAIが自律的に入手できるようになります。これにより、Serendie Design Systemに則ったアプリケーション開発ワークフローを実現できます。
 
-Serendie MCP サーバーは、リモートMCPサーバー(Streamable HTTP Transport形式)として公開しており、下記のエンドポイントを指定することで、ローカルでのセットアップなしにすぐに利用を始められます。
+Serendie MCP サーバーは、リモートMCPサーバーとして公開しており、下記のエンドポイントを設定するだけで使い始めることができます。
 
 <CodeBox code={`https://serendie.design/mcp`} language={"shell"} />
+
+なお、**お使いのAIエージェントが[Agent Skills](/ai/agent-skills)に対応している場合は、合わせて導入することを推奨します。** MCPサーバーが提供するツールをAIエージェントが効果的に活用できます。
 
 </PageSection>
 
@@ -29,7 +31,6 @@ Serendie MCP サーバーは、リモートMCPサーバー(Streamable HTTP Trans
 
 MCPサーバーでは「ツール」という単位で、AIエージェントに道具の提供を行います。どのツールを使うのかは、AIエージェントが、プロンプトやコンテキストに基づいて決定します。現在Serendie MCPサーバーが提供しているツールは以下の通りです。
 
-- Serendie UIのセットアップ方法など概要情報 (Overview) の取得ツール
 - Serendie UIコンポーネントの一覧とプロパティなどの詳細取得ツール
 - デザイントークンの一覧・詳細取得ツール
 - Serendie Symbolsの一覧・詳細取得ツール
@@ -48,13 +49,13 @@ MCPサーバーでは「ツール」という単位で、AIエージェントに
 
 ## 自然言語によるプロトタイピング
 
-[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)や[Figma Make](https://www.figma.com/ja-jp/make/)など、各種Agentic Codingツールを用いることで自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
+[Claude Code](https://docs.claude.com/ja/docs/claude-code/overview)や[Figma Make](https://www.figma.com/ja-jp/make/)など、各種AIエージェントを用いることで自然言語によるプロトタイピングが可能ですが、ここにSerendie MCPサーバーを用いることで、Serendie UIを用いた実装がスピーディーに実現できます。
 
-Serendie MCPのOverviewツールにより、Serendie UIのイントロダクションが提供されるため、Serendie UIを使うためのセットアップをAIエージェントが自律的行うことができます。また、各種リソース取得ツールを用いることで、AIエージェントはSerendie UIの活用に必要な知識を効率的に得ることができます。これはAgentic Codingにおいて質の高いプロトタイピングの実現に繋がります。
+MCPサーバーを通してガイドラインなどを参照しつつ、Serendie UIの基礎知識やベストプラクティスをAIエージェントが入手できるため、自律的で質の高いプロトタイピングの実現に繋がります。
 
 ## デザインから実装する
 
-Serendie UIは、Figmaコンポーネント（デザイン）とReactコンポーネント（実装） がセットで提供され、<a href="https://help.figma.com/hc/ja/articles/23920389749655-Code-Connect" target="_blank">Figma Code Connect</a>による対応付けがされています。これにより、Serendie MCPサーバーと<a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP サーバー</a>を併用することで、<a href="https://serendie.design/get-started/design/" target="_blank">Serendie UI Kit</a>によるデザインを、高速かつ高品質に実装することが可能です。
+Serendie UIは、Figmaコンポーネント（デザイン）とReactコンポーネント（実装） がセットで提供され、<a href="https://help.figma.com/hc/ja/articles/23920389749655-Code-Connect" target="_blank">Figma Code Connect</a>による対応付けがされています。これにより、Serendie MCPサーバーと<a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP サーバー</a>を併用することで、<a href="https://serendie.design/get-started/design/" target="_blank">Serendie UI Kit</a>で作られたデザインを、高速かつ高品質に実装することが可能です。
 
 Figma MCPサーバーを用いることで、AIエージェントは、デザインデータの読み取りが可能になります。MCPサーバーを設定のうえ、**「現在選択しているFigma上のデザインを、Serendie UIで実装して」** のようにお使いのAIエージェントに伝えることで、Serendie UIのセットアップ、各種コンポーネントの使い方などの知識を自律的に得ながら、プロジェクト環境に応じた高品質なコードを生成できます。
 
@@ -77,7 +78,18 @@ Figma MCPサーバーを用いることで、AIエージェントは、デザイ
 
 ## Claude Code
 
-下記のコマンドをターミナルから入力してください
+Claude Codeは、<a href="https://code.claude.com/docs/ja/discover-plugins" target="_blank">Plugin形式</a>のインストールに対応しています。[Agent Skills](/ai/agent-skills)とMCPサーバーの設定が同梱され、管理や更新も容易なため、Claude CodeではPluginとしての導入を推奨します。
+
+Claude Codeを起動した上で、下記を順に実行してください。
+
+<CodeBox
+  code={`/plugin marketplace add serendie/serendie
+/plugin install serendie@serendie
+/reload-plugins`}
+  language={"shell"}
+/>
+
+Pluginではなく、MCPサーバーのみ導入したい場合は、下記のコマンドをターミナルから入力してください。
 
 <CodeBox
   code={`claude mcp add --transport http serendie-mcp https://serendie.design/mcp`}
@@ -101,7 +113,7 @@ Figma MCPサーバーを用いることで、AIエージェントは、デザイ
   Cursor Deep Link
 </PageARef>
 
-## Visual Studio Code / GitHub Copilot
+## GitHub Copilot
 
 Visual Studio Code内の<a href="https://docs.github.com/ja/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp" target="\_blank">コマンドパレットからMCPの設定</a>を開き、mcp.json内に下記を追記してください。
 

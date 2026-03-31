@@ -2,4 +2,63 @@
 title: Agent Skills
 slug: ai/agent-skills
 illustType: "E"
+description: "コーディングエージェントにSerendie Design Systemを使うための設定やベストプラクティスを与えることができます。Serendie MCPとセットで使うことを想定しています。"
+lastUpdated: "2026-04-01"
 ---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+<PageSection>
+  <PageHeadLine number={0}>Agent Skillsとは</PageHeadLine>
+
+Agent Skillsは、AIエージェントに専門知識や特定のタスクを遂行するための能力を付与するための仕組みです。MCPサーバーが道具を提供するのに対し、Agent Skillsはその使い方を提供します。
+
+MCP同様に<a href="https://agentskills.io/home" target="_blank">オープンな仕様</a> として発展しており、Claude Code, Codex, Cursor, GitHub,
+Copilot, Gemini CLIなど主要なコーディングエージェントが対応しています。またSkillのマーケットプレイス <a href="https://skills.sh" target="_blank">skills.sh</a> などのエコシステムも整備されつつあります。
+
+<PageARef href="https://skills.sh">
+  skills.sh - The Agent Skills Directory
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>現在提供しているSkill</PageHeadLine>
+
+Serendie Design Systemでは、次のSkillを提供しています。
+
+- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/skills/serendie-overview/SKILL.md) ― Serendie UIやSerendie Symbolsなど各種リソースの概要、セットアップ手順、デザイントークンを扱うベストプラクティスを提供するスキル。Serendie UIを使った実装をコーディングエージェントに指示する際に最初にトリガーするスキル
+
+なお、[Serendie MCPサーバー](/ai/mcp-server)を併用することで、より詳細なリソース情報をAIエージェントが取得できるため、合わせてセットアップしてください。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>セットアップ</PageHeadLine>
+
+## Codex, Cursor, GitHub Copilot, Gemini CLIなど
+
+Agent Skillsの管理ツールである <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a> を使うことで、各種エージェントの仕様に対応する形でSkillsをインストールできます。下記のコマンドをターミナルから入力してください。
+
+<CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
+
+## Claude Code
+
+Claude Codeは、 <a href="https://code.claude.com/docs/ja/discover-plugins" target="_blank">
+Plugin形式</a>
+のインストールに対応しています。Agent
+Skillsと[MCPサーバー](/ai/mcp-server)の設定が同梱され、管理や更新も容易なため、Claude
+CodeではPluginとしての導入を推奨します。
+
+Claude Codeを起動した上で、下記を順に実行してください。
+
+<CodeBox
+  code={`/plugin marketplace add serendie/serendie
+/plugin install serendie@serendie
+/reload-plugins`}
+  language={"shell"}
+/>
+
+</PageSection>
