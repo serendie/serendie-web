@@ -14,58 +14,47 @@ import { PageSection, PageARef } from "@/components/PageLayout.tsx";
 <PageSection>
   <PageHeadLine number={0}>What are Agent Skills</PageHeadLine>
 
-Agent Skills are a mechanism for giving AI agents deep knowledge about specific libraries and frameworks. By installing a skill, AI agents understand framework-specific patterns and best practices, enabling them to generate more accurate code.
+Agent Skills are a mechanism for giving AI agents specialized knowledge and the ability to perform specific tasks. While MCP servers provide tools, Agent Skills provide guidance on how to use them.
 
-Skills are growing as an open ecosystem centered around <a href="https://skills.sh" target="_blank">skills.sh</a>, supporting over 20 AI agents including Claude Code, GitHub Copilot, Cursor, and Cline.
+Like MCP, Agent Skills are evolving as an <a href="https://agentskills.io/home" target="_blank">open specification</a>, supported by major coding agents including Claude Code, Codex, Cursor, GitHub Copilot, and Gemini CLI. An ecosystem of skill marketplaces such as <a href="https://skills.sh" target="_blank">skills.sh</a> is also emerging.
 
 <PageARef href="https://skills.sh">
-  Skills — The Agent Skills Directory
+  skills.sh - The Agent Skills Directory
 </PageARef>
 
 </PageSection>
 
 <PageSection>
-  <PageHeadLine number={1}>What's Included in the Serendie Skill</PageHeadLine>
+  <PageHeadLine number={1}>Available Skills</PageHeadLine>
 
-The Serendie Design System provides a skill as `serendie/serendie`. By installing this skill, AI agents automatically gain the following knowledge:
+The Serendie Design System provides the following skill:
 
-- **Serendie UI setup** — Correct setup procedures including CSS configuration and import paths
-- **Component usage** — Category classification, Props naming conventions, Ark UI-based architecture
-- **Design tokens** — Proper use of system vs. reference tokens, role concepts, common mistakes and correct examples
-- **Icons (Serendie Symbols)** — Import methods and naming conventions
-- **PandaCSS integration** — SerendiePreset configuration, `css()` and Text Styles usage
-- **Themes & color modes** — SerendieProvider configuration, five color themes, dark mode support
-- **Serendie MCP Server guidance** — Directs AI agents to MCP tools for detailed information
+- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/skills/serendie-overview/SKILL.md) — A skill that provides an overview of resources such as Serendie UI and Serendie Symbols, setup instructions, and best practices for working with design tokens. This is the first skill to trigger when instructing a coding agent to implement with Serendie UI.
 
-The skill also includes connection settings for the [Serendie MCP Server](/en/ai/mcp-server), allowing AI agents to autonomously fetch the latest information from the MCP server when the skill's built-in knowledge is insufficient.
-
-<PageARef href="https://github.com/serendie/serendie/tree/main/skills/serendie-overview">
-  serendie/serendie — Skill source code (GitHub)
-</PageARef>
+We recommend also setting up the [Serendie MCP Server](/en/ai/mcp-server), as it allows AI agents to retrieve more detailed resource information.
 
 </PageSection>
 
 <PageSection>
   <PageHeadLine number={2}>Setup</PageHeadLine>
 
-## Skills CLI
+## Codex, Cursor, GitHub Copilot, Gemini CLI, etc.
 
-Install the Serendie Skill in your project with the following command. It supports a wide range of AI agents including Claude Code, GitHub Copilot, Cursor, and Cline.
+Using the Agent Skills management tool <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a>, you can install Skills in a format compatible with various agents. Enter the following command in your terminal:
 
 <CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
 
-<PageARef href="https://skills.sh">
-  Supported AI agents — skills.sh
-</PageARef>
+## Claude Code
 
-## Claude Code Plugin (Recommended)
+Claude Code supports installation as a <a href="https://docs.claude.com/en/docs/claude-code/plugins" target="_blank">Plugin</a>. Since it bundles Agent Skills and [MCP Server](/en/ai/mcp-server) configuration together, and updates are applied automatically, we recommend installing as a Plugin for Claude Code.
 
-If you use <a href="https://docs.claude.com/en/docs/claude-code/plugins" target="_blank">Claude Code</a>, we recommend installing as a Plugin. The Plugin bundles both Skills and the [MCP Server](/en/ai/mcp-server) configuration together, and updates are applied automatically — eliminating the need for manual setup and maintenance.
+Launch Claude Code and run the following commands in order:
 
-Run the following commands in Claude Code:
-
-<CodeBox code={`/plugin marketplace add serendie/serendie
+<CodeBox
+  code={`/plugin marketplace add serendie/serendie
 /plugin install serendie@serendie
-/reload-plugins`} language={"shell"} />
+/reload-plugins`}
+  language={"shell"}
+/>
 
 </PageSection>

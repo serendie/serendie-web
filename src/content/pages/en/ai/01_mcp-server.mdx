@@ -4,7 +4,7 @@ displayTitle: Serendie MCP Server
 slug: en/ai/mcp-server
 illustType: "E"
 description: "Learn how AI agents can leverage the resources and guidelines provided by the Serendie Design System."
-lastUpdated: "2026-03-31"
+lastUpdated: "2026-04-01"
 ---
 
 import PageHeadLine from "@/components/PageHeadLine.astro";
@@ -18,9 +18,11 @@ The Serendie MCP Server is a <a href="https://modelcontextprotocol.io/introducti
 
 By connecting this MCP server to various AI agents, the AI can autonomously obtain guidelines, best practices, and resource lists—including components and icons—provided by the Serendie Design System. This enables an application development workflow that follows the Serendie Design System.
 
-The Serendie MCP Server is published as a remote MCP server (Streamable HTTP Transport), so you can start using it immediately without any local setup by specifying the following endpoint.
+The Serendie MCP Server is published as a remote MCP server, so you can start using it by simply configuring the following endpoint.
 
 <CodeBox code={`https://serendie.design/mcp`} language={"shell"} />
+
+If your AI agent supports [Agent Skills](/en/ai/agent-skills), **we recommend setting them up as well.** This helps the AI agent use the tools provided by the MCP server more effectively.
 
 </PageSection>
 
@@ -29,7 +31,6 @@ The Serendie MCP Server is published as a remote MCP server (Streamable HTTP Tra
 
 The MCP server provides capabilities to AI agents in units called "tools." The AI agent decides which tool to use based on the prompt and context. The tools currently provided by the Serendie MCP Server are:
 
-- Overview tool for retrieving Serendie UI setup instructions and general information
 - Tools for listing and retrieving details of Serendie UI components and their properties
 - Tools for listing and retrieving design token details
 - Tools for listing and retrieving Serendie Symbols details
@@ -48,13 +49,13 @@ The implementation of each tool is available on the GitHub repository (serendie/
 
 ## Prototyping with Natural Language
 
-Agentic coding tools such as [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [Figma Make](https://www.figma.com/make/) enable prototyping with natural language. By adding the Serendie MCP Server, you can quickly build implementations using Serendie UI.
+AI agents such as [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [Figma Make](https://www.figma.com/make/) enable prototyping with natural language. By adding the Serendie MCP Server, you can quickly build implementations using Serendie UI.
 
-The Serendie MCP Overview tool provides an introduction to Serendie UI, allowing AI agents to autonomously set up the environment for using Serendie UI. Additionally, by using the various resource retrieval tools, AI agents can efficiently acquire the knowledge needed to use Serendie UI. This leads to higher-quality prototyping in agentic coding.
+Through the MCP server, AI agents can reference guidelines and acquire foundational knowledge and best practices for Serendie UI, leading to autonomous, high-quality prototyping.
 
 ## Implementing from Designs
 
-Serendie UI provides Figma components (design) and React components (implementation) as a pair, with mappings established through <a href="https://help.figma.com/hc/en-us/articles/23920389749655-Code-Connect" target="_blank">Figma Code Connect</a>. By combining the Serendie MCP Server with the <a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP Server</a>, you can implement designs created with the <a href="https://serendie.design/en/get-started/design/" target="_blank">Serendie UI Kit</a> quickly and with high quality.
+Serendie UI provides Figma components (design) and React components (implementation) as a pair, with mappings established through <a href="https://help.figma.com/hc/en-us/articles/23920389749655-Code-Connect" target="_blank">Figma Code Connect</a>. By combining the Serendie MCP Server with the <a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server" target="_blank">Figma MCP Server</a>, you can implement designs made with the <a href="https://serendie.design/en/get-started/design/" target="_blank">Serendie UI Kit</a> quickly and with high quality.
 
 Using the Figma MCP Server, AI agents can read design data. After configuring the MCP server, simply tell your AI agent something like **"Implement the currently selected Figma design using Serendie UI"**—the AI agent will autonomously set up Serendie UI, learn how to use the various components, and generate high-quality code suited to your project environment.
 
@@ -77,14 +78,23 @@ Using the Figma MCP Server, AI agents can read design data. After configuring th
 
 ## Claude Code
 
-Enter the following command in your terminal:
+Claude Code supports installation as a <a href="https://docs.claude.com/en/docs/claude-code/plugins" target="_blank">Plugin</a>. Since it bundles [Agent Skills](/en/ai/agent-skills) and MCP server configuration together, and updates are applied automatically, we recommend installing as a Plugin for Claude Code.
+
+Launch Claude Code and run the following commands in order:
+
+<CodeBox
+  code={`/plugin marketplace add serendie/serendie
+/plugin install serendie@serendie
+/reload-plugins`}
+  language={"shell"}
+/>
+
+If you prefer to set up only the MCP server without the Plugin, enter the following command in your terminal:
 
 <CodeBox
   code={`claude mcp add --transport http serendie-mcp https://serendie.design/mcp`}
   language={"shell"}
 />
-
-For Claude Code, you can also install as a **Plugin** that bundles the MCP server with [Agent Skills](/en/ai/agent-skills). This is recommended as updates are applied automatically. See [Agent Skills setup](/en/ai/agent-skills#section-2) for details.
 
 ## Codex
 
@@ -103,7 +113,7 @@ Click the link below to automatically add the MCP server.
   Cursor Deep Link
 </PageARef>
 
-## Visual Studio Code / GitHub Copilot
+## GitHub Copilot
 
 Open the <a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp" target="\_blank">MCP settings from the Command Palette</a> in Visual Studio Code, and add the following to your mcp.json:
 
