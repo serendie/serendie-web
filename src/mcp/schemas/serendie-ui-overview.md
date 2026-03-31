@@ -1,16 +1,8 @@
 # @serendie/ui Overview
 
-## このツールの用途
-
-このツールでは、Serendie Design System（@serendie/ui, @serendie/symbols, @serendie/design-token）の概要・セットアップ手順・デザイントークンの使い方を提供し、詳細情報を他のツールから得られるように案内する。
-
-**同様の情報は`@serendie/ui`リポジトリ内でAgent Skills (/serendie-overview)として提供している。** このツールはAgent Skillsが使えない環境向けである。**既に `/serendie-overview` Skillをトリガーしている場合は、このツールは使わないこと**
-
-## Serendieライブラリとは
-
 三菱電機のSerendie Design Systemが提供するWebフロントエンド向けのライブラリ群。ReactベースのUIライブラリ `@serendie/ui` など、複数の関連パッケージから構成される。
 
-### 関連パッケージ
+## 関連パッケージ
 
 Serendieが提供・メンテナンスしているライブラリは下記の通り。
 
@@ -20,7 +12,7 @@ Serendieが提供・メンテナンスしているライブラリは下記の通
 | `@serendie/design-token` | デザイントークンを提供する。 Panda CSS用トークンの他に、CSS Variables形式などでも提供されており、Serendie UIとは独立して使用も可能。React外の環境でデザイントークンのみ利用する場合を想定。 |
 | `@serendie/symbols`      | Serendie Symbolsと呼ばれる。300種類以上のアイコン（React環境前提）を提供。Serendie UIに同梱されるが、独立して使用も可能                                                                     |
 
-### 依存パッケージ
+## 依存パッケージ
 
 Serendie UIは、Ark UI（ヘッドレスUIライブラリ）およびPanda CSS（スタイリングライブラリ）に基づき開発されている。特に各コンポーネントをユーザー環境に合わせたカスタマイズをする際に、下記のAPI Docsを参照すること。
 

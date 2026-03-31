@@ -38,8 +38,8 @@ describe("get-serendie-ui-overview", () => {
       inputSchema: object;
     };
     expect(toolConfig.title).toBe("Get Serendie UI Overview");
-    expect(toolConfig.description).toContain("MUST call this tool FIRST");
-    expect(toolConfig.description).toContain("Markdown");
+    expect(toolConfig.description).toContain("Serendie Design System");
+    expect(toolConfig.description).toContain("@serendie/ui");
     expect(toolConfig.inputSchema).toEqual({});
 
     expect(registeredHandler).toBeDefined();
