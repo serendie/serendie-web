@@ -147,10 +147,3 @@ scripts/              # Build and utility scripts
 
 The user typically runs `npm run dev` in a separate terminal window. You don't need to start the dev server unless specifically asked.
 
-### Task Completion Notification
-
-When you complete a task, run this command to notify the user with a loud ping sound:
-
-```bash
-afplay /System/Library/Sounds/Hero.aiff
-```

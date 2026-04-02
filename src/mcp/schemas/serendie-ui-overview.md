@@ -1,257 +1,220 @@
 # @serendie/ui Overview
 
-## 概要
-
-@serendie/uiは三菱電機のSerendie Design SystemをベースにしたReactコンポーネントライブラリです。
-ユーザーは@serendie/uiをインストールし、いくつかの設定をすることで、Serendie Design Systemに準拠したUIコンポーネントを利用できます。
-また、PandaCSSのスタイルシステムが同梱されているため、プロジェクトにPandaCSSを導入することで独自のUIコンポーネントやスタイルを作成することもできます。
+三菱電機のSerendie Design Systemが提供するWebフロントエンド向けのライブラリ群。ReactベースのUIライブラリ `@serendie/ui` など、複数の関連パッケージから構成される。
 
 ## 関連パッケージ
 
-- @serendie/design-token
-  - Serendieのデザイントークンを提供するパッケージ
-  - PandaCSS用トークンの他に、CSS Variables形式、JSON形式でも提供されており、Serendie UIとは独立して使用することもできます。
-  - Reactは使わないが、Serendie Design Systemを利用する場合などに活用できます。
-  - 関連MCPツール: `get-design-tokens`, `get-design-token-detail`
-- @serendie/symbols
-  - 汎用性の高い 300 種類以上のアイコンパッケージ
-  - Serendie Symbols は React 環境を前提としています。
-  - 関連MCPツール: `get-symbols`, `get-symbol-detail`
-- @ark-ui/react
-  - Serendie UIはヘッドレスUIライブラリであるArk UIを利用しています。
-  - プロジェクトに導入する必要はありませんが、UIコンポーネントの細かな利用方法についてはArk UIのAPIリファレンスを参照してください。
-    - LLMs TXT: https://ark-ui.com/llms.txt
-- @pandacss/dev
-  - Serendie UIはPandaCSSを利用しています。
-  - プロジェクトに導入する必要はありませんが、独自にコンポーネントを作りたい場合などに統合的に利用できます。
-  - PandaCSSの利用方法についてはPandaCSSのAPIリファレンスを参照してください。
-    - LLMs TXT: https://panda-css.com/llms.txt
+Serendieが提供・メンテナンスしているライブラリは下記の通り。
 
-## コンポーネントカテゴリ
+| パッケージ               | 役割                                                                                                                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@serendie/ui`           | Serendie UIと呼ばれる。UIコンポーネントを提供する中核ライブラリ。Figma上のデザインライブラリ (Serendie UI Kit) と対応している。                                                             |
+| `@serendie/design-token` | デザイントークンを提供する。 Panda CSS用トークンの他に、CSS Variables形式などでも提供されており、Serendie UIとは独立して使用も可能。React外の環境でデザイントークンのみ利用する場合を想定。 |
+| `@serendie/symbols`      | Serendie Symbolsと呼ばれる。300種類以上のアイコン（React環境前提）を提供。Serendie UIに同梱されるが、独立して使用も可能                                                                     |
 
-- Actions (アクション): ボタンやボトムナビゲーションなど
-- Inputs (入力): TextField、Select、Switchなど
-- Layout (レイアウト): Accordion、Tabs、Dividerなど
-- Display (表示): Avatar、Badge、ProgressIndicatorなど
-- Feedback (フィードバック): Toast、ModalDialog、Paginationなど
-- Other (その他)
+## 依存パッケージ
 
-コンポーネントのカテゴリは`get-components` MCPツールで確認できます。
+Serendie UIは、Ark UI（ヘッドレスUIライブラリ）およびPanda CSS（スタイリングライブラリ）に基づき開発されている。特に各コンポーネントをユーザー環境に合わせたカスタマイズをする際に、下記のAPI Docsを参照すること。
 
-## @serendie/uiのセットアップ
+| パッケージ      | ユーザーへの影響                                                                                                                                        | API Docs                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `@ark-ui/react` | 同梱されるためユーザーがプロジェクトに導入する必要は無し。Serendie UIの各コンポーネントはArk UIを継承するため、適宜Ark UIのドキュメントを参照すること。 | https://ark-ui.com/llms.txt    |
+| `@pandacss/dev` | ユーザーのプロジェクト導入は任意だが、スタイリング時にSerendie UIとの親和性は高い。                                                                     | https://panda-css.com/llms.txt |
 
-### 前提
+## Serendie MCP
 
-- React環境がセットアップ済
+リモートMCPサーバーであるSerendie MCP (https://serendie.design/mcp) が提供されている。詳細な情報は Serendie MCPの各ツールから取得すること。
 
-### 手順
+| ツール                      | 用途                                             |
+| --------------------------- | ------------------------------------------------ |
+| `get-components`            | コンポーネント一覧の取得                         |
+| `get-component-detail`      | 特定コンポーネントの Props・使用例の取得         |
+| `get-design-tokens`         | デザイントークン一覧の取得                       |
+| `get-design-token-detail`   | 特定デザイントークンの値・使用例の取得           |
+| `get-symbols`               | アイコン一覧の取得                               |
+| `get-symbol-detail`         | 特定アイコンの詳細・使用例の取得                 |
+| `search-serendie-guideline` | 設計指針やアセットの使い方などガイドラインの検索 |
 
-1. `npm install @serendie/ui`
-2. CSS設定に
+なお、同等の情報をドキュメントサイトおよびStorybookとしても提供している。
 
-   ```
-   @layer reset, base, tokens, recipes, utilities;
-   @serendie/ui/styles.css
-   ```
+- ドキュメント: https://serendie.design/
+- Storybook: https://storybook.serendie.design/
 
-   を追加してください。
+## 基本セットアップ
 
-3. `@serendie/ui`や`@serendie/ui/jsx`から必要なコンポーネントをインポートして利用してください。
+### 1.インストール
 
-```tsx
-import { Button } from "@serendie/ui";
-import { Box } from "@serendie/ui/jsx";
-
-//...snip...
-return (
-  <Box
-    alignItems="center"
-    justifyContent="center"
-    display="flex"
-    flexDirection="column"
-  >
-    <Button onClick={() => setCount(count + 1)}>Hello {count}</Button>
-  </Box>
-);
-//...snip...
+```bash
+npm install @serendie/ui
 ```
 
-## CSS Variablesを利用する
+### 2.[重要] CSSの設定
 
-Panda CSSの仕様上、@serendie/uiパッケージには「ビルド済みのCSSのみ」が同梱されているため、
-
-```tsx
-  <Box my="sd.system.dimension.spacing.sixExtraLarge">
-```
-
-のように、serendie/ui内部で指定していないクラス名は生成されていません(事前にビルドすると膨大なCSSが生成されるため)
-ただし、それぞれの値はCSS Variablesを使って取得することができます。
+CSSのルートに以下を追加すること。**この設定が抜けると正しくCSSが適用されない。`@layer` の宣言順序がスタイルの優先度を決定するため、順序を変えるとスタイルが壊れたり意図しない上書きが発生する。**
 
 ```css
-.my-class {
-  font-size: var(--sd-reference-typography-scale-expanded-large);
-  color: var(--sd-system-color-impression-primary);
-  margin: var(--sd-system-dimension-spacing-sixExtraLarge);
-}
+@layer reset, base, tokens, recipes, utilities;
+@import "@serendie/ui/styles.css";
 ```
+
+なお、**Reset CSS は @serendie/ui に同梱済みのため、別途追加してはいけない。**
+
+### 3.インポートパス
+
+ユーザーの環境に合わせて、必要なコンポーネントをインポートして利用する。
 
 ```tsx
-  <Box className="my-class">
+// Serendie UIのインポート (通常)
+import { TextField, Button, Select } from "@serendie/ui";
+
+// PandaCSS スタイルユーティリティ（PandaCSS導入時）
+import { css } from "@serendie/ui/css";
+
+// PandaCSS レイアウトコンポーネント（PandaCSS導入時）
+import { Box, Center, Flex, Stack, VStack } from "@serendie/ui/jsx";
 ```
 
-プロジェクトの制約によりPandaCSSを利用できない場合は、CSS Variablesを利用してください。
+## Serendie Symbols (アイコン) を使う
 
-## PandaCSSを利用する(推奨)
+`@serendie/ui` の依存パッケージとしてインストールされるため、追加インストールは不要。`@serendie/ui` を使わずアイコンのみ利用する場合は `npm install @serendie/symbols` で個別導入する。
 
-プロジェクトにPandaCSSを導入すると、よりシームレスにSerendie UIを利用することができます。
+使用例:
 
-### インストール
-
+```tsx
+import {
+  SerendieSymbolHome, // homeアイコン (outline)
+  SerendieSymbolSettingsFilled, // 設定アイコン (filled)
+} from "@serendie/symbols";
 ```
+
+利用可能なアイコンはSerendie MCPの `get-symbols` / `get-symbol-detail` で確認すること。
+
+## PandaCSS の導入（推奨）
+
+ユーザープロジェクトに、PandaCSS を導入すると、デザイントークンを JSX 内で直接利用できるなど、よりシームレスにSerendie UIを利用できる。
+`panda init` は親ディレクトリに既存の panda.config.ts がある場合、生成をスキップすることがある。その場合は手動で panda.config.ts を作成すること。
+
+インストール:
+
+```bash
 npm install -D @pandacss/dev
 npx panda init --postcss
 ```
 
-package.jsonに以下を追加します
+package.json に `"prepare": "panda codegen"` を追加し、panda.config.ts で **`SerendiePreset` を presets に指定する**。これによりデザイントークンやレシピがPandaCSSから利用可能になる。
+その他のPandaCSS設定は公式ドキュメント (https://panda-css.com/llms.txt) を参照のこと。
 
-````diff
-{
-  "scripts": {
-+   "prepare": "panda codegen",
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  }
-}
-
-
-### 設定
-
-panda initで生成されたpanda.config.tsに設定を追加します
-
-```diff
-+import { SerendiePreset } from "@serendie/ui";
+```ts
+import { SerendiePreset } from "@serendie/ui";
 
 export default defineConfig({
-+  jsxFramework: "react",
-+  presets: [SerendiePreset],
+  presets: [SerendiePreset],
+  jsxFramework: "react",
+  include: ["./src/**/*.{js,jsx,ts,tsx}"],
+  // その他はPandaCSSのドキュメントに従って設定
 });
+```
 
-````
+この設定により、下記のようにデザイントークン名をコード内で扱うことができる。なお、このデザイントークン名は、Figmaのデザインライブラリ (Serendie UI Kit) のデザイントークン名 (Figma Variables) と一致する。
 
-これで
-
-```tsx
+```jsx
   <Box my="sd.system.dimension.spacing.sixExtraLarge">
 ```
 
-などに対応するCSSが生成されます。
-また、css()メソッドを利用しても同様のことができます。
+また、css()メソッドを利用して同様のことができる。
 
-```tsx
+```jsx
 import { css } from "@serendie/ui/css";
 // ...snip...
 <div className={css({ my: "sd.system.dimension.spacing.sixExtraLarge" })}>
 ```
 
-## Serendie Symbolsのセットアップ
+## コンポーネントの概要
 
-1. `npm install @serendie/symbols`
-2. `@serendie/symbols`から必要なシンボルをインポートして利用してください。
+コンポーネントは以下のカテゴリに分類される。一覧・詳細は Serendie MCP の `get-components` / `get-component-detail` で取得すること。
 
-```tsx
-import {
-  SerendieSymbolHome, // アウトライン
-  SerendieSymbolSettingsFilled, // 塗りつぶし
-} from "@serendie/symbols";
+- **Actions**: Button, IconButton, BottomNavigation など
+- **Inputs**: TextField, PasswordField, Select, Switch など
+- **Layout**: Accordion, Tabs, Divider など
+- **Display**: Avatar, Badge, ProgressIndicator など
+- **Feedback**: Toast, ModalDialog, Pagination など
+- **Other**: その他
+
+バリアント Props 名はコンポーネントごとに異なる（例: Button は `styleType`、Badge は `styleColor`）。 **他のUIライブラリでみられる `variant` ではないので、必ず `get-component-detail` または TypeScript の型定義で確認すること。**
+
+## デザイントークンの概要
+
+- [重要] デザイントークンは、Serendie UIを扱う際のデザインにおける基本単位。**ユーザーから指定が無い限り、px値やHEXカラーなど直値の指定は禁止であり、デザイントークンを原則使うこと。**
+- 利用可能なデザイントークンは Serendie MCP の `get-design-tokens` / `get-design-token-detail` で確認すること
+
+### デザイントークンの基礎
+
+より詳細はSerendie MCPの `search-serendie-guideline`でキーワード検索して確認すること。
+
+- デザイントークンには「システムトークン（`sd.system.*`）」と「リファレンストークン（`sd.reference.*`）」の2層から構成される。システムトークンはリファレンストークンを参照する。
+- 通常ユーザープロジェクトでは、**システムトークンを最優先で使用する。** リファレンストークンを直接扱うのは理由が無い限り避けるのがベストプラクティス。
+- デザイントークンは、タイプとロールという概念を持ち、デザイントークン文字列の内部で表現される。
+  - タイプ: デザイントークンのカテゴリ。カラー、書体、寸法など、適用範囲が分かる。
+    - Color, Typography, Dimension, Elevationなど。`sd.system.dimension` のように3階層目で表現される。
+  - ロール: タイプをさらに細分化したもの。システムトークンのみ持つ情報であり、デザイントークンの適用箇所を表す。
+    - `sd.system.dimension.spacing`のように4階層目で表現される
+    - Colorロール: impression（ブランドカラー）, component（UI構造色）, interaction（状態変化色: hovered, disabled等。装飾目的で流用しないこと）など
+    - Typographyロール: title, headlineなど
+    - Dimensionロール: spacing, radiusなど
+- デザイントークンの末尾につくsuffix (`expanded`, `compact`) は、デバイス環境を示す。`expanded`はPC/Laptop環境、`compact`はスマートフォン環境に対応している。レスポンシブデザインの場合は、breakpointごとに使い分けるなど、ユーザーのプロジェクトに合わせて使い分けること。
+
+### よくある誤りと正しい例
+
+**NG: px値やHEXカラーを直接指定している**
+
+```ts
+css({
+  padding: "16px",
+  margin: 8,
+  color: "#333",
+  fontSize: "16px",
+  borderRadius: "8px",
+  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+});
 ```
 
-どのようなシンボルがあるかは MCPツール`get-symbols`、`get-symbol-detail`で確認できます。
+**OK: デザイントークンを使用している**
 
-## カラーテーマ
-
-htmlタグなどに、data-panda-theme属性を付与することで、CSS 環境であってもテーマを切り替えることができます。
-
-```html
-<html data-panda-theme="asagi"></html>
+```ts
+css({
+  p: "sd.system.dimension.spacing.medium",
+  m: "sd.system.dimension.spacing.small",
+  color: "sd.system.color.component.onSurface",
+  textStyle: "sd.system.typography.headline.small_expanded", // Panda CSSのText Styleを利用 (後述)
+  borderRadius: "sd.system.dimension.radius.medium",
+  boxShadow: "sd.system.elevation.shadow.level2",
+});
 ```
 
-- 利用可能テーマ: `konjo`, `asagi`, `kurikawa`, `sumire`, `tsutsuji`
-- デフォルトテーマ: `konjo`
+`textStyle` は PandaCSS の [Text Styles](https://panda-css.com/docs/theming/text-styles) 機能であり、fontSize / fontWeight / lineHeight 等を個別に指定するのではなく `textStyle` で一括指定する。必須ではないが、記述が簡潔になるため、PandaCSSを利用する場合は利用が推奨される。
 
-## 開発ガイドライン
+**NG: リファレンストークンやセマンティクスの合わないトークンを使っている**
 
-- デザイントークンを必ず使用する
-- 既存コンポーネントを優先採用する
-- アクセシビリティ要件を確実に満たす
-
-## 共通パターン
-
-- Props
-  - `variant`: `solid` / `outline` / `ghost`
-  - `size`: `xs` / `sm` / `md` / `lg` / `xl`
-  - `colorScheme`: `primary`, `secondary` など
-  - `asChild`: ラップ要素の置換に使用
-- Composition: Ark UIのコンポジションパターンに準拠
-
-## ベストプラクティス
-
-- デザイントークン（特にスペーシング）を必ず使用する
-- `px`値の直接指定は禁止
-- Reset CSSは追加不要（同梱済）
-- `@serendie/ui` と `@serendie/symbols` を組み合わせて利用
-- デザイントークン選択時は`get-design-tokens` MCPツールで対応可能なトークンを確認する
-- 重要:実装したあとはTypeScriptの型チェックを行い**プロパティに間違いがないかを必ず確認する**
-
-## デザイントークンガイドライン
-
-- デザイントークンは必須。`px`値の直接使用は禁止
-- トークン種別:
-  - リファレンス (`sd.reference.*`): 生の値。UIデザインにおいて、もし適切なシステムトークンがなかった場合は使用可能。
-  - システム (`sd.system.*`): リファレンスを参照。実装ではできるだけこちらを使用
-- 優先事項:
-  - システムトークン(`sd.system.`)を最優先で利用
-  - 対象のコンポーネントとシステムトークンの役割が一致しているときのみ、システムトークンを適用
-  - スペーシングは`sd.system.dimension.spacing.*`を利用
-  - 色指定は`sd.system.color.*`を利用（HEX禁止）
-  - `textStyle`でタイポグラフィトークンを適用
-  - スペーシングと色は必ずデザイントークンを使用
-- よくある誤り:
-  - `padding: '16px'` → `p: 'sd.system.dimension.spacing.*'`
-  - `color: '#333'` → `color: 'sd.system.color.component.onSurface'`
-  - `color: 'sd.reference.color.scale.gray.500'` → `color: 'sd.system.color.component.onSurface'`
-  - `color: 'sd.system.color.component.outline'`（テキスト色） → `color: 'sd.system.color.component.onSurface'`（テキスト色）
-  - `margin: 8` → `m: 'sd.system.dimension.spacing.*'`
-  - `font-size: 16px` → `textStyle: 'sd.system.typography.scale.expanded.large'`
-- 正しい例:
-  ```ts
-  css({
-    p: "sd.system.dimension.spacing.medium",
-    color: "sd.system.color.component.onSurface",
-    textStyle: "sd.system.typography.headline.small_expanded",
-  });
-  ```
-- 注意: 具体的なトークン一覧は`get-design-tokens`ツールで確認
-
-## TIPS
-
-### コンポーネントのデフォルト設定
-
-- TextField: `maxWidth`が既定で設定されている → `className={css({ width: '100%' })}`で解除
-- PasswordField: TextFieldと同様に`maxWidth`設定 → `className={css({ width: '100%' })}`で解除
-
-## インポートパスのルール
-
-コンポーネントのインポートは以下のようにすること
-特にSerendie UIのコンポーネントは`@serendie/ui`からインポートすること。
-また、あらかじめ`use client`が適用されたコンポーネントを `@serendie/ui/client` からインポートして使うこともできます
-
-```tsx
-// @serendie/uiが提供する機能コンポーネント
-import { TextField, PasswordField, Button, ... } from "@serendie/ui";
-// PandaCSSが提供するスタイルユーティリティ
-import { css } from "@serendie/ui/css";
-// PandaCSSが提供するレイアウトコンポーネント
-import { Box, Center, Flex, Stack, VStack, ... } from "@serendie/ui/jsx";
+```ts
+css({
+  color: "sd.reference.color.scale.gray.500", // リファレンストークンを直接使用
+  borderColor: "sd.system.color.component.onSurface", // テキスト用トークンをボーダーに (セマンティクスの不一致)
+  bg: "sd.system.color.interaction.disabled", // interactionロールは状態変化専用。「グレーの背景が欲しいから」と装飾目的で流用してはいけない
+});
 ```
+
+**OK: 用途に合ったシステムトークンを使っている**
+
+```ts
+css({
+  color: "sd.system.color.component.onSurface", // テキスト色にはonSurface
+  borderColor: "sd.system.color.component.outline", // ボーダーにはoutline
+  bg: "sd.system.color.component.surface", // 背景にはsurface
+});
+```
+
+### [重要] 適切なデザイントークンが見つからない場合
+
+- タイプおよびロールは、セマンティクスに従って適切に使うことが最も重要であり、**見た目を重視したデザイントークンの誤用は禁止**
+- デザイントークンの用途やセマンティクスが不明なときは、Serendie MCPを活用するか、**Serendie UIコンポーネントの既存実装での使い方を調べること。**
+- 適切なトークンが見つからない場合は、無理に誤用するのではなく、**デザイントークンをユーザープロジェクト内で新規定義することを検討する。** 例えば、PandaCSSの[Theming機能](https://panda-css.com/llms.txt/theming)を利用して、ユーザープロジェクト内の独自トークンを定義することができる。誤用よりも分離して定義する方が、将来的にSerendie UI側で適切なトークンが追加された際の移行も容易になる。

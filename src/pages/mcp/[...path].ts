@@ -58,14 +58,6 @@ export const ALL: APIRoute = (context) => {
   const cfEnv = (context.locals as { runtime?: { env?: Record<string, string | undefined> } })?.runtime?.env;
 
   if (cfEnv) {
-    // Honoのコンテキストに環境変数を渡すためにリクエストを作成
-    const request = new Request(context.request.url, {
-      method: context.request.method,
-      headers: context.request.headers,
-      body: context.request.body,
-    });
-
-    // 環境変数をglobalThisに設定(Honoアプリ内でアクセスできるように)
     (globalThis as typeof globalThis & {
       __SERENDIE_WORKER_ENV__?: Record<string, string | undefined>;
     }).__SERENDIE_WORKER_ENV__ = cfEnv;
