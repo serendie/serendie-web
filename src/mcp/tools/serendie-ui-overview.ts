@@ -20,10 +20,12 @@ export function getSerendieUIOverviewTool(mcpServer: McpServer) {
     {
       title: "Get Serendie UI Overview",
       description:
-        "IMPORTANT: You MUST call this tool FIRST before any Serendie-related development. " +
-        "This provides critical prerequisite knowledge about @serendie/ui design system. " +
-        "Always use this tool at the beginning of any conversation about Serendie to avoid common mistakes " +
-        "like adding reset CSS (already included) or using px values instead of design tokens. " +
+        "IMPORTANT: This tool is intended for AI agents that do not support Agent Skills. " +
+        "If the `/serendie-overview` Skill has already been triggered, do NOT use this tool. " +
+        "Otherwise, this should be the very first tool called for any Serendie-related development. " +
+        "Provides essential knowledge about Serendie Design System (@serendie/ui, @serendie/symbols, @serendie/design-token), " +
+        "including overview, setup instructions, and design token usage. " +
+        "Use for any Serendie-related questions such as component/icon usage and design token selection. " +
         "The response is formatted as Markdown for direct consumption by LLMs.",
       inputSchema: {},
       outputSchema: GetSerendieUIOverviewToolSchema.shape,
