@@ -17,23 +17,20 @@ Serendie Web は三菱電機のオープンデザインシステム「Serendie D
 
 ## i18n / 翻訳ワークフロー
 
-日本語と英語の2系統を**別経路**で管理する。混同しないこと。
+現在は日英対応。日本語ファーストで英訳はLLMで行う想定。
+管理方法が2系統あることに注意。
 
 ### MDX コンテンツの翻訳
 
-- **日本語ファースト**: 原稿は `src/content/pages/` 配下に書く
+- ガイドラインドキュメントの原稿は `src/content/pages/` 配下に書く
 - 英訳は `src/content/pages/en/` 配下に**同じファイル構成でミラー配置**する
-- 日本語側を変更したら英訳側の同期も忘れない (コミット例: `docs: Sync English translations with recent Japanese updates`)
+- 日本語側を変更したら英訳側の同期も忘れない
 
-### UI 文字列の翻訳
+### UIテキストの翻訳
 
-- `src/i18n/ui.ts` がローカル辞書、**Figma Variables が源泉** であり、コマンドで同期する
-- 同期コマンド:
-  - `npm run translations:pull` — Figma → `ui.ts`
-  - `npm run translations:push` — `ui.ts` → Figma
-  - `npm run translations:lint` — 言語間のキー漏れ・未翻訳検査 (PR では必須)
-- `"#"` は **未翻訳の placeholder** (Figma が空文字を送れない制約の回避)。lint で弾かれる
-- 詳細は `scripts/translations/README.md` 参照
+- SDS Web内のボタンやナビゲーションのラベルテキストは、ミラー管理ではなく、**Key/Value形式のロケールファイルを動的に切り替える方式**
+- `src/i18n/ui.ts` および `src/i18n/ui-components.ts` がロケールファイル
+- ja/en の両方に同じキーを持たせるのが原則（型でも両方の存在が要求される）。万一片方が欠けた場合はランタイムで日本語にフォールバックされるが、英訳を行い同期することを忘れないこと
 
 ## ビルドの再生成タイミング
 

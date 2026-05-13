@@ -29,10 +29,10 @@ npm run test:mcp   # MCP サーバーの統合テスト (`npm run dev`の起動�
 
 ## i18n
 
-いずれも英訳はLLMで実施
+日本語でライティングを行い、英訳はLLMで実施するワークフロー
 
-1. ガイドラインドキュメント(MDX)は日本語ファースト記述し、英訳を `src/content/pages/en/` 配下に同じファイル構成でミラー配置しています。
-2. サイト内のUIテキスト (ボタンラベル等)は `src/i18n/ui.ts` にてKey/Value形式で管理します。
+1. ガイドラインドキュメント(MDX)は、日本語に対応する英訳ファイルを `src/content/pages/en/` 配下にミラー配置
+2. サイト内のUIテキスト (ボタンラベル等)は `src/i18n/ui.ts` および `src/i18n/ui-components.ts` にてKey/Value形式で管理
 
 ## Others
 
