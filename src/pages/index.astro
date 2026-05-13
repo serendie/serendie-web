@@ -22,7 +22,10 @@ import IconColor from "@/assets/toppage/icons/color-.svg?raw";
 import IconDesignTokens from "@/assets/toppage/icons/design-tokens.svg?raw";
 import IconDesign from "@/assets/toppage/icons/design.svg?raw";
 import IconDev from "@/assets/toppage/icons/dev.svg?raw";
-import IconAIAgent from "@/assets/toppage/icons/ai-agents.svg?raw";
+import IconAIPlugin from "@/assets/toppage/icons/ai-plugin.svg?raw";
+import IconAIMcp from "@/assets/toppage/icons/ai-mcp.svg?raw";
+import IconAISkills from "@/assets/toppage/icons/ai-skills.svg?raw";
+import IconAILlm from "@/assets/toppage/icons/ai-llm.svg?raw";
 import IconDimension from "@/assets/toppage/icons/dimemntion.svg?raw";
 import IconElevation from "@/assets/toppage/icons/elevation.svg?raw";
 import IconIcon from "@/assets/toppage/icons/icon.svg?raw";
@@ -65,11 +68,27 @@ const content = [
         href: localePath("get-started/dev"),
         illustration: IconDev,
       },
+    ],
+  },
+  {
+    titleEn: t("nav.ai.long"),
+    description: "",
+    links: [
       {
-        title: "AIエージェント",
-        href: "/get-started/ai-agent/mcp-server",
-        illustration: IconAIAgent,
-      }
+        title: "Serendie MCP",
+        href: localePath("ai/mcp-server"),
+        illustration: IconAIMcp,
+      },
+      {
+        title: "Agent Skills",
+        href: localePath("ai/agent-skills"),
+        illustration: IconAISkills,
+      },
+      {
+        title: "Figma Plugin",
+        href: localePath("ai/serendie-ui-plugin"),
+        illustration: IconAIPlugin,
+      },
     ],
   },
   {
