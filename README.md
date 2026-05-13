@@ -1,4 +1,7 @@
-# Serendie Design System Web
+# SDS Web
+
+Serendie Design Systemのドキュメントサイトです。
+Serendie MCPも同梱されています。
 
 ## Staging
 
@@ -12,13 +15,13 @@ URL: https://serendie.design/
 
 `main`ブランチにpushすると、プロダクション環境へデプロイされます。
 
-## ローカルでの開発
+## Development
 
 ```
 npm install
 npm run dev
 ```
 
-## その他
+## Others
 
-- storybook( https://storybook.serendie.design/ )については [serendie/serendie](https://github.com/serendie/serendie) で管理しています。
+- storybook( https://storybook.serendie.design/ )は [serendie/serendie](https://github.com/serendie/serendie) で管理しています。
