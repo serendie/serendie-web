@@ -29,7 +29,7 @@ Copilot, Gemini CLIなど主要なコーディングエージェントが対応�
 
 Serendie Design Systemでは、次のSkillを提供しています。
 
-- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/skills/serendie-overview/SKILL.md) ― Serendie UIやSerendie Symbolsなど各種リソースの概要、セットアップ手順、デザイントークンを扱うベストプラクティスを提供するスキル。Serendie UIを使った実装をコーディングエージェントに指示する際に最初にトリガーするスキル
+- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/.claude/skills/serendie-overview/SKILL.md) ― Serendie UIやSerendie Symbolsなど各種リソースの概要、セットアップ手順、デザイントークンを扱うベストプラクティスを提供するスキル。Serendie UIを使った実装をコーディングエージェントに指示する際に最初にトリガーするスキル
 
 なお、[Serendie MCPサーバー](/ai/mcp-server)を併用することで、より詳細なリソース情報をAIエージェントが取得できるため、合わせてセットアップしてください。
 
@@ -37,12 +37,6 @@ Serendie Design Systemでは、次のSkillを提供しています。
 
 <PageSection>
   <PageHeadLine number={2}>セットアップ</PageHeadLine>
-
-## Codex, Cursor, GitHub Copilot, Gemini CLIなど
-
-Agent Skillsの管理ツールである <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a> を使うことで、各種エージェントの仕様に対応する形でSkillsをインストールできます。下記のコマンドをターミナルから入力してください。
-
-<CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
 
 ## Claude Code
 
@@ -60,5 +54,17 @@ Claude Codeを起動した上で、下記を順に実行してください。
 /reload-plugins`}
   language={"shell"}
 />
+
+## Codex, Cursor, GitHub Copilot, Gemini CLIなど
+
+Agent Skillsの管理ツールである <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a> を使うことで、各種エージェントの仕様に対応する形でSkillsをインストールできます。下記のコマンドをターミナルから実行してください。
+
+<CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
+
+## Figma Make
+
+2026年5月現在、Figma MakeではSkillファイルを個別にアップロードする必要があります。
+
+GitHubから[serendie-overviewのSkillファイル (Markdown形式)](https://github.com/serendie/serendie/blob/main/.claude/skills/serendie-overview/SKILL.md)をダウンロードし、[Figma Make ヘルプページ](https://help.figma.com/hc/en-us/articles/40283639496599-Custom-skills-for-Figma-Make#h_01KR283FSA0EXZBHK1BMZJAB43)に記載の手順でFigma Makeにアップロードしてください。
 
 </PageSection>
