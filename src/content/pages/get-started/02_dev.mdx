@@ -3,7 +3,7 @@ title: 開発
 slug: get-started/dev
 illustType: "B"
 description: "Webフロントエンド開発において、Serendie UI Kitをベースにした画面デザインを、Reactで実装していくシーンを想定して活用方法を紹介します。"
-lastUpdated: "2025-04-02"
+lastUpdated: "2026-05-14"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -18,7 +18,7 @@ export const sampleCodeCss = `@layer reset, base, tokens, recipes, utilities;
 
     Serendie UI Kit内で提供しているデザイントークンおよびUIコンポーネントを、Webフロントエンド開発でも利用できるように実装版を提供しています。特に開発シーンにおいてメインで活用することになるUIコンポーネント集を、Serendie UIと呼びます。
 
-    Serendie UIは、現在のところReact環境を前提としています。またOSSとして一般公開しているので、三菱電機に限らず誰でも利用可能です。
+    Serendie UIは、現在のところReact環境を前提としています。またOSSとして一般公開しており、三菱電機に限らず誰でも利用可能です。
 
     このページではSerendie UIを使い始めるための基本的な情報を紹介します。三菱電機メンバー向けにはブートキャンプも開催しています。開催予定は[社内ポータル](https://mitsubishielectricgroup.sharepoint.com/sites/014758/serendie_designsystem)を参照してください。
 
@@ -95,8 +95,20 @@ export const sampleCodeCss = `@layer reset, base, tokens, recipes, utilities;
 
     デザイントークンは、CSS/JavaScript環境であれば広く利用可能な形で配布しています。プロジェクトがReact環境ではないなどの理由で「Serendie UIは使えないが、カラーや書体定義だけは使いたい」シーンで活用できます。
 
-    npmなどのパッケージマネージャーで下記のようにインストールしてください。なお、デザイントークンの一覧は[こちら](/foundations/design-tokens/reference-tokens)を参照してください。
+    npmなどのパッケージマネージャーで下記のようにインストールしてください。なお、デザイントークンの一覧は[こちらのドキュメント](/foundations/design-tokens/reference-tokens)を参照してください。
 
     <CodeBox code={`npm install @serendie/design-token`} language={'shell'} />
+
+  </PageSection>
+
+  <PageSection>
+    <PageHeadLine number={5}>Agentic Codingのサポート</PageHeadLine>
+
+    AIエージェントによる開発 (Agentic Coding) を円滑に行うために、[Serendie MCPサーバー](/ai/mcp-server)と[Agent Skills](/ai/agent-skills)を提供しています。
+
+    Serendie MCPサーバーは、Serendie Design Systemが提供する各種リソースを、AIエージェントが効率的に活用するためのツール群であり、Agent Skillsはその使い方を提供するものです。
+    この2つはセットで使うことでより効果を発揮します。
+
+    [こちらのドキュメント](/ai)を参照し、お使いのAIエージェントに合わせてセットアップしてください。
 
   </PageSection>
