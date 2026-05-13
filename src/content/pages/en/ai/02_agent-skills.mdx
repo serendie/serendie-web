@@ -29,7 +29,7 @@ Like MCP, Agent Skills are evolving as an <a href="https://agentskills.io/home" 
 
 The Serendie Design System provides the following skill:
 
-- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/skills/serendie-overview/SKILL.md) — A skill that provides an overview of resources such as Serendie UI and Serendie Symbols, setup instructions, and best practices for working with design tokens. This is the first skill to trigger when instructing a coding agent to implement with Serendie UI.
+- [**/serendie-overview**](https://github.com/serendie/serendie/blob/main/.claude/skills/serendie-overview/SKILL.md) — A skill that provides an overview of resources such as Serendie UI and Serendie Symbols, setup instructions, and best practices for working with design tokens. This is the first skill to trigger when instructing a coding agent to implement with Serendie UI.
 
 We recommend also setting up the [Serendie MCP Server](/en/ai/mcp-server), as it allows AI agents to retrieve more detailed resource information.
 
@@ -37,12 +37,6 @@ We recommend also setting up the [Serendie MCP Server](/en/ai/mcp-server), as it
 
 <PageSection>
   <PageHeadLine number={2}>Setup</PageHeadLine>
-
-## Codex, Cursor, GitHub Copilot, Gemini CLI, etc.
-
-Using the Agent Skills management tool <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a>, you can install Skills in a format compatible with various agents. Enter the following command in your terminal:
-
-<CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
 
 ## Claude Code
 
@@ -56,5 +50,17 @@ Launch Claude Code and run the following commands in order:
 /reload-plugins`}
   language={"shell"}
 />
+
+## Codex, Cursor, GitHub Copilot, Gemini CLI, etc.
+
+Using the Agent Skills management tool <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a>, you can install Skills in a format compatible with various agents. Run the following command in your terminal:
+
+<CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
+
+## Figma Make
+
+As of May 2026, Figma Make requires you to upload Skill files individually.
+
+Download the [serendie-overview Skill file (Markdown)](https://github.com/serendie/serendie/blob/main/.claude/skills/serendie-overview/SKILL.md) from GitHub and upload it to Figma Make following the instructions in the [Figma Make help page](https://help.figma.com/hc/en-us/articles/40283639496599-Custom-skills-for-Figma-Make#h_01KR283FSA0EXZBHK1BMZJAB43).
 
 </PageSection>
