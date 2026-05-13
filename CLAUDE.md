@@ -1,149 +1,56 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## プロジェクト概要
 
-## Project Overview
+Serendie Web は三菱電機のオープンデザインシステム「Serendie Design System (SDS)」の公式ドキュメントサイト。Astro + React + TypeScript + PandaCSS で構築されている。
 
-Serendie Web is the documentation website for the Serendie Design System (SDS), an open design system by Mitsubishi Electric. Built with Astro, React, and TypeScript, it showcases UI components and design guidelines.
+- 本番: https://serendie.design/
+- ステージング: https://dev.serendie-web.pages.dev/
+- Storybook: https://storybook.serendie.design/ (別リポジトリ)
 
-**Key URLs:**
+**位置付け**: 本リポジトリは**ドキュメントサイト**であって、コンポーネント本体 (`@serendie/ui`)・アイコン (`@serendie/symbols`)・デザイントークン (`@serendie/design-token`) の実装は別リポジトリ。本リポジトリでは、一般ユーザーと同様に、各パッケージは公開済みのものを参照する
 
-- Production: https://serendie.design/
-- Staging: https://dev.serendie-web.pages.dev/ (Basic Auth protected)
-- Storybook: https://storybook.serendie.design/ (separate repository)
+## デプロイ
 
-## Essential Commands
+- `main` branch: 本番 (serendie.design)
+- `dev` branch: ステージング (dev.serendie-web.pages.dev)
 
-```bash
-# Development
-npm run dev              # Start dev server (builds Panda CSS first)
+## i18n / 翻訳ワークフロー
 
-# Building
-npm run build            # Full production build
-npm run build:panda      # Regenerate Panda CSS styles and types
-npm run build:tokens     # Rebuild design tokens from Style Dictionary
-npm run build:componentsManifest # Regenerate component manifest for MCP server
+日本語と英語の2系統を**別経路**で管理する。混同しないこと。
 
-# Code Quality
-npm run lint             # Run ESLint
-npm run lint:fix         # Auto-fix ESLint issues
-npm run format           # Format code with Prettier
+### MDX コンテンツの翻訳
 
-# Testing
-npm run test:mcp         # Run MCP server tests
-```
+- **日本語ファースト**: 原稿は `src/content/pages/` 配下に書く
+- 英訳は `src/content/pages/en/` 配下に**同じファイル構成でミラー配置**する
+- 日本語側を変更したら英訳側の同期も忘れない (コミット例: `docs: Sync English translations with recent Japanese updates`)
 
-## Architecture & Key Concepts
+### UI 文字列の翻訳
 
-### Tech Stack
+- `src/i18n/ui.ts` がローカル辞書、**Figma Variables が源泉** であり、コマンドで同期する
+- 同期コマンド:
+  - `npm run translations:pull` — Figma → `ui.ts`
+  - `npm run translations:push` — `ui.ts` → Figma
+  - `npm run translations:lint` — 言語間のキー漏れ・未翻訳検査 (PR では必須)
+- `"#"` は **未翻訳の placeholder** (Figma が空文字を送れない制約の回避)。lint で弾かれる
+- 詳細は `scripts/translations/README.md` 参照
 
-- **Framework**: Astro 4.x with React 18 integration (hybrid mode for API routes)
-- **Styling**: PandaCSS with @serendie/ui preset
-- **Content**: MDX for component documentation
-- **Build**: Vite with custom SVG handling
-- **Deployment**: Cloudflare Pages
-- **API**: Hono.js for API routes
-- **MCP**: Model Context Protocol server for AI assistant integration
+## ビルドの再生成タイミング
 
-### Project Structure
+以下を変更したら対応するコマンドを叩いて生成物を更新する:
 
-```
-src/
-├── components/         # React/Astro components
-├── content/           # MDX documentation files
-│   ├── components/    # UI component docs
-│   └── pages/        # General documentation
-├── layouts/          # Page layouts
-├── mcp/              # MCP server implementation
-│   ├── server.ts     # MCP server configuration
-│   └── tools/        # MCP tool implementations
-├── pages/            # Astro routes
-└── sampleCode/       # Component code examples
+| 変更対象                                                         | 必須コマンド                       |
+| ---------------------------------------------------------------- | ---------------------------------- |
+| `panda.config.ts` / Panda の style 設定                          | `npm run build:panda`              |
+| `tokens/data/` 配下のデザイントークン                            | `npm run build:tokens`             |
+| `@serendie/ui` のバージョンアップ、コンポーネント MDX の大幅変更 | `npm run build:componentsManifest` |
 
-styled-system/         # Generated PandaCSS output
-tokens/               # Design token configuration
-scripts/              # Build and utility scripts
-├── generateComponentsManifest/  # Component manifest generator
-├── figmaLocalStyles2PandaTokens/  # Figma to Panda tokens converter
-├── figmaSvgConverter/  # Figma SVG converter
-└── token2cssVars/  # Token to CSS variables converter
-```
+`npm run dev` 起動時に `build:panda` と `build:componentsManifest` は自動実行される。ただし**起動中に上記を変更した場合は手動再実行が必要**。
 
-### Design System Integration
+## テスト
 
-- **Components**: Import from `@serendie/ui`
-- **Icons**: Import from `@serendie/symbols`
-- **Tokens**: Managed via Style Dictionary, accessible through PandaCSS
-- **Themes**: Multiple themes (asagi, konjo, kurikawa, sumire, tsutsuji)
+2系統が共存:
 
-### Development Workflow
-
-1. **Adding/Modifying Components Documentation**:
-
-   - Edit MDX files in `src/content/components/`
-   - Add code examples in `src/sampleCode/`
-   - Component demos use the actual `@serendie/ui` components
-
-2. **Working with Styles**:
-
-   - Use PandaCSS patterns (`css()`, `styled()`)
-   - Tokens are available through the styled-system
-   - Run `npm run build:panda` after config changes
-
-3. **Managing Design Tokens**:
-
-   - Edit token files in `tokens/data/`
-   - Run `npm run build:tokens` to regenerate
-   - Tokens are transformed for both CSS and PandaCSS
-
-4. **Content Management**:
-
-   - Content collections defined in `src/content/config.ts`
-   - Frontmatter controls navigation and metadata
-   - MDX allows React components in documentation
-
-5. **MCP Server Development**:
-   - MCP server files are in `src/mcp/`
-   - Add new tools in `src/mcp/tools/`
-   - **IMPORTANT**: Always run `npm run test:mcp` after modifying MCP server code
-   - Tests are located in `src/mcp/__tests__/`
-   - **Note**: The dev server must be running (`npm run dev`) before running MCP tests
-   - **Documentation**: When adding or modifying MCP tools, always update `src/mcp/README.md` with:
-     - Tool descriptions and parameters
-     - Return value specifications
-     - Usage examples
-     - Any new patterns or best practices
-
-### Important Configuration Files
-
-- `astro.config.mjs` - Astro setup with React/MDX
-- `panda.config.ts` - PandaCSS with Serendie preset
-- `tokens/build.js` - Style Dictionary token build
-- `vite.config.ts` - Vite plugins for SVG handling
-
-### Environment Variables
-
-- `BASE_PATH` - For subpath deployment
-- `SITE_DOMAIN` - Custom domain override
-- `CF_PAGES_BRANCH` - Cloudflare deployment branch
-- `CF_PAGES_URL` - Cloudflare deployment URL
-
-### Key Dependencies
-
-- `@serendie/ui` - Component library (v1.0.1)
-- `@serendie/design-token` - Design tokens
-- `@ark-ui/react` - Headless UI primitives
-- `framer-motion` - Animations
-- `embla-carousel-react` - Carousel component
-
-### Deployment Notes
-
-- Main branch → Production (serendie.design)
-- Dev branch → Staging (dev.serendie-web.pages.dev)
-- `_redirects` file controls Cloudflare Pages redirects
-- No test suite currently implemented
-
-### Development Server
-
-The user typically runs `npm run dev` in a separate terminal window. You don't need to start the dev server unless specifically asked.
-
+- **`npm run test`** (vitest) — 一般コードのユニットテスト
+- **`npm run test:mcp`** — MCP サーバーの統合テスト。実エンドポイントを叩くため**先に `npm run dev` を起動しておくこと**
+- MCP 関連の詳細ルールは `src/mcp/CLAUDE.md` 参照
