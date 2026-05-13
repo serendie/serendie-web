@@ -3,7 +3,7 @@ title: デザイン
 slug: get-started/design
 illustType: "B"
 description: "UIデザインのなかでSerendie UI Kitを活用する方法を紹介します。"
-lastUpdated: "2024-11-1"
+lastUpdated: "2026-05-14"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -20,14 +20,17 @@ import { siteConfig } from "../../../../siteConfig.js";
 Serendie UI KitはSerendie Design Systemの一部であり、Figma上でライブラリとして利用可能なデザインアセット集です。<a href={siteConfig.serendieUIKitFigmaFileURL}>Figma Community</a>
 にて公開しており、**三菱電機メンバーにかかわらずどなたでも利用できます。**
 
-現在のところ下記のようなアセットを含んでいます。
+Serendie UI Kitには、下記のようなアセットが含まれます。
 
-1. デザイントークン ― カラー、タイポグラフィなどの定義を[Figma Variables](https://help.figma.com/hc/ja/articles/15339657135383-Figma%E3%81%A7%E3%81%AE%E3%83%90%E3%83%AA%E3%82%A2%E3%83%96%E3%83%AB%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%AC%E3%82%A4%E3%83%89)として提供
+1. デザイントークン ― カラー、タイポグラフィなどの定義をFigma Variablesとして提供
 2. UIコンポーネント (Serendie UI) ― ButtonやText Fieldなど汎用的UIのFigmaコンポーネント集
 3. アイコン (Serendie Symbols) ― Serendieらしさを表現する300種類以上のアイコン集
 4. サンプル ― 1~3を活用した画面デザイン例。サンプルを起点にデザインを始めることも可能
+5. [Serendie UI Plugin](https://www.figma.com/community/plugin/1620336048159630313) ― Serendie UI Kitの利用をAIで支援するFigmaプラグイン
 
-このページでは、Serendie UI Kitを活用するための基本的な情報を紹介します。各項目について詳しく知りたい方は、[Foundations](/foundations)および[Components](/components)を参照してください。また、三菱電機メンバー向けにはブートキャンプも開催しています。開催予定は[社内ポータル](https://mitsubishielectricgroup.sharepoint.com/sites/014758/serendie_designsystem)を参照してください。
+このページでは、Serendie UI Kitを活用するための基本的な情報を紹介します。各項目について詳しく知りたい方は、[Foundations](/foundations)、[Components](/components)、[SDS for AI](/ai)を参照してください。
+
+また、三菱電機メンバー向けにはブートキャンプも開催しています。開催予定は[社内ポータル](https://mitsubishielectricgroup.sharepoint.com/sites/014758/serendie_designsystem)を参照してください。
 
 </PageSection>
 
@@ -90,10 +93,24 @@ Serendie UI KitはSerendie Design Systemの一部であり、Figma上でライ�
       <img src="/assets/pages/getstarted/getstarted-design-4.avif" width="310" alt="use examples" />
     </p>
 
+    ## AIに相談する
+
+    [Serendie UI Plugin](https://www.figma.com/community/plugin/1620336048159630313) は、UIコンポーネントの設計を相談したり、デザインがSerendie Design Systemのガイドラインに沿っているかを検証・修正できる、デザイナー向けのFigmaプラグインです。
+
+    Serendie UI PluginのAI相談機能では、デザイントークンやUIコンポーネントの使い方など、Serendie UI Kitの基礎を相談できます。詳しくは[こちらのドキュメント](/ai/serendie-ui-plugin)を参照してください。
+
+    <p>
+      <img
+        src="/assets/pages/ai/plugin-usecase-talk-with-ai.png"
+        width="310"
+        alt="serendie ui plugin"
+      />
+    </p>
+
 </PageSection>
 
 <PageSection>
-    <PageHeadLine number={3}>モードを切り替える</PageHeadLine>
+    <PageHeadLine number={3}>発展: Variableモードを使う</PageHeadLine>
 
     Figma Variablesには、[Variablesモード](https://help.figma.com/hc/ja/articles/15343816063383-%E3%83%90%E3%83%AA%E3%82%A2%E3%83%96%E3%83%AB%E3%83%A2%E3%83%BC%E3%83%89)という機能があります。これはダークモードやレスポンシブデザインのような「コンテキストによるUIの変化」を、デザインファイル上で表現するうえで強力な機能です。
 
