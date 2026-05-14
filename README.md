@@ -15,7 +15,7 @@ URL: https://serendie.design/
 
 `main` ブランチに push すると、プロダクション環境へデプロイされます。
 
-### Test
+## Test
 
 ```bash
 npm run test
