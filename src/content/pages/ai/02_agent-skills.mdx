@@ -3,7 +3,7 @@ title: Agent Skills
 slug: ai/agent-skills
 illustType: "E"
 description: "コーディングエージェントにSerendie Design Systemを使うための設定やベストプラクティスを与えることができます。Serendie MCPとセットで使うことを想定しています。"
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -60,6 +60,10 @@ Claude Codeを起動した上で、下記を順に実行してください。
 Agent Skillsの管理ツールである <a href="https://github.com/vercel-labs/skills" target="_blank">vercel-labs/skills</a> を使うことで、各種エージェントの仕様に対応する形でSkillsをインストールできます。下記のコマンドをターミナルから実行してください。
 
 <CodeBox code={`npx skills add serendie/serendie`} language={"shell"} />
+
+pnpmをご利用の方は下記を実行してください:
+
+<CodeBox code={`pnpm dlx skills add serendie/serendie`} language={"shell"} />
 
 ## Figma Make
 
