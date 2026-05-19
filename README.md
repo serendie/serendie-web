@@ -1,5 +1,6 @@
 # SDS Web
 
+[![SafeSkill 90/100](https://img.shields.io/badge/SafeSkill-90%2F100_Verified%20Safe-brightgreen)](https://safeskill.dev/scan/serendie-serendie-web)
 - Serendie Design System ドキュメントサイト (serendie.design)
 - Serendie MCPサーバー (serendie.design/mcp)
 
