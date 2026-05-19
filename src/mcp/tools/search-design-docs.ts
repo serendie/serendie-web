@@ -169,11 +169,13 @@ const createSearchDocsHandler =
 
 export function getSearchDesignDocsTools(mcpServer: McpServer) {
   mcpServer.registerTool(
-    "search-component-docs",
+    "search-external-component-docs",
     {
-      title: "Search Component Docs",
-      description: `コンポーネントの命名や設計のヒントになる参考資料を検索します。
-新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。`,
+      title: "Search External Component Docs",
+      description: `Serendie Design Systemに未定義の新規コンポーネントの命名や設計を検討するため、外部デザインシステムの参考資料を検索します。
+コンポーネントの命名や設計のヒントになる参考資料を検索します。
+新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。
+@serendie/ui の実装・既存コンポーネント利用・SDS準拠判断では、必ず search-serendie-guideline / get-components を優先してください。`,
       inputSchema: componentDocsParams,
       outputSchema: {
         query: z.string(),
@@ -185,11 +187,13 @@ export function getSearchDesignDocsTools(mcpServer: McpServer) {
   );
 
   mcpServer.registerTool(
-    "search-design-token-docs",
+    "search-external-design-token-docs",
     {
-      title: "Search Design Token Docs",
-      description: `デザイントークンの使用法とデザイン原則を検索します。
-デザイントークンの使用方法を検討・精査するときに使用してください。`,
+      title: "Search External Design Token Docs",
+      description: `Serendie Design Systemに未定義の新規トークン設計を検討するため、外部デザインシステムの参考資料を検索します。
+デザイントークンの使用法とデザイン原則を検索します。
+デザイントークンの使用方法を検討・精査するときに使用してください。
+@serendie/design-token の既存トークン利用・SDS準拠判断では、必ず search-serendie-guideline / get-design-tokens を優先してください。`,
       inputSchema: designTokenDocsParams,
       outputSchema: {
         query: z.string(),

@@ -60,19 +60,23 @@ describe("search design docs MCP tools", () => {
   it("registers component and design token search tools", () => {
     const { configs } = registerTools();
 
-    expect(configs.get("search-component-docs")?.title).toBe(
-      "Search Component Docs"
+    expect(configs.get("search-external-component-docs")?.title).toBe(
+      "Search External Component Docs"
     );
-    expect(configs.get("search-component-docs")?.description).toBe(
-      `コンポーネントの命名や設計のヒントになる参考資料を検索します。
-新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。`
+    expect(configs.get("search-external-component-docs")?.description).toBe(
+      `Serendie Design Systemに未定義の新規コンポーネントの命名や設計を検討するため、外部デザインシステムの参考資料を検索します。
+コンポーネントの命名や設計のヒントになる参考資料を検索します。
+新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。
+@serendie/ui の実装・既存コンポーネント利用・SDS準拠判断では、必ず search-serendie-guideline / get-components を優先してください。`
     );
-    expect(configs.get("search-design-token-docs")?.title).toBe(
-      "Search Design Token Docs"
+    expect(configs.get("search-external-design-token-docs")?.title).toBe(
+      "Search External Design Token Docs"
     );
-    expect(configs.get("search-design-token-docs")?.description).toBe(
-      `デザイントークンの使用法とデザイン原則を検索します。
-デザイントークンの使用方法を検討・精査するときに使用してください。`
+    expect(configs.get("search-external-design-token-docs")?.description).toBe(
+      `Serendie Design Systemに未定義の新規トークン設計を検討するため、外部デザインシステムの参考資料を検索します。
+デザイントークンの使用法とデザイン原則を検索します。
+デザイントークンの使用方法を検討・精査するときに使用してください。
+@serendie/design-token の既存トークン利用・SDS準拠判断では、必ず search-serendie-guideline / get-design-tokens を優先してください。`
     );
   });
 
@@ -97,7 +101,7 @@ describe("search design docs MCP tools", () => {
     } as Response);
 
     const { handlers } = registerTools();
-    const result = await handlers.get("search-component-docs")!({
+    const result = await handlers.get("search-external-component-docs")!({
       query: "accordion",
       nResults: 3,
     });
@@ -143,7 +147,9 @@ describe("search design docs MCP tools", () => {
     } as Response);
 
     const { handlers } = registerTools();
-    await handlers.get("search-design-token-docs")!({ query: "color role" });
+    await handlers.get("search-external-design-token-docs")!({
+      query: "color role",
+    });
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
@@ -168,7 +174,7 @@ describe("search design docs MCP tools", () => {
     } as Response);
 
     const { handlers } = registerTools();
-    const result = await handlers.get("search-design-token-docs")!({
+    const result = await handlers.get("search-external-design-token-docs")!({
       query: "typography",
     });
 
