@@ -107,15 +107,26 @@ const searchDocs = async ({
   };
 };
 
-const searchDocsParams = {
-  query: z.string().min(1).describe("Plain text query used to search docs."),
+const componentDocsParams = {
+  query: z.string().min(1).describe("コンポーネントの検索クエリ"),
   nResults: z
     .number()
     .min(1)
     .max(20)
     .optional()
     .default(5)
-    .describe("Number of results to return. Defaults to 5."),
+    .describe("返される結果の数 (デフォルト: 5)"),
+};
+
+const designTokenDocsParams = {
+  query: z.string().min(1).describe("デザイントークンの検索クエリ"),
+  nResults: z
+    .number()
+    .min(1)
+    .max(20)
+    .optional()
+    .default(5)
+    .describe("返される結果の数 (デフォルト: 5)"),
 };
 
 const createSearchDocsHandler =
@@ -161,9 +172,9 @@ export function getSearchDesignDocsTools(mcpServer: McpServer) {
     "search-component-docs",
     {
       title: "Search Component Docs",
-      description:
-        "Search ARK UI and Component Gallery docs for component naming and design patterns.",
-      inputSchema: searchDocsParams,
+      description: `コンポーネントの命名や設計のヒントになる参考資料を検索します。
+新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。`,
+      inputSchema: componentDocsParams,
       outputSchema: {
         query: z.string(),
         totalResults: z.number(),
@@ -177,9 +188,9 @@ export function getSearchDesignDocsTools(mcpServer: McpServer) {
     "search-design-token-docs",
     {
       title: "Search Design Token Docs",
-      description:
-        "Search Material Design 3 docs for design token usage and design principles.",
-      inputSchema: searchDocsParams,
+      description: `デザイントークンの使用法とデザイン原則を検索します。
+デザイントークンの使用方法を検討・精査するときに使用してください。`,
+      inputSchema: designTokenDocsParams,
       outputSchema: {
         query: z.string(),
         totalResults: z.number(),

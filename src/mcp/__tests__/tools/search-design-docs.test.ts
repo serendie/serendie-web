@@ -63,8 +63,16 @@ describe("search design docs MCP tools", () => {
     expect(configs.get("search-component-docs")?.title).toBe(
       "Search Component Docs"
     );
+    expect(configs.get("search-component-docs")?.description).toBe(
+      `コンポーネントの命名や設計のヒントになる参考資料を検索します。
+新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。`
+    );
     expect(configs.get("search-design-token-docs")?.title).toBe(
       "Search Design Token Docs"
+    );
+    expect(configs.get("search-design-token-docs")?.description).toBe(
+      `デザイントークンの使用法とデザイン原則を検索します。
+デザイントークンの使用方法を検討・精査するときに使用してください。`
     );
   });
 
