@@ -169,11 +169,11 @@ const createSearchDocsHandler =
 
 export function getSearchDesignDocsTools(mcpServer: McpServer) {
   mcpServer.registerTool(
-    "search-external-component-docs",
+    "search-design-patterns",
     {
-      title: "Search External Component Docs",
-      description: `Serendie Design Systemに未定義の新規コンポーネントの命名や設計を検討するため、外部デザインシステムの参考資料を検索します。
-コンポーネントの命名や設計のヒントになる参考資料を検索します。
+      title: "Search Design Patterns",
+      description: `Ark UIおよびデザインシステムギャラリーサイト (component.gallery) 掲載のコンポーネントを対象に、デザインパターンを検索できます。
+コンポーネントの命名やプロパティやバリアントの種類など、UIコンポーネント設計の参考情報を得ることができます。
 新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。
 @serendie/ui の実装・既存コンポーネント利用・SDS準拠判断では、必ず search-serendie-guideline / get-components を優先してください。`,
       inputSchema: componentDocsParams,
@@ -187,11 +187,11 @@ export function getSearchDesignDocsTools(mcpServer: McpServer) {
   );
 
   mcpServer.registerTool(
-    "search-external-design-token-docs",
+    "search-md3-design-token-docs",
     {
-      title: "Search External Design Token Docs",
-      description: `Serendie Design Systemに未定義の新規トークン設計を検討するため、外部デザインシステムの参考資料を検索します。
-デザイントークンの使用法とデザイン原則を検索します。
+      title: "Search MD3 Design Token Docs",
+      description: `Material Design 3のデザイントークン設計に関するドキュメントを検索できます。
+Serendie Design System (Serendie UI)のデザイントークンは、Material Design 3の設計を踏襲しているため、Serendie UIを使う上での参考情報となります。
 デザイントークンの使用方法を検討・精査するときに使用してください。
 @serendie/design-token の既存トークン利用・SDS準拠判断では、必ず search-serendie-guideline / get-design-tokens を優先してください。`,
       inputSchema: designTokenDocsParams,
