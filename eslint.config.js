@@ -34,6 +34,12 @@ export default tsESLint.config(
   ...tsESLint.configs.recommended,
   prettierRecommended,
   {
-    ignores: ["dist/", "styled-system/", "**/*.cjs", "tokens/generated/"],
+    ignores: [
+      ".astro/",
+      "dist/",
+      "styled-system/",
+      "**/*.cjs",
+      "tokens/generated/",
+    ],
   }
 );
