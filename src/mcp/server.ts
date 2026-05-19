@@ -10,6 +10,7 @@ import { getSerendieUIOverviewTool } from "./tools/serendie-ui-overview";
 // This avoids fs usage and works in Cloudflare Workers
 import previewHtml from "./ui/preview.html?raw";
 import { getSearchSerendieGuidelineTool } from "./tools/search-serendie-guideline";
+import { getSearchDesignDocsTools } from "./tools/search-design-docs";
 
 export function createMcpServer() {
   const mcpServer = new McpServer({
@@ -27,6 +28,7 @@ export function createMcpServer() {
   getComponentsTool(mcpServer);
   getComponentDetailTool(mcpServer);
   getSearchSerendieGuidelineTool(mcpServer);
+  getSearchDesignDocsTools(mcpServer);
 
   // Add a simple health check tool
   mcpServer.registerTool(
