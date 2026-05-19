@@ -16,8 +16,8 @@ const Sidebar = styled("aside", {
     py: "sd.system.dimension.spacing.extraLarge",
     display: "flex",
     flexDirection: "column",
-    borderRight: "solid",
-    borderColor: "sd.system.color.component.outline",
+    borderRightStyle: "solid",
+    borderRightColor: "sd.system.color.component.outline",
     borderRightWidth: "sd.system.dimension.border.medium",
     _before: {
       content: '""',
