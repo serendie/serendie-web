@@ -107,15 +107,26 @@ const searchDocs = async ({
   };
 };
 
-const searchDocsParams = {
-  query: z.string().min(1).describe("Plain text query used to search docs."),
+const componentDocsParams = {
+  query: z.string().min(1).describe("コンポーネントの検索クエリ"),
   nResults: z
     .number()
     .min(1)
     .max(20)
     .optional()
     .default(5)
-    .describe("Number of results to return. Defaults to 5."),
+    .describe("返される結果の数 (デフォルト: 5)"),
+};
+
+const designTokenDocsParams = {
+  query: z.string().min(1).describe("デザイントークンの検索クエリ"),
+  nResults: z
+    .number()
+    .min(1)
+    .max(20)
+    .optional()
+    .default(5)
+    .describe("返される結果の数 (デフォルト: 5)"),
 };
 
 const createSearchDocsHandler =
@@ -158,12 +169,14 @@ const createSearchDocsHandler =
 
 export function getSearchDesignDocsTools(mcpServer: McpServer) {
   mcpServer.registerTool(
-    "search-component-docs",
+    "search-design-patterns",
     {
-      title: "Search Component Docs",
-      description:
-        "Search ARK UI and Component Gallery docs for component naming and design patterns.",
-      inputSchema: searchDocsParams,
+      title: "Search Design Patterns",
+      description: `Ark UIおよびデザインシステムギャラリーサイト (component.gallery) 掲載のコンポーネントを対象に、デザインパターンを検索できます。
+コンポーネントの命名やプロパティやバリアントの種類など、UIコンポーネント設計の参考情報を得ることができます。
+新規コンポーネントの命名や設計、既存コンポーネントのパターンを理解する際に活用してください。
+@serendie/ui の実装・既存コンポーネント利用・SDS準拠判断では、必ず search-serendie-guideline / get-components を優先してください。`,
+      inputSchema: componentDocsParams,
       outputSchema: {
         query: z.string(),
         totalResults: z.number(),
@@ -174,12 +187,14 @@ export function getSearchDesignDocsTools(mcpServer: McpServer) {
   );
 
   mcpServer.registerTool(
-    "search-design-token-docs",
+    "search-md3-design-token-docs",
     {
-      title: "Search Design Token Docs",
-      description:
-        "Search Material Design 3 docs for design token usage and design principles.",
-      inputSchema: searchDocsParams,
+      title: "Search MD3 Design Token Docs",
+      description: `Material Design 3のデザイントークン設計に関するドキュメントを検索できます。
+Serendie Design System (Serendie UI)のデザイントークンは、Material Design 3の設計を踏襲しているため、Serendie UIを使う上での参考情報となります。
+デザイントークンの使用方法を検討・精査するときに使用してください。
+@serendie/design-token の既存トークン利用・SDS準拠判断では、必ず search-serendie-guideline / get-design-tokens を優先してください。`,
+      inputSchema: designTokenDocsParams,
       outputSchema: {
         query: z.string(),
         totalResults: z.number(),
