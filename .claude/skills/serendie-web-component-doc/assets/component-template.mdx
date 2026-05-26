@@ -1,0 +1,50 @@
+---
+title: NewComponent
+componentName: 新しいコンポーネント
+description: コンポーネントの説明文。
+descriptionEn: "English description."
+lastUpdated: "2026-05-13"
+---
+
+{/*
+  使い方:
+  1. このファイルを src/content/components/<component-name>.mdx にコピーする
+     （ファイル名のケバブケースがそのまま URL のスラッグになる）
+  2. frontmatter を実際のコンポーネントに合わせて書き換える
+     （必須フィールドは src/content/config.ts のスキーマで確認すること）
+  3. 観点（Basic / Size / Type / State ...）ごとに、下の CodeI18n ブロックを複製して並べる
+  4. titleKey / descriptionKey は src/i18n/ui-components.ts の ja / en 両方に登録する
+  5. storyPath は serendie/serendie 側の対応 story を確認して貼る
+  この説明コメントは実際の MDX からは削除すること。
+*/}
+
+import CodeI18n from "@/components/CodeI18n.astro";
+import { BasicSample } from "@/sampleCode/NewComponent/BasicSample";
+import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
+
+{/* --- 基本（全コンポーネント必須） --- */}
+<CodeI18n
+  titleKey="components.newComponent.basic.title"
+  descriptionKey="components.newComponent.basic.desc"
+  code={basicSampleRaw}
+  storyPath="/story/components-newcomponent--basic"
+>
+  <BasicSample client:load />
+</CodeI18n>
+
+{/*
+  観点を増やす場合は、上の import 2 行（コンポーネント本体 + ?raw ソース）と
+  CodeI18n ブロックをセットで複製する。例: Size 観点を足すなら
+
+  import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
+  import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
+
+  <CodeI18n
+    titleKey="components.newComponent.size.title"
+    descriptionKey="components.newComponent.size.desc"
+    code={sizeSampleRaw}
+    storyPath="/story/components-newcomponent--size"
+  >
+    <SizeSample client:load />
+  </CodeI18n>
+*/}
