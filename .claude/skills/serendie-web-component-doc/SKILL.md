@@ -8,6 +8,8 @@ description: >-
   「src/content/components 配下に MDX を作りたい」と言ったとき、あるいは Serendie の特定コンポーネント名を挙げて
   ドキュメント整備を依頼したときは、明示的に「スキルを使って」と言われなくても必ずこのスキルを参照すること。
   ファイル設置だけで URL が自動生成される構成なので、手順を外すと壊れやすい点に注意。
+metadata:
+  internal: true
 ---
 
 # Serendie Web コンポーネントドキュメント追加
@@ -44,8 +46,8 @@ prop が手本と食い違っていたら、**手本側を正**として進め�
 `src/content/components/<component-name>.mdx` を作成する。スラッグはファイル名がそのままパスになる
 （例: `new-component.mdx` → `/components/new-component/`）。ケバブケースで付ける。
 
-frontmatter は `src/content/config.ts` のスキーマに従う。雛形は `assets/component-template.mdx` を参照
-（コピーして書き換えるのが速い）。最低限の形は次のとおり:
+frontmatter は `src/content/config.ts` のスキーマに従う。下記の雛形をコピーし、
+実際のコンポーネントに合わせて書き換えるのが速い:
 
 ```mdx
 ---
@@ -56,10 +58,23 @@ descriptionEn: "English description."
 lastUpdated: "2026-05-13"
 ---
 
+{/*
+  使い方:
+  1. このファイルを src/content/components/<component-name>.mdx にコピーする
+     （ファイル名のケバブケースがそのまま URL のスラッグになる）
+  2. frontmatter を実際のコンポーネントに合わせて書き換える
+     （必須フィールドは src/content/config.ts のスキーマで確認すること）
+  3. 観点（Basic / Size / Type / State ...）ごとに、下の CodeI18n ブロックを複製して並べる
+  4. titleKey / descriptionKey は src/i18n/ui-components.ts の ja / en 両方に登録する
+  5. storyPath は serendie/serendie 側の対応 story を確認して貼る
+  この説明コメントは実際の MDX からは削除すること。
+*/}
+
 import CodeI18n from "@/components/CodeI18n.astro";
 import { BasicSample } from "@/sampleCode/NewComponent/BasicSample";
 import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
 
+{/* --- 基本（全コンポーネント必須） --- */}
 <CodeI18n
   titleKey="components.newComponent.basic.title"
   descriptionKey="components.newComponent.basic.desc"
@@ -68,6 +83,23 @@ import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
 >
   <BasicSample client:load />
 </CodeI18n>
+
+{/*
+  観点を増やす場合は、上の import 2 行（コンポーネント本体 + ?raw ソース）と
+  CodeI18n ブロックをセットで複製する。例: Size 観点を足すなら
+
+  import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
+  import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
+
+  <CodeI18n
+    titleKey="components.newComponent.size.title"
+    descriptionKey="components.newComponent.size.desc"
+    code={sizeSampleRaw}
+    storyPath="/story/components-newcomponent--size"
+  >
+    <SizeSample client:load />
+  </CodeI18n>
+*/}
 ```
 
 要点:
