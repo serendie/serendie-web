@@ -1,11 +1,9 @@
 ---
 name: serendie-web-component-doc
 description: >-
-  Serendie Web リポジトリに、新しいコンポーネントのドキュメントページ
-  （MDX・サンプルコード・i18n 翻訳）を追加するワークフロー。「コンポーネントを
-  ドキュメント化したい」「sampleCode を追加したい」「src/content/components 配下に
-  MDX を作りたい」と言われたとき、または Serendie の特定コンポーネント名を挙げて
-  ドキュメント整備を依頼されたときに使う。
+  Serendie Web リポジトリに、新しいコンポーネントのドキュメントページ（MDX・サンプルコード・i18n 翻訳）を追加するワークフロー。
+  「コンポーネントをドキュメント化したい」「src/content/components 配下にMDX を作りたい」と言われたとき、
+  またはSerendie UIの特定コンポーネント名を挙げてドキュメント整備を依頼されたときに使う。
 metadata:
   internal: true
 ---
