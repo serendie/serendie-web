@@ -26,25 +26,28 @@ Serendie Webは、Astroベースであり、ルーティングは `src/pages/com
 3. 指示がなければ、ドキュメント未作成のコンポーネントを一覧してユーザーに確認する。
    意図的に未作成のコンポーネントもあるため、勝手に着手しない。
 
-## 2. 手本のインプット
+## 2. インプットを揃える
 
-対象が決まったら、着手前に**既存の手本を 1 つ読む**こと。リポジトリの実体が最終的な真実なので、ここで「現在の正解」を掴んでから設計に入る。
+対象が決まったら、設計に入る前にドキュメント側とコンポーネント実装側の両方から「現在の正解」を掴む。
+リポジトリの実体が最終的な真実なので、スキーマや手本がこのスキルの記述と食い違っていたら**実装および手本側を正**とする。
+
+### ドキュメント側 (手本)
+
+着手前に**既存の手本を 1 つ読む**こと。
 
 - シンプルな手本: `src/content/components/button.mdx` + `src/sampleCode/Button/`
 - 複雑な手本: `src/sampleCode/DataTable/`（Basic / Advanced / 機能別の切り分け）
 - frontmatter スキーマ: `src/content/config.ts`
 - 翻訳の入れ方: `src/i18n/ui-components.ts`
 
-スキーマや手本の書き方が、このスキルの記述と食い違っていたら**手本側を正**とする。
+### コンポーネント実装側 (Props)
 
-## 3. コンポーネント実装のインプット
-
-- 対象となるコンポーネント実装について、`@serendie/ui`を実際に読むこと。
-- [重要] **コンポーネントが持つPropsは重要なインプットである**。後工程のサンプル設計に直結するため、実装を必ず読むこと。
+対象となるコンポーネント実装について、`@serendie/ui` を実際に読むこと。
+コンポーネントが持つ Props は次工程のサンプル設計に直結する重要なインプットなので、必ず読む。
 
 ---
 
-## 4. サンプル設計を決める
+## 3. サンプル設計を決める
 
 コンポーネントドキュメントは、複数のサンプルセクションから構成される。どのような観点でサンプルを設けるのかが、ドキュメントの品質を決める一番大事なステップ。
 全てを推測に基づいて作成するのではなく、**適宜ユーザーと協議しながら進めること。**
@@ -52,7 +55,7 @@ Serendie Webは、Astroベースであり、ルーティングは `src/pages/com
 Figmaコンポーネントが持つプロパティに対応させて、観点ごとにサンプルを分けるのが基本方針。
 ユーザーはFigmaコンポーネントを見ながら観点設計を行い、あなたはReactコンポーネントのPropsを見ながら観点設計を行う。
 
-観点が決まらないと MDX のブロック数も決まらないので、**実装より先にここを固める**。
+観点が決まらないと MDX のブロック数も決まらないので、実装より先にここを固める。
 
 ### 観点パターン
 
@@ -73,23 +76,26 @@ Figmaコンポーネントが持つプロパティに対応させて、観点ご
 機械的に全観点を網羅しない。less is moreを大切にする。
 観点の最終的な粒度はユーザーが Figma を見ながら判断する。**こちらからパターンを提示し、ユーザーに決めてもらう**こと。
 
-- 原則は**Figma/Reactのプロパティをベースに該当するものだけ**作る
+- 原則はFigma/Reactのプロパティをベースに該当するものだけ作る
   - `size` prop がある → `SizeSample`
   - `styleType` / `variant` がある → `TypeSample`
   - `disabled` などインタラクティブな状態がある → `StateSample`
   - 機能による違いがあれば、それぞれ追加
 - 該当しない観点のサンプルは作らない（空の Size 比較を並べても情報量がない）。
-- [重要] **迷ったら手本の粒度感に寄せる（Button = Size + Type / DataTable = Basic + Advanced + 機能別）。**
+- DataTable や DatePicker など、機能性を持つ Molecules 相当の複雑なコンポーネントは、まずは基本的な使い方 (`BasicSample`) を示す。逆に Button など Atom 相当のシンプルなコンポーネントでは不要。
+- 迷ったら手本の粒度感に寄せる（Button = Size + Type / DataTable = Basic + Advanced + 機能別）。
 
-### ベストプラクティス
+### StateMatrix の使い方
 
-- DataTableやDatePickerなど、機能性を持つMolecules相当の複雑なコンポーネントは、まずは基本的な使い方 (BasicSample) を示す。逆にButtonなどAtom相当のシンプルなコンポーネントでは不要。
-- 状態 (StateSample) には、マトリクス形式で表示するための専用のコンポーネントが用意されている (StateMatrix)
-- StateMatrixによる2軸表示は複雑であるため、必要な時のみ使うこと。**既に他観点で採用されているものは、マトリクスの軸として使わないこと。（SizeSampleがあれば、StateMatrixの軸にSizeは使わない)**
+状態 (StateSample) を見せるための専用ユーティリティとして、リポジトリ内に `StateMatrix` がある（`src/components/StateMatrix.tsx`、`@/components/StateMatrix` でimport可能）。
+手本: `src/sampleCode/Button/StateSample.tsx`。
 
-## 5. 実装する
+- 2軸のマトリクス表示は情報密度が高い反面複雑なので、必要な時のみ使う。
+- **既に他観点で採用されているものは、マトリクスの軸として使わないこと**（`SizeSample` があれば、`StateMatrix` の軸に Size は使わない）。観点同士の役割を被らせない。
 
-### 5-1. サンプルコード
+## 4. 実装する
+
+### 4-1. サンプルコード
 
 `src/sampleCode/<ComponentName>/` 配下に React コンポーネントを置く。手本は `src/sampleCode/Button/`。
 
@@ -109,7 +115,7 @@ Figmaコンポーネントが持つプロパティに対応させて、観点ご
 - 型注釈は明示的に書く（必要なら `export type` を併記。手本: `DataTable/BasicSample.tsx`）
 - import 順や整形は ESLint / Prettier に従う
 
-### 5-2. MDX ドキュメント
+### 4-2. MDX ドキュメント
 
 `src/content/components/<component-name>.mdx` を作成する。
 **ファイル名のケバブケースがそのまま URL のスラッグになる**（例: `new-component.mdx` → `/components/new-component/`）。
@@ -131,7 +137,7 @@ import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
 import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 
 <CodeI18n
-  titleKey="components.newComponent.basic.title"
+  titleKey="components.newComponent.size.title"
   descriptionKey="components.newComponent.size.desc"
   code={sizeSampleRaw}
   storyPath="/story/components-newcomponent--size"
@@ -142,13 +148,13 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 
 **ポイント**
 
-- 観点を増やすときは、import 2 行（コンポーネント本体 + `?raw` ソース）と `CodeI18n` ブロックをセットで複製する。
+- 観点を増やすときは、import 2 行（コンポーネント本体 + `?raw` ソース）と `CodeI18n` ブロックをセットで複製する。観点ごとに `titleKey` / `descriptionKey` のサブキー（`size.title`, `size.desc` など）を揃える。
 - `?raw` インポートにより、サンプルのソースがそのまま Code ブロックに表示される。本体と生ソースの**両方を import** すること。
 - `titleKey` / `descriptionKey` は次のステップで `ui-components.ts` に登録するキーと一致させる。
 - `storyPath` は `serendie/serendie` リポジトリ側にある対応 story のパス。
   既存 MDX のパス形式に合わせる（仕組み: `src/components/CodeI18n.astro` が `Code.astro` に渡してリンク表示）。
 
-### 5-3. [重要] 説明文のライティング
+### 4-3. 説明文のライティング
 
 大きく2種類(frontmatterのdescriptionおよび、各サンプルのdescription)の説明文を記述する。
 Serendie UIユーザー向けドキュメントの根幹であり、ドキュメントの品質を決定づける。
@@ -156,10 +162,12 @@ Serendie UIユーザー向けドキュメントの根幹であり、ドキュメ
 **共通のライティング指針**
 
 - Serendie UIユーザー向けに、このコンポーネントの利用方法を説明するものであり、日本語ファーストで記述する。
-- **less is moreを最も重要にする。** AI Slopを避け、不要に情報を盛らない
+- **less is moreを最も重要にする**。AI Slopを避け、不要に情報を盛らない
 - 各説明文は**ユーザーが既に案を持っていることが多い。** 下記の指針に従って素案を考え、それを例示しつつ問いかけることを基本スタンスとする
 
 **frontmatterの説明文**
+
+→ MDX の frontmatter (`description` / `descriptionEn`) に直接書く。
 
 - UIコンポーネントの役割や用途を端的に伝える
 - Component Gallery (https://component.gallery/) から類似コンポーネントを探し、そのコンポーネントページの説明文を参考にする
@@ -172,7 +180,9 @@ Serendie UIユーザー向けドキュメントの根幹であり、ドキュメ
 
 **各サンプルの説明文**
 
-- 手順4のサンプル設計に基づき、コンポーネントのバリエーションを解説する
+→ `src/i18n/ui-components.ts` の `descriptionKey` 配下に書く（4-4 で日英両方に登録）。
+
+- 手順3のサンプル設計に基づき、コンポーネントのバリエーションを解説する
   - **ベネフィットや注意点**を中心に書く。
   - 書くべき情報が無いときは無理せず短くまとめる
 - 文字数の目安は最大130文字。下限はなく短いほうが良い。
@@ -187,15 +197,15 @@ Serendie UIユーザー向けドキュメントの根幹であり、ドキュメ
 
 > Small と Medium の 2 種類があります。
 
-### 5-4. 翻訳
+### 4-4. 翻訳
 
 - i18n対応のため、Key/Value形式で文言を管理している。
-- 対応言語は日英。手順5-3で記述した日本語を英訳すること
+- 対応言語は日英。手順4-3で記述した日本語を英訳すること（frontmatter description は MDX の `descriptionEn` に、各サンプル description は `ui-components.ts` の `en` ロケールに）。
 - `src/i18n/ui-components.ts` の `ja` / `en` **両方**に、MDX で参照した `titleKey` / `descriptionKey` を追加する。片方欠けると未翻訳キーが露出するので必ず揃える。
 
 ---
 
-## 6. 確認する
+## 5. 確認する
 
 - `npm run dev` で `http://localhost:<port>/components/<component-name>/` を開いて表示確認。
 - **サイドナビにも自動で出ているか確認**（コンテンツ一覧から自動取得されるため手動登録は原則不要）。
