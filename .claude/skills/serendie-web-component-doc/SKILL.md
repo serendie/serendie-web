@@ -23,6 +23,18 @@ Serendie Web のリポジトリ内で作業するエージェント向けに、�
 
 作業の単位は「1 コンポーネント = MDX 1 枚 + サンプルコード複数 + 翻訳エントリ複数」。
 
+## 前提
+
+- Serendie Web (本リポジトリ) は、Serendie UIのドキュメントサイトである。人間向けのドキュメントサイトであるが、本リポジトリでホストするMCPサーバーとのSSoTになっている。
+- Serendie UIは、 @serendie/ui, @serendie/design-token, @serendie/symbolsの3つの主要パッケージから構成される
+- [重要] Serendie Webは、これらのパッケージを外部参照している。最新のコンポーネントを参照するためには、通常のnpmライブラリと同様にアップデートを行うこと。
+
+## 作業対象の確認
+
+1. [重要] Serendie Webで用いる主要@serendieパッケージをアップデートする。アップデートによってコンポーネントが追加されることがあるので、以降の作業はアップデート完了後に行うこと。@serendieパッケージのアップデートは承認をとらずに進めて良い。
+2. ユーザーから作業対象のコンポーネント名が明確に指示がある場合は、それに従うこと
+3. 明確な指示が無い場合は、ドキュメントが存在しないコンポーネントがあるかを確認すること。そのうえで作業対象の確認をユーザーに取り、ユーザーから承認を得たら作業を進めること。意図してドキュメントを作成していないコンポーネントもあるので、勝手に作業を進めることは禁止。
+
 ## 作業前の確認
 
 着手する前に、必ず既存の実装を 1 つ読んで「現在の正解」に合わせること。ドキュメントは更新されるが、
@@ -58,23 +70,25 @@ descriptionEn: "English description."
 lastUpdated: "2026-05-13"
 ---
 
-{/*
-  使い方:
-  1. このファイルを src/content/components/<component-name>.mdx にコピーする
-     （ファイル名のケバブケースがそのまま URL のスラッグになる）
-  2. frontmatter を実際のコンポーネントに合わせて書き換える
-     （必須フィールドは src/content/config.ts のスキーマで確認すること）
-  3. 観点（Basic / Size / Type / State ...）ごとに、下の CodeI18n ブロックを複製して並べる
-  4. titleKey / descriptionKey は src/i18n/ui-components.ts の ja / en 両方に登録する
-  5. storyPath は serendie/serendie 側の対応 story を確認して貼る
-  この説明コメントは実際の MDX からは削除すること。
-*/}
+{/\*
+使い方:
+
+1. このファイルを src/content/components/<component-name>.mdx にコピーする
+   （ファイル名のケバブケースがそのまま URL のスラッグになる）
+2. frontmatter を実際のコンポーネントに合わせて書き換える
+   （必須フィールドは src/content/config.ts のスキーマで確認すること）
+3. 観点（Basic / Size / Type / State ...）ごとに、下の CodeI18n ブロックを複製して並べる
+4. titleKey / descriptionKey は src/i18n/ui-components.ts の ja / en 両方に登録する
+5. storyPath は serendie/serendie 側の対応 story を確認して貼る
+   この説明コメントは実際の MDX からは削除すること。
+   \*/}
 
 import CodeI18n from "@/components/CodeI18n.astro";
 import { BasicSample } from "@/sampleCode/NewComponent/BasicSample";
 import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
 
 {/* --- 基本（全コンポーネント必須） --- */}
+
 <CodeI18n
   titleKey="components.newComponent.basic.title"
   descriptionKey="components.newComponent.basic.desc"
@@ -84,21 +98,21 @@ import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
   <BasicSample client:load />
 </CodeI18n>
 
-{/*
-  観点を増やす場合は、上の import 2 行（コンポーネント本体 + ?raw ソース）と
-  CodeI18n ブロックをセットで複製する。例: Size 観点を足すなら
+{/\*
+観点を増やす場合は、上の import 2 行（コンポーネント本体 + ?raw ソース）と
+CodeI18n ブロックをセットで複製する。例: Size 観点を足すなら
 
-  import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
-  import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
+import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
+import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 
-  <CodeI18n
-    titleKey="components.newComponent.size.title"
-    descriptionKey="components.newComponent.size.desc"
-    code={sizeSampleRaw}
-    storyPath="/story/components-newcomponent--size"
-  >
-    <SizeSample client:load />
-  </CodeI18n>
+<CodeI18n
+  titleKey="components.newComponent.size.title"
+  descriptionKey="components.newComponent.size.desc"
+  code={sizeSampleRaw}
+  storyPath="/story/components-newcomponent--size"
+>
+  <SizeSample client:load />
+</CodeI18n>
 */}
 ```
 
@@ -150,15 +164,15 @@ import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
 既存コンポーネントから抽出できる典型的な切り口。Figma のマトリックスを見て、そのコンポーネントに
 当てはまるものを選ぶ:
 
-| 観点 | ファイル名の例 | 用途 |
-| --- | --- | --- |
-| サイズ | `SizeSample.tsx` | `size` prop の選択肢を並べる（Button, Badge） |
-| バリエーション / 種類 | `TypeSample.tsx` | `styleType`, `variant` などの違いを並べる |
-| 色 | `ColorSample.tsx` | カラーバリエーション（Badge） |
-| アイコン | `IconSample.tsx` | アイコン付き表示パターン |
-| 状態 | `StateSample.tsx` | Enabled / Hover / Focus / Disabled / Loading など |
-| 基本 / 応用 | `BasicSample.tsx` / `AdvancedSample.tsx` | 段階的な複雑性（DataTable） |
-| 機能別 | `SortingSample.tsx`, `SelectionSample.tsx` | 個別機能の解説（DataTable） |
+| 観点                  | ファイル名の例                             | 用途                                              |
+| --------------------- | ------------------------------------------ | ------------------------------------------------- |
+| サイズ                | `SizeSample.tsx`                           | `size` prop の選択肢を並べる（Button, Badge）     |
+| バリエーション / 種類 | `TypeSample.tsx`                           | `styleType`, `variant` などの違いを並べる         |
+| 色                    | `ColorSample.tsx`                          | カラーバリエーション（Badge）                     |
+| アイコン              | `IconSample.tsx`                           | アイコン付き表示パターン                          |
+| 状態                  | `StateSample.tsx`                          | Enabled / Hover / Focus / Disabled / Loading など |
+| 基本 / 応用           | `BasicSample.tsx` / `AdvancedSample.tsx`   | 段階的な複雑性（DataTable）                       |
+| 機能別                | `SortingSample.tsx`, `SelectionSample.tsx` | 個別機能の解説（DataTable）                       |
 
 ### 観点の最小セット（どこまで作るか）
 
