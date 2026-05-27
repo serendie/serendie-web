@@ -153,6 +153,8 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 ここが「読まれるドキュメント」になるかを左右する部分。Figma のコンポーネント表（バリエーションのマトリックス）に
 対応させて、観点ごとにサンプルを分けるのが基本方針。
 
+[重要] 観点の粒度については、パターンを提示しつつユーザーに判断を促すこと。ユーザーはFigmaを確認しながら観点粒度を検討する。
+
 ### 命名規則
 
 - ディレクトリ: コンポーネント名と一致する **PascalCase**（例: `Button/`, `CheckBox/`, `DataTable/`）
@@ -161,7 +163,7 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 
 ### 観点のパターン
 
-既存コンポーネントから抽出できる典型的な切り口。Figma のマトリックスを見て、そのコンポーネントに
+既存コンポーネントから抽出できる典型的な切り口。ユーザーはFigma のマトリックスを見て、そのコンポーネントに
 当てはまるものを選ぶ:
 
 | 観点                  | ファイル名の例                             | 用途                                              |
@@ -185,8 +187,7 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
   - `styleType` / `variant` がある → `TypeSample`
   - `disabled` などの状態を持つインタラクティブ要素 → `StateSample`
   - 色バリエーション・アイコン対応・複合機能があれば、それぞれ `ColorSample` / `IconSample` / 機能別を足す
-- 該当しない観点のサンプルは**作らない**（空のサイズ違いを並べても情報量がない）。逆に Figma にあるのに
-  抜けている観点がないかは必ず確認する。
+- 該当しない観点のサンプルは**作らない**（空のサイズ違いを並べても情報量がない）。
 - 迷ったら手本（Button = Size + Type、DataTable = Basic + Advanced + 機能別）の粒度感に寄せる。
 
 ### 「読まれるコード」の原則
@@ -207,6 +208,20 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 - サンプル（観点）ごとに、対応する story にそれぞれ貼る。
 - `CodeI18n` は `Code.astro` に `storyPath` を渡して Storybook リンクを表示する仕組み
   （`src/components/CodeI18n.astro` を参照）。
+
+### [重要] 説明文のテキストライティング
+
+各サンプルコードブロックは、そのサンプルの説明文 (description) を持つ。ライティングの指針は下記。
+
+1. ユーザーに例示しつつ問いかけること。ユーザーが既に検討済みのテキスト案を持っていることがある。
+2. 例示する際には、下記の観点に気をつけて説明文を考えること:
+
+- 簡潔であることが最も重要。2行程度に収め、不要に情報を盛ること (AI Slop) を避ける。
+- コンポーネントを使う側のベネフィットや注意点を中心に書くこと。例えば下記が理想形である。
+  - ラベルの左右にアイコンを入れることができます。ボタンがトリガーするアクションを視覚的にユーザーに伝えることができます。
+  - SmallとMediumの2種類があります。SmallはPCなどの大きな画面でマウス操作をする前提で使用することを推奨しており、モバイルなどタッチデバイスでは非推奨です。Mediumは画面サイズにかかわらず使用できます。
+- ただし書くべき情報が無い場合は、無理せず下記のように収めるほうがベターである。less is more
+  - SmallとMediumの2種類があります。
 
 ---
 
