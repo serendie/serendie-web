@@ -26,6 +26,16 @@ Serendie Webは、Astroベースであり、ルーティングは `src/pages/com
 3. 指示がなければ、ドキュメント未作成のコンポーネントを一覧してユーザーに確認する。
    意図的に未作成のコンポーネントもあるため、勝手に着手しない。
 
+### 既存記述の事前確認
+
+対象コンポーネントが**他コンポーネントのサブセクションとして既に部分的にドキュメント化されている**ケースがある (例: `PasswordField` が `text-field.mdx` 内のサブセクションとして存在)。新規独立ドキュメントを作る前に、必ず次の grep で既存記述を確認すること:
+
+- `src/content/components/` 配下を対象コンポーネント名で横断検索
+- `src/i18n/ui-components.ts` を対象コンポーネント名で検索 (`components.<X>.passwordField.*` のような既存キーがあるか)
+- `src/sampleCode/` 配下に既存のサンプル実装が紛れていないか
+
+該当が見つかった場合は**勝手に独立ドキュメント化を進めず、ユーザーに「独立ドキュメントへの昇格」か「現状サブセクションのまま拡充」かを確認する**。既存記述の扱い (移行 or 残置 or 削除) は必ずユーザー判断を仰ぐ。
+
 ## 2. インプットを揃える
 
 対象が決まったら、設計に入る前にドキュメント側とコンポーネント実装側の両方から「現在の正解」を掴む。
@@ -154,6 +164,8 @@ import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 - `titleKey` / `descriptionKey` は次のステップで `ui-components.ts` に登録するキーと一致させる。
 - `storyPath` は `serendie/serendie` リポジトリ側にある対応 story のパス。
   既存 MDX のパス形式に合わせる（仕組み: `src/components/CodeI18n.astro` が `Code.astro` に渡してリンク表示）。
+  対応 story が確認できない場合は `/docs/components-<component-name>--docs` をフォールバックとして使う（例: `button.mdx` 最終ブロックの `storyPath="/docs/components-button--docs"` と同形式）。
+- `descriptionEn` は `config.ts` 上は optional だが、公開ドキュメントでは**常に埋める運用**（既存全 MDX が埋めている）。英訳は手順 4-3 / 4-4 で同期する。
 
 ### 4-3. 説明文のライティング
 
