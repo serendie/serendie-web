@@ -1,53 +1,138 @@
 ---
 name: serendie-web-component-doc
 description: >-
-  Serendie Web（@serendie/ui デザインシステムのドキュメントサイト）リポジトリに、新しいコンポーネントの
-  ドキュメントページを追加するためのワークフロー。MDX ドキュメント・サンプルコード・i18n 翻訳の作成と、
-  サンプルコードの「観点」別の切り分け方、Storybook リンクの貼り方を定義する。ユーザーが
-  「コンポーネントページを追加したい」「コンポーネントをドキュメント化したい」「sampleCode を追加したい」
-  「src/content/components 配下に MDX を作りたい」と言ったとき、あるいは Serendie の特定コンポーネント名を挙げて
-  ドキュメント整備を依頼したときは、明示的に「スキルを使って」と言われなくても必ずこのスキルを参照すること。
-  ファイル設置だけで URL が自動生成される構成なので、手順を外すと壊れやすい点に注意。
+  Serendie Web リポジトリに、新しいコンポーネントのドキュメントページ（MDX・サンプルコード・i18n 翻訳）を追加するワークフロー。
+  「コンポーネントをドキュメント化したい」「src/content/components 配下にMDX を作りたい」と言われたとき、
+  またはSerendie UIの特定コンポーネント名を挙げてドキュメント整備を依頼されたときに使う。
 metadata:
   internal: true
 ---
 
-# Serendie Web コンポーネントドキュメント追加
+# Serendie Web コンポーネントドキュメントの追加
 
-## このスキルがやること
+このSkillは、新しいコンポーネントのドキュメントページを追加するワークフローである。
+Serendie Webは、Astroベースであり、ルーティングは `src/pages/components/[...slug].astro` がコンテンツコレクションから自動生成するため、正しい場所にファイルを置くだけでURLが生える。
+逆に置き場所・命名・frontmatter スキーマを外すと表示されない／ビルドが壊れるので、**手順に忠実に進めること。**
 
-Serendie Web のリポジトリ内で作業するエージェント向けに、新しいコンポーネントのドキュメントページを
-追加する一連の流れをガイドする。ルーティングは `src/pages/components/[...slug].astro` が
-コンテンツコレクションから自動生成するため、**正しい場所にファイルを置くだけで URL が生える**。
-逆に言うと、置き場所・命名・frontmatter スキーマを外すと表示されない／ビルドが壊れるので、手順に忠実に進めること。
-
-作業の単位は「1 コンポーネント = MDX 1 枚 + サンプルコード複数 + 翻訳エントリ複数」。
-
-## 作業前の確認
-
-着手する前に、必ず既存の実装を 1 つ読んで「現在の正解」に合わせること。ドキュメントは更新されるが、
-リポジトリの実体が最終的な真実。特に次を確認する:
-
-- frontmatter スキーマ: `src/content/config.ts`（コンテンツコレクションの定義。必須フィールドはここを見る）
-- サンプルコードの書き方の手本: `src/sampleCode/Button/`（`SizeSample.tsx`, `TypeSample.tsx` など）
-- 複雑なコンポーネントの手本: `src/sampleCode/DataTable/`（`BasicSample.tsx` / `AdvancedSample.tsx` / 機能別）
-- 翻訳の入れ方: `src/i18n/ui-components.ts`（`ja` / `en` の既存エントリ）
-- MDX の書き方の手本: `src/content/components/button.mdx`
-
-行番号は変わりやすいので、パスを頼りにファイル内を grep / 目視で確認する。スキーマやライブラリの
-prop が手本と食い違っていたら、**手本側を正**として進めること。
+作業の単位は「1 コンポーネント = MDX 1 枚 + サンプルコード複数 + 翻訳エントリ複数」から構成される。ユーザーから指示がない限り、作業対象は、**1 セッションにつき 1 コンポーネント**を原則とする。
 
 ---
 
-## 手順
+## 1. 対象を決める
 
-### 1. MDX ドキュメントを作成
+1. `@serendie/ui` などの主要パッケージを最新化する。新規コンポーネントが追加されている可能性があるため、
+   このステップを先に済ませてから対象を選ぶこと（@serendie/uiパッケージの更新はユーザーに一報した上で、確認をとらずに実行して良い）。
+2. ユーザーから対象コンポーネントの指示があればそれに従う。
+3. 指示がなければ、ドキュメント未作成のコンポーネントを一覧してユーザーに確認する。
+   意図的に未作成のコンポーネントもあるため、勝手に着手しない。
 
-`src/content/components/<component-name>.mdx` を作成する。スラッグはファイル名がそのままパスになる
-（例: `new-component.mdx` → `/components/new-component/`）。ケバブケースで付ける。
+### 既存記述の事前確認
 
-frontmatter は `src/content/config.ts` のスキーマに従う。下記の雛形をコピーし、
-実際のコンポーネントに合わせて書き換えるのが速い:
+対象コンポーネントが**他コンポーネントのサブセクションとして既に部分的にドキュメント化されている**ケースがある (例: `PasswordField` が `text-field.mdx` 内のサブセクションとして存在)。新規独立ドキュメントを作る前に、必ず次の grep で既存記述を確認すること:
+
+- `src/content/components/` 配下を対象コンポーネント名で横断検索
+- `src/i18n/ui-components.ts` を対象コンポーネント名で検索 (`components.<X>.passwordField.*` のような既存キーがあるか)
+- `src/sampleCode/` 配下に既存のサンプル実装が紛れていないか
+
+該当が見つかった場合は**勝手に独立ドキュメント化を進めず、ユーザーに「独立ドキュメントへの昇格」か「現状サブセクションのまま拡充」かを確認する**。既存記述の扱い (移行 or 残置 or 削除) は必ずユーザー判断を仰ぐ。
+
+## 2. インプットを揃える
+
+対象が決まったら、設計に入る前にドキュメント側とコンポーネント実装側の両方から「現在の正解」を掴む。
+リポジトリの実体が最終的な真実なので、スキーマや手本がこのスキルの記述と食い違っていたら**実装および手本側を正**とする。
+
+### ドキュメント側 (手本)
+
+着手前に**既存の手本を 1 つ読む**こと。
+
+- シンプルな手本: `src/content/components/button.mdx` + `src/sampleCode/Button/`
+- 複雑な手本: `src/sampleCode/DataTable/`（Basic / Advanced / 機能別の切り分け）
+- frontmatter スキーマ: `src/content/config.ts`
+- 翻訳の入れ方: `src/i18n/ui-components.ts`
+
+### コンポーネント実装側 (Props)
+
+- 対象となるコンポーネント実装について、`@serendie/ui` を実際に読むこと。
+- コンポーネントが持つ Props は次工程のサンプル設計に直結する重要なインプットである
+- どんな機能性をそのコンポーネントが提供しているのか把握するため、**型情報だけでなく実体のコンポーネント実装も見ること。**
+
+---
+
+## 3. サンプル設計を決める
+
+コンポーネントドキュメントは、複数のサンプルセクションから構成される。どのような観点でサンプルを設けるのかが、ドキュメントの品質を決める一番大事なステップ。
+全てを推測に基づいて作成するのではなく、**適宜ユーザーと協議しながら進めること。**
+
+Figmaコンポーネントが持つプロパティに対応させて、観点ごとにサンプルを分けるのが基本方針。
+ユーザーはFigmaコンポーネントを見ながら観点設計を行い、あなたはReactコンポーネントのPropsを見ながら観点設計を行う。
+
+観点が決まらないと MDX のブロック数も決まらないので、実装より先にここを固める。
+
+### 観点パターン
+
+代表的なサンプル設計パターンは下記である。
+
+| 観点                  | ファイル名の例                             | 用途                                              |
+| --------------------- | ------------------------------------------ | ------------------------------------------------- |
+| サイズ                | `SizeSample.tsx`                           | `size` prop の選択肢を並べる（Button, Badge）     |
+| バリエーション / 種類 | `TypeSample.tsx`                           | `styleType`, `variant` などの違いを並べる         |
+| 色                    | `ColorSample.tsx`                          | カラーバリエーション（Badge）                     |
+| 状態                  | `StateSample.tsx`                          | Enabled / Hover / Focus / Disabled / Loading など |
+| アイコン              | `IconSample.tsx`                           | アイコン付き表示パターン                          |
+| 機能別                | `SortingSample.tsx`, `SelectionSample.tsx` | 個別機能の解説（DataTable）                       |
+| 基本 / 応用           | `BasicSample.tsx` / `AdvancedSample.tsx`   | 段階的な複雑性（DataTable）                       |
+
+### 判断軸
+
+機械的に全観点を網羅しない。less is moreを大切にする。
+観点の最終的な粒度はユーザーが Figma を見ながら判断する。**こちらからパターンを提示し、ユーザーに決めてもらう**こと。
+
+- 原則はFigma/Reactのプロパティをベースに該当するものだけ作る
+  - `size` prop がある → `SizeSample`
+  - `styleType` / `variant` がある → `TypeSample`
+  - `disabled` などインタラクティブな状態がある → `StateSample`
+  - 機能による違いがあれば、それぞれ追加
+- 該当しない観点のサンプルは作らない（空の Size 比較を並べても情報量がない）。
+- DataTable や DatePicker など、機能性を持つ Molecules 相当の複雑なコンポーネントは、まずは基本的な使い方 (`BasicSample`) を示す。逆に Button など Atom 相当のシンプルなコンポーネントでは不要。
+- 迷ったら手本の粒度感に寄せる（Button = Size + Type / DataTable = Basic + Advanced + 機能別）。
+
+### StateMatrix の使い方
+
+状態 (StateSample) を見せるための専用ユーティリティとして、リポジトリ内に `StateMatrix` がある（`src/components/StateMatrix.tsx`、`@/components/StateMatrix` でimport可能）。
+手本: `src/sampleCode/Button/StateSample.tsx`。
+
+- 2軸のマトリクス表示は情報密度が高い反面複雑なので、必要な時のみ使う。
+- **既に他観点で採用されているものは、マトリクスの軸として使わないこと**（`SizeSample` があれば、`StateMatrix` の軸に Size は使わない）。観点同士の役割を被らせない。
+
+## 4. 実装する
+
+### 4-1. サンプルコード
+
+`src/sampleCode/<ComponentName>/` 配下に React コンポーネントを置く。手本は `src/sampleCode/Button/`。
+
+**命名規則**
+
+- ディレクトリ: コンポーネント名と一致する PascalCase（`Button/`, `CheckBox/`, `DataTable/`）
+- ファイル名: `<観点>Sample.tsx`（`SizeSample.tsx`, `TypeSample.tsx`）
+- export: ファイル名と同じ **named export**（`?raw` でそのまま画面表示されるため default export にしない）
+
+**「読まれるコード」として書く**
+
+`?raw` でソースがそのまま MDX 内の Code ブロックに表示される前提なので、サンプルは「コピペで動く読み物」として書く。
+
+- 実際の `@serendie/ui` のコンポーネントを使う（モックや自作の代用品で済ませない）
+- **1 ファイルで完結**させる（外部の小コンポーネントへの分割は避ける、1 画面で理解できる粒度）
+- **過度な抽象化を避け、シンプルさが重要**。コピペでそのまま動くコードにする
+- 型注釈は明示的に書く（必要なら `export type` を併記。手本: `DataTable/BasicSample.tsx`）
+- import 順や整形は ESLint / Prettier に従う
+
+### 4-2. MDX ドキュメント
+
+`src/content/components/<component-name>.mdx` を作成する。
+**ファイル名のケバブケースがそのまま URL のスラッグになる**（例: `new-component.mdx` → `/components/new-component/`）。
+frontmatter は `src/content/config.ts` のスキーマに従う。
+
+下記が最小の雛形:
 
 ```mdx
 ---
@@ -58,151 +143,89 @@ descriptionEn: "English description."
 lastUpdated: "2026-05-13"
 ---
 
-{/*
-  使い方:
-  1. このファイルを src/content/components/<component-name>.mdx にコピーする
-     （ファイル名のケバブケースがそのまま URL のスラッグになる）
-  2. frontmatter を実際のコンポーネントに合わせて書き換える
-     （必須フィールドは src/content/config.ts のスキーマで確認すること）
-  3. 観点（Basic / Size / Type / State ...）ごとに、下の CodeI18n ブロックを複製して並べる
-  4. titleKey / descriptionKey は src/i18n/ui-components.ts の ja / en 両方に登録する
-  5. storyPath は serendie/serendie 側の対応 story を確認して貼る
-  この説明コメントは実際の MDX からは削除すること。
-*/}
-
 import CodeI18n from "@/components/CodeI18n.astro";
-import { BasicSample } from "@/sampleCode/NewComponent/BasicSample";
-import basicSampleRaw from "@/sampleCode/NewComponent/BasicSample.tsx?raw";
+import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
+import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
 
-{/* --- 基本（全コンポーネント必須） --- */}
 <CodeI18n
-  titleKey="components.newComponent.basic.title"
-  descriptionKey="components.newComponent.basic.desc"
-  code={basicSampleRaw}
-  storyPath="/story/components-newcomponent--basic"
+  titleKey="components.newComponent.size.title"
+  descriptionKey="components.newComponent.size.desc"
+  code={sizeSampleRaw}
+  storyPath="/story/components-newcomponent--size"
 >
-  <BasicSample client:load />
+  <SizeSample client:load />
 </CodeI18n>
-
-{/*
-  観点を増やす場合は、上の import 2 行（コンポーネント本体 + ?raw ソース）と
-  CodeI18n ブロックをセットで複製する。例: Size 観点を足すなら
-
-  import { SizeSample } from "@/sampleCode/NewComponent/SizeSample";
-  import sizeSampleRaw from "@/sampleCode/NewComponent/SizeSample.tsx?raw";
-
-  <CodeI18n
-    titleKey="components.newComponent.size.title"
-    descriptionKey="components.newComponent.size.desc"
-    code={sizeSampleRaw}
-    storyPath="/story/components-newcomponent--size"
-  >
-    <SizeSample client:load />
-  </CodeI18n>
-*/}
 ```
 
-要点:
+**ポイント**
 
-- `?raw` インポートでソースが `Code` ブロックにそのまま表示される。コンポーネント本体（`<BasicSample />`）と
-  生ソース（`basicSampleRaw`）の両方を import すること。
-- `CodeI18n` は 1 ブロック = 1 サンプルの粒度で使う。観点を増やすぶんだけブロックを並べる
-  （手本: `src/content/components/button.mdx`）。
-- `titleKey` / `descriptionKey` は手順 3 で `ui-components.ts` に登録するキーと一致させる。
-- `storyPath` は手順の最後で貼る Storybook リンク。形式は既存の MDX に合わせる。
+- 観点を増やすときは、import 2 行（コンポーネント本体 + `?raw` ソース）と `CodeI18n` ブロックをセットで複製する。観点ごとに `titleKey` / `descriptionKey` のサブキー（`size.title`, `size.desc` など）を揃える。
+- `?raw` インポートにより、サンプルのソースがそのまま Code ブロックに表示される。本体と生ソースの**両方を import** すること。
+- `titleKey` / `descriptionKey` は次のステップで `ui-components.ts` に登録するキーと一致させる。
+- `storyPath` は `serendie/serendie` リポジトリ側にある対応 story のパス。
+  既存 MDX のパス形式に合わせる（仕組み: `src/components/CodeI18n.astro` が `Code.astro` に渡してリンク表示）。
+  対応 story が確認できない場合は `/docs/components-<component-name>--docs` をフォールバックとして使う（例: `button.mdx` 最終ブロックの `storyPath="/docs/components-button--docs"` と同形式）。
+- `descriptionEn` は `config.ts` 上は optional だが、公開ドキュメントでは**常に埋める運用**（既存全 MDX が埋めている）。英訳は手順 4-3 / 4-4 で同期する。
 
-### 2. サンプルコードを作成
+### 4-3. 説明文のライティング
 
-`src/sampleCode/<ComponentName>/` に React コンポーネントを置く。**実際の `@serendie/ui` ライブラリの
-コンポーネントを使う**こと（モックや自作の代用品で済ませない）。手本は `src/sampleCode/Button/`。
+大きく2種類(frontmatterのdescriptionおよび、各サンプルのdescription)の説明文を記述する。
+Serendie UIユーザー向けドキュメントの根幹であり、ドキュメントの品質を決定づける。
 
-切り分け方・命名・コードの書き方は後半の「サンプルコードの切り分け方」に従う。ここが品質の肝。
+**共通のライティング指針**
 
-### 3. 翻訳文章を追加
+- Serendie UIユーザー向けに、このコンポーネントの利用方法を説明するものであり、日本語ファーストで記述する。
+- **less is moreを最も重要にする**。不要に情報を盛らない。
+- 各説明文は**ユーザーが既に案を持っていることが多い。** 下記の指針に従って素案を考え、それを例示しつつ問いかけることを基本スタンスとする
+- **根拠ベースで書く**。コンポーネント実装 / 既存MDX / Figma / Storybook docs などから読み取れる事実だけを根拠とし、推測のベネフィットや使い分けガイドは書かない。手本の言い回しを借用するときも、それが当該コンポーネントにも当てはまる根拠を確認してから。
+- 手本の文章量に合わせて埋めようとしない。まずは事実だけで書ける最短版を素案にし、情報を増やすかどうかはユーザーと協議する。
+- **素案提示時は推測と事実を区別する**。根拠が薄い箇所には ⚠️ をつけて素案を出し、ユーザーが検証・差し戻しできるようにする。
 
-`src/i18n/ui-components.ts` の `ja` / `en` **両方**に、MDX で参照した `titleKey` / `descriptionKey` を追加する
-（手本: 既存の `components.*` エントリ）。ここに各サンプルの説明文を書き、MDX 側はキー参照だけで流し込む形にする。
+**frontmatterの説明文**
 
-`ja` だけ／`en` だけにならないよう、両言語そろえること。片方欠けると表示崩れや未翻訳キーの露出につながる。
+→ MDX の frontmatter (`description` / `descriptionEn`) に直接書く。
 
-### 4. 確認
+- UIコンポーネントの役割や用途を端的に伝える
+- Component Gallery (https://component.gallery/) から類似コンポーネントを探し、そのコンポーネントページの説明文を参考にする
+- 文字数の目安は30~90文字。90文字に達することは稀である
+
+良い例:
+
+> アクションをトリガーするためのクリック可能なコンポーネントです。 (Button)
+> オン/オフの2つの状態を切り替えるためのコンポーネントです。設定画面などでその状態を視覚的に伝えることができます。 (Switch)
+
+**各サンプルの説明文**
+
+→ `src/i18n/ui-components.ts` の `descriptionKey` 配下に書く（4-4 で日英両方に登録）。
+
+- 手順3のサンプル設計に基づき、コンポーネントのバリエーションを解説する
+  - 実装から確認できる事実（種類数、prop の効果など）を中心に書く。
+  - ベネフィットや注意点、使い分けガイドも書くことが理想だが、Storybook docs / 既存ドキュメントなどに**外部根拠がある時だけ**書く。根拠がなければ書かない（手本にあるからといって真似しない）。
+  - 書くべき情報が無いときは無理せず短くまとめる。「{X}と{Y}の2種類があります。」だけで十分なケースは多い。
+- 文字数の目安は最大130文字。下限はなく短いほうが良い。
+- サンプルコードを読めばわかる自明なことは書かなくて良い
+
+良い例:
+
+> ラベルの左右にアイコンを入れることができます。ボタンがトリガーするアクションを視覚的にユーザーに伝えることができます。
+
+> Small と Medium の 2 種類があります。Small は PC など大きな画面でマウス操作する前提で、モバイルなどタッチデバイスでは非推奨です。Medium は画面サイズにかかわらず使用できます。
+
+書くべきことが無いときは下記でも良い:
+
+> Small と Medium の 2 種類があります。
+
+### 4-4. 翻訳
+
+- i18n対応のため、Key/Value形式で文言を管理している。
+- 対応言語は日英。手順4-3で記述した日本語を英訳すること（frontmatter description は MDX の `descriptionEn` に、各サンプル description は `ui-components.ts` の `en` ロケールに）。
+- `src/i18n/ui-components.ts` の `ja` / `en` **両方**に、MDX で参照した `titleKey` / `descriptionKey` を追加する。片方欠けると未翻訳キーが露出するので必ず揃える。
+
+---
+
+## 5. 確認する
 
 - `npm run dev` で `http://localhost:<port>/components/<component-name>/` を開いて表示確認。
-- ナビゲーション一覧は手動登録不要。コンテンツ一覧から自動で拾われるので、サイドナビに出ているかも確認する。
+- **サイドナビにも自動で出ているか確認**（コンテンツ一覧から自動取得されるため手動登録は原則不要）。
 - `npm run lint` を通す。
-- MCP に影響する変更なら `npm run test:mcp` も実行する。
-
----
-
-## サンプルコードの切り分け方
-
-ここが「読まれるドキュメント」になるかを左右する部分。Figma のコンポーネント表（バリエーションのマトリックス）に
-対応させて、観点ごとにサンプルを分けるのが基本方針。
-
-### 命名規則
-
-- ディレクトリ: コンポーネント名と一致する **PascalCase**（例: `Button/`, `CheckBox/`, `DataTable/`）
-- ファイル名: `<観点>Sample.tsx` の PascalCase（例: `SizeSample.tsx`, `TypeSample.tsx`）
-- export 名: ファイル名と同じ **named export**（`?raw` でそのまま画面表示されるため、default export にしない）
-
-### 観点のパターン
-
-既存コンポーネントから抽出できる典型的な切り口。Figma のマトリックスを見て、そのコンポーネントに
-当てはまるものを選ぶ:
-
-| 観点 | ファイル名の例 | 用途 |
-| --- | --- | --- |
-| サイズ | `SizeSample.tsx` | `size` prop の選択肢を並べる（Button, Badge） |
-| バリエーション / 種類 | `TypeSample.tsx` | `styleType`, `variant` などの違いを並べる |
-| 色 | `ColorSample.tsx` | カラーバリエーション（Badge） |
-| アイコン | `IconSample.tsx` | アイコン付き表示パターン |
-| 状態 | `StateSample.tsx` | Enabled / Hover / Focus / Disabled / Loading など |
-| 基本 / 応用 | `BasicSample.tsx` / `AdvancedSample.tsx` | 段階的な複雑性（DataTable） |
-| 機能別 | `SortingSample.tsx`, `SelectionSample.tsx` | 個別機能の解説（DataTable） |
-
-### 観点の最小セット（どこまで作るか）
-
-機械的に全観点を作るのではなく、**コンポーネントに応じて判断する**。基準は次のとおり:
-
-- **`BasicSample`（基本形）は常に必須。** 最小で動く形を最初に見せる。これだけは全コンポーネントで作る。
-- それ以外の観点は、**Figma のコンポーネント表（マトリックス）と、実際のコンポーネントの props を突き合わせて、
-  該当するものを選ぶ。** 例:
-  - `size` prop がある → `SizeSample`
-  - `styleType` / `variant` がある → `TypeSample`
-  - `disabled` などの状態を持つインタラクティブ要素 → `StateSample`
-  - 色バリエーション・アイコン対応・複合機能があれば、それぞれ `ColorSample` / `IconSample` / 機能別を足す
-- 該当しない観点のサンプルは**作らない**（空のサイズ違いを並べても情報量がない）。逆に Figma にあるのに
-  抜けている観点がないかは必ず確認する。
-- 迷ったら手本（Button = Size + Type、DataTable = Basic + Advanced + 機能別）の粒度感に寄せる。
-
-### 「読まれるコード」の原則
-
-`?raw` でソースがそのまま表示される前提なので、サンプルは「コピペで動く読み物」として書く:
-
-- 過度な抽象化を避け、**コピペでそのまま動くコード**にする。
-- **1 ファイルで完結**させる（外部の小コンポーネントへの分割は避ける）。読み手が 1 画面で理解できることを優先。
-- **型注釈は明示的に**書く（手本の `DataTable/BasicSample.tsx` のように、必要なら `export type` を併記）。
-- import 文の順序・整形を揃える（ESLint / Prettier に従う）。最後に `npm run lint` で確認。
-
-### Storybook リンク
-
-各サンプルには対応する Storybook の story へのリンクを貼る。
-
-- story は `serendie/serendie` リポジトリ側にあるので、そちらをチェックして対応する story を見つける。
-- MDX の `CodeI18n` の `storyPath` に、対応する story のパスを渡す（手本の MDX のパス形式に合わせる）。
-- サンプル（観点）ごとに、対応する story にそれぞれ貼る。
-- `CodeI18n` は `Code.astro` に `storyPath` を渡して Storybook リンクを表示する仕組み
-  （`src/components/CodeI18n.astro` を参照）。
-
----
-
-## チェックリスト（完了前に確認）
-
-- [ ] `src/content/components/<component-name>.mdx` を作成し、frontmatter がスキーマに沿っている
-- [ ] サンプルは `@serendie/ui` の実コンポーネントを使い、PascalCase ディレクトリ + `<観点>Sample.tsx` + named export
-- [ ] `BasicSample` がある。それ以外は Figma マトリックス × props で必要な観点だけ作った
-- [ ] 各サンプルが 1 ファイル完結・コピペで動く・型注釈あり・lint 通過
-- [ ] `ui-components.ts` の `ja` / `en` 両方に `titleKey` / `descriptionKey` を追加した
-- [ ] `storyPath` を `serendie/serendie` の対応 story に合わせて貼った
-- [ ] `npm run dev` で該当 URL を開いて表示確認。サイドナビにも出ている
-- [ ] `npm run lint`（必要なら `npm run test:mcp`）が通る
+- MCP に影響する変更なら `npm run test:mcp` も実行（先に `npm run dev` が起動している必要あり）。
