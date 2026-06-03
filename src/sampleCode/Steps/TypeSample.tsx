@@ -1,5 +1,6 @@
 import { Steps } from "@serendie/ui";
-import { VBox } from "src/components/LayoutUtils";
+import { css } from "styled-system/css";
+import { Dd, Dl, Dt } from "src/components/LayoutUtils";
 
 const items = [
   { title: "ステップ1", description: "補足テキスト" },
@@ -9,15 +10,27 @@ const items = [
 
 export function TypeSample() {
   return (
-    <VBox w="100%">
-      <VBox w="100%">
-        <p>Default</p>
-        <Steps items={items} direction="horizontal" type="default" step={1} />
-      </VBox>
-      <VBox w="100%">
-        <p>Subtle</p>
-        <Steps items={items} direction="horizontal" type="subtle" step={1} />
-      </VBox>
-    </VBox>
+    <Dl>
+      <Dt>Default</Dt>
+      <Dd>
+        <Steps
+          items={items}
+          direction="horizontal"
+          type="default"
+          step={1}
+          className={css({ width: "100%" })}
+        />
+      </Dd>
+      <Dt>Subtle</Dt>
+      <Dd>
+        <Steps
+          items={items}
+          direction="horizontal"
+          type="subtle"
+          step={1}
+          className={css({ width: "100%" })}
+        />
+      </Dd>
+    </Dl>
   );
 }
