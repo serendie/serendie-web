@@ -10,8 +10,14 @@ const items = [
 export function DirectionSample() {
   return (
     <VBox>
-      <Steps items={items} direction="horizontal" type="default" step={1} />
-      <Steps items={items} direction="vertical" type="default" step={1} />
+      <VBox>
+        <p>Horizontal</p>
+        <Steps items={items} direction="horizontal" type="default" step={1} />
+      </VBox>
+      <VBox>
+        <p>Vertical</p>
+        <Steps items={items} direction="vertical" type="default" step={1} />
+      </VBox>
     </VBox>
   );
 }

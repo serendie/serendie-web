@@ -10,8 +10,14 @@ const items = [
 export function TypeSample() {
   return (
     <VBox>
-      <Steps items={items} direction="horizontal" type="default" step={1} />
-      <Steps items={items} direction="horizontal" type="subtle" step={1} />
+      <VBox>
+        <p>Default</p>
+        <Steps items={items} direction="horizontal" type="default" step={1} />
+      </VBox>
+      <VBox>
+        <p>Subtle</p>
+        <Steps items={items} direction="horizontal" type="subtle" step={1} />
+      </VBox>
     </VBox>
   );
 }
