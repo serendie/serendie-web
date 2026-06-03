@@ -9,7 +9,8 @@ export const uiComponents = {
     "components.avatar.variant.desc":
       "任意の画像やテキストをアバターとして使用できます。特に画像をアバターとする場合は、初期値としてプレースホルダーを適切に設定してください。",
     "components.badge.size.title": "サイズ",
-    "components.badge.size.desc": "サイズはSmall, Medium, Largeの3種類があります。",
+    "components.badge.size.desc":
+      "サイズはSmall, Medium, Largeの3種類があります。",
     "components.badge.color.title": "カラー",
     "components.badge.color.desc":
       "例外的にリファレンストークンを参照する形でカラーバリエーションを用意しています。",
@@ -125,7 +126,8 @@ export const uiComponents = {
     "components.modalDialog.basicUsage.desc":
       "Modal Dialogを閉じるボタンは必ず必要です。また背景レイヤー (scrim) をクリックすることで閉じることができます。",
     "components.notificationBadge.size.title": "サイズ",
-    "components.notificationBadge.size.desc": "SmallとMediumの2種類のサイズがあります。",
+    "components.notificationBadge.size.desc":
+      "SmallとMediumの2種類のサイズがあります。",
     "components.notificationBadge.color.title": "カラー",
     "components.notificationBadge.color.desc":
       "PrimaryとSecondaryの2種類のカラーがあります。Secondaryはテーマカラーに準じます。",
@@ -144,10 +146,12 @@ export const uiComponents = {
     "components.progressIndicator.determinate.title": "確定値（Determinate）",
     "components.progressIndicator.determinate.desc":
       "処理の進捗が数値で把握できる場合に使用します。Linearは横方向に進捗が伸び、Circularは円弧で進捗を示します。値は value / max から算出されます。",
-    "components.progressIndicator.indeterminate.title": "不確定値（Indeterminate）",
+    "components.progressIndicator.indeterminate.title":
+      "不確定値（Indeterminate）",
     "components.progressIndicator.indeterminate.desc":
       "処理時間が読めない待機状態を示す場合に使用します。Linearはスライドアニメーション、Circularは回転する円弧アニメーションで待機を表現します。",
-    "components.progressIndicator.indeterminateColor.title": "カラー（Indeterminate）",
+    "components.progressIndicator.indeterminateColor.title":
+      "カラー（Indeterminate）",
     "components.progressIndicator.indeterminateColor.desc":
       "不確定値では color を Primary と Subtle から選べます。状況に応じて重要度や背景とのコントラストを考慮して使い分けてください。",
     "components.radioButton.variant.title": "バリエーション",
@@ -172,6 +176,11 @@ export const uiComponents = {
     "components.switch.state.title": "状態",
     "components.switch.state.desc":
       "5種類の状態があります。非活性とする際はdisabled propsを使用してください。",
+    "components.steps.type.title": "タイプ",
+    "components.steps.type.desc": "DefaultとSubtleの2種類があります。",
+    "components.steps.direction.title": "方向",
+    "components.steps.direction.desc":
+      "HorizontalとVerticalの2種類があります。",
     "components.tabs.basicUsage.title": "サンプル",
     "components.tabs.basicUsage.desc": "Tabs内で、TabItemを連ねて使用します。",
     "components.tabs.notificationBadge.title": "バリエーション",
@@ -304,9 +313,11 @@ export const uiComponents = {
     "components.datePicker.calendarOnly.desc":
       "Shows only the calendar without an input field.",
     "components.divider.color.title": "Color",
-    "components.divider.color.desc": "Choose strength based on visual emphasis.",
+    "components.divider.color.desc":
+      "Choose strength based on visual emphasis.",
     "components.divider.orientation.title": "Orientation",
-    "components.divider.orientation.desc": "Available in horizontal and vertical.",
+    "components.divider.orientation.desc":
+      "Available in horizontal and vertical.",
     "components.drawer.placement.title": "Variants",
     "components.drawer.placement.desc":
       "Supports left and right placement, plus a full-screen mode. Avoid Full on spacious desktop layouts.",
@@ -356,7 +367,8 @@ export const uiComponents = {
     "components.progressIndicator.indeterminate.title": "Indeterminate",
     "components.progressIndicator.indeterminate.desc":
       "Use when duration is unknown. Linear shows sliding animation; Circular shows a rotating arc.",
-    "components.progressIndicator.indeterminateColor.title": "Indeterminate colors",
+    "components.progressIndicator.indeterminateColor.title":
+      "Indeterminate colors",
     "components.progressIndicator.indeterminateColor.desc":
       "Choose between Primary and Subtle for indeterminate. Pick based on importance and background contrast.",
     "components.radioButton.variant.title": "Variants",
@@ -381,6 +393,12 @@ export const uiComponents = {
     "components.switch.state.title": "States",
     "components.switch.state.desc":
       "Five states. Use the disabled prop when non-interactive.",
+    "components.steps.type.title": "Type",
+    "components.steps.type.desc":
+      "Two types are available: Default and Subtle.",
+    "components.steps.direction.title": "Direction",
+    "components.steps.direction.desc":
+      "Two directions are available: Horizontal and Vertical.",
     "components.tabs.basicUsage.title": "Example",
     "components.tabs.basicUsage.desc": "Use multiple TabItems within Tabs.",
     "components.tabs.notificationBadge.title": "Variants",
