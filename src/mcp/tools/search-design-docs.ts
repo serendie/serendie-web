@@ -1,30 +1,24 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod/v3";
+import { getBinding, getEnvValue } from "../utils/bindings";
 
 const DEFAULT_DOCS_SEARCH_API_ENDPOINT =
   "https://design-docs-search.takram-spread.workers.dev/api/search";
 
 type SourceFilter = "ark_ui" | "component_gallery" | "m3";
-type WorkerEnv = Record<string, string | undefined>;
 
 interface SearchDocsResponse {
   results?: unknown[];
   total?: number;
 }
 
-const getEnvValue = (key: string): string | undefined => {
-  if (typeof process !== "undefined" && process.env?.[key]) {
-    return process.env[key];
-  }
-
-  const globalEnv = (
-    globalThis as typeof globalThis & {
-      __SERENDIE_WORKER_ENV__?: WorkerEnv;
-    }
-  ).__SERENDIE_WORKER_ENV__;
-
-  return globalEnv?.[key];
-};
+interface PageMetadataRow {
+  url: string;
+  source: string;
+  title: string;
+  filename: string;
+  metadata_json: string;
+}
 
 const removeBase64Data = (value: unknown): unknown => {
   if (typeof value === "string") {
@@ -50,7 +44,18 @@ const removeBase64Data = (value: unknown): unknown => {
   return value;
 };
 
-const searchDocs = async ({
+function extractSourceFromFilename(filename: string): string {
+  const parts = filename.split("/");
+  return parts[0] || "unknown";
+}
+
+function extractTitleFromContent(content: unknown): string {
+  if (typeof content !== "string") return "Untitled";
+  const match = content.match(/#\s+(.+)$/m);
+  return match ? match[1].trim() : "Untitled";
+}
+
+async function searchViaBinding({
   query,
   nResults,
   sourceFilters,
@@ -58,7 +63,93 @@ const searchDocs = async ({
   query: string;
   nResults: number;
   sourceFilters: SourceFilter[];
-}) => {
+}): Promise<{ query: string; totalResults: number; results: unknown } | null> {
+  const aiSearch = getBinding("DESIGN_DOCS_SEARCH");
+  const db = getBinding("DESIGN_DOCS_DB");
+  if (!aiSearch) return null;
+
+  const allResults: unknown[] = [];
+
+  for (const sourceFilter of sourceFilters) {
+    const searchResult = await aiSearch.search({
+      messages: [{ role: "user", content: query }],
+      ai_search_options: {
+        retrieval: {
+          max_num_results: nResults,
+          filters: { folder: `${sourceFilter}/` },
+        },
+      },
+    });
+
+    const chunks = searchResult.chunks || [];
+    const filenames = chunks.map((chunk) => chunk.item.key);
+
+    const metadataMap = new Map<string, PageMetadataRow>();
+    if (db && filenames.length > 0) {
+      try {
+        const placeholders = filenames.map(() => "?").join(", ");
+        const rows = await db
+          .prepare(
+            `SELECT url, source, title, filename, metadata_json FROM page_metadata WHERE filename IN (${placeholders})`
+          )
+          .bind(...filenames)
+          .all<PageMetadataRow>();
+        for (const row of rows.results) {
+          metadataMap.set(row.filename, row);
+        }
+      } catch {
+        // D1 unavailable — fall back to content extraction
+      }
+    }
+
+    for (const chunk of chunks) {
+      const filename = chunk.item.key;
+      const source = extractSourceFromFilename(filename);
+      const row = metadataMap.get(filename);
+
+      const text = chunk.text ?? "";
+      const title = row?.title ?? extractTitleFromContent(text);
+      const url = row?.url ?? "";
+
+      let metadata: Record<string, unknown> = { source, url, title };
+      if (row) {
+        try {
+          const parsed = JSON.parse(row.metadata_json);
+          delete parsed.anatomy_image_base64;
+          metadata = { source, url, title, ...parsed };
+        } catch {
+          // parse failure — use default metadata
+        }
+      }
+
+      allResults.push({
+        id: filename.replace(/\.md$/, "").replace(/\//g, "_"),
+        score: chunk.score,
+        source,
+        title,
+        url,
+        text,
+        metadata,
+      });
+    }
+  }
+
+  return {
+    query,
+    totalResults: allResults.length,
+    results: removeBase64Data(allResults),
+  };
+}
+
+async function searchViaHttpFetch({
+  query,
+  nResults,
+  sourceFilters,
+}: {
+  query: string;
+  nResults: number;
+  sourceFilters: SourceFilter[];
+}) {
   const endpoint =
     getEnvValue("DOCS_SEARCH_API_ENDPOINT") ?? DEFAULT_DOCS_SEARCH_API_ENDPOINT;
   const apiKey = getEnvValue("DOCS_SEARCH_API_KEY");
@@ -105,7 +196,17 @@ const searchDocs = async ({
     totalResults: results.length,
     results: removeBase64Data(results),
   };
-};
+}
+
+async function searchDocs(params: {
+  query: string;
+  nResults: number;
+  sourceFilters: SourceFilter[];
+}) {
+  return (
+    (await searchViaBinding(params)) ?? (await searchViaHttpFetch(params))
+  );
+}
 
 const componentDocsParams = {
   query: z.string().min(1).describe("コンポーネントの検索クエリ"),
