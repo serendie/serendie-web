@@ -1,0 +1,31 @@
+---
+title: Steps
+componentName: ステップ
+description: プロセスの手順や進行状況を段階的に示すコンポーネントです。
+descriptionEn: "A component that visually represents step-by-step progress in a process."
+lastUpdated: "2026-05-20"
+---
+
+import CodeI18n from "@/components/CodeI18n.astro";
+import { TypeSample } from "@/sampleCode/Steps/TypeSample";
+import typeSampleRaw from "@/sampleCode/Steps/TypeSample.tsx?raw";
+import { DirectionSample } from "@/sampleCode/Steps/DirectionSample";
+import directionSampleRaw from "@/sampleCode/Steps/DirectionSample.tsx?raw";
+
+<CodeI18n
+  titleKey="components.steps.type.title"
+  descriptionKey="components.steps.type.desc"
+  code={typeSampleRaw}
+  storyPath="/story/components-steps--horizontal-default"
+>
+  <TypeSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.steps.direction.title"
+  descriptionKey="components.steps.direction.desc"
+  code={directionSampleRaw}
+  storyPath="/story/components-steps--vertical-default"
+>
+  <DirectionSample client:load />
+</CodeI18n>
