@@ -33,7 +33,7 @@ export function TypeSample() {
         </List>
       </Dd>
 
-      <Dt>SubDescription</Dt>
+      <Dt>Sub Description</Dt>
       <Dd>
         <List>
           <ListItem
