@@ -12,12 +12,12 @@ export function TypeSample() {
         </List>
       </Dd>
 
-      <Dt>Left Icon</Dt>
+      <Dt>Heading Element</Dt>
       <Dd>
         <List>
           <ListItem
             title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"placeholder"} />}
+            headingElement={<SerendieSymbol name={"placeholder"} />}
           />
         </List>
       </Dd>
@@ -28,55 +28,41 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"placeholder"} />}
-          >
-            <p>タイムスタンプなど</p>
-          </ListItem>
-        </List>
-      </Dd>
-
-      <Dt>Large Left Icon</Dt>
-      <Dd>
-        <List>
-          <ListItem
-            title="リストタイトル"
-            leftIcon={<SerendieSymbol name={"placeholder"} />}
-            isLargeLeftIcon
+            headingElement={<SerendieSymbol name={"placeholder"} />}
           />
         </List>
       </Dd>
 
-      <Dt>Multiple Lines</Dt>
+      <Dt>Sub Description</Dt>
       <Dd>
         <List>
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"placeholder"} />}
-            isLargeLeftIcon
-          >
-            <p>タイムスタンプなど</p>
-          </ListItem>
-        </List>
-      </Dd>
-
-      <Dt>Right Icon</Dt>
-      <Dd>
-        <List>
-          <ListItem
-            title="リストタイトル"
-            rightIcon={<SerendieSymbol name={"chevron-right"} />}
+            subDescription="10分前"
+            headingElement={<SerendieSymbol name={"placeholder"} />}
           />
         </List>
       </Dd>
 
-      <Dt>Multiple Lines</Dt>
+      <Dt>Large Heading Element</Dt>
       <Dd>
         <List>
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            rightIcon={<SerendieSymbol name={"chevron-right"} />}
+            headingElement={<SerendieSymbol name={"placeholder"} />}
+            isLargeHeadingElement
+          />
+        </List>
+      </Dd>
+
+      <Dt>Trailing Element</Dt>
+      <Dd>
+        <List>
+          <ListItem
+            title="リストタイトル"
+            trailingElement={<SerendieSymbol name={"chevron-right"} />}
           />
         </List>
       </Dd>
@@ -87,8 +73,8 @@ export function TypeSample() {
           <ListItem
             title="リストタイトル"
             description="補足テキスト"
-            leftIcon={<SerendieSymbol name={"placeholder"} />}
-            isLargeLeftIcon
+            headingElement={<SerendieSymbol name={"placeholder"} />}
+            isLargeHeadingElement
             badge={3}
           />
         </List>
