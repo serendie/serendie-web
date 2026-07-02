@@ -118,7 +118,7 @@ export const uiComponents = {
       "バリエーションごとに4種類の状態があります。DisabledはTextFieldなど他のコンポーネントの状態と連動して使用してください。",
     "components.list.variant.title": "バリエーション",
     "components.list.variant.desc":
-      "テキストや画像、通知バッジを組み合わせて使用できます。一覧から詳細にリンクする際は、Right Iconを使用してください。",
+      "テキストやアイコン、通知バッジを組み合わせて使用できます。一覧から詳細にリンクする際は、Trailing Elementを使用してください。",
     "components.list.state.title": "状態",
     "components.list.state.desc":
       "4つの状態があります。メニューにおいて非活性状態を示すときにDisabledを、選択状態を示すときにSelectedを使用してください。",
@@ -337,7 +337,7 @@ export const uiComponents = {
       "Each variant has four states. Align Disabled with related components such as TextField.",
     "components.list.variant.title": "Variants",
     "components.list.variant.desc":
-      "Combine text, images, and notification badges. Use a right icon when linking to details.",
+      "Combine text, icons, and notification badges. Use a trailing element when linking to details.",
     "components.list.state.title": "States",
     "components.list.state.desc":
       "There are four states. Use Disabled for inactive menu items and Selected when an item is chosen.",
