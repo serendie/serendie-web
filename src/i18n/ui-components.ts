@@ -170,6 +170,14 @@ export const uiComponents = {
     "components.select.state.title": "状態",
     "components.select.state.desc":
       "3種類の状態があります。エラー状態においては、エラーの詳細をメッセージ表示してください。",
+    "components.slider.size.title": "サイズ",
+    "components.slider.size.desc": "MediumとLargeの2種類があります。",
+    "components.slider.marker.title": "マーカー",
+    "components.slider.marker.desc":
+      "markerValues propsで任意の値の位置にマーカーを表示できます。showMarkers propsをfalseにするとマーカーを非表示にできます。",
+    "components.slider.state.title": "状態",
+    "components.slider.state.desc":
+      "非活性とする際はdisabled propsを使用してください。",
     "components.switch.basicUsage.title": "サンプル",
     "components.switch.basicUsage.desc":
       "スイッチのオン/オフはイベントのトリガーとなります。onCheckedChangeハンドラで、イベント処理を実装してください。",
@@ -387,6 +395,14 @@ export const uiComponents = {
     "components.select.state.title": "States",
     "components.select.state.desc":
       "Three states. In error state, show details in a message.",
+    "components.slider.size.title": "Size",
+    "components.slider.size.desc": "Two sizes: Medium and Large.",
+    "components.slider.marker.title": "Markers",
+    "components.slider.marker.desc":
+      "Markers can be displayed at arbitrary values with the markerValues props. Set the showMarkers props to false to hide markers.",
+    "components.slider.state.title": "States",
+    "components.slider.state.desc":
+      "Use the disabled props to make the slider non-interactive.",
     "components.switch.basicUsage.title": "Example",
     "components.switch.basicUsage.desc":
       "Switch toggle triggers events. Implement handling in onCheckedChange.",
