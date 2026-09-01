@@ -115,8 +115,9 @@ export function getDesignTokensTool(mcpServer: McpServer) {
 
         // テーマでフィルタリング
         if (theme) {
+          // 末尾のドットまで含めて一致させ、konjo 指定時に konjo-dark を含めない
           filteredTokens = filteredTokens.filter((token) =>
-            token.key.includes(`themes.${theme}`)
+            token.key.includes(`themes.${theme}.`)
           );
         }
 
@@ -138,7 +139,7 @@ export function getDesignTokensTool(mcpServer: McpServer) {
 
           // テーマを抽出
           let tokenTheme: string | null = null;
-          const themeMatch = token.key.match(/themes\.(\w+)\./);
+          const themeMatch = token.key.match(/themes\.([\w-]+)\./);
           if (themeMatch) {
             tokenTheme = themeMatch[1];
           }
@@ -311,7 +312,7 @@ export function getDesignTokenDetailTool(mcpServer: McpServer) {
 
         // テーマを抽出
         let theme: string | null = null;
-        const themeMatch = token.key.match(/themes\.(\w+)\./);
+        const themeMatch = token.key.match(/themes\.([\w-]+)\./);
         if (themeMatch) {
           theme = themeMatch[1];
         }

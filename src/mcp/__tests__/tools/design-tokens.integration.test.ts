@@ -196,7 +196,7 @@ describe("Design Tokens Integration Tests (Real Data)", () => {
         if (validation.success) {
           const validatedData = validation.data;
           const expectedCount = tokens.filter((t) =>
-            t.key.includes(`themes.${theme}`)
+            t.key.includes(`themes.${theme}.`)
           ).length;
 
           console.log(`Tokens for theme '${theme}':`, expectedCount);
