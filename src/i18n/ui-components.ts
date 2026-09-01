@@ -20,6 +20,17 @@ export const uiComponents = {
     "components.banner.variant.title": "バリエーション",
     "components.banner.variant.desc":
       "注意喚起のレベルに応じて使い分けてください。同じ画面内に同レベルのBannerを複数並べることは避けてください。",
+    "components.breadcrumbs.basicUsage.title": "基本的な使い方",
+    "components.breadcrumbs.basicUsage.desc":
+      "Breadcrumbs内で、BreadcrumbItemを連ねて使用します。現在のページにはcurrent propsを指定してください。icon propsで各項目にアイコンを表示できます。",
+    "components.breadcrumbs.size.title": "サイズ",
+    "components.breadcrumbs.size.desc": "MediumとSmallの2種類があります。",
+    "components.breadcrumbs.separator.title": "区切り文字",
+    "components.breadcrumbs.separator.desc":
+      "ChevronとSlashの2種類があります。separator propsで指定してください。",
+    "components.breadcrumbs.collapse.title": "省略表示",
+    "components.breadcrumbs.collapse.desc":
+      "maxItems propsで表示する項目数を制限できます。超過した中間の項目は省略記号にまとめられます。省略記号をクリックすると省略された項目が展開されます。",
     "components.bottomNavigation.basicUsage.title": "サンプル",
     "components.bottomNavigation.basicUsage.desc":
       "BottomNavigation内で、BottomNavigationItemを連ねて使用します。最大5タブ程度が目安です。それ以上になる場合は、Drawerなど別のナビゲーションを検討してください。",
@@ -245,6 +256,17 @@ export const uiComponents = {
     "components.banner.variant.title": "Variants",
     "components.banner.variant.desc":
       "Choose based on alert severity. Avoid placing multiple banners of the same level on a single screen.",
+    "components.breadcrumbs.basicUsage.title": "Basic usage",
+    "components.breadcrumbs.basicUsage.desc":
+      "Use BreadcrumbItem elements inside Breadcrumbs. Specify the current props for the current page. Icons can be displayed with the icon props.",
+    "components.breadcrumbs.size.title": "Size",
+    "components.breadcrumbs.size.desc": "Two sizes: Medium and Small.",
+    "components.breadcrumbs.separator.title": "Separator",
+    "components.breadcrumbs.separator.desc":
+      "Two separators: Chevron and Slash. Specify with the separator props.",
+    "components.breadcrumbs.collapse.title": "Collapsing items",
+    "components.breadcrumbs.collapse.desc":
+      "Limit the number of visible items with the maxItems props. Extra middle items are collapsed into an ellipsis. Clicking the ellipsis expands the collapsed items.",
     "components.bottomNavigation.basicUsage.title": "Example",
     "components.bottomNavigation.basicUsage.desc":
       "Use BottomNavigation together with consecutive BottomNavigationItems. Up to about five tabs is a guideline; consider Drawer when you need more.",
