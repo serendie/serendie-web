@@ -4,7 +4,7 @@ import { Dd, Dl, Dt } from "src/components/LayoutUtils";
 export function MarkerSample() {
   return (
     <Dl>
-      <Dt>With Marker Values</Dt>
+      <Dt>With Markers</Dt>
       <Dd>
         <Slider
           size="large"
