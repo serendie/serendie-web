@@ -1,0 +1,53 @@
+---
+title: Breadcrumbs
+componentName: パンくずリスト
+description: 現在のページの階層構造を示し、上位ページへの移動を可能にするナビゲーションコンポーネントです。
+descriptionEn: "A navigation component that shows the current page's position in the hierarchy and allows users to navigate to higher levels."
+lastUpdated: "2026-08-26"
+---
+
+import CodeI18n from "@/components/CodeI18n.astro";
+import { BasicSample } from "@/sampleCode/Breadcrumbs/BasicSample";
+import basicSampleRaw from "@/sampleCode/Breadcrumbs/BasicSample.tsx?raw";
+import { SizeSample } from "@/sampleCode/Breadcrumbs/SizeSample";
+import sizeSampleRaw from "@/sampleCode/Breadcrumbs/SizeSample.tsx?raw";
+import { SeparatorSample } from "@/sampleCode/Breadcrumbs/SeparatorSample";
+import separatorSampleRaw from "@/sampleCode/Breadcrumbs/SeparatorSample.tsx?raw";
+import { CollapseSample } from "@/sampleCode/Breadcrumbs/CollapseSample";
+import collapseSampleRaw from "@/sampleCode/Breadcrumbs/CollapseSample.tsx?raw";
+
+<CodeI18n
+  titleKey="components.breadcrumbs.basicUsage.title"
+  descriptionKey="components.breadcrumbs.basicUsage.desc"
+  code={basicSampleRaw}
+  storyPath="/story/components-breadcrumbs--basic"
+>
+  <BasicSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.breadcrumbs.size.title"
+  descriptionKey="components.breadcrumbs.size.desc"
+  code={sizeSampleRaw}
+  storyPath="/story/components-breadcrumbs--small"
+>
+  <SizeSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.breadcrumbs.separator.title"
+  descriptionKey="components.breadcrumbs.separator.desc"
+  code={separatorSampleRaw}
+  storyPath="/story/components-breadcrumbs--slash"
+>
+  <SeparatorSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.breadcrumbs.collapse.title"
+  descriptionKey="components.breadcrumbs.collapse.desc"
+  code={collapseSampleRaw}
+  storyPath="/story/components-breadcrumbs--with-ellipsis"
+>
+  <CollapseSample client:load />
+</CodeI18n>

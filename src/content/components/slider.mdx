@@ -1,0 +1,42 @@
+---
+title: Slider
+componentName: スライダー
+description: 指定した範囲の中から値を選択するためのコンポーネントです。
+descriptionEn: "A component for selecting a value from a specified range."
+lastUpdated: "2026-08-26"
+---
+
+import CodeI18n from "@/components/CodeI18n.astro";
+import { SizeSample } from "@/sampleCode/Slider/SizeSample";
+import sizeSampleRaw from "@/sampleCode/Slider/SizeSample.tsx?raw";
+import { MarkerSample } from "@/sampleCode/Slider/MarkerSample";
+import markerSampleRaw from "@/sampleCode/Slider/MarkerSample.tsx?raw";
+import { StateSample } from "@/sampleCode/Slider/StateSample";
+import stateSampleRaw from "@/sampleCode/Slider/StateSample.tsx?raw";
+
+<CodeI18n
+  titleKey="components.slider.size.title"
+  descriptionKey="components.slider.size.desc"
+  code={sizeSampleRaw}
+  storyPath="/story/components-slider--medium"
+>
+  <SizeSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.slider.marker.title"
+  descriptionKey="components.slider.marker.desc"
+  code={markerSampleRaw}
+  storyPath="/story/components-slider--with-marker-values"
+>
+  <MarkerSample client:load />
+</CodeI18n>
+
+<CodeI18n
+  titleKey="components.slider.state.title"
+  descriptionKey="components.slider.state.desc"
+  code={stateSampleRaw}
+  storyPath="/story/components-slider--disabled"
+>
+  <StateSample client:load />
+</CodeI18n>
