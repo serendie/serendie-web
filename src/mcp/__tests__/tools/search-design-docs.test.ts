@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getSearchDesignDocsTools } from "../../tools/search-design-docs";
+import { setWorkerBindings } from "../../utils/bindings";
 
 type RegisteredHandler = (params: {
   query: string;
@@ -53,6 +54,7 @@ describe("search design docs MCP tools", () => {
     } else {
       process.env.DOCS_SEARCH_API_KEY = originalApiKey;
     }
+    setWorkerBindings({});
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
@@ -80,106 +82,164 @@ Serendie Design System (Serendie UI)のデザイントークンは、Material De
     );
   });
 
-  it("searches ark_ui and component_gallery for component docs", async () => {
-    const fetchMock = vi.mocked(fetch);
-    fetchMock.mockResolvedValue({
-      ok: true,
-      json: async () => ({
-        results: [
+  describe("HTTP fetch fallback (no bindings)", () => {
+    it("searches ark_ui and component_gallery for component docs", async () => {
+      const fetchMock = vi.mocked(fetch);
+      fetchMock.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          results: [
+            {
+              id: "accordion",
+              score: 0.9,
+              source: "ark_ui",
+              title: "Accordion",
+              url: "https://ark-ui.com/react/docs/components/accordion",
+              text: "Accordion guidance",
+              metadata: { image: "data:image/png;base64,abc" },
+            },
+          ],
+          total: 1,
+        }),
+      } as Response);
+
+      const { handlers } = registerTools();
+      const result = await handlers.get("search-design-patterns")!({
+        query: "accordion",
+        nResults: 3,
+      });
+
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenNthCalledWith(
+        1,
+        "https://example.com/api/search",
+        expect.objectContaining({
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": "test-api-key",
+          },
+          body: JSON.stringify({
+            query: "accordion",
+            n_results: 3,
+            source_filter: "ark_ui",
+          }),
+        })
+      );
+      expect(fetchMock).toHaveBeenNthCalledWith(
+        2,
+        "https://example.com/api/search",
+        expect.objectContaining({
+          body: JSON.stringify({
+            query: "accordion",
+            n_results: 3,
+            source_filter: "component_gallery",
+          }),
+        })
+      );
+      expect(result.isError).toBe(false);
+      expect(result.content[0].text).toContain("[image data removed]");
+      expect(result.content[0].text).not.toContain("data:image/png;base64");
+    });
+
+    it("searches m3 for design token docs", async () => {
+      const fetchMock = vi.mocked(fetch);
+      fetchMock.mockResolvedValue({
+        ok: true,
+        json: async () => ({ results: [], total: 0 }),
+      } as Response);
+
+      const { handlers } = registerTools();
+      await handlers.get("search-md3-design-token-docs")!({
+        query: "color role",
+      });
+
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(fetchMock).toHaveBeenCalledWith(
+        "https://example.com/api/search",
+        expect.objectContaining({
+          body: JSON.stringify({
+            query: "color role",
+            n_results: 5,
+            source_filter: "m3",
+          }),
+        })
+      );
+    });
+
+    it("returns MCP tool errors when doc-search API fails", async () => {
+      const fetchMock = vi.mocked(fetch);
+      fetchMock.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+        text: async () => "search failed",
+      } as Response);
+
+      const { handlers } = registerTools();
+      const result = await handlers.get("search-md3-design-token-docs")!({
+        query: "typography",
+      });
+
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toContain("Doc search request failed");
+      expect(result.content[0].text).toContain("search failed");
+    });
+  });
+
+  describe("AI Search binding path", () => {
+    it("uses binding when available", async () => {
+      const mockSearch = vi.fn().mockResolvedValue({
+        search_query: "accordion",
+        chunks: [
           {
-            id: "accordion",
+            id: "chunk-1",
+            type: "text",
             score: 0.9,
-            source: "ark_ui",
-            title: "Accordion",
-            url: "https://ark-ui.com/react/docs/components/accordion",
             text: "Accordion guidance",
-            metadata: { image: "data:image/png;base64,abc" },
+            item: {
+              key: "ark_ui/docs-components-accordion.md",
+              metadata: {},
+            },
           },
         ],
-        total: 1,
-      }),
-    } as Response);
+      });
 
-    const { handlers } = registerTools();
-    const result = await handlers.get("search-design-patterns")!({
-      query: "accordion",
-      nResults: 3,
-    });
-
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      1,
-      "https://example.com/api/search",
-      expect.objectContaining({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": "test-api-key",
-        },
-        body: JSON.stringify({
-          query: "accordion",
-          n_results: 3,
-          source_filter: "ark_ui",
+      const mockDb = {
+        prepare: vi.fn().mockReturnValue({
+          bind: vi.fn().mockReturnValue({
+            all: vi.fn().mockResolvedValue({
+              results: [
+                {
+                  url: "https://ark-ui.com/react/docs/components/accordion",
+                  source: "ark_ui",
+                  title: "Accordion",
+                  filename: "ark_ui/docs-components-accordion.md",
+                  metadata_json: "{}",
+                },
+              ],
+            }),
+          }),
         }),
-      })
-    );
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      2,
-      "https://example.com/api/search",
-      expect.objectContaining({
-        body: JSON.stringify({
-          query: "accordion",
-          n_results: 3,
-          source_filter: "component_gallery",
-        }),
-      })
-    );
-    expect(result.isError).toBe(false);
-    expect(result.content[0].text).toContain("[image data removed]");
-    expect(result.content[0].text).not.toContain("data:image/png;base64");
-  });
+      };
 
-  it("searches m3 for design token docs", async () => {
-    const fetchMock = vi.mocked(fetch);
-    fetchMock.mockResolvedValue({
-      ok: true,
-      json: async () => ({ results: [], total: 0 }),
-    } as Response);
+      setWorkerBindings({
+        DESIGN_DOCS_SEARCH: { search: mockSearch } as unknown as AiSearchInstanceService,
+        DESIGN_DOCS_DB: mockDb as unknown as D1Database,
+      });
 
-    const { handlers } = registerTools();
-    await handlers.get("search-md3-design-token-docs")!({
-      query: "color role",
+      const { handlers } = registerTools();
+      const result = await handlers.get("search-design-patterns")!({
+        query: "accordion",
+        nResults: 3,
+      });
+
+      expect(result.isError).toBe(false);
+      expect(mockSearch).toHaveBeenCalledTimes(2);
+      const parsed = JSON.parse(result.content[0].text);
+      expect(parsed.totalResults).toBe(2);
+      expect(parsed.results[0].title).toBe("Accordion");
+      expect(parsed.results[0].source).toBe("ark_ui");
     });
-
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://example.com/api/search",
-      expect.objectContaining({
-        body: JSON.stringify({
-          query: "color role",
-          n_results: 5,
-          source_filter: "m3",
-        }),
-      })
-    );
-  });
-
-  it("returns MCP tool errors when doc-search API fails", async () => {
-    const fetchMock = vi.mocked(fetch);
-    fetchMock.mockResolvedValue({
-      ok: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      text: async () => "search failed",
-    } as Response);
-
-    const { handlers } = registerTools();
-    const result = await handlers.get("search-md3-design-token-docs")!({
-      query: "typography",
-    });
-
-    expect(result.isError).toBe(true);
-    expect(result.content[0].text).toContain("Doc search request failed");
-    expect(result.content[0].text).toContain("search failed");
   });
 });

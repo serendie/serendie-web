@@ -3,6 +3,10 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { createMcpServer } from "../../mcp/server";
+import {
+  setWorkerBindings,
+  type WorkerBindings,
+} from "../../mcp/utils/bindings";
 
 // Disable prerendering for API routes
 export const prerender = false;
@@ -15,11 +19,9 @@ app.use("*", cors());
 
 // MCP endpoint
 app.all("/", async (c) => {
-  const workerEnv = c.env as Record<string, string | undefined> | undefined;
+  const workerEnv = c.env as WorkerBindings | undefined;
   if (workerEnv) {
-    (globalThis as typeof globalThis & {
-      __SERENDIE_WORKER_ENV__?: Record<string, string | undefined>;
-    }).__SERENDIE_WORKER_ENV__ = workerEnv;
+    setWorkerBindings(workerEnv);
   }
 
   const mcpServer = createMcpServer();
@@ -53,14 +55,12 @@ export type App = typeof app;
 
 // Astro API route handler
 export const ALL: APIRoute = (context) => {
-  // Cloudflare Pages環境で環境変数を取得
-  // context.locals.runtime.env にCloudflare Workersの環境変数が入っている
-  const cfEnv = (context.locals as { runtime?: { env?: Record<string, string | undefined> } })?.runtime?.env;
+  const cfEnv = (
+    context.locals as { runtime?: { env?: WorkerBindings } }
+  )?.runtime?.env;
 
   if (cfEnv) {
-    (globalThis as typeof globalThis & {
-      __SERENDIE_WORKER_ENV__?: Record<string, string | undefined>;
-    }).__SERENDIE_WORKER_ENV__ = cfEnv;
+    setWorkerBindings(cfEnv);
   }
 
   return app.fetch(context.request, cfEnv);
