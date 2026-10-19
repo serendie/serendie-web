@@ -3,7 +3,7 @@ title: v1からv3への移行
 slug: get-started/migration-v3
 illustType: "B"
 description: "@serendie/ui v1.x から v3.x へアップデートする際の変更点と確認項目を紹介します。"
-lastUpdated: "2026-10-02"
+lastUpdated: "2026-10-19"
 ---
 
 import PageHeadLine from "../../../components/PageHeadLine.astro";
@@ -12,17 +12,19 @@ import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
 
 export const sampleCodeProgress = `// v1
 <ProgressIndicator size="medium" color="white" />
+<ProgressIndicator size="medium" color="gray" />
 
-// v3
+// v3: ProgressIndicatorIndeterminate
 
-<ProgressIndicatorIndeterminate type="circular" size="medium" />
+<ProgressIndicatorIndeterminate type="circular" size="medium" color="primary" />
+<ProgressIndicatorIndeterminate type="circular" size="medium" color="subtle" />
 `;
 
 export const sampleCodePortalled = `// When options are hidden inside a non-SDS dialog
 <Select items={items} portalled={false} />`;
 
 export const sampleCodeGrep = `# Check your app CSS for dependencies on generated class names
-grep -rnE "bg_sd|c_sd|bd_sd|sd\\\\.system" src/**/*.css`;
+grep -rnE --include='*.css' 'bg_sd|c_sd|bd_sd|sd\\.system' src`;
 
 <PageSection>
   <PageHeadLine number={0}>このガイドについて</PageHeadLine>
@@ -54,6 +56,14 @@ Serendie UI は Panda CSS で生成したクラス名を使用しており、ク
 
 v3.0.0 以前はビルド時にのみ使用する `@pandacss/dev` が通常依存に含まれていたため、`npm audit --omit=dev` で Panda CSS 関連パッケージ（PostCSS, picomatch, browserslist, esbuild など）が監査対象になっていました。v3.1.1 で開発依存へ移動しています。
 
+## npm audit --omit=dev の確認結果
+
+確認日 2026-10-19。新規プロジェクトに該当バージョンのみをインストールし、`npm audit --omit=dev` を実行した結果、`@serendie/ui@1.0.0` は 52 件（High 46 / Moderate 6）、`@serendie/ui@3.5.1` と `@serendie/ui@3.7.2` は 0 件でした。
+
+結果は npm のアドバイザリデータベースの更新に伴って変わります。また、検出件数はランタイムの脆弱性や実際の悪用可能性を直接示すものではありません（依存関係を通じて、1つのアドバイザリが複数回数えられる場合があります）。パッケージの依存経路は `npm explain <package>` で確認できます（例: `npm explain axios form-data esbuild`）。
+
+High 以上の脆弱性を検出した場合に失敗させるには、`npm audit --omit=dev --audit-level=high` を実行してください。
+
 ## 依存関係のまとめ
 
 - `@ark-ui/react`: `^3.5.0` → `^5.18.0`（v2.1.0〜）
@@ -81,7 +91,7 @@ v3.0.0 以前はビルド時にのみ使用する `@pandacss/dev` が通常依�
 
 ## ProgressIndicator ― Propsの変更
 
-v1 の `ProgressIndicator` は回転アニメーションのみの `svg` 要素で、`size` と `color`（`gray` / `white`）を受け付けていました。v3 では進捗値を表示する `ProgressIndicator`（`type`, `size`, `value`, `max`）と、不確定状態の `ProgressIndicatorIndeterminate` に分かれています。`color` Props は廃止されました。
+v1 の `ProgressIndicator` は回転アニメーションのみの `svg` 要素で、`size` と `color` を受け付け、`gray` は `sd.reference.color.scale.gray.400`、`white` は `sd.reference.color.scale.white.1000` を適用していました。v3 では進捗値を表示する `ProgressIndicator`（`type`, `size`, `value`, `max`）と、不確定状態の `ProgressIndicatorIndeterminate` に分かれています。v3.5.1 の `ProgressIndicator` に `color` Props はありません。`ProgressIndicatorIndeterminate` は `color="primary" | "subtle"` を受け付け、`primary` は `sd.system.color.impression.primary`、`subtle` は `sd.reference.color.scale.gray.300` を適用します。v1 の `gray` に最も近いのは `subtle` ですが、色は同一ではありません。v1 の `white` に相当する値はありません。見た目を確認して選択してください。
 
 <CodeBox code={sampleCodeProgress} language={"jsx"} />
 
@@ -169,9 +179,9 @@ Serendie UI 以外のダイアログ（自作のダイアログや他ライブ�
   <PageHeadLine number={6}>アップデート時の確認項目</PageHeadLine>
 
 1. `npm ls @ark-ui/react @pandacss/dev` で依存関係を確認する（v3.1.1 以降では `@pandacss/dev` は通常依存に含まれません）
-2. `npm audit --omit=dev` を実行し、Serendie UI 由来の検出がないことを確認する
+2. `npm audit --omit=dev --audit-level=high` を実行し、High 以上の脆弱性を確認する
 3. アプリ側のCSSで生成クラス名を指定している箇所を洗い出し、Props・`className`・デザイントークンへ置き換える
-4. `ProgressIndicator` の `color` Props を使用している箇所を `ProgressIndicatorIndeterminate` へ置き換える
+4. `ProgressIndicator` の v1 `color="gray"` は `ProgressIndicatorIndeterminate` の `color="subtle"`（gray.300）が最も近い値ですが同一ではなく、`color="white"` に相当する値はありません。v3 の `color="primary" | "subtle"` から選び、見た目を確認する
 5. Select / Search / DropdownMenu をダイアログ内で使用している箇所を洗い出し、Serendie UI 以外のダイアログ内では `portalled={false}` を検討する
 6. Select の `onValueChange` が「同じ値を再選択しても発火する」前提で実装されていないか確認する
 7. CheckBox / ChoiceBox の `checked` を厳密な `boolean` として扱っていないか確認する
