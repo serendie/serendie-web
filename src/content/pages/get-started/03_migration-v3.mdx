@@ -1,0 +1,192 @@
+---
+title: v1からv3への移行
+slug: get-started/migration-v3
+illustType: "B"
+description: "@serendie/ui v1.x から v3.x へアップデートする際の変更点と確認項目を紹介します。"
+lastUpdated: "2026-10-19"
+---
+
+import PageHeadLine from "../../../components/PageHeadLine.astro";
+import CodeBox from "../../../components/CodeBox.astro";
+import { PageSection, PageARef } from "../../../components/PageLayout.tsx";
+
+export const sampleCodeProgress = `// v1
+<ProgressIndicator size="medium" color="white" />
+<ProgressIndicator size="medium" color="gray" />
+
+// v3: ProgressIndicatorIndeterminate
+
+<ProgressIndicatorIndeterminate type="circular" size="medium" color="primary" />
+<ProgressIndicatorIndeterminate type="circular" size="medium" color="subtle" />
+`;
+
+export const sampleCodePortalled = `// When options are hidden inside a non-SDS dialog
+<Select items={items} portalled={false} />`;
+
+export const sampleCodeGrep = `# Check your app CSS for dependencies on generated class names
+grep -rnE --include='*.css' 'bg_sd|c_sd|bd_sd|sd\\.system' src`;
+
+<PageSection>
+  <PageHeadLine number={0}>このガイドについて</PageHeadLine>
+
+`@serendie/ui` v1.0.0 から v3.x（v3.5.1 以降）へアップデートする際に影響のある変更点と、アップデート時の確認項目をまとめています。各バージョンのリリースノートは[GitHub Releases](https://github.com/serendie/serendie/releases)を参照してください。
+
+<PageARef href="https://github.com/serendie/serendie/releases">
+  Releases - Serendie UI (GitHub)
+</PageARef>
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={1}>バージョン別の主要な変更</PageHeadLine>
+
+アップデートの影響が大きい変更は次の3つです。
+
+## v2.1.0 ― Ark UI v5への更新
+
+内部で利用しているヘッドレスUIライブラリ[Ark UI](https://ark-ui.com/)を v3 系から v5 系へ更新しました。Select・Search・CheckBox・ChoiceBox などの内部実装、DOM構造、`data-scope` / `data-part` 属性、イベント発火のタイミングが変わっています。Ark UI の API を直接利用している場合は、Ark UI 側の移行ガイドも参照してください。
+
+## v3.0.0 ― ダークモード対応とデザイントークンの更新
+
+`@serendie/design-token` を 1.1 系から 1.4 系へ更新し、ダークモードに対応しました。これに伴い、多くのコンポーネントで使用する背景色・枠線色のシステムトークンが変わっています（例: `sd.system.color.component.surface` → `surfaceContainerBright`、`outlineVariant` → `outlineBright` / `outlineDim`）。
+
+Serendie UI は Panda CSS で生成したクラス名を使用しており、クラス名はスタイルの内容から生成されます。そのため、トークンの変更に伴って生成クラス名も変わります。**生成クラス名は公開APIではなく、バージョン間の互換性は保証していません。** アプリ側のCSSで生成クラス名を直接指定して上書きしている場合は、このバージョンで見た目が崩れます。
+
+## v3.1.1 ― @pandacss/dev を開発依存へ移動
+
+v3.0.0 以前はビルド時にのみ使用する `@pandacss/dev` が通常依存に含まれていたため、`npm audit --omit=dev` で Panda CSS 関連パッケージ（PostCSS, picomatch, browserslist, esbuild など）が監査対象になっていました。v3.1.1 で開発依存へ移動しています。
+
+## npm audit --omit=dev の確認結果
+
+確認日 2026-10-19。新規プロジェクトに該当バージョンのみをインストールし、`npm audit --omit=dev` を実行した結果、`@serendie/ui@1.0.0` は 52 件（High 46 / Moderate 6）、`@serendie/ui@3.5.1` と `@serendie/ui@3.7.2` は 0 件でした。
+
+結果は npm のアドバイザリデータベースの更新に伴って変わります。また、検出件数はランタイムの脆弱性や実際の悪用可能性を直接示すものではありません（依存関係を通じて、1つのアドバイザリが複数回数えられる場合があります）。パッケージの依存経路は `npm explain <package>` で確認できます（例: `npm explain axios form-data esbuild`）。
+
+High 以上の脆弱性を検出した場合に失敗させるには、`npm audit --omit=dev --audit-level=high` を実行してください。
+
+## 依存関係のまとめ
+
+- `@ark-ui/react`: `^3.5.0` → `^5.18.0`（v2.1.0〜）
+- `@serendie/design-token`: `^1.1.0` → `^1.4.5`（v3.0.0〜）
+- `@pandacss/dev`: dependencies → devDependencies（v3.1.1〜）
+- `react`（peerDependencies）: `>=18.3.1`（変更なし）
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={2}>導入方法の変更</PageHeadLine>
+
+インストール方法、ルートCSSでの `@layer` 宣言と `@serendie/ui/styles.css` の読み込み、`data-panda-theme` によるテーマ切り替え、パッケージの `exports`（`.`, `./*`, `./css`, `./tokens`, `./types`, `./patterns`, `./jsx`, `./styles.css`）は v1 から変更ありません。
+
+次の機能が追加されています。いずれも任意です。
+
+- `@serendie/ui/client` ― Next.js App Router の Server Component から利用するためのエントリポイント
+- `SerendieProvider` ― 言語（`lang`）、カラーテーマ（`colorTheme`）、カラーモード（`colorMode`）を設定するProvider。ダークモードや英語表示を使う場合に設定します。未設定でも従来どおり日本語・ライトモードで動作します
+- `ColorSchemeScript`、`useThemeContext`、`useTranslations` などのテーマ・多言語関連のエクスポート
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={3}>コンポーネント別の変更</PageHeadLine>
+
+## ProgressIndicator ― Propsの変更
+
+v1 の `ProgressIndicator` は回転アニメーションのみの `svg` 要素で、`size` と `color` を受け付け、`gray` は `sd.reference.color.scale.gray.400`、`white` は `sd.reference.color.scale.white.1000` を適用していました。v3 では進捗値を表示する `ProgressIndicator`（`type`, `size`, `value`, `max`）と、不確定状態の `ProgressIndicatorIndeterminate` に分かれています。v3.5.1 の `ProgressIndicator` に `color` Props はありません。`ProgressIndicatorIndeterminate` は `color="primary" | "subtle"` を受け付け、`primary` は `sd.system.color.impression.primary`、`subtle` は `sd.reference.color.scale.gray.300` を適用します。v1 の `gray` に最も近いのは `subtle` ですが、色は同一ではありません。v1 の `white` に相当する値はありません。見た目を確認して選択してください。
+
+<CodeBox code={sampleCodeProgress} language={"jsx"} />
+
+## Select
+
+- `items` は省略可能になり、`collection` は内部で生成するため指定できなくなりました
+- `portalled`（デフォルト `true`）と `requiredLabel` が追加されました
+- 選択肢の描画先が変わりました。v1 では常に `body` 直下へ描画していましたが、v3 では Serendie UI の ModalDialog または Drawer の中で使用した場合、そのダイアログのコンテンツ内へ自動的に描画されます
+- 選択中の項目を再度クリックした場合、選択は維持され、`onValueChange` は値が変わらないため再度発火しません（Ark UI v5 の挙動）
+- `className` はルート要素にのみ適用されます。選択肢などの内部要素には適用されません
+
+## Search
+
+- `items`、`portalled`、`allowCustomValue`（デフォルト `true`）、`onSearch` が追加されました
+- v1 では候補がある場合のみ候補リストを描画していましたが、v3 では常に描画し Portal で制御します
+- クリアボタンの DOM 構造が変わりました（Ark UI の `Combobox.Trigger` から独自の `button` 要素へ）
+
+## DropdownMenu
+
+- `portalled`（デフォルト `true`）が追加されました。Select と同様に ModalDialog / Drawer 内では自動的にダイアログ内へ描画されます
+
+## ModalDialog
+
+- `submitButtonProps` が追加されました
+- 閉じるボタンのラベルが多言語対応になりました（日本語表示は従来と同じ「閉じる」です）
+- 背景色トークンが `surface` から `surfaceContainerBright` へ変わりました
+
+## CheckBox / ChoiceBox
+
+- Ark UI v5 の `indeterminate` 状態に対応しました。`checked` の値は `boolean` に加えて `"indeterminate"` を取り得ます
+- ChoiceBox の非表示 `input` 要素の位置が変わりました
+
+## Pagination
+
+- `aria-label` / `title` が多言語対応になりました（日本語表示は従来と同じです）
+
+## Button / IconButton
+
+- `ButtonProps` 型がエクスポートされるようになりました
+- ローディング表示が `ProgressIndicatorIndeterminate` に変わりました
+- 背景色・枠線色のトークンが変わりました
+
+## 新規コンポーネント
+
+Chart、DataTable、DatePicker、Slider、Steps、Tooltip が追加されています。既存コードへの影響はありません。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={4}>スタイルのカスタマイズ</PageHeadLine>
+
+v1 からの移行で最も多い問題は、生成クラス名を指定したCSS上書きが効かなくなることです。アプリ側のCSSに生成クラス名への依存がないか確認してください。
+
+<CodeBox code={sampleCodeGrep} language={"shell"} />
+
+生成クラス名の代わりに、次の方法を利用してください。
+
+- **Props** ― `size` や `styleType` など、コンポーネントが提供する Props。最も安全な方法です
+- **`className`** ― ルート要素にスタイルを追加できます。ただし、すべてのコンポーネントが対応しているわけではありません（v3.5.1 時点で AccordionGroup、List、PasswordField、RadioGroup は未対応）。また、内部要素には適用されません
+- **デザイントークンの上書き** ― テーマ全体の色やサイズを変更する場合は、[テーミング](/foundations/theming)を参照してください
+- **Ark UI の `data-scope` / `data-part` 属性セレクタ** ― 内部要素を指定する場合に利用できます。生成クラス名より安定していますが、Ark UI のメジャーバージョン更新で変わる可能性があります
+
+内部要素を安定して指定するためのAPI（`classNames` や `slotProps` のようなもの）は現時点では提供していません。必要な場合は [GitHub Discussions](https://github.com/orgs/serendie/discussions) でご相談ください。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={5}>Portalとz-indexの仕様</PageHeadLine>
+
+Select、Search、DropdownMenu、DatePicker は選択肢やメニューを Portal で描画します。v3 では次のように動作します。
+
+- `portalled`（デフォルト `true`）: `body` 直下に描画します。ただし Serendie UI の ModalDialog / Drawer の中で使用した場合は、自動的にそのダイアログのコンテンツ内に描画されます
+- z-index はデザイントークンで定義されています（`sd.system.elevation.zIndex.dropdown` = 500、`sd.system.elevation.zIndex.modal` = 1000）
+- `portalled={false}`: Portal を使わずその場に描画します。親要素の `overflow: hidden` によって選択肢が切れる場合があります
+
+Serendie UI 以外のダイアログ（自作のダイアログや他ライブラリのダイアログ）の中で使用した場合、選択肢は `body` 直下に描画されるため、ダイアログの z-index が 500 を超えていると選択肢が隠れます。この場合は `portalled={false}` を指定するか、ダイアログ側の z-index を調整してください。
+
+<CodeBox code={sampleCodePortalled} language={"jsx"} />
+
+また、アプリ側のCSSで `z-index` や stacking context（`transform`, `filter`, `isolation` など）を変更している場合や、`@layer` の宣言順が[導入手順](/get-started/dev)と異なる場合も、表示に影響することがあります。
+
+</PageSection>
+
+<PageSection>
+  <PageHeadLine number={6}>アップデート時の確認項目</PageHeadLine>
+
+1. `npm ls @ark-ui/react @pandacss/dev` で依存関係を確認する（v3.1.1 以降では `@pandacss/dev` は通常依存に含まれません）
+2. `npm audit --omit=dev --audit-level=high` を実行し、High 以上の脆弱性を確認する
+3. アプリ側のCSSで生成クラス名を指定している箇所を洗い出し、Props・`className`・デザイントークンへ置き換える
+4. `ProgressIndicator` の v1 `color="gray"` は `ProgressIndicatorIndeterminate` の `color="subtle"`（gray.300）が最も近い値ですが同一ではなく、`color="white"` に相当する値はありません。v3 の `color="primary" | "subtle"` から選び、見た目を確認する
+5. Select / Search / DropdownMenu をダイアログ内で使用している箇所を洗い出し、Serendie UI 以外のダイアログ内では `portalled={false}` を検討する
+6. Select の `onValueChange` が「同じ値を再選択しても発火する」前提で実装されていないか確認する
+7. CheckBox / ChoiceBox の `checked` を厳密な `boolean` として扱っていないか確認する
+8. ルートCSSの `@layer reset, base, tokens, recipes, utilities;` がアプリ側CSSより前に宣言されているか確認する
+9. compact / expanded の2段階のブレークポイントでレイアウトを確認する（Serendie UI の標準ブレークポイントは `expanded` のみです）
+10. ダークモードを利用する場合は `SerendieProvider` の `colorMode` と `ColorSchemeScript` を設定する
+
+</PageSection>
